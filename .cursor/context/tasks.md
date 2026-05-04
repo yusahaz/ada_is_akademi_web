@@ -1,0 +1,63 @@
+# Tasks
+
+## Active
+
+- [ ] Wire login form submission to real auth API when backend is ready
+- [ ] Refine per-locale copy quality for ES/IT/RU content blocks
+
+---
+
+## Completed
+
+- [x] Group admin overview statistics by domain (Aday/İşveren/İlan/Başvuru/Aktivasyon) with iconized cards and inline state counts
+- [x] Convert detailed statistics area into iconized reusable card blocks (`DashboardCard`) for consistent admin UI
+- [x] Render `/Statistics/Overview` metrics inside Admin dashboard as responsive detailed statistics grid
+- [x] Rework Admin dashboard mobile-first layout (sidebar actions grid, tighter spacing, responsive card flow)
+- [x] Replace env-based API path lookup with centralized typed endpoint registry
+- [x] Refactor auth and admin summary adapters to consume endpoint registry
+- [x] Clean obsolete path env typings/examples and update auth i18n error copy
+- [x] Validate endpoint-registry refactor with lint + build
+- [x] Map `/Statistics/Overview` response model into admin summary adapter defaults
+- [x] Migrate admin summary source to centralized endpoint registry (`Statistics/Overview`)
+- [x] Validate updated admin summary integration with lint + build
+- [x] Remove horizontal overflow in Admin dashboard with mobile-first layout fixes (stacked action buttons + min-width guards)
+- [x] Validate refreshed OpenAPI against `src/api` wrappers and confirm endpoint coverage (no missing paths)
+- [x] Sync OpenAPI payload/response contracts in API wrappers (`CreateJobPostingCommand`, skill/add-permission return ids, optional submit note)
+- [x] Re-run lint + build after OpenAPI contract sync
+- [x] Make LoginModal fully theme-aware so light mode uses ocean palette instead of fixed dark glass
+- [x] Improve light-mode readability with ocean-themed high-contrast palette across Hero and Landing sections
+- [x] Encrypt persisted auth session in localStorage and restore via secure decrypt flow
+- [x] Convert admin summary cards to API-driven stats model with endpoint-configurable adapter
+- [x] Add actionable admin detail tools (user lifecycle actions, approval query, password reset)
+- [x] Refactor Admin Dashboard into classic layout with left sidebar and right content area
+- [x] Add summary cards and section-based detail screens for admin operations
+- [x] Add admin-user registration form inside Admin Dashboard and map it to RegisterAdmin endpoint
+- [x] Add role resolver for Worker/Employer/Admin from authenticated session
+- [x] Build responsive dashboards for Worker, Employer, and Admin after login
+- [x] Route authenticated users to role-based dashboard and keep landing for guests
+- [x] Add auth session provider with persistent login storage and restore-on-load
+- [x] Wire LoginModal successful login to global auth session + logout action
+- [x] Re-sync API wrappers against refreshed OpenAPI v1 (SystemUsers auth + Employers/Workers/SystemUserGroups)
+- [x] Align frontend API endpoint wrappers with local OpenAPI v1 paths and methods
+- [x] Add dark/light theme state with localStorage + system preference fallback
+- [x] Add navbar theme toggle button and i18n labels for all locales
+- [x] Custom Navbar language dropdown: dark glass panel, cyan accents, listbox keyboard + RTL `end-*` anchor
+- [x] Analyze Faz 1 API contract and map frontend integration boundaries
+- [x] Add reusable HTTP client + typed ApiResponse handling for Faz 1 endpoints
+- [x] Wire login/register UI submit handlers to API-ready service abstraction with loading/error states
+- [x] Implement login modal UI with i18n + RTL-friendly layout
+- [x] Analyze reference visual direction and retain no code-copy policy
+- [x] Keep hero and navbar visual language; extend with new section system
+- [x] Implement section components with mobile-first responsive behavior
+- [x] Ensure all new user-facing strings come from i18n resources
+- [x] Validate Arabic RTL compatibility via logical layout properties
+- [x] Run lint and production build checks successfully
+
+---
+
+## Rules
+
+- Always update tasks
+- Break large tasks into small ones
+- Move each completed item from Active to Completed
+- At least one analysis task must exist before code changes

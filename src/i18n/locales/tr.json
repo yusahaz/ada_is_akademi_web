@@ -1,0 +1,305 @@
+{
+  "landing": {
+    "meta": {
+      "title": "Ada İş Akademi"
+    },
+    "nav": {
+      "brand": "Ada İş Akademi",
+      "logoMark": "A",
+      "login": "Giriş Yap",
+      "logout": "Çıkış Yap",
+      "languageAria": "Dil seç",
+      "logoAria": "Ada İş Akademi logosu",
+      "themeToggle": "Tema",
+      "themeToggleAria": "Temayı değiştir"
+    },
+    "lang": {
+      "tr": "Türkçe",
+      "en": "English",
+      "es": "Español",
+      "it": "Italiano",
+      "ru": "Русский",
+      "ar": "العربية"
+    },
+    "hero": {
+      "badge": "Bugün çalış — vardiya fırsatları tek uygulamada",
+      "title": "Öğrenciler ve işverenler aynı platformda, anında eşleşsin.",
+      "subtitle": "Ada İş Akademi ile günlük iş fırsatlarını keşfet, hızlıca başvur; süreci ve ödemelerini tek uygulamada takip et.",
+      "ctaExplore": "İş fırsatlarını keşfet",
+      "ctaHowItWorks": "Nasıl çalışır?",
+      "decorativeAria": "Bağlantılı düğümlerden oluşan soyut arka plan illüstrasyonu"
+    },
+    "card": {
+      "shifts": {
+        "title": "Yakınındaki vardiyalar",
+        "matching": "Eşleştirme",
+        "application": "Başvuru",
+        "approval": "Onay",
+        "cta": "{{count}} uygun ilanı incele"
+      },
+      "activity": {
+        "title": "Haftalık aktivite",
+        "stat": "+24% bu hafta"
+      },
+      "suggestion": {
+        "title": "Akıllı öneri",
+        "body": "Profilini güçlendir; günlük vardiya ilanlarında daha üst sıralarda görün."
+      }
+    },
+    "stats": {
+      "items": [
+        "Günlük aktif aday: 12K+",
+        "Onaylı iş ortağı: 1.8K+",
+        "Ortalama eşleşme süresi: < 2 dk"
+      ]
+    },
+    "how": {
+      "title": "Üç adımda hızlı eşleşme",
+      "subtitle": "Adaydan işe alıma tüm süreci mobil odaklı, izlenebilir ve düşük sürtünmeli bir deneyime dönüştürüyoruz.",
+      "items": [
+        {
+          "title": "Profilini tamamla",
+          "body": "Yetenek, müsaitlik ve konum bilgilerini ekleyerek doğru ilanlarla eşleş."
+        },
+        {
+          "title": "Hızlı başvur",
+          "body": "Uygun vardiyalara tek dokunuşla başvur; başvuru durumunu canlı takip et."
+        },
+        {
+          "title": "Onaylan ve başla",
+          "body": "İşveren onayı sonrası görev detaylarını al ve süreci tek panelden yönet."
+        }
+      ]
+    },
+    "features": {
+      "title": "Sadece güzel değil, operasyonel olarak güçlü",
+      "subtitle": "Landing deneyimi, dönüşüm ve güven hedefleriyle birlikte ürün gerçekliğine bağlanır.",
+      "items": [
+        {
+          "title": "Akıllı eşleşme",
+          "body": "Rol, konum ve zaman uygunluğuna göre öncelikli ilan önerileri."
+        },
+        {
+          "title": "Güvenli süreç",
+          "body": "Profil doğrulama, onay adımları ve şeffaf durum geri bildirimi."
+        },
+        {
+          "title": "İki taraflı değer",
+          "body": "Aday ve işveren için dengeli, hızlı ve ölçülebilir deneyim."
+        }
+      ]
+    },
+    "proof": {
+      "caption": "Kullanıcı geri bildirimi",
+      "quote": "İlanı yayınladıktan dakikalar içinde uygun adaylarla eşleştik. Süreç hem hızlı hem şeffaf.",
+      "author": "Operasyon Müdürü, Partner Marka"
+    },
+    "cta": {
+      "title": "Bugün yayına al, yarın etkisini gör",
+      "subtitle": "Aday ve işverenleri tek mobil deneyimde buluşturan modern işe alım akışını hemen başlat.",
+      "action": "Hemen başlamayı planla"
+    },
+    "footer": {
+      "copy": "© Ada İş Akademi. Tüm hakları saklıdır."
+    },
+    "visual": {
+      "avatarLetter": "A",
+      "ratingAria": "Beş üzerinden beş yıldız"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "welcome": "Hoş geldin, {{email}}"
+    },
+    "worker": {
+      "title": "Worker Dashboard",
+      "subtitle": "Başvurularını, yaklaşan vardiyalarını ve profil gücünü tek yerden yönet.",
+      "cards": {
+        "applications": {
+          "title": "Aktif başvuru",
+          "value": "12",
+          "hint": "Bugün 3 ilanda durum güncellendi."
+        },
+        "shifts": {
+          "title": "Bu haftaki vardiya",
+          "value": "4",
+          "hint": "2 vardiya onaylandı, 1'i beklemede."
+        },
+        "profile": {
+          "title": "Profil skoru",
+          "value": "%87",
+          "hint": "Öne çıkmak için 2 yeni yetenek ekleyebilirsin."
+        }
+      }
+    },
+    "employer": {
+      "title": "Employer Dashboard",
+      "subtitle": "İlanlarını yayınla, aday akışını takip et ve operasyon metriklerini izle.",
+      "cards": {
+        "postings": {
+          "title": "Açık ilan",
+          "value": "8",
+          "hint": "Son 24 saatte 2 yeni ilan yayınlandı."
+        },
+        "candidates": {
+          "title": "Yeni aday",
+          "value": "34",
+          "hint": "Uygunluk skoru yüksek 9 aday önerildi."
+        },
+        "compliance": {
+          "title": "Süreç uyumu",
+          "value": "%96",
+          "hint": "SLA hedefleri planlandığı gibi ilerliyor."
+        }
+      }
+    },
+    "admin": {
+      "title": "Kontrol Paneli",
+      "subtitle": "Sistem kullanıcılarını, onay süreçlerini ve güvenlik durumunu merkezi olarak yönet.",
+      "sidebar": {
+        "overview": "Genel Bakış",
+        "users": "Kullanıcılar",
+        "approvals": "Onaylar",
+        "security": "Güvenlik",
+        "createAdmin": "Admin Oluştur"
+      },
+      "summary": {
+        "loading": "Yükleniyor...",
+        "fetchError": "Özet verileri endpointlerden alınamadı, varsayılan değerler gösteriliyor."
+      },
+      "cards": {
+        "systemUsers": {
+          "title": "Toplam sistem kullanıcısı",
+          "value": "1.248",
+          "hint": "Bugün 18 yeni kullanıcı aktif edildi."
+        },
+        "approvals": {
+          "title": "Bekleyen onay",
+          "value": "27",
+          "hint": "12 başvuru öncelikli kuyrukta."
+        },
+        "security": {
+          "title": "Güvenlik durumu",
+          "value": "Stabil",
+          "hint": "Son 7 günde kritik ihlal tespit edilmedi."
+        }
+      },
+      "statistics": {
+        "title": "Detaylı İstatistikler",
+        "subtitle": "Dashboard genel görünüm metrikleri",
+        "groups": {
+          "candidateStatus": "Aday Durumu",
+          "employerStatus": "İşveren Durumu",
+          "postingStatus": "İlan Durumu",
+          "applicationStatus": "Başvuru Durumu",
+          "activationStatus": "Aktivasyon Durumu"
+        },
+        "activatedTodayCount": "Bugün aktive edilen kullanıcı",
+        "totalWorkerCount": "Toplam Aday",
+        "activeWorkerCount": "Aktif Aday",
+        "totalEmployerCount": "Toplam İşveren",
+        "activeEmployerCount": "Aktif İşveren",
+        "totalJobPostingCount": "Toplam iş ilanı",
+        "openJobPostingCount": "Açık iş ilanı",
+        "totalJobApplicationCount": "Toplam başvuru",
+        "pendingJobApplicationCount": "Bekleyen başvuru",
+        "acceptedJobApplicationCount": "Kabul edilen başvuru",
+        "rejectedJobApplicationCount": "Reddedilen başvuru"
+      },
+      "details": {
+        "overview": {
+          "title": "Sistem Genel Özeti",
+          "body": "Bu alanda platformun güncel durumunu, anlık trendlerini ve kritik KPI metriklerini takip edebilirsin."
+        },
+        "users": {
+          "title": "Kullanıcı Yönetimi Detayı",
+          "body": "Sistem kullanıcılarını tip bazında filtreleyebilir, durumu askıya alma veya yeniden aktive etme işlemlerini buradan yönetebilirsin."
+        },
+        "approvals": {
+          "title": "Onay Kuyruğu Detayı",
+          "body": "Bekleyen onayları öncelik sırasına göre değerlendirip işlem geçmişini izleyebileceğin operasyon ekranı."
+        },
+        "security": {
+          "title": "Güvenlik ve Uyum Detayı",
+          "body": "Şüpheli hareketler, parola değişiklikleri ve erişim politikalarıyla ilgili kayıtları bu panelden inceleyebilirsin."
+        }
+      },
+      "register": {
+        "title": "Admin Kullanıcısı Oluştur",
+        "subtitle": "Yeni admin hesabı eklemek için aşağıdaki formu doldur.",
+        "firstName": "Ad",
+        "lastName": "Soyad",
+        "email": "E-posta",
+        "phone": "Telefon",
+        "password": "Şifre",
+        "submit": "Admin oluştur",
+        "submitting": "Admin oluşturuluyor...",
+        "success": "Admin kaydı başarıyla oluşturuldu.",
+        "genericError": "Admin kaydı oluşturulurken hata oluştu.",
+        "authNotConfigured": "Admin kayıt endpoint'i yapılandırılmamış."
+      },
+      "actions": {
+        "userIdPlaceholder": "Sistem kullanıcı ID",
+        "postingIdPlaceholder": "İlan ID",
+        "newPasswordPlaceholder": "Yeni şifre",
+        "suspend": "Askıya al",
+        "reactivate": "Aktifleştir",
+        "ban": "Yasakla",
+        "resetPassword": "Şifre sıfırla",
+        "queryApprovals": "Onayları getir",
+        "invalidUserId": "Geçerli bir kullanıcı ID gir.",
+        "invalidPostingId": "Geçerli bir ilan ID gir.",
+        "invalidPassword": "Şifre en az 6 karakter olmalı.",
+        "userSuspendSuccess": "Kullanıcı askıya alındı.",
+        "userReactivateSuccess": "Kullanıcı yeniden aktifleştirildi.",
+        "userBanSuccess": "Kullanıcı yasaklandı.",
+        "passwordResetSuccess": "Kullanıcı şifresi güncellendi.",
+        "approvalQuerySuccess": "{{count}} başvuru kaydı listelendi.",
+        "genericError": "İşlem sırasında hata oluştu."
+      }
+    }
+  },
+  "auth": {
+    "audienceAria": "Hesap türü",
+    "audience": {
+      "individual": "Bireysel",
+      "corporate": "Kurumsal"
+    },
+    "login": {
+      "title": "Giriş yap",
+      "subtitleIndividual": "Başvurularını, vardiyalarını ve bildirimlerini yönetmek için hesabına eriş.",
+      "subtitleCorporate": "Kurum hesabınla giriş yap; ilan ve işe alım süreçlerini yönet.",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "ornek@mail.com",
+      "passwordLabel": "Şifre",
+      "passwordPlaceholder": "Şifreni gir",
+      "submit": "Devam et",
+      "submitting": "Giriş yapılıyor...",
+      "forgot": "Şifremi unuttum",
+      "closeAria": "Giriş penceresini kapat",
+      "goToRegister": "Hesap oluştur",
+      "goToLogin": "Girişe dön"
+    },
+    "register": {
+      "title": "Kayıt ol",
+      "subtitle": "Bireysel aday olarak hesap oluştur.",
+      "fullNameLabel": "Ad soyad",
+      "fullNamePlaceholder": "Adın ve soyadın",
+      "emailLabel": "E-posta",
+      "emailPlaceholder": "ornek@mail.com",
+      "passwordLabel": "Şifre",
+      "passwordPlaceholder": "Şifre oluştur",
+      "confirmPasswordLabel": "Şifre tekrar",
+      "confirmPasswordPlaceholder": "Şifreni tekrar gir",
+      "submit": "Hesap oluştur",
+      "submitting": "Hesap oluşturuluyor..."
+    },
+    "feedback": {
+      "authNotConfigured": "Kimlik doğrulama servis uç noktaları şu anda kullanılamıyor.",
+      "genericError": "İşlem sırasında bir hata oluştu. Lütfen tekrar dene.",
+      "passwordMismatch": "Şifreler eşleşmiyor.",
+      "loginSuccess": "Giriş isteği başarıyla gönderildi.",
+      "registerSuccess": "Kayıt isteği başarıyla gönderildi."
+    }
+  }
+}

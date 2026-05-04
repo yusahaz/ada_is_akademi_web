@@ -1,0 +1,305 @@
+{
+  "landing": {
+    "meta": {
+      "title": "Ada İş Akademi"
+    },
+    "nav": {
+      "brand": "Ada İş Akademi",
+      "logoMark": "A",
+      "login": "Войти",
+      "logout": "Выйти",
+      "languageAria": "Выбрать язык",
+      "logoAria": "Логотип Ada İş Akademi",
+      "themeToggle": "Тема",
+      "themeToggleAria": "Переключить тему"
+    },
+    "lang": {
+      "tr": "Türkçe",
+      "en": "English",
+      "es": "Español",
+      "it": "Italiano",
+      "ru": "Русский",
+      "ar": "العربية"
+    },
+    "hero": {
+      "badge": "Работайте сегодня — смены и возможности в одном приложении",
+      "title": "Студенты и работодатели на одной платформе — мгновенное совпадение.",
+      "subtitle": "Открывайте ежедневные возможности с Ada İş Akademi, подавайте заявки быстрее и отслеживайте процесс и выплаты в одном приложении.",
+      "ctaExplore": "Смотреть возможности",
+      "ctaHowItWorks": "Как это работает",
+      "decorativeAria": "Абстрактная фоновая иллюстрация со связанными узлами"
+    },
+    "card": {
+      "shifts": {
+        "title": "Смены рядом с вами",
+        "matching": "Подбор",
+        "application": "Заявка",
+        "approval": "Подтверждение",
+        "cta": "Просмотреть {{count}} подходящих объявлений"
+      },
+      "activity": {
+        "title": "Активность за неделю",
+        "stat": "+24% на этой неделе"
+      },
+      "suggestion": {
+        "title": "Умная рекомендация",
+        "body": "Укрепите профиль, чтобы чаще появляться выше в ежедневных объявлениях о сменах."
+      }
+    },
+    "stats": {
+      "items": [
+        "Daily active candidates: 12K+",
+        "Verified hiring partners: 1.8K+",
+        "Average match time: < 2 min"
+      ]
+    },
+    "how": {
+      "title": "Fast matching in three steps",
+      "subtitle": "From candidate onboarding to hiring approval, every step is mobile-first and trackable.",
+      "items": [
+        {
+          "title": "Complete your profile",
+          "body": "Add skills, availability, and location to match with relevant listings."
+        },
+        {
+          "title": "Apply instantly",
+          "body": "Apply to suitable shifts in one tap and track status in real time."
+        },
+        {
+          "title": "Get approved and start",
+          "body": "Receive employer approval, view task details, and manage the process in one panel."
+        }
+      ]
+    },
+    "features": {
+      "title": "Not only beautiful, operationally strong",
+      "subtitle": "The landing experience is connected to conversion goals, trust, and real product workflows.",
+      "items": [
+        {
+          "title": "Smart matching",
+          "body": "Priority recommendations based on role, location, and availability."
+        },
+        {
+          "title": "Secure workflow",
+          "body": "Profile verification, approval steps, and transparent status feedback."
+        },
+        {
+          "title": "Two-sided value",
+          "body": "Balanced, fast, and measurable experience for both candidates and employers."
+        }
+      ]
+    },
+    "proof": {
+      "caption": "User feedback",
+      "quote": "Minutes after publishing the listing, we matched with suitable candidates. The process is both fast and transparent.",
+      "author": "Operations Manager, Partner Brand"
+    },
+    "cta": {
+      "title": "Launch today, see impact tomorrow",
+      "subtitle": "Start a modern hiring flow that connects candidates and employers in a single mobile experience.",
+      "action": "Plan your launch now"
+    },
+    "footer": {
+      "copy": "© Ada İş Akademi. All rights reserved."
+    },
+    "visual": {
+      "avatarLetter": "A",
+      "ratingAria": "Пять из пяти звёзд"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "welcome": "Добро пожаловать, {{email}}"
+    },
+    "worker": {
+      "title": "Панель работника",
+      "subtitle": "Управляйте откликами, ближайшими сменами и состоянием профиля в одном месте.",
+      "cards": {
+        "applications": {
+          "title": "Активные отклики",
+          "value": "12",
+          "hint": "Сегодня статус изменился у 3 вакансий."
+        },
+        "shifts": {
+          "title": "Смены на этой неделе",
+          "value": "4",
+          "hint": "2 смены подтверждены, 1 ожидает."
+        },
+        "profile": {
+          "title": "Рейтинг профиля",
+          "value": "87%",
+          "hint": "Добавьте 2 навыка, чтобы подняться выше."
+        }
+      }
+    },
+    "employer": {
+      "title": "Панель работодателя",
+      "subtitle": "Публикуйте вакансии, отслеживайте кандидатов и контролируйте процесс.",
+      "cards": {
+        "postings": {
+          "title": "Открытые вакансии",
+          "value": "8",
+          "hint": "За последние 24 часа опубликовано 2 вакансии."
+        },
+        "candidates": {
+          "title": "Новые кандидаты",
+          "value": "34",
+          "hint": "Рекомендовано 9 кандидатов с высоким совпадением."
+        },
+        "compliance": {
+          "title": "Соблюдение процесса",
+          "value": "96%",
+          "hint": "Цели SLA выполняются по плану."
+        }
+      }
+    },
+    "admin": {
+      "title": "Панель администратора",
+      "subtitle": "Управляйте пользователями системы, согласованиями и безопасностью из одного центра.",
+      "sidebar": {
+        "overview": "Обзор",
+        "users": "Пользователи",
+        "approvals": "Согласования",
+        "security": "Безопасность",
+        "createAdmin": "Создать админа"
+      },
+      "summary": {
+        "loading": "Загрузка...",
+        "fetchError": "Не удалось получить сводные метрики из endpoint. Показаны резервные значения."
+      },
+      "cards": {
+        "systemUsers": {
+          "title": "Всего системных пользователей",
+          "value": "1 248",
+          "hint": "Сегодня активировано 18 новых пользователей."
+        },
+        "approvals": {
+          "title": "Ожидают согласования",
+          "value": "27",
+          "hint": "12 заявок в приоритетной очереди."
+        },
+        "security": {
+          "title": "Статус безопасности",
+          "value": "Стабильно",
+          "hint": "Критических инцидентов за 7 дней не обнаружено."
+        }
+      },
+      "statistics": {
+        "title": "Подробная статистика",
+        "subtitle": "Обзорные метрики панели",
+        "groups": {
+          "candidateStatus": "Статус кандидатов",
+          "employerStatus": "Статус работодателей",
+          "postingStatus": "Статус вакансий",
+          "applicationStatus": "Статус откликов",
+          "activationStatus": "Статус активации"
+        },
+        "activatedTodayCount": "Активировано сегодня",
+        "totalWorkerCount": "Всего работников",
+        "activeWorkerCount": "Активные работники",
+        "totalEmployerCount": "Всего работодателей",
+        "activeEmployerCount": "Активные работодатели",
+        "totalJobPostingCount": "Всего вакансий",
+        "openJobPostingCount": "Открытые вакансии",
+        "totalJobApplicationCount": "Всего откликов",
+        "pendingJobApplicationCount": "Ожидающие отклики",
+        "acceptedJobApplicationCount": "Принятые отклики",
+        "rejectedJobApplicationCount": "Отклоненные отклики"
+      },
+      "details": {
+        "overview": {
+          "title": "Сводка системы",
+          "body": "Отслеживайте текущее состояние платформы, живые тренды и критические KPI в этом блоке."
+        },
+        "users": {
+          "title": "Детали управления пользователями",
+          "body": "Фильтруйте пользователей по типу, приостанавливайте или активируйте аккаунты и смотрите события."
+        },
+        "approvals": {
+          "title": "Детали очереди согласований",
+          "body": "Проверяйте ожидающие согласования по приоритету и отслеживайте историю обработки."
+        },
+        "security": {
+          "title": "Детали безопасности и соответствия",
+          "body": "Анализируйте подозрительную активность, смену паролей и события политик доступа."
+        }
+      },
+      "register": {
+        "title": "Создать администратора",
+        "subtitle": "Заполните форму, чтобы создать новую учетную запись администратора.",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "email": "Электронная почта",
+        "phone": "Телефон",
+        "password": "Пароль",
+        "submit": "Создать администратора",
+        "submitting": "Создание администратора...",
+        "success": "Учетная запись администратора успешно создана.",
+        "genericError": "Не удалось создать учетную запись администратора.",
+        "authNotConfigured": "Endpoint регистрации администратора не настроен."
+      },
+      "actions": {
+        "userIdPlaceholder": "ID системного пользователя",
+        "postingIdPlaceholder": "ID вакансии",
+        "newPasswordPlaceholder": "Новый пароль",
+        "suspend": "Приостановить",
+        "reactivate": "Активировать",
+        "ban": "Заблокировать",
+        "resetPassword": "Сбросить пароль",
+        "queryApprovals": "Загрузить согласования",
+        "invalidUserId": "Введите корректный ID пользователя.",
+        "invalidPostingId": "Введите корректный ID вакансии.",
+        "invalidPassword": "Пароль должен быть не короче 6 символов.",
+        "userSuspendSuccess": "Пользователь приостановлен.",
+        "userReactivateSuccess": "Пользователь активирован.",
+        "userBanSuccess": "Пользователь заблокирован.",
+        "passwordResetSuccess": "Пароль пользователя обновлен.",
+        "approvalQuerySuccess": "Загружено записей заявок: {{count}}.",
+        "genericError": "Операция завершилась ошибкой."
+      }
+    }
+  },
+  "auth": {
+    "audienceAria": "Тип аккаунта",
+    "audience": {
+      "individual": "Частный",
+      "corporate": "Компания"
+    },
+    "login": {
+      "title": "Войти",
+      "subtitleIndividual": "Войдите в аккаунт, чтобы управлять заявками, сменами и уведомлениями.",
+      "subtitleCorporate": "Войдите как организация, чтобы управлять вакансиями и наймом.",
+      "emailLabel": "Электронная почта",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Введите пароль",
+      "submit": "Продолжить",
+      "submitting": "Выполняется вход...",
+      "forgot": "Забыли пароль?",
+      "closeAria": "Закрыть окно входа",
+      "goToRegister": "Создать аккаунт",
+      "goToLogin": "Назад ко входу"
+    },
+    "register": {
+      "title": "Регистрация",
+      "subtitle": "Создайте аккаунт как частный кандидат.",
+      "fullNameLabel": "ФИО",
+      "fullNamePlaceholder": "Ваше имя",
+      "emailLabel": "Электронная почта",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "Придумайте пароль",
+      "confirmPasswordLabel": "Подтверждение пароля",
+      "confirmPasswordPlaceholder": "Повторите пароль",
+      "submit": "Создать аккаунт",
+      "submitting": "Создание аккаунта..."
+    },
+    "feedback": {
+      "authNotConfigured": "Endpoints сервиса аутентификации сейчас недоступны.",
+      "genericError": "Произошла ошибка. Попробуйте еще раз.",
+      "passwordMismatch": "Пароли не совпадают.",
+      "loginSuccess": "Запрос на вход успешно отправлен.",
+      "registerSuccess": "Запрос на регистрацию успешно отправлен."
+    }
+  }
+}

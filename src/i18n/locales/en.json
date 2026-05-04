@@ -1,0 +1,305 @@
+{
+  "landing": {
+    "meta": {
+      "title": "Ada İş Akademi"
+    },
+    "nav": {
+      "brand": "Ada İş Akademi",
+      "logoMark": "A",
+      "login": "Sign in",
+      "logout": "Sign out",
+      "languageAria": "Choose language",
+      "logoAria": "Ada İş Akademi logo",
+      "themeToggle": "Theme",
+      "themeToggleAria": "Toggle theme"
+    },
+    "lang": {
+      "tr": "Türkçe",
+      "en": "English",
+      "es": "Español",
+      "it": "Italiano",
+      "ru": "Русский",
+      "ar": "العربية"
+    },
+    "hero": {
+      "badge": "Work today — shift opportunities in one app",
+      "title": "Students and employers on the same platform, matched instantly.",
+      "subtitle": "Discover daily job opportunities with Ada İş Akademi, apply fast, and track your process and payouts in one app.",
+      "ctaExplore": "Explore opportunities",
+      "ctaHowItWorks": "How it works",
+      "decorativeAria": "Abstract background illustration with connected nodes"
+    },
+    "card": {
+      "shifts": {
+        "title": "Shifts near you",
+        "matching": "Matching",
+        "application": "Application",
+        "approval": "Approval",
+        "cta": "Review {{count}} matching listings"
+      },
+      "activity": {
+        "title": "Weekly activity",
+        "stat": "+24% this week"
+      },
+      "suggestion": {
+        "title": "Smart suggestion",
+        "body": "Strengthen your profile to rank higher in daily shift listings."
+      }
+    },
+    "stats": {
+      "items": [
+        "Daily active candidates: 12K+",
+        "Verified hiring partners: 1.8K+",
+        "Average match time: < 2 min"
+      ]
+    },
+    "how": {
+      "title": "Fast matching in three steps",
+      "subtitle": "From candidate onboarding to hiring approval, every step is mobile-first and trackable.",
+      "items": [
+        {
+          "title": "Complete your profile",
+          "body": "Add skills, availability, and location to match with relevant listings."
+        },
+        {
+          "title": "Apply instantly",
+          "body": "Apply to suitable shifts in one tap and track status in real time."
+        },
+        {
+          "title": "Get approved and start",
+          "body": "Receive employer approval, view task details, and manage the process in one panel."
+        }
+      ]
+    },
+    "features": {
+      "title": "Not only beautiful, operationally strong",
+      "subtitle": "The landing experience is connected to conversion goals, trust, and real product workflows.",
+      "items": [
+        {
+          "title": "Smart matching",
+          "body": "Priority recommendations based on role, location, and availability."
+        },
+        {
+          "title": "Secure workflow",
+          "body": "Profile verification, approval steps, and transparent status feedback."
+        },
+        {
+          "title": "Two-sided value",
+          "body": "Balanced, fast, and measurable experience for both candidates and employers."
+        }
+      ]
+    },
+    "proof": {
+      "caption": "User feedback",
+      "quote": "Minutes after publishing the listing, we matched with suitable candidates. The process is both fast and transparent.",
+      "author": "Operations Manager, Partner Brand"
+    },
+    "cta": {
+      "title": "Launch today, see impact tomorrow",
+      "subtitle": "Start a modern hiring flow that connects candidates and employers in a single mobile experience.",
+      "action": "Plan your launch now"
+    },
+    "footer": {
+      "copy": "© Ada İş Akademi. All rights reserved."
+    },
+    "visual": {
+      "avatarLetter": "A",
+      "ratingAria": "Five out of five stars"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "welcome": "Welcome, {{email}}"
+    },
+    "worker": {
+      "title": "Worker Dashboard",
+      "subtitle": "Track your applications, upcoming shifts, and profile health in one place.",
+      "cards": {
+        "applications": {
+          "title": "Active applications",
+          "value": "12",
+          "hint": "3 listings changed status today."
+        },
+        "shifts": {
+          "title": "Shifts this week",
+          "value": "4",
+          "hint": "2 shifts approved, 1 pending confirmation."
+        },
+        "profile": {
+          "title": "Profile score",
+          "value": "87%",
+          "hint": "Add 2 skills to improve your ranking."
+        }
+      }
+    },
+    "employer": {
+      "title": "Employer Dashboard",
+      "subtitle": "Publish postings, monitor candidate flow, and keep operations on track.",
+      "cards": {
+        "postings": {
+          "title": "Open postings",
+          "value": "8",
+          "hint": "2 new postings were published in the last 24 hours."
+        },
+        "candidates": {
+          "title": "New candidates",
+          "value": "34",
+          "hint": "9 high-match candidates were recommended."
+        },
+        "compliance": {
+          "title": "Process compliance",
+          "value": "96%",
+          "hint": "SLA targets are progressing as planned."
+        }
+      }
+    },
+    "admin": {
+      "title": "Admin Dashboard",
+      "subtitle": "Manage system users, approvals, and security health from a single control center.",
+      "sidebar": {
+        "overview": "Overview",
+        "users": "Users",
+        "approvals": "Approvals",
+        "security": "Security",
+        "createAdmin": "Create Admin"
+      },
+      "summary": {
+        "loading": "Loading...",
+        "fetchError": "Summary metrics could not be loaded from endpoints. Showing fallback values."
+      },
+      "cards": {
+        "systemUsers": {
+          "title": "Total system users",
+          "value": "1,248",
+          "hint": "18 new users were activated today."
+        },
+        "approvals": {
+          "title": "Pending approvals",
+          "value": "27",
+          "hint": "12 applications are in the priority queue."
+        },
+        "security": {
+          "title": "Security status",
+          "value": "Stable",
+          "hint": "No critical incident detected in the last 7 days."
+        }
+      },
+      "statistics": {
+        "title": "Detailed Statistics",
+        "subtitle": "Dashboard overview metrics",
+        "groups": {
+          "candidateStatus": "Candidate Status",
+          "employerStatus": "Employer Status",
+          "postingStatus": "Posting Status",
+          "applicationStatus": "Application Status",
+          "activationStatus": "Activation Status"
+        },
+        "activatedTodayCount": "Users activated today",
+        "totalWorkerCount": "Total workers",
+        "activeWorkerCount": "Active workers",
+        "totalEmployerCount": "Total employers",
+        "activeEmployerCount": "Active employers",
+        "totalJobPostingCount": "Total job postings",
+        "openJobPostingCount": "Open job postings",
+        "totalJobApplicationCount": "Total applications",
+        "pendingJobApplicationCount": "Pending applications",
+        "acceptedJobApplicationCount": "Accepted applications",
+        "rejectedJobApplicationCount": "Rejected applications"
+      },
+      "details": {
+        "overview": {
+          "title": "System Overview",
+          "body": "Track current platform status, live trends, and critical KPI metrics from this summary area."
+        },
+        "users": {
+          "title": "User Management Details",
+          "body": "Filter system users by type, suspend or reactivate accounts, and monitor lifecycle events from one place."
+        },
+        "approvals": {
+          "title": "Approval Queue Details",
+          "body": "Review pending approvals by priority and follow their operational processing history."
+        },
+        "security": {
+          "title": "Security and Compliance Details",
+          "body": "Inspect suspicious activity, password updates, and access policy events inside this panel."
+        }
+      },
+      "register": {
+        "title": "Create Admin User",
+        "subtitle": "Fill out the form below to create a new admin account.",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "password": "Password",
+        "submit": "Create admin",
+        "submitting": "Creating admin...",
+        "success": "Admin account created successfully.",
+        "genericError": "Failed to create admin account.",
+        "authNotConfigured": "Admin register endpoint is not configured."
+      },
+      "actions": {
+        "userIdPlaceholder": "System user ID",
+        "postingIdPlaceholder": "Job posting ID",
+        "newPasswordPlaceholder": "New password",
+        "suspend": "Suspend",
+        "reactivate": "Reactivate",
+        "ban": "Ban",
+        "resetPassword": "Reset password",
+        "queryApprovals": "Fetch approvals",
+        "invalidUserId": "Enter a valid user ID.",
+        "invalidPostingId": "Enter a valid posting ID.",
+        "invalidPassword": "Password must be at least 6 characters.",
+        "userSuspendSuccess": "User was suspended.",
+        "userReactivateSuccess": "User was reactivated.",
+        "userBanSuccess": "User was banned.",
+        "passwordResetSuccess": "User password was updated.",
+        "approvalQuerySuccess": "{{count}} application records listed.",
+        "genericError": "Operation failed."
+      }
+    }
+  },
+  "auth": {
+    "audienceAria": "Account type",
+    "audience": {
+      "individual": "Individual",
+      "corporate": "Business"
+    },
+    "login": {
+      "title": "Sign in",
+      "subtitleIndividual": "Access your account to manage applications, shifts, and notifications.",
+      "subtitleCorporate": "Sign in with your organization account to manage listings and hiring.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Continue",
+      "submitting": "Signing in...",
+      "forgot": "Forgot password?",
+      "closeAria": "Close sign-in dialog",
+      "goToRegister": "Create an account",
+      "goToLogin": "Back to sign in"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Register as an individual candidate.",
+      "fullNameLabel": "Full name",
+      "fullNamePlaceholder": "Your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Re-enter your password",
+      "submit": "Create account",
+      "submitting": "Creating account..."
+    },
+    "feedback": {
+      "authNotConfigured": "Authentication service endpoints are currently unavailable.",
+      "genericError": "Something went wrong. Please try again.",
+      "passwordMismatch": "Passwords do not match.",
+      "loginSuccess": "Login request sent successfully.",
+      "registerSuccess": "Registration request sent successfully."
+    }
+  }
+}

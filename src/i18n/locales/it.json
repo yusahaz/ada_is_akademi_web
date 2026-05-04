@@ -1,0 +1,305 @@
+{
+  "landing": {
+    "meta": {
+      "title": "Ada İş Akademi"
+    },
+    "nav": {
+      "brand": "Ada İş Akademi",
+      "logoMark": "A",
+      "login": "Accedi",
+      "logout": "Esci",
+      "languageAria": "Scegli la lingua",
+      "logoAria": "Logo Ada İş Akademi",
+      "themeToggle": "Tema",
+      "themeToggleAria": "Cambia tema"
+    },
+    "lang": {
+      "tr": "Türkçe",
+      "en": "English",
+      "es": "Español",
+      "it": "Italiano",
+      "ru": "Русский",
+      "ar": "العربية"
+    },
+    "hero": {
+      "badge": "Lavora oggi — turni e opportunità in un’unica app",
+      "title": "Studenti e datori di lavoro sulla stessa piattaforma, abbinati all’istante.",
+      "subtitle": "Scopri opportunità giornaliere con Ada İş Akademi, candidati velocemente e monitora processi e pagamenti in un’unica app.",
+      "ctaExplore": "Scopri le opportunità",
+      "ctaHowItWorks": "Come funziona",
+      "decorativeAria": "Illustrazione di sfondo astratta con nodi collegati"
+    },
+    "card": {
+      "shifts": {
+        "title": "Turni vicino a te",
+        "matching": "Abbinamento",
+        "application": "Candidatura",
+        "approval": "Approvazione",
+        "cta": "Esamina {{count}} annunci compatibili"
+      },
+      "activity": {
+        "title": "Attività settimanale",
+        "stat": "+24% questa settimana"
+      },
+      "suggestion": {
+        "title": "Suggerimento intelligente",
+        "body": "Rafforza il tuo profilo per posizionarti più in alto negli annunci giornalieri dei turni."
+      }
+    },
+    "stats": {
+      "items": [
+        "Daily active candidates: 12K+",
+        "Verified hiring partners: 1.8K+",
+        "Average match time: < 2 min"
+      ]
+    },
+    "how": {
+      "title": "Fast matching in three steps",
+      "subtitle": "From candidate onboarding to hiring approval, every step is mobile-first and trackable.",
+      "items": [
+        {
+          "title": "Complete your profile",
+          "body": "Add skills, availability, and location to match with relevant listings."
+        },
+        {
+          "title": "Apply instantly",
+          "body": "Apply to suitable shifts in one tap and track status in real time."
+        },
+        {
+          "title": "Get approved and start",
+          "body": "Receive employer approval, view task details, and manage the process in one panel."
+        }
+      ]
+    },
+    "features": {
+      "title": "Not only beautiful, operationally strong",
+      "subtitle": "The landing experience is connected to conversion goals, trust, and real product workflows.",
+      "items": [
+        {
+          "title": "Smart matching",
+          "body": "Priority recommendations based on role, location, and availability."
+        },
+        {
+          "title": "Secure workflow",
+          "body": "Profile verification, approval steps, and transparent status feedback."
+        },
+        {
+          "title": "Two-sided value",
+          "body": "Balanced, fast, and measurable experience for both candidates and employers."
+        }
+      ]
+    },
+    "proof": {
+      "caption": "User feedback",
+      "quote": "Minutes after publishing the listing, we matched with suitable candidates. The process is both fast and transparent.",
+      "author": "Operations Manager, Partner Brand"
+    },
+    "cta": {
+      "title": "Launch today, see impact tomorrow",
+      "subtitle": "Start a modern hiring flow that connects candidates and employers in a single mobile experience.",
+      "action": "Plan your launch now"
+    },
+    "footer": {
+      "copy": "© Ada İş Akademi. All rights reserved."
+    },
+    "visual": {
+      "avatarLetter": "A",
+      "ratingAria": "Cinque stelle su cinque"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "welcome": "Benvenuto, {{email}}"
+    },
+    "worker": {
+      "title": "Dashboard lavoratore",
+      "subtitle": "Gestisci candidature, turni imminenti e qualità del profilo in un unico punto.",
+      "cards": {
+        "applications": {
+          "title": "Candidature attive",
+          "value": "12",
+          "hint": "3 annunci hanno cambiato stato oggi."
+        },
+        "shifts": {
+          "title": "Turni della settimana",
+          "value": "4",
+          "hint": "2 turni approvati e 1 in attesa."
+        },
+        "profile": {
+          "title": "Punteggio profilo",
+          "value": "87%",
+          "hint": "Aggiungi 2 competenze per salire nel ranking."
+        }
+      }
+    },
+    "employer": {
+      "title": "Dashboard azienda",
+      "subtitle": "Pubblica annunci, monitora i candidati e controlla l'operativita.",
+      "cards": {
+        "postings": {
+          "title": "Annunci aperti",
+          "value": "8",
+          "hint": "2 nuovi annunci pubblicati nelle ultime 24 ore."
+        },
+        "candidates": {
+          "title": "Nuovi candidati",
+          "value": "34",
+          "hint": "9 candidati ad alta compatibilita consigliati."
+        },
+        "compliance": {
+          "title": "Conformita processo",
+          "value": "96%",
+          "hint": "Gli obiettivi SLA stanno procedendo secondo piano."
+        }
+      }
+    },
+    "admin": {
+      "title": "Dashboard amministratore",
+      "subtitle": "Gestisci utenti di sistema, approvazioni e sicurezza da un unico pannello.",
+      "sidebar": {
+        "overview": "Panoramica",
+        "users": "Utenti",
+        "approvals": "Approvazioni",
+        "security": "Sicurezza",
+        "createAdmin": "Crea admin"
+      },
+      "summary": {
+        "loading": "Caricamento...",
+        "fetchError": "Impossibile caricare i riepiloghi dagli endpoint. Mostrati valori di fallback."
+      },
+      "cards": {
+        "systemUsers": {
+          "title": "Utenti sistema totali",
+          "value": "1.248",
+          "hint": "18 nuovi utenti attivati oggi."
+        },
+        "approvals": {
+          "title": "Approvazioni in attesa",
+          "value": "27",
+          "hint": "12 richieste sono in coda prioritaria."
+        },
+        "security": {
+          "title": "Stato sicurezza",
+          "value": "Stabile",
+          "hint": "Nessun incidente critico negli ultimi 7 giorni."
+        }
+      },
+      "statistics": {
+        "title": "Statistiche dettagliate",
+        "subtitle": "Metriche di panoramica dashboard",
+        "groups": {
+          "candidateStatus": "Stato candidati",
+          "employerStatus": "Stato aziende",
+          "postingStatus": "Stato annunci",
+          "applicationStatus": "Stato candidature",
+          "activationStatus": "Stato attivazione"
+        },
+        "activatedTodayCount": "Utenti attivati oggi",
+        "totalWorkerCount": "Lavoratori totali",
+        "activeWorkerCount": "Lavoratori attivi",
+        "totalEmployerCount": "Aziende totali",
+        "activeEmployerCount": "Aziende attive",
+        "totalJobPostingCount": "Annunci totali",
+        "openJobPostingCount": "Annunci aperti",
+        "totalJobApplicationCount": "Candidature totali",
+        "pendingJobApplicationCount": "Candidature in attesa",
+        "acceptedJobApplicationCount": "Candidature accettate",
+        "rejectedJobApplicationCount": "Candidature rifiutate"
+      },
+      "details": {
+        "overview": {
+          "title": "Panoramica sistema",
+          "body": "Monitora stato corrente, trend live e KPI critici della piattaforma da questa sezione."
+        },
+        "users": {
+          "title": "Dettaglio gestione utenti",
+          "body": "Filtra utenti per tipo, sospendi o riattiva account e controlla gli eventi operativi."
+        },
+        "approvals": {
+          "title": "Dettaglio coda approvazioni",
+          "body": "Valuta le approvazioni in attesa per priorita e segui lo storico di processo."
+        },
+        "security": {
+          "title": "Dettaglio sicurezza e conformita",
+          "body": "Analizza attivita sospette, cambi password e policy di accesso da questo pannello."
+        }
+      },
+      "register": {
+        "title": "Crea utente admin",
+        "subtitle": "Compila il modulo per creare un nuovo account amministratore.",
+        "firstName": "Nome",
+        "lastName": "Cognome",
+        "email": "Email",
+        "phone": "Telefono",
+        "password": "Password",
+        "submit": "Crea admin",
+        "submitting": "Creazione admin...",
+        "success": "Account admin creato con successo.",
+        "genericError": "Impossibile creare l'account admin.",
+        "authNotConfigured": "Endpoint di registrazione admin non configurato."
+      },
+      "actions": {
+        "userIdPlaceholder": "ID utente di sistema",
+        "postingIdPlaceholder": "ID annuncio",
+        "newPasswordPlaceholder": "Nuova password",
+        "suspend": "Sospendi",
+        "reactivate": "Riattiva",
+        "ban": "Blocca",
+        "resetPassword": "Reimposta password",
+        "queryApprovals": "Carica approvazioni",
+        "invalidUserId": "Inserisci un ID utente valido.",
+        "invalidPostingId": "Inserisci un ID annuncio valido.",
+        "invalidPassword": "La password deve avere almeno 6 caratteri.",
+        "userSuspendSuccess": "Utente sospeso.",
+        "userReactivateSuccess": "Utente riattivato.",
+        "userBanSuccess": "Utente bloccato.",
+        "passwordResetSuccess": "Password utente aggiornata.",
+        "approvalQuerySuccess": "Elencate {{count}} candidature.",
+        "genericError": "Operazione non riuscita."
+      }
+    }
+  },
+  "auth": {
+    "audienceAria": "Tipo di account",
+    "audience": {
+      "individual": "Privato",
+      "corporate": "Azienda"
+    },
+    "login": {
+      "title": "Accedi",
+      "subtitleIndividual": "Accedi al tuo account per gestire candidature, turni e notifiche.",
+      "subtitleCorporate": "Accedi con l’account organizzazione per gestire annunci e assunzioni.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Inserisci la password",
+      "submit": "Continua",
+      "submitting": "Accesso in corso...",
+      "forgot": "Password dimenticata?",
+      "closeAria": "Chiudi finestra di accesso",
+      "goToRegister": "Crea un account",
+      "goToLogin": "Torna all’accesso"
+    },
+    "register": {
+      "title": "Crea account",
+      "subtitle": "Registrati come candidato individuale.",
+      "fullNameLabel": "Nome e cognome",
+      "fullNamePlaceholder": "Il tuo nome",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Crea una password",
+      "confirmPasswordLabel": "Conferma password",
+      "confirmPasswordPlaceholder": "Reinserisci la password",
+      "submit": "Crea account",
+      "submitting": "Creazione account..."
+    },
+    "feedback": {
+      "authNotConfigured": "Gli endpoint del servizio di autenticazione non sono attualmente disponibili.",
+      "genericError": "Si e verificato un errore. Riprova.",
+      "passwordMismatch": "Le password non coincidono.",
+      "loginSuccess": "La richiesta di accesso e stata inviata con successo.",
+      "registerSuccess": "La richiesta di registrazione e stata inviata con successo."
+    }
+  }
+}

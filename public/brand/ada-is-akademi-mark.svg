@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none" role="img" aria-labelledby="adaMarkTitle">
+  <title id="adaMarkTitle">Ada 0_ Akademi mark</title>
+  <!-- Academy roof / growth arc -->
+  <path
+    d="M9.5 15.5 20 7.5 30.5 15.5"
+    stroke="#14F1D9"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Stylized A -->
+  <path
+    d="M11.25 32 20 12 28.75 32"
+    stroke="#14F1D9"
+    stroke-width="2.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M14.75 23.25H25.25"
+    stroke="#14F1D9"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+  <!-- Connection nodes (platform / matching) -->
+  <circle cx="14.75" cy="23.25" r="1.85" fill="#14F1D9" />
+  <circle cx="25.25" cy="23.25" r="1.85" fill="#14F1D9" />
+  <path
+    d="M14.75 23.25H20V29"
+    stroke="#14F1D9"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    opacity=".55"
+  />
+</svg>

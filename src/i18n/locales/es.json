@@ -1,0 +1,305 @@
+{
+  "landing": {
+    "meta": {
+      "title": "Ada İş Akademi"
+    },
+    "nav": {
+      "brand": "Ada İş Akademi",
+      "logoMark": "A",
+      "login": "Iniciar sesión",
+      "logout": "Cerrar sesión",
+      "languageAria": "Elegir idioma",
+      "logoAria": "Logotipo de Ada İş Akademi",
+      "themeToggle": "Tema",
+      "themeToggleAria": "Cambiar tema"
+    },
+    "lang": {
+      "tr": "Türkçe",
+      "en": "English",
+      "es": "Español",
+      "it": "Italiano",
+      "ru": "Русский",
+      "ar": "العربية"
+    },
+    "hero": {
+      "badge": "Trabaja hoy — turnos y oportunidades en una sola app",
+      "title": "Estudiantes y empleadores en la misma plataforma, emparejados al instante.",
+      "subtitle": "Descubre oportunidades diarias con Ada İş Akademi, postúlate rápido y sigue tu proceso y pagos en una sola app.",
+      "ctaExplore": "Explorar oportunidades",
+      "ctaHowItWorks": "Cómo funciona",
+      "decorativeAria": "Ilustración de fondo abstracta con nodos conectados"
+    },
+    "card": {
+      "shifts": {
+        "title": "Turnos cerca de ti",
+        "matching": "Emparejamiento",
+        "application": "Solicitud",
+        "approval": "Aprobación",
+        "cta": "Revisar {{count}} ofertas compatibles"
+      },
+      "activity": {
+        "title": "Actividad semanal",
+        "stat": "+24% esta semana"
+      },
+      "suggestion": {
+        "title": "Sugerencia inteligente",
+        "body": "Fortalece tu perfil para aparecer más arriba en los listados diarios de turnos."
+      }
+    },
+    "stats": {
+      "items": [
+        "Daily active candidates: 12K+",
+        "Verified hiring partners: 1.8K+",
+        "Average match time: < 2 min"
+      ]
+    },
+    "how": {
+      "title": "Fast matching in three steps",
+      "subtitle": "From candidate onboarding to hiring approval, every step is mobile-first and trackable.",
+      "items": [
+        {
+          "title": "Complete your profile",
+          "body": "Add skills, availability, and location to match with relevant listings."
+        },
+        {
+          "title": "Apply instantly",
+          "body": "Apply to suitable shifts in one tap and track status in real time."
+        },
+        {
+          "title": "Get approved and start",
+          "body": "Receive employer approval, view task details, and manage the process in one panel."
+        }
+      ]
+    },
+    "features": {
+      "title": "Not only beautiful, operationally strong",
+      "subtitle": "The landing experience is connected to conversion goals, trust, and real product workflows.",
+      "items": [
+        {
+          "title": "Smart matching",
+          "body": "Priority recommendations based on role, location, and availability."
+        },
+        {
+          "title": "Secure workflow",
+          "body": "Profile verification, approval steps, and transparent status feedback."
+        },
+        {
+          "title": "Two-sided value",
+          "body": "Balanced, fast, and measurable experience for both candidates and employers."
+        }
+      ]
+    },
+    "proof": {
+      "caption": "User feedback",
+      "quote": "Minutes after publishing the listing, we matched with suitable candidates. The process is both fast and transparent.",
+      "author": "Operations Manager, Partner Brand"
+    },
+    "cta": {
+      "title": "Launch today, see impact tomorrow",
+      "subtitle": "Start a modern hiring flow that connects candidates and employers in a single mobile experience.",
+      "action": "Plan your launch now"
+    },
+    "footer": {
+      "copy": "© Ada İş Akademi. All rights reserved."
+    },
+    "visual": {
+      "avatarLetter": "A",
+      "ratingAria": "Cinco de cinco estrellas"
+    }
+  },
+  "dashboard": {
+    "common": {
+      "welcome": "Bienvenido, {{email}}"
+    },
+    "worker": {
+      "title": "Panel de trabajador",
+      "subtitle": "Gestiona solicitudes, próximos turnos y estado de perfil en una sola vista.",
+      "cards": {
+        "applications": {
+          "title": "Solicitudes activas",
+          "value": "12",
+          "hint": "3 anuncios cambiaron de estado hoy."
+        },
+        "shifts": {
+          "title": "Turnos de esta semana",
+          "value": "4",
+          "hint": "2 turnos aprobados y 1 en espera."
+        },
+        "profile": {
+          "title": "Puntuación de perfil",
+          "value": "87%",
+          "hint": "Agrega 2 habilidades para mejorar tu posición."
+        }
+      }
+    },
+    "employer": {
+      "title": "Panel de empleador",
+      "subtitle": "Publica ofertas, sigue el flujo de candidatos y controla la operación.",
+      "cards": {
+        "postings": {
+          "title": "Ofertas abiertas",
+          "value": "8",
+          "hint": "Se publicaron 2 ofertas nuevas en las últimas 24 horas."
+        },
+        "candidates": {
+          "title": "Nuevos candidatos",
+          "value": "34",
+          "hint": "Se recomendaron 9 candidatos con alta compatibilidad."
+        },
+        "compliance": {
+          "title": "Cumplimiento del proceso",
+          "value": "96%",
+          "hint": "Los objetivos SLA avanzan según lo previsto."
+        }
+      }
+    },
+    "admin": {
+      "title": "Panel de administrador",
+      "subtitle": "Administra usuarios del sistema, aprobaciones y seguridad desde un único centro.",
+      "sidebar": {
+        "overview": "Resumen",
+        "users": "Usuarios",
+        "approvals": "Aprobaciones",
+        "security": "Seguridad",
+        "createAdmin": "Crear admin"
+      },
+      "summary": {
+        "loading": "Cargando...",
+        "fetchError": "No se pudieron cargar las metricas desde los endpoints. Se muestran valores de respaldo."
+      },
+      "cards": {
+        "systemUsers": {
+          "title": "Usuarios totales del sistema",
+          "value": "1.248",
+          "hint": "Hoy se activaron 18 nuevos usuarios."
+        },
+        "approvals": {
+          "title": "Aprobaciones pendientes",
+          "value": "27",
+          "hint": "12 solicitudes están en la cola prioritaria."
+        },
+        "security": {
+          "title": "Estado de seguridad",
+          "value": "Estable",
+          "hint": "No se detectaron incidentes críticos en los últimos 7 días."
+        }
+      },
+      "statistics": {
+        "title": "Estadísticas detalladas",
+        "subtitle": "Métricas generales del panel",
+        "groups": {
+          "candidateStatus": "Estado de candidatos",
+          "employerStatus": "Estado de empleadores",
+          "postingStatus": "Estado de ofertas",
+          "applicationStatus": "Estado de solicitudes",
+          "activationStatus": "Estado de activación"
+        },
+        "activatedTodayCount": "Usuarios activados hoy",
+        "totalWorkerCount": "Trabajadores totales",
+        "activeWorkerCount": "Trabajadores activos",
+        "totalEmployerCount": "Empleadores totales",
+        "activeEmployerCount": "Empleadores activos",
+        "totalJobPostingCount": "Ofertas totales",
+        "openJobPostingCount": "Ofertas abiertas",
+        "totalJobApplicationCount": "Solicitudes totales",
+        "pendingJobApplicationCount": "Solicitudes pendientes",
+        "acceptedJobApplicationCount": "Solicitudes aceptadas",
+        "rejectedJobApplicationCount": "Solicitudes rechazadas"
+      },
+      "details": {
+        "overview": {
+          "title": "Resumen del sistema",
+          "body": "Sigue el estado actual de la plataforma, tendencias en vivo y KPI criticos desde esta vista."
+        },
+        "users": {
+          "title": "Detalle de gestion de usuarios",
+          "body": "Filtra usuarios por tipo, suspende o reactiva cuentas y revisa eventos de ciclo de vida."
+        },
+        "approvals": {
+          "title": "Detalle de cola de aprobaciones",
+          "body": "Revisa aprobaciones pendientes por prioridad y sigue su historial operativo."
+        },
+        "security": {
+          "title": "Detalle de seguridad y cumplimiento",
+          "body": "Inspecciona actividad sospechosa, cambios de contrasena y politicas de acceso desde este panel."
+        }
+      },
+      "register": {
+        "title": "Crear usuario administrador",
+        "subtitle": "Completa el formulario para crear una nueva cuenta de administrador.",
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "password": "Contraseña",
+        "submit": "Crear administrador",
+        "submitting": "Creando administrador...",
+        "success": "La cuenta de administrador se creó correctamente.",
+        "genericError": "No se pudo crear la cuenta de administrador.",
+        "authNotConfigured": "El endpoint de registro de administrador no está configurado."
+      },
+      "actions": {
+        "userIdPlaceholder": "ID de usuario del sistema",
+        "postingIdPlaceholder": "ID de oferta",
+        "newPasswordPlaceholder": "Nueva contraseña",
+        "suspend": "Suspender",
+        "reactivate": "Reactivar",
+        "ban": "Bloquear",
+        "resetPassword": "Restablecer contraseña",
+        "queryApprovals": "Traer aprobaciones",
+        "invalidUserId": "Introduce un ID de usuario válido.",
+        "invalidPostingId": "Introduce un ID de oferta válido.",
+        "invalidPassword": "La contraseña debe tener al menos 6 caracteres.",
+        "userSuspendSuccess": "El usuario fue suspendido.",
+        "userReactivateSuccess": "El usuario fue reactivado.",
+        "userBanSuccess": "El usuario fue bloqueado.",
+        "passwordResetSuccess": "La contraseña del usuario fue actualizada.",
+        "approvalQuerySuccess": "Se listaron {{count}} solicitudes.",
+        "genericError": "La operación falló."
+      }
+    }
+  },
+  "auth": {
+    "audienceAria": "Tipo de cuenta",
+    "audience": {
+      "individual": "Particular",
+      "corporate": "Empresa"
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "subtitleIndividual": "Accede a tu cuenta para gestionar solicitudes, turnos y notificaciones.",
+      "subtitleCorporate": "Accede con la cuenta de tu organización para gestionar ofertas y contratación.",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@correo.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Introduce tu contraseña",
+      "submit": "Continuar",
+      "submitting": "Iniciando sesión...",
+      "forgot": "¿Has olvidado tu contraseña?",
+      "closeAria": "Cerrar ventana de inicio de sesión",
+      "goToRegister": "Crear una cuenta",
+      "goToLogin": "Volver al inicio de sesión"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "subtitle": "Regístrate como candidato particular.",
+      "fullNameLabel": "Nombre completo",
+      "fullNamePlaceholder": "Tu nombre",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "tu@correo.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Crea una contraseña",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Vuelve a escribir la contraseña",
+      "submit": "Crear cuenta",
+      "submitting": "Creando cuenta..."
+    },
+    "feedback": {
+      "authNotConfigured": "Los endpoints del servicio de autenticación no están disponibles actualmente.",
+      "genericError": "Ocurrió un error. Inténtalo de nuevo.",
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "loginSuccess": "La solicitud de inicio de sesión se envió correctamente.",
+      "registerSuccess": "La solicitud de registro se envió correctamente."
+    }
+  }
+}
