@@ -2,6 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../theme/theme-context'
+import { InteractiveButton } from './ui-primitives'
 
 export type AdminDataGridColumn<TItem> = {
   id: string
@@ -110,7 +111,11 @@ export function AdminDataGrid<TItem>({
 
   return (
     <div className="mt-4 space-y-3">
-      <div className="overflow-x-auto rounded-xl border border-slate-300/80">
+      <div
+        className={`overflow-x-auto rounded-2xl border backdrop-blur-sm ${
+          theme === 'dark' ? 'border-white/10 bg-white/[0.03]' : 'border-slate-300/80 bg-white/90'
+        }`}
+      >
         <table className={`min-w-full text-sm ${theme === 'dark' ? 'text-white/90' : 'text-slate-800'}`}>
           <thead className={theme === 'dark' ? 'bg-white/5' : 'bg-slate-100'}>
             <tr>
@@ -210,9 +215,9 @@ export function AdminDataGrid<TItem>({
               setPage((prev) => Math.max(1, prev - 1))
             }}
             disabled={safePage <= 1}
-            className="rounded-lg border border-slate-300 px-2 py-1 text-xs disabled:opacity-50"
+            className="inline-flex disabled:opacity-50"
           >
-            {t('dashboard.admin.grid.prev')}
+            <InteractiveButton theme={theme}>{t('dashboard.admin.grid.prev')}</InteractiveButton>
           </button>
           <span className={`text-xs ${theme === 'dark' ? 'text-white/75' : 'text-slate-600'}`}>
             {t('dashboard.admin.grid.pageLabel', { page: safePage, total: totalPages })}
@@ -227,9 +232,9 @@ export function AdminDataGrid<TItem>({
               setPage((prev) => Math.min(totalPages, prev + 1))
             }}
             disabled={safePage >= totalPages}
-            className="rounded-lg border border-slate-300 px-2 py-1 text-xs disabled:opacity-50"
+            className="inline-flex disabled:opacity-50"
           >
-            {t('dashboard.admin.grid.next')}
+            <InteractiveButton theme={theme}>{t('dashboard.admin.grid.next')}</InteractiveButton>
           </button>
         </div>
       </div>

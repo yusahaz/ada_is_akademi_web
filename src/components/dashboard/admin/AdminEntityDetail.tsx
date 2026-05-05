@@ -2,6 +2,7 @@ import { type ReactNode, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../../theme/theme-context'
+import { DashboardSurface, InteractiveButton } from '../ui-primitives'
 
 export type AdminEntityDetailBreadcrumbSegment = {
   key: string
@@ -79,11 +80,7 @@ export function AdminEntityDetail({
 
   return (
     <div className="space-y-4">
-      <div
-        className={`flex flex-col gap-3 border-b pb-4 ${
-          theme === 'dark' ? 'border-white/10' : 'border-slate-200'
-        }`}
-      >
+      <DashboardSurface theme={theme} className="border-b pb-4">
         <div className="flex flex-wrap items-start gap-2 sm:items-center sm:justify-between">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
             <button
@@ -143,13 +140,11 @@ export function AdminEntityDetail({
                 type="button"
                 disabled={pending || saveDisabled}
                 onClick={() => void handleSave()}
-                className={`${btnBase} ${
-                  theme === 'dark'
-                    ? 'bg-[#14f1d9] text-[#041014] hover:bg-[#62ffee]'
-                    : 'bg-sky-600 text-white hover:bg-sky-500'
-                }`}
+                className={btnBase}
               >
-                {pending ? t('dashboard.admin.detail.actions.processing') : t('dashboard.admin.detail.actions.save')}
+                <InteractiveButton theme={theme} isActive>
+                  {pending ? t('dashboard.admin.detail.actions.processing') : t('dashboard.admin.detail.actions.save')}
+                </InteractiveButton>
               </button>
             ) : null}
             {onDelete ? (
@@ -157,26 +152,20 @@ export function AdminEntityDetail({
                 type="button"
                 disabled={pending || deleteDisabled}
                 onClick={() => void handleDelete()}
-                className={`${btnBase} ${
-                  theme === 'dark'
-                    ? 'border border-rose-500/60 bg-rose-500/20 text-rose-100 hover:bg-rose-500/35'
-                    : 'border border-rose-500/60 bg-rose-100 text-rose-800 hover:bg-rose-200'
-                }`}
+                className={btnBase}
               >
-                {pending ? t('dashboard.admin.detail.actions.processing') : t('dashboard.admin.detail.actions.delete')}
+                <InteractiveButton theme={theme}>
+                  {pending ? t('dashboard.admin.detail.actions.processing') : t('dashboard.admin.detail.actions.delete')}
+                </InteractiveButton>
               </button>
             ) : null}
             <button
               type="button"
               disabled={pending}
               onClick={onClose}
-              className={`${btnBase} ${
-                theme === 'dark'
-                  ? 'border border-white/20 text-white hover:bg-white/10'
-                  : 'border border-slate-300 text-slate-800 hover:bg-slate-100'
-              }`}
+              className={btnBase}
             >
-              {t('dashboard.admin.detail.actions.close')}
+              <InteractiveButton theme={theme}>{t('dashboard.admin.detail.actions.close')}</InteractiveButton>
             </button>
           </div>
         </div>
@@ -188,7 +177,7 @@ export function AdminEntityDetail({
         >
           {title}
         </h3>
-      </div>
+      </DashboardSurface>
 
       {combinedError ? (
         <p className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-3 py-2 text-sm text-rose-200">

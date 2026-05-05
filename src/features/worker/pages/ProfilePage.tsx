@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { WorkerProfileData } from '../../../api/worker-portal'
 import { workerPortalApi } from '../../../api/worker-portal'
 import { useTheme } from '../../../theme/theme-context'
+import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
 
 export function ProfilePage() {
   const { t } = useTranslation()
@@ -33,13 +34,13 @@ export function ProfilePage() {
     }
   }, [t])
 
-  if (loading) return <Card text={t('dashboard.workerPortal.states.loading')} theme={theme} />
-  if (error) return <Card text={error} theme={theme} isError />
-  if (!profile) return <Card text={t('dashboard.workerPortal.states.empty')} theme={theme} />
+  if (loading) return <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
+  if (error) return <StatePanel text={error} theme={theme} isError />
+  if (!profile) return <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
 
   return (
     <div className="grid gap-3 lg:grid-cols-2">
-      <article className={`rounded-xl border p-4 ${resolveCard(theme)}`}>
+      <DashboardSurface theme={theme}>
         <h2 className={`text-sm font-semibold ${resolveTitle(theme)}`}>{t('dashboard.workerPortal.profile.basic')}</h2>
         <div className={`mt-3 space-y-2 text-sm ${resolveMuted(theme)}`}>
           <p>{t('dashboard.workerPortal.profile.fullName', { value: profile.fullName })}</p>
@@ -48,9 +49,9 @@ export function ProfilePage() {
           <p>{t('dashboard.workerPortal.profile.university', { value: profile.university })}</p>
           <p>{t('dashboard.workerPortal.profile.studentNumber', { value: profile.studentNumber })}</p>
         </div>
-      </article>
+      </DashboardSurface>
 
-      <article className={`rounded-xl border p-4 ${resolveCard(theme)}`}>
+      <DashboardSurface theme={theme}>
         <h2 className={`text-sm font-semibold ${resolveTitle(theme)}`}>{t('dashboard.workerPortal.profile.skills')}</h2>
         <div className="mt-3 flex flex-wrap gap-2">
           {(profile.skills.length > 0 ? profile.skills : ['-']).map((skill) => (
@@ -62,24 +63,9 @@ export function ProfilePage() {
             </span>
           ))}
         </div>
-      </article>
+      </DashboardSurface>
     </div>
   )
-}
-
-function Card({ text, theme, isError = false }: { text: string; theme: 'light' | 'dark'; isError?: boolean }) {
-  const classes = isError
-    ? theme === 'dark'
-      ? 'border-amber-400/30 bg-amber-500/10 text-amber-100'
-      : 'border-amber-300 bg-amber-50 text-amber-800'
-    : theme === 'dark'
-      ? 'border-white/10 bg-white/[0.04] text-white/75'
-      : 'border-slate-300/80 bg-white text-slate-700'
-  return <p className={`rounded-xl border px-3 py-2 text-sm ${classes}`}>{text}</p>
-}
-
-function resolveCard(theme: 'light' | 'dark') {
-  return theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'
 }
 
 function resolveTitle(theme: 'light' | 'dark') {

@@ -91,6 +91,13 @@ Props: `titleKey`, `subtitleKey`, `children`
 States: theme-aware (`dark` | `light`)
 Responsive Notes: single-column mobile with card grid scaling to 2-3 columns on wider breakpoints.
 
+Component: Dashboard UI Primitives (`DashboardSurface`, `InteractiveButton`, `GlowBadge`, `StatePanel`)
+Purpose: Unified premium post-login UI layer for 3D-like depth, micro-interactions, consistent motion feel, and reusable state rendering.
+Used In: `DashboardShell`, `AdminDashboard`, `EmployerDashboard`, `WorkerShell`, Worker portal pages, admin detail/grid surfaces
+Props: theme-aware minimal props (`theme`, `children`, optional `isActive`/`isError`/`className`)
+States: default/active/error variations with dark-light parity
+Responsive Notes: mobile-first spacing, safe-area friendly composition, touch-friendly interactive sizes.
+
 Component: WorkerDashboard / EmployerDashboard / AdminDashboard
 Purpose: Role-based post-login home surfaces for operational metrics and actions; Employer dashboard uses section-based workspace (overview/postings/candidates/operations/billing/reports) with API-aware fallback states; Admin dashboard is an orchestrator (left sidebar + KPI overview + `createAdmin` form) delegating list/detail work to `src/components/dashboard/admin/*Section` screens (no URL routing; `activeSection` + local `list|detail` mode).
 Used In: `App` (authenticated state)

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../../theme/theme-context'
+import { DashboardSurface, InteractiveButton, StatePanel } from '../../../components/dashboard/ui-primitives'
 
 export function QrCheckPage() {
   const { t } = useTranslation()
@@ -9,7 +10,7 @@ export function QrCheckPage() {
   const [status, setStatus] = useState<'idle' | 'validating' | 'success' | 'failed'>('idle')
 
   return (
-    <article className={`rounded-xl border p-4 ${theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'}`}>
+    <DashboardSurface theme={theme}>
       <h2 className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
         {t('dashboard.workerPortal.qr.title')}
       </h2>
@@ -18,26 +19,20 @@ export function QrCheckPage() {
       </p>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={() => setStatus('validating')} className={buttonClass(theme)}>
-          {t('dashboard.workerPortal.qr.actions.validate')}
+        <button type="button" onClick={() => setStatus('validating')} className="inline-flex">
+          <InteractiveButton theme={theme}>{t('dashboard.workerPortal.qr.actions.validate')}</InteractiveButton>
         </button>
-        <button type="button" onClick={() => setStatus('success')} className={buttonClass(theme)}>
-          {t('dashboard.workerPortal.qr.actions.success')}
+        <button type="button" onClick={() => setStatus('success')} className="inline-flex">
+          <InteractiveButton theme={theme}>{t('dashboard.workerPortal.qr.actions.success')}</InteractiveButton>
         </button>
-        <button type="button" onClick={() => setStatus('failed')} className={buttonClass(theme)}>
-          {t('dashboard.workerPortal.qr.actions.fail')}
+        <button type="button" onClick={() => setStatus('failed')} className="inline-flex">
+          <InteractiveButton theme={theme}>{t('dashboard.workerPortal.qr.actions.fail')}</InteractiveButton>
         </button>
       </div>
 
-      <p className={`mt-4 rounded-lg border px-3 py-2 text-sm ${theme === 'dark' ? 'border-white/10 text-white/80' : 'border-slate-200 text-slate-700'}`}>
-        {t(`dashboard.workerPortal.qr.status.${status}`)}
-      </p>
-    </article>
+      <div className="mt-4">
+        <StatePanel theme={theme} text={t(`dashboard.workerPortal.qr.status.${status}`)} />
+      </div>
+    </DashboardSurface>
   )
-}
-
-function buttonClass(theme: 'light' | 'dark') {
-  return `rounded-md px-3 py-2 text-xs font-semibold ${
-    theme === 'dark' ? 'bg-[#14f1d9]/20 text-[#14f1d9]' : 'bg-sky-100 text-sky-700'
-  }`
 }

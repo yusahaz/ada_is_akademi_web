@@ -10,6 +10,7 @@ import {
   IconSpark,
   IconUsers,
 } from '../landing/icons'
+import { DashboardSurface, GlowBadge, InteractiveButton } from './ui-primitives'
 import { CandidatesSection } from './admin/CandidatesSection'
 import { EmployersSection } from './admin/EmployersSection'
 import { UserGroupsSection } from './admin/UserGroupsSection'
@@ -313,18 +314,20 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
               : 'border-sky-200 bg-[#0c2340]'
           }`}
         >
-          <div className="rounded-2xl bg-white/10 px-3 py-3">
+          <div className="rounded-2xl bg-white/10 px-3 py-3 backdrop-blur-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sky-200">
               {t('landing.meta.title')}
             </p>
             <p className="mt-1 text-sm font-medium text-white">{t('dashboard.admin.title')}</p>
           </div>
 
-          <p className="mt-4 px-1 text-xs font-semibold uppercase tracking-[0.12em] text-sky-300/90">
+          <div className="mt-4 px-1">
+            <GlowBadge theme={theme === 'dark' ? 'dark' : 'light'}>
             {t('dashboard.common.welcome', {
               email: meDisplayName ?? session?.email ?? 'unknown',
             })}
-          </p>
+            </GlowBadge>
+          </div>
 
           <nav className="mt-3 flex flex-col gap-2">
             {sidebarItems.map((item) => {
@@ -334,14 +337,12 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
                   key={item.key}
                   type="button"
                   onClick={() => handleSidebarItemClick(item.key)}
-                  className={`flex min-h-11 w-full items-center gap-3 rounded-xl border px-3 py-2 text-start text-sm font-medium transition ${
-                    isNavActive
-                      ? 'border-sky-300/60 bg-sky-400/20 text-white'
-                      : 'border-white/10 text-slate-100 hover:bg-white/10'
-                  }`}
+                  className="flex min-h-11 w-full items-center gap-3 text-start text-sm font-medium"
                 >
                   <span className={isNavActive ? 'text-sky-200' : 'text-slate-300'}>{item.icon}</span>
-                  <span className="truncate">{item.label}</span>
+                  <InteractiveButton theme={theme} isActive={isNavActive} className="w-full justify-start">
+                    <span className="truncate">{item.label}</span>
+                  </InteractiveButton>
                 </button>
               )
             })}
@@ -349,11 +350,7 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
         </aside>
 
         <div className="min-w-0 space-y-4 px-3 py-4 sm:px-4 sm:py-5 lg:ml-[260px] lg:px-6 lg:py-6">
-          <article
-            className={`rounded-2xl border p-4 backdrop-blur-xl sm:p-6 ${
-              theme === 'dark' ? 'border-white/10 bg-[#121a2b]' : 'border-slate-300/80 bg-white'
-            }`}
-          >
+          <DashboardSurface theme={theme} className="sm:p-6">
             <h2
               className={`font-display text-xl font-semibold ${
                 theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -536,7 +533,7 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
                 ) : null}
               </>
             ) : null}
-          </article>
+          </DashboardSurface>
 
           {activeSection === 'overview' && summaryStats ? (
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -585,7 +582,7 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
                   tone: theme === 'dark' ? 'bg-indigo-700 text-indigo-50' : 'bg-indigo-600 text-white',
                 },
               ].map((item) => (
-                <article key={item.title} className={`rounded-2xl p-4 shadow-sm ${item.tone}`}>
+                <DashboardSurface key={item.title} theme={theme} className={item.tone}>
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-2xl font-semibold">{item.value}</p>
@@ -601,7 +598,7 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
                       {item.subHint}: {item.subValue}
                     </p>
                   </div>
-                </article>
+                </DashboardSurface>
               ))}
             </div>
           ) : null}

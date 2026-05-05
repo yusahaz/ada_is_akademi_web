@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { workerPortalApi } from '../../../api/worker-portal'
 import { useTheme } from '../../../theme/theme-context'
+import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
 
 export function OverviewPage() {
   const { t } = useTranslation()
@@ -34,22 +35,17 @@ export function OverviewPage() {
   }, [t])
 
   if (loading) {
-    return <StateMessage text={t('dashboard.workerPortal.states.loading')} theme={theme} />
+    return <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
   }
 
   if (error) {
-    return <StateMessage text={error} theme={theme} variant="error" />
+    return <StatePanel text={error} theme={theme} isError />
   }
 
   return (
     <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
       {cards.map((card) => (
-        <article
-          key={card.key}
-          className={`rounded-xl border p-4 ${
-            theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'
-          }`}
-        >
+        <DashboardSurface key={card.key} theme={theme}>
           <p className={`text-xs ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`}>
             {t(`dashboard.workerPortal.overview.${card.key}`)}
           </p>
@@ -60,29 +56,8 @@ export function OverviewPage() {
           >
             {card.value}
           </p>
-        </article>
+        </DashboardSurface>
       ))}
     </div>
   )
-}
-
-function StateMessage({
-  text,
-  theme,
-  variant = 'default',
-}: {
-  text: string
-  theme: 'light' | 'dark'
-  variant?: 'default' | 'error'
-}) {
-  const classes =
-    variant === 'error'
-      ? theme === 'dark'
-        ? 'border-amber-400/30 bg-amber-500/10 text-amber-100'
-        : 'border-amber-300 bg-amber-50 text-amber-800'
-      : theme === 'dark'
-        ? 'border-white/10 bg-white/[0.04] text-white/75'
-        : 'border-slate-300/80 bg-white text-slate-700'
-
-  return <p className={`rounded-xl border px-3 py-2 text-sm ${classes}`}>{text}</p>
 }

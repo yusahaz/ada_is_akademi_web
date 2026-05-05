@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { WorkerPayoutItem } from '../../../api/worker-portal'
 import { workerPortalApi } from '../../../api/worker-portal'
 import { useTheme } from '../../../theme/theme-context'
+import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
 
 export function PayoutsPage() {
   const { t } = useTranslation()
@@ -34,14 +35,14 @@ export function PayoutsPage() {
     }
   }, [t])
 
-  if (loading) return <State text={t('dashboard.workerPortal.states.loading')} theme={theme} />
-  if (error) return <State text={error} theme={theme} isError />
-  if (items.length === 0) return <State text={t('dashboard.workerPortal.states.empty')} theme={theme} />
+  if (loading) return <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
+  if (error) return <StatePanel text={error} theme={theme} isError />
+  if (items.length === 0) return <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
 
   return (
     <div className="space-y-3">
       {items.map((item) => (
-        <article key={item.id} className={`rounded-xl border p-4 ${theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'}`}>
+        <DashboardSurface key={item.id} theme={theme}>
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.postingTitle}</p>
@@ -64,34 +65,8 @@ export function PayoutsPage() {
                 : t('dashboard.workerPortal.payouts.confirm')}
             </button>
           ) : null}
-        </article>
+        </DashboardSurface>
       ))}
     </div>
-  )
-}
-
-function State({
-  text,
-  theme,
-  isError = false,
-}: {
-  text: string
-  theme: 'light' | 'dark'
-  isError?: boolean
-}) {
-  return (
-    <p
-      className={`rounded-xl border px-3 py-2 text-sm ${
-        isError
-          ? theme === 'dark'
-            ? 'border-amber-400/30 bg-amber-500/10 text-amber-100'
-            : 'border-amber-300 bg-amber-50 text-amber-800'
-          : theme === 'dark'
-            ? 'border-white/10 bg-white/[0.04] text-white/75'
-            : 'border-slate-300/80 bg-white text-slate-700'
-      }`}
-    >
-      {text}
-    </p>
   )
 }

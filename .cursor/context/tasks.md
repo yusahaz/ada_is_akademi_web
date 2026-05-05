@@ -9,6 +9,10 @@
 
 ## Completed
 
+- [x] Add FR locale support globally (i18n config + language switcher + locale file)
+- [x] Rollout shared post-login 3D primitives across Admin/Employer/Worker shells
+- [x] Migrate Worker portal pages to premium interactive dashboard surface system
+- [x] Validate post-login 3D refresh with lint/build and role-based smoke checks
 - [x] Build project-wide notification/toast infrastructure and provider wiring
 - [x] Redesign Candidates detail screen with professional tabbed sections
 - [x] Replace account action select with segmented action bar + confirm + immediate API call

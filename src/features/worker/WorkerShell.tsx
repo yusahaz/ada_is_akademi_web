@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../../theme/theme-context'
+import { DashboardSurface, InteractiveButton } from '../../components/dashboard/ui-primitives'
 
 const navItems = [
   { to: '/worker', key: 'overview' },
@@ -24,49 +25,28 @@ export function WorkerShell({ children }: WorkerShellProps) {
   const { theme } = useTheme()
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-3 py-4 sm:px-5 sm:py-6 lg:px-8">
-      <header
-        className={`rounded-2xl border p-4 sm:p-5 ${
-          theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'
-        }`}
-      >
-        <h1
-          className={`font-display text-xl font-semibold sm:text-2xl ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
-          }`}
-        >
-          {t('dashboard.workerPortal.title')}
-        </h1>
-        <p className={`mt-2 text-sm sm:text-base ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`}>
-          {t('dashboard.workerPortal.subtitle')}
-        </p>
-      </header>
-
-      <nav className="mt-4 overflow-x-auto pb-1">
-        <ul className="flex min-w-max gap-2">
+    <section className="mx-auto w-full max-w-7xl px-3 py-4 pb-[max(env(safe-area-inset-bottom),1rem)] sm:px-5 sm:py-6 lg:px-8">
+      <DashboardSurface theme={theme} className="p-3 sm:p-4">
+        <nav className="overflow-x-auto pb-1">
+          <ul className="flex min-w-max gap-2">
           {navItems.map((item) => (
             <li key={item.key}>
               <NavLink
                 to={item.to}
                 end={item.to === '/worker'}
-                className={({ isActive }) =>
-                  `inline-flex rounded-xl px-3 py-2 text-xs font-semibold sm:text-sm ${
-                    isActive
-                      ? theme === 'dark'
-                        ? 'bg-[#14f1d9]/20 text-[#14f1d9]'
-                        : 'bg-sky-100 text-sky-700'
-                      : theme === 'dark'
-                        ? 'bg-white/[0.04] text-white/70'
-                        : 'bg-slate-100 text-slate-600'
-                  }`
-                }
+                className="inline-flex"
               >
-                {t(`dashboard.workerPortal.nav.${item.key}`)}
+                {({ isActive }) => (
+                  <InteractiveButton theme={theme} isActive={isActive}>
+                    {t(`dashboard.workerPortal.nav.${item.key}`)}
+                  </InteractiveButton>
+                )}
               </NavLink>
             </li>
           ))}
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      </DashboardSurface>
 
       <div className="mt-4">{children}</div>
     </section>

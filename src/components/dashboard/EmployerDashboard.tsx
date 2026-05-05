@@ -11,6 +11,7 @@ import type { JobApplicationListItem } from '../../api/job-applications'
 import type { JobPostingDetail, JobPostingSummary } from '../../api/job-postings'
 import { useTheme } from '../../theme/theme-context'
 import { IconBolt, IconCheck, IconShield, IconUsers } from '../landing/icons'
+import { DashboardSurface, InteractiveButton } from './ui-primitives'
 
 type EmployerSection =
   | 'overview'
@@ -183,25 +184,13 @@ export function EmployerDashboard() {
   )
 
   const sectionButtonClass = (isActiveButton: boolean) =>
-    `rounded-xl border px-3 py-2 text-xs font-semibold transition sm:text-sm ${
-      isActiveButton
-        ? theme === 'dark'
-          ? 'border-[#14f1d9]/45 bg-[#14f1d9]/10 text-[#95fff2]'
-          : 'border-sky-300 bg-sky-50 text-sky-700'
-        : theme === 'dark'
-          ? 'border-white/10 bg-white/[0.03] text-white/80 hover:bg-white/[0.07]'
-          : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-    }`
-
-  const panelClass = `rounded-2xl border p-4 sm:p-5 ${
-    theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'
-  }`
+    `inline-flex ${isActiveButton ? 'is-active' : ''}`
 
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
 
   return (
     <section className="mx-auto w-full max-w-7xl px-3 py-4 pb-[max(env(safe-area-inset-bottom),1rem)] sm:px-5 sm:py-6 lg:px-8">
-      <header className={panelClass}>
+      <DashboardSurface theme={theme} className="sm:p-5">
         <h1
           className={`font-display text-xl font-semibold sm:text-2xl ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -210,7 +199,7 @@ export function EmployerDashboard() {
           {t('dashboard.employer.title')}
         </h1>
         <p className={`mt-2 text-sm sm:text-base ${toneClass}`}>{t('dashboard.employer.subtitle')}</p>
-      </header>
+      </DashboardSurface>
 
       <nav className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-6">
         {(
@@ -229,7 +218,9 @@ export function EmployerDashboard() {
             onClick={() => setActiveSection(key)}
             className={sectionButtonClass(activeSection === key)}
           >
-            {label}
+            <InteractiveButton theme={theme} isActive={activeSection === key}>
+              {label}
+            </InteractiveButton>
           </button>
         ))}
       </nav>
@@ -252,11 +243,9 @@ export function EmployerDashboard() {
             icon: <IconShield className="h-4 w-4" />,
           },
         ].map((item) => (
-          <article
+          <DashboardSurface
             key={item.title}
-            className={`rounded-xl border p-4 ${
-              theme === 'dark' ? 'border-white/10 bg-white/[0.04]' : 'border-slate-300/80 bg-white'
-            }`}
+            theme={theme}
           >
             <div className="flex items-center justify-between gap-3">
               <p className={`text-xs ${theme === 'dark' ? 'text-white/75' : 'text-slate-600'}`}>
@@ -277,7 +266,7 @@ export function EmployerDashboard() {
             >
               {item.value}
             </p>
-          </article>
+          </DashboardSurface>
         ))}
       </div>
 
@@ -295,7 +284,7 @@ export function EmployerDashboard() {
 
       {activeSection === 'overview' ? (
         <div className="mt-4 grid gap-4 lg:grid-cols-2">
-          <article className={panelClass}>
+          <DashboardSurface theme={theme}>
             <h2
               className={`font-display text-lg font-semibold ${
                 theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -334,9 +323,9 @@ export function EmployerDashboard() {
                 ))}
               </div>
             )}
-          </article>
+          </DashboardSurface>
 
-          <article className={panelClass}>
+          <DashboardSurface theme={theme}>
             <h2
               className={`font-display text-lg font-semibold ${
                 theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -372,12 +361,12 @@ export function EmployerDashboard() {
                 ))}
               </div>
             )}
-          </article>
+          </DashboardSurface>
         </div>
       ) : null}
 
       {activeSection === 'postings' ? (
-        <article className={`mt-4 ${panelClass}`}>
+        <DashboardSurface theme={theme} className="mt-4">
           <div className="flex flex-wrap items-center gap-2">
             {(
               [
@@ -393,7 +382,9 @@ export function EmployerDashboard() {
                 className={sectionButtonClass(postingsFilter === key)}
                 onClick={() => setPostingsFilter(key)}
               >
-                {label}
+                <InteractiveButton theme={theme} isActive={postingsFilter === key}>
+                  {label}
+                </InteractiveButton>
               </button>
             ))}
           </div>
@@ -453,11 +444,11 @@ export function EmployerDashboard() {
           ) : (
             <p className={`mt-4 text-xs ${toneClass}`}>{t('dashboard.employer.fallback.readOnlyData')}</p>
           )}
-        </article>
+        </DashboardSurface>
       ) : null}
 
       {activeSection === 'candidates' ? (
-        <article className={`mt-4 ${panelClass}`}>
+        <DashboardSurface theme={theme} className="mt-4">
           <h2 className={`font-display text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
             {t('dashboard.employer.candidates.title')}
           </h2>
@@ -502,11 +493,11 @@ export function EmployerDashboard() {
               </div>
             ))}
           </div>
-        </article>
+        </DashboardSurface>
       ) : null}
 
       {activeSection === 'operations' ? (
-        <article className={`mt-4 ${panelClass}`}>
+        <DashboardSurface theme={theme} className="mt-4">
           <h2 className={`font-display text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
             {t('dashboard.employer.operations.title')}
           </h2>
@@ -531,11 +522,11 @@ export function EmployerDashboard() {
               </div>
             ))}
           </div>
-        </article>
+        </DashboardSurface>
       ) : null}
 
       {activeSection === 'billing' ? (
-        <article className={`mt-4 ${panelClass}`}>
+        <DashboardSurface theme={theme} className="mt-4">
           <h2 className={`font-display text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
             {t('dashboard.employer.billing.title')}
           </h2>
@@ -550,9 +541,11 @@ export function EmployerDashboard() {
                       onClick={() => setReceivableFilter(status)}
                       className={sectionButtonClass(receivableFilter === status)}
                     >
-                      {status === 'all'
-                        ? t('dashboard.employer.billing.filters.all')
-                        : t(`dashboard.employer.billing.receivableStatus.${status}`)}
+                      <InteractiveButton theme={theme} isActive={receivableFilter === status}>
+                        {status === 'all'
+                          ? t('dashboard.employer.billing.filters.all')
+                          : t(`dashboard.employer.billing.receivableStatus.${status}`)}
+                      </InteractiveButton>
                     </button>
                   ),
                 )}
@@ -584,9 +577,11 @@ export function EmployerDashboard() {
                     onClick={() => setPayoutFilter(status)}
                     className={sectionButtonClass(payoutFilter === status)}
                   >
-                    {status === 'all'
-                      ? t('dashboard.employer.billing.filters.all')
-                      : t(`dashboard.employer.billing.payoutStatus.${status}`)}
+                    <InteractiveButton theme={theme} isActive={payoutFilter === status}>
+                      {status === 'all'
+                        ? t('dashboard.employer.billing.filters.all')
+                        : t(`dashboard.employer.billing.payoutStatus.${status}`)}
+                    </InteractiveButton>
                   </button>
                 ))}
               </div>
@@ -608,11 +603,11 @@ export function EmployerDashboard() {
             </div>
           </div>
           <p className={`mt-4 text-xs ${toneClass}`}>{t('dashboard.employer.fallback.noBillingApi')}</p>
-        </article>
+        </DashboardSurface>
       ) : null}
 
       {activeSection === 'reports' ? (
-        <article className={`mt-4 ${panelClass}`}>
+        <DashboardSurface theme={theme} className="mt-4">
           <h2 className={`font-display text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
             {t('dashboard.employer.reports.title')}
           </h2>
@@ -644,15 +639,17 @@ export function EmployerDashboard() {
                 onClick={() => setReportFormat(format)}
                 className={sectionButtonClass(reportFormat === format)}
               >
-                {format.toUpperCase()}
+                <InteractiveButton theme={theme} isActive={reportFormat === format}>
+                  {format.toUpperCase()}
+                </InteractiveButton>
               </button>
             ))}
             <button type="button" className={sectionButtonClass(false)}>
-              {t('dashboard.employer.reports.queueExport')}
+              <InteractiveButton theme={theme}>{t('dashboard.employer.reports.queueExport')}</InteractiveButton>
             </button>
           </div>
           <p className={`mt-4 text-xs ${toneClass}`}>{t('dashboard.employer.reports.readOnly')}</p>
-        </article>
+        </DashboardSurface>
       ) : null}
     </section>
   )
