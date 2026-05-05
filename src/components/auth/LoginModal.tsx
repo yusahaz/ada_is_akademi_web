@@ -112,6 +112,12 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
     : 'border-sky-200 bg-white text-slate-900 placeholder:text-slate-400'
 
   const helperTextClass = isDark ? 'text-white/60' : 'text-slate-600'
+  const accentTextClass = isDark
+    ? 'text-[#14f1d9] underline-offset-4 hover:underline'
+    : 'text-sky-700 underline-offset-4 hover:underline'
+  const primaryButtonClass = isDark
+    ? 'mt-2 flex h-11 w-full items-center justify-center rounded-2xl bg-[#14f1d9] text-sm font-semibold text-[#041014] shadow-[0_16px_50px_rgba(20,241,217,0.22)] transition hover:bg-[#62ffee] disabled:cursor-not-allowed disabled:opacity-70'
+    : 'mt-2 flex h-11 w-full items-center justify-center rounded-2xl bg-sky-600 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(2,132,199,0.28)] transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-70'
 
   async function handleLoginSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -237,7 +243,9 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
             aria-selected={audience === 'individual'}
             className={`flex-1 rounded-xl px-3 py-2 text-center text-xs font-semibold transition sm:text-sm ${
               audience === 'individual'
-                ? 'bg-[#14f1d9]/15 text-[#14f1d9] ring-1 ring-[#14f1d9]/30'
+                ? isDark
+                  ? 'bg-[#14f1d9]/15 text-[#14f1d9] ring-1 ring-[#14f1d9]/30'
+                  : 'bg-sky-600 text-white ring-1 ring-sky-400/60'
                 : inactiveSegmentClass
             }`}
             onClick={() => {
@@ -254,7 +262,9 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
             aria-selected={audience === 'corporate'}
             className={`flex-1 rounded-xl px-3 py-2 text-center text-xs font-semibold transition sm:text-sm ${
               audience === 'corporate'
-                ? 'bg-[#14f1d9]/15 text-[#14f1d9] ring-1 ring-[#14f1d9]/30'
+                ? isDark
+                  ? 'bg-[#14f1d9]/15 text-[#14f1d9] ring-1 ring-[#14f1d9]/30'
+                  : 'bg-sky-600 text-white ring-1 ring-sky-400/60'
                 : inactiveSegmentClass
             }`}
             onClick={() => {
@@ -344,7 +354,7 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-2 flex h-11 w-full items-center justify-center rounded-2xl bg-[#14f1d9] text-sm font-semibold text-[#041014] shadow-[0_16px_50px_rgba(20,241,217,0.22)] transition hover:bg-[#62ffee] disabled:cursor-not-allowed disabled:opacity-70"
+              className={primaryButtonClass}
             >
               {isSubmitting
                 ? t('auth.register.submitting')
@@ -355,7 +365,7 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
               <button
                 type="button"
                 disabled={isSubmitting}
-                className="font-medium text-[#14f1d9] underline-offset-4 hover:underline"
+                className={`font-medium ${accentTextClass}`}
                 onClick={() => {
                   clearFeedback()
                   setAuthView('login')
@@ -399,7 +409,7 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
                 </label>
                 <button
                   type="button"
-                  className="text-xs font-medium text-[#14f1d9] underline-offset-4 hover:underline"
+                  className={`text-xs font-medium ${accentTextClass}`}
                   onClick={() => {
                     /* Recovery flow TBD */
                   }}
@@ -420,7 +430,7 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-2 flex h-11 w-full items-center justify-center rounded-2xl bg-[#14f1d9] text-sm font-semibold text-[#041014] shadow-[0_16px_50px_rgba(20,241,217,0.22)] transition hover:bg-[#62ffee] disabled:cursor-not-allowed disabled:opacity-70"
+              className={primaryButtonClass}
             >
               {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit')}
             </button>
@@ -430,7 +440,7 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  className="font-medium text-[#14f1d9] underline-offset-4 hover:underline"
+                  className={`font-medium ${accentTextClass}`}
                   onClick={() => {
                     clearFeedback()
                     setAuthView('register')
