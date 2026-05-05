@@ -1,47 +1,100 @@
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import {
-  ApiError,
-  createAuthAdapter,
-  getAdminSummaryStats,
-  jobApplicationsApi,
-  systemUsersApi,
-} from '../../api'
-import type { JobApplicationListItem } from '../../api/job-applications'
+import { ApiError, createAuthAdapter, getAdminSummaryStats, systemUsersApi } from '../../api'
 import { useAuth } from '../../auth/auth-context'
 import { useTheme } from '../../theme/theme-context'
 import {
   IconCheck,
-  IconShield,
   IconSpark,
   IconUsers,
 } from '../landing/icons'
+import { CandidatesSection } from './admin/CandidatesSection'
+import { EmployersSection } from './admin/EmployersSection'
+import { UserGroupsSection } from './admin/UserGroupsSection'
+import { UsersSection } from './admin/UsersSection'
 
-type AdminSection = 'overview' | 'users' | 'approvals' | 'security' | 'createAdmin'
+type AdminSection =
+  | 'overview'
+  | 'employers'
+  | 'candidates'
+  | 'userGroups'
+  | 'users'
+  | 'createAdmin'
 
-export function AdminDashboard() {
+const ALLOWED_ADMIN_SECTIONS: AdminSection[] = [
+  'overview',
+  'employers',
+  'candidates',
+  'userGroups',
+  'users',
+  'createAdmin',
+]
+
+type AdminDashboardProps = {
+  isSidebarOpen: boolean
+  onSidebarClose: () => void
+}
+
+function IconBriefcase({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <rect x="3.5" y="7" width="17" height="12.5" rx="2.5" />
+      <path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7" />
+      <path d="M3.5 12.2h17" />
+    </svg>
+  )
+}
+
+function IconUserCircle({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="9.2" r="2.2" />
+      <path d="M8.2 16.2c.9-1.5 2.2-2.2 3.8-2.2s2.9.7 3.8 2.2" />
+    </svg>
+  )
+}
+
+function IconClipboardList({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <rect x="5" y="4.5" width="14" height="16" rx="2.4" />
+      <path d="M9.2 4.5h5.6v2.3H9.2z" />
+      <path d="M8.5 10h7M8.5 13.2h7M8.5 16.4h4.3" />
+    </svg>
+  )
+}
+
+function IconShield({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <path d="M12 3.5l7 3.2v6c0 4.2-3 8-7 8.8-4-.8-7-4.6-7-8.8v-6l7-3.2z" />
+      <path d="M9.2 12.2l2.2 2.2 4.4-4.4" />
+    </svg>
+  )
+}
+
+function parseLocalizedCount(value: string) {
+  const digits = value.replace(/[^\d]/g, '')
+  const parsed = Number(digits)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboardProps) {
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const { session } = useAuth()
+  const navigate = useNavigate()
+  const { section, entityId } = useParams<{ section?: string; entityId?: string }>()
   const authApi = useMemo(() => createAuthAdapter(), [])
-  const [activeSection, setActiveSection] = useState<AdminSection>('overview')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
-  const [operationPending, setOperationPending] = useState(false)
-  const [operationMessage, setOperationMessage] = useState<string | null>(null)
-  const [operationError, setOperationError] = useState<string | null>(null)
-  const [approvalItems, setApprovalItems] = useState<JobApplicationListItem[]>([])
   const [meDisplayName, setMeDisplayName] = useState<string | null>(null)
   const [summaryError, setSummaryError] = useState<string | null>(null)
   const [summaryStats, setSummaryStats] = useState<{
-    systemUsersCount: string
-    approvalsCount: string
-    securityStatus: string
-    usersHint: string
-    approvalsHint: string
-    securityHint: string
     overview: {
       activatedTodayCount: string
       totalWorkerCount: string
@@ -93,13 +146,6 @@ export function AdminDashboard() {
         const formatCount = (value: number) => value.toLocaleString(locale)
         setSummaryError(null)
         setSummaryStats({
-          systemUsersCount: formatCount(stats.systemUsersCount),
-          approvalsCount: formatCount(stats.approvalsCount),
-          securityStatus: stats.securityStatus || t('dashboard.admin.cards.security.value'),
-          usersHint: stats.usersHint || t('dashboard.admin.cards.systemUsers.hint'),
-          approvalsHint:
-            stats.approvalsHint || t('dashboard.admin.cards.approvals.hint'),
-          securityHint: stats.securityHint || t('dashboard.admin.cards.security.hint'),
           overview: stats.overview
             ? {
                 activatedTodayCount: formatCount(stats.overview.activatedTodayCount),
@@ -172,119 +218,6 @@ export function AdminDashboard() {
     }
   }
 
-  async function runSystemUserAction(
-    action: 'suspend' | 'reactivate' | 'ban',
-    systemUserId: number,
-  ) {
-    setOperationError(null)
-    setOperationMessage(null)
-    setOperationPending(true)
-    try {
-      if (action === 'suspend') {
-        await systemUsersApi.suspend({ systemUserId })
-        setOperationMessage(t('dashboard.admin.actions.userSuspendSuccess'))
-      } else if (action === 'reactivate') {
-        await systemUsersApi.reactivate({ systemUserId })
-        setOperationMessage(t('dashboard.admin.actions.userReactivateSuccess'))
-      } else {
-        await systemUsersApi.ban({ systemUserId })
-        setOperationMessage(t('dashboard.admin.actions.userBanSuccess'))
-      }
-    } catch {
-      setOperationError(t('dashboard.admin.actions.genericError'))
-    } finally {
-      setOperationPending(false)
-    }
-  }
-
-  async function handleUserActionSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (operationPending) return
-
-    const formData = new FormData(event.currentTarget)
-    const action = String(formData.get('action') ?? '') as
-      | 'suspend'
-      | 'reactivate'
-      | 'ban'
-    const rawUserId = String(formData.get('systemUserId') ?? '').trim()
-    const systemUserId = Number(rawUserId)
-
-    if (!Number.isFinite(systemUserId) || systemUserId <= 0) {
-      setOperationError(t('dashboard.admin.actions.invalidUserId'))
-      setOperationMessage(null)
-      return
-    }
-
-    await runSystemUserAction(action, systemUserId)
-  }
-
-  async function handlePasswordResetSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (operationPending) return
-
-    const formData = new FormData(event.currentTarget)
-    const rawUserId = String(formData.get('systemUserId') ?? '').trim()
-    const password = String(formData.get('password') ?? '')
-    const systemUserId = Number(rawUserId)
-
-    if (!Number.isFinite(systemUserId) || systemUserId <= 0) {
-      setOperationError(t('dashboard.admin.actions.invalidUserId'))
-      setOperationMessage(null)
-      return
-    }
-    if (password.trim().length < 6) {
-      setOperationError(t('dashboard.admin.actions.invalidPassword'))
-      setOperationMessage(null)
-      return
-    }
-
-    setOperationError(null)
-    setOperationMessage(null)
-    setOperationPending(true)
-    try {
-      await systemUsersApi.changePassword({ systemUserId, password })
-      setOperationMessage(t('dashboard.admin.actions.passwordResetSuccess'))
-      event.currentTarget.reset()
-    } catch {
-      setOperationError(t('dashboard.admin.actions.genericError'))
-    } finally {
-      setOperationPending(false)
-    }
-  }
-
-  async function handleApprovalQuerySubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (operationPending) return
-
-    const formData = new FormData(event.currentTarget)
-    const rawPostingId = String(formData.get('jobPostingId') ?? '').trim()
-    const jobPostingId = Number(rawPostingId)
-
-    if (!Number.isFinite(jobPostingId) || jobPostingId <= 0) {
-      setOperationError(t('dashboard.admin.actions.invalidPostingId'))
-      setOperationMessage(null)
-      return
-    }
-
-    setOperationError(null)
-    setOperationMessage(null)
-    setOperationPending(true)
-    try {
-      const items = await jobApplicationsApi.list({ jobPostingId })
-      setApprovalItems(items)
-      setOperationMessage(
-        t('dashboard.admin.actions.approvalQuerySuccess', {
-          count: items.length,
-        }),
-      )
-    } catch {
-      setOperationError(t('dashboard.admin.actions.genericError'))
-      setApprovalItems([])
-    } finally {
-      setOperationPending(false)
-    }
-  }
-
   const sidebarItems: Array<{
     key: AdminSection
     label: string
@@ -296,253 +229,129 @@ export function AdminDashboard() {
       icon: <IconCheck className="h-4 w-4" />,
     },
     {
+      key: 'employers',
+      label: t('dashboard.admin.sidebar.employers'),
+      icon: <IconBriefcase className="h-4 w-4" />,
+    },
+    {
+      key: 'candidates',
+      label: t('dashboard.admin.sidebar.candidates'),
+      icon: <IconUserCircle className="h-4 w-4" />,
+    },
+    {
+      key: 'userGroups',
+      label: t('dashboard.admin.sidebar.userGroups'),
+      icon: <IconShield className="h-4 w-4" />,
+    },
+    {
       key: 'users',
       label: t('dashboard.admin.sidebar.users'),
       icon: <IconUsers className="h-4 w-4" />,
     },
     {
-      key: 'approvals',
-      label: t('dashboard.admin.sidebar.approvals'),
-      icon: <IconCheck className="h-4 w-4" />,
-    },
-    {
-      key: 'security',
-      label: t('dashboard.admin.sidebar.security'),
-      icon: <IconShield className="h-4 w-4" />,
-    },
-    {
       key: 'createAdmin',
       label: t('dashboard.admin.sidebar.createAdmin'),
-      icon: <IconUsers className="h-4 w-4" />,
+      icon: <IconSpark className="h-4 w-4" />,
     },
   ]
 
+  const activeSection: AdminSection = ALLOWED_ADMIN_SECTIONS.includes((section ?? 'overview') as AdminSection)
+    ? ((section ?? 'overview') as AdminSection)
+    : 'overview'
+
+  useEffect(() => {
+    if (!section) return
+    if (ALLOWED_ADMIN_SECTIONS.includes(section as AdminSection)) return
+    navigate('/admin/overview', { replace: true })
+  }, [navigate, section])
+
   const detailTitleBySection: Record<AdminSection, string> = {
     overview: t('dashboard.admin.details.overview.title'),
+    employers: t('dashboard.admin.sidebar.employers'),
+    candidates: t('dashboard.admin.details.candidates.title'),
+    userGroups: t('dashboard.admin.details.userGroups.title'),
     users: t('dashboard.admin.details.users.title'),
-    approvals: t('dashboard.admin.details.approvals.title'),
-    security: t('dashboard.admin.details.security.title'),
     createAdmin: t('dashboard.admin.register.title'),
   }
 
   const detailBodyBySection: Record<Exclude<AdminSection, 'createAdmin'>, string> = {
     overview: t('dashboard.admin.details.overview.body'),
+    employers: t('dashboard.admin.details.employers.body'),
+    candidates: t('dashboard.admin.details.candidates.body'),
+    userGroups: t('dashboard.admin.details.userGroups.body'),
     users: t('dashboard.admin.details.users.body'),
-    approvals: t('dashboard.admin.details.approvals.body'),
-    security: t('dashboard.admin.details.security.body'),
   }
 
+  function handleSidebarItemClick(section: AdminSection) {
+    navigate(`/admin/${section}`)
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      onSidebarClose()
+    }
+  }
+
+  const detailId = entityId ? Number(entityId) : null
+  const safeDetailId = Number.isFinite(detailId) && (detailId as number) > 0 ? (detailId as number) : null
+
   return (
-    <section className="mx-auto max-w-6xl overflow-x-hidden px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
-      <div className="grid gap-3 lg:grid-cols-[240px_1fr] lg:gap-6">
+    <section className="w-full overflow-x-hidden">
+      <div className="relative">
+        {isSidebarOpen ? (
+          <button
+            type="button"
+            aria-label={t('dashboard.admin.sidebar.closeAria')}
+            className="fixed inset-0 z-30 bg-slate-950/40 lg:hidden"
+            onClick={onSidebarClose}
+          />
+        ) : null}
+
         <aside
-          className={`rounded-3xl border p-2 sm:p-3 ${
+          className={`fixed inset-y-0 left-0 z-40 w-[260px] border p-3 transition-transform duration-300 lg:top-[4.5rem] lg:h-[calc(100svh-4.5rem)] lg:rounded-none lg:border-r lg:translate-x-0 ${
+            isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } ${
             theme === 'dark'
-              ? 'border-white/10 bg-white/[0.04]'
-              : 'border-slate-300/80 bg-white'
+              ? 'border-slate-700 bg-[#0f1f35]'
+              : 'border-sky-200 bg-[#0c2340]'
           }`}
         >
-          <p
-            className={`px-2 py-2 text-xs font-semibold uppercase tracking-[0.12em] ${
-              theme === 'dark' ? 'text-[#14f1d9]' : 'text-sky-700'
-            }`}
-          >
+          <div className="rounded-2xl bg-white/10 px-3 py-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sky-200">
+              {t('landing.meta.title')}
+            </p>
+            <p className="mt-1 text-sm font-medium text-white">{t('dashboard.admin.title')}</p>
+          </div>
+
+          <p className="mt-4 px-1 text-xs font-semibold uppercase tracking-[0.12em] text-sky-300/90">
             {t('dashboard.common.welcome', {
               email: meDisplayName ?? session?.email ?? 'unknown',
             })}
           </p>
-          <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:mt-3 lg:flex lg:grid-cols-1 lg:flex-col">
+
+          <nav className="mt-3 flex flex-col gap-2">
             {sidebarItems.map((item) => {
-              const isActive = activeSection === item.key
+              const isNavActive = activeSection === item.key
               return (
                 <button
                   key={item.key}
                   type="button"
-                  onClick={() => setActiveSection(item.key)}
-                  className={`flex min-h-11 w-full items-center gap-2 rounded-xl px-3 py-2 text-start text-sm font-medium transition ${
-                    isActive
-                      ? theme === 'dark'
-                        ? 'bg-[#14f1d9]/15 text-[#14f1d9]'
-                        : 'bg-sky-100 text-sky-700'
-                      : theme === 'dark'
-                        ? 'text-white/75 hover:bg-white/8'
-                        : 'text-slate-700 hover:bg-slate-100'
+                  onClick={() => handleSidebarItemClick(item.key)}
+                  className={`flex min-h-11 w-full items-center gap-3 rounded-xl border px-3 py-2 text-start text-sm font-medium transition ${
+                    isNavActive
+                      ? 'border-sky-300/60 bg-sky-400/20 text-white'
+                      : 'border-white/10 text-slate-100 hover:bg-white/10'
                   }`}
                 >
-                  <span>{item.icon}</span>
+                  <span className={isNavActive ? 'text-sky-200' : 'text-slate-300'}>{item.icon}</span>
                   <span className="truncate">{item.label}</span>
                 </button>
               )
             })}
-          </div>
+          </nav>
         </aside>
 
-        <div className="min-w-0 space-y-4 lg:space-y-6">
-          <div
-            className={`rounded-3xl border p-4 sm:p-7 ${
-              theme === 'dark'
-                ? 'border-white/10 bg-white/[0.04]'
-                : 'border-slate-300/80 bg-white'
-            }`}
-          >
-            <h1
-              className={`font-display text-2xl font-semibold sm:text-3xl ${
-                theme === 'dark' ? 'text-white' : 'text-slate-900'
-              }`}
-            >
-              {t('dashboard.admin.title')}
-            </h1>
-            <p
-              className={`mt-2 break-words text-sm sm:text-base ${
-                theme === 'dark' ? 'text-white/65' : 'text-slate-600'
-              }`}
-            >
-              {t('dashboard.admin.subtitle')}
-            </p>
-          </div>
-
-          {summaryStats?.overview ? (
-            <div className="grid gap-3 sm:grid-cols-2">
-                {[
-                  {
-                    title: t('dashboard.admin.statistics.groups.candidateStatus'),
-                    icon: <IconSpark className="h-4 w-4" />,
-                    items: [
-                      {
-                        label: t('dashboard.admin.statistics.totalWorkerCount'),
-                        value: summaryStats.overview.totalWorkerCount,
-                      },
-                      {
-                        label: t('dashboard.admin.statistics.activeWorkerCount'),
-                        value: summaryStats.overview.activeWorkerCount,
-                      },
-                    ],
-                  },
-                  {
-                    title: t('dashboard.admin.statistics.groups.employerStatus'),
-                    icon: <IconUsers className="h-4 w-4" />,
-                    items: [
-                      {
-                        label: t('dashboard.admin.statistics.totalEmployerCount'),
-                        value: summaryStats.overview.totalEmployerCount,
-                      },
-                      {
-                        label: t('dashboard.admin.statistics.activeEmployerCount'),
-                        value: summaryStats.overview.activeEmployerCount,
-                      },
-                    ],
-                  },
-                  {
-                    title: t('dashboard.admin.statistics.groups.postingStatus'),
-                    icon: <IconShield className="h-4 w-4" />,
-                    items: [
-                      {
-                        label: t('dashboard.admin.statistics.totalJobPostingCount'),
-                        value: summaryStats.overview.totalJobPostingCount,
-                      },
-                      {
-                        label: t('dashboard.admin.statistics.openJobPostingCount'),
-                        value: summaryStats.overview.openJobPostingCount,
-                      },
-                    ],
-                  },
-                  {
-                    title: t('dashboard.admin.statistics.groups.applicationStatus'),
-                    icon: <IconCheck className="h-4 w-4" />,
-                    items: [
-                      {
-                        label: t('dashboard.admin.statistics.totalJobApplicationCount'),
-                        value: summaryStats.overview.totalJobApplicationCount,
-                      },
-                      {
-                        label: t('dashboard.admin.statistics.pendingJobApplicationCount'),
-                        value: summaryStats.overview.pendingJobApplicationCount,
-                      },
-                      {
-                        label: t('dashboard.admin.statistics.acceptedJobApplicationCount'),
-                        value: summaryStats.overview.acceptedJobApplicationCount,
-                      },
-                      {
-                        label: t('dashboard.admin.statistics.rejectedJobApplicationCount'),
-                        value: summaryStats.overview.rejectedJobApplicationCount,
-                      },
-                    ],
-                  },
-                  {
-                    title: t('dashboard.admin.statistics.groups.activationStatus'),
-                    icon: <IconShield className="h-4 w-4" />,
-                    items: [
-                      {
-                        label: t('dashboard.admin.statistics.activatedTodayCount'),
-                        value: summaryStats.overview.activatedTodayCount,
-                      },
-                    ],
-                  },
-                ].map((group) => (
-                  <article
-                    key={group.title}
-                    className={`rounded-3xl border p-4 sm:p-6 ${
-                      theme === 'dark'
-                        ? 'border-white/10 bg-white/[0.04]'
-                        : 'border-slate-300/80 bg-white'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <h3
-                        className={`font-display text-base font-semibold ${
-                          theme === 'dark' ? 'text-white' : 'text-slate-900'
-                        }`}
-                      >
-                        {group.title}
-                      </h3>
-                      <span
-                        className={`inline-flex h-8 w-8 items-center justify-center rounded-xl ${
-                          theme === 'dark'
-                            ? 'bg-[#14f1d9]/12 text-[#14f1d9]'
-                            : 'bg-sky-100 text-sky-700'
-                        }`}
-                      >
-                        {group.icon}
-                      </span>
-                    </div>
-                    <div className="mt-3 space-y-2">
-                      {group.items.map((item) => (
-                        <div
-                          key={`${group.title}-${item.label}`}
-                          className="flex items-center justify-between gap-3"
-                        >
-                          <p
-                            className={`text-xs ${
-                              theme === 'dark' ? 'text-white/65' : 'text-slate-600'
-                            }`}
-                          >
-                            {item.label}
-                          </p>
-                          <p
-                            className={`font-display text-base font-semibold ${
-                              theme === 'dark' ? 'text-white' : 'text-slate-900'
-                            }`}
-                          >
-                            {item.value}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </article>
-                ))}
-              </div>
-          ) : null}
-          {summaryError ? (
-            <p className="rounded-xl border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-sm text-amber-100">
-              {summaryError}
-            </p>
-          ) : null}
-
+        <div className="min-w-0 space-y-4 px-3 py-4 sm:px-4 sm:py-5 lg:ml-[260px] lg:px-6 lg:py-6">
           <article
-            className={`rounded-3xl border p-4 backdrop-blur-xl sm:p-6 ${
-              theme === 'dark'
-                ? 'border-white/10 bg-white/[0.04]'
-                : 'border-slate-300/80 bg-white'
+            className={`rounded-2xl border p-4 backdrop-blur-xl sm:p-6 ${
+              theme === 'dark' ? 'border-white/10 bg-[#121a2b]' : 'border-slate-300/80 bg-white'
             }`}
           >
             <h2
@@ -563,152 +372,48 @@ export function AdminDashboard() {
                   {detailBodyBySection[activeSection]}
                 </p>
 
+                {activeSection === 'employers' ? (
+                  <EmployersSection
+                    isActive={activeSection === 'employers'}
+                    detailId={safeDetailId}
+                    onOpenDetail={(id) => navigate(`/admin/employers/${id}`)}
+                    onCloseDetail={() => navigate('/admin/employers')}
+                  />
+                ) : null}
+                {activeSection === 'candidates' ? (
+                  <CandidatesSection
+                    isActive={activeSection === 'candidates'}
+                    detailId={safeDetailId}
+                    onOpenDetail={(id) => navigate(`/admin/candidates/${id}`)}
+                    onCloseDetail={() => navigate('/admin/candidates')}
+                  />
+                ) : null}
+                {activeSection === 'userGroups' ? (
+                  <UserGroupsSection
+                    isActive={activeSection === 'userGroups'}
+                    detailId={safeDetailId}
+                    onOpenDetail={(id) => navigate(`/admin/userGroups/${id}`)}
+                    onCloseDetail={() => navigate('/admin/userGroups')}
+                  />
+                ) : null}
                 {activeSection === 'users' ? (
-                  <form
-                    className="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]"
-                    onSubmit={handleUserActionSubmit}
-                  >
-                    <input
-                      name="systemUserId"
-                      type="number"
-                      min="1"
-                      placeholder={t('dashboard.admin.actions.userIdPlaceholder')}
-                      className={`w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition ${
-                        theme === 'dark'
-                          ? 'border-white/15 bg-white/5 text-white placeholder:text-white/35 focus:border-[#14f1d9]/55 focus:ring-2 focus:ring-[#14f1d9]/20'
-                          : 'border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-200'
-                      }`}
-                    />
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                      <button
-                        type="submit"
-                        name="action"
-                        value="suspend"
-                        disabled={operationPending}
-                        className="inline-flex h-11 items-center justify-center rounded-xl border border-amber-400/40 px-3 text-sm font-semibold text-amber-300 transition hover:bg-amber-400/10 disabled:opacity-60"
-                      >
-                        {t('dashboard.admin.actions.suspend')}
-                      </button>
-                      <button
-                        type="submit"
-                        name="action"
-                        value="reactivate"
-                        disabled={operationPending}
-                        className="inline-flex h-11 items-center justify-center rounded-xl border border-emerald-400/40 px-3 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-400/10 disabled:opacity-60"
-                      >
-                        {t('dashboard.admin.actions.reactivate')}
-                      </button>
-                      <button
-                        type="submit"
-                        name="action"
-                        value="ban"
-                        disabled={operationPending}
-                        className="inline-flex h-11 items-center justify-center rounded-xl border border-rose-400/40 px-3 text-sm font-semibold text-rose-300 transition hover:bg-rose-400/10 disabled:opacity-60"
-                      >
-                        {t('dashboard.admin.actions.ban')}
-                      </button>
-                    </div>
-                  </form>
-                ) : null}
-
-                {activeSection === 'security' ? (
-                  <form
-                    className="mt-5 grid gap-3 sm:grid-cols-2"
-                    onSubmit={handlePasswordResetSubmit}
-                  >
-                    <input
-                      name="systemUserId"
-                      type="number"
-                      min="1"
-                      placeholder={t('dashboard.admin.actions.userIdPlaceholder')}
-                      className={`w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition ${
-                        theme === 'dark'
-                          ? 'border-white/15 bg-white/5 text-white placeholder:text-white/35 focus:border-[#14f1d9]/55 focus:ring-2 focus:ring-[#14f1d9]/20'
-                          : 'border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-200'
-                      }`}
-                    />
-                    <input
-                      name="password"
-                      type="password"
-                      placeholder={t('dashboard.admin.actions.newPasswordPlaceholder')}
-                      className={`w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition ${
-                        theme === 'dark'
-                          ? 'border-white/15 bg-white/5 text-white placeholder:text-white/35 focus:border-[#14f1d9]/55 focus:ring-2 focus:ring-[#14f1d9]/20'
-                          : 'border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-200'
-                      }`}
-                    />
-                    <div className="sm:col-span-2">
-                      <button
-                        type="submit"
-                        disabled={operationPending}
-                        className="inline-flex h-11 items-center justify-center rounded-xl bg-[#14f1d9] px-4 text-sm font-semibold text-[#041014] transition hover:bg-[#62ffee] disabled:opacity-60"
-                      >
-                        {t('dashboard.admin.actions.resetPassword')}
-                      </button>
-                    </div>
-                  </form>
-                ) : null}
-
-                {activeSection === 'approvals' ? (
-                  <>
-                    <form
-                      className="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]"
-                      onSubmit={handleApprovalQuerySubmit}
-                    >
-                      <input
-                        name="jobPostingId"
-                        type="number"
-                        min="1"
-                        placeholder={t('dashboard.admin.actions.postingIdPlaceholder')}
-                        className={`w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition ${
-                          theme === 'dark'
-                            ? 'border-white/15 bg-white/5 text-white placeholder:text-white/35 focus:border-[#14f1d9]/55 focus:ring-2 focus:ring-[#14f1d9]/20'
-                            : 'border-slate-300 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-200'
-                        }`}
-                      />
-                      <button
-                        type="submit"
-                        disabled={operationPending}
-                        className="inline-flex h-11 items-center justify-center rounded-xl bg-[#14f1d9] px-4 text-sm font-semibold text-[#041014] transition hover:bg-[#62ffee] disabled:opacity-60"
-                      >
-                        {t('dashboard.admin.actions.queryApprovals')}
-                      </button>
-                    </form>
-
-                    <div className="mt-4 min-w-0 space-y-2">
-                      {approvalItems.map((item) => (
-                        <div
-                          key={`${item.applicationId}-${item.workerId}`}
-                          className={`rounded-xl border px-3 py-2 text-sm break-words ${
-                            theme === 'dark'
-                              ? 'border-white/10 bg-white/[0.03] text-white/80'
-                              : 'border-slate-300 bg-slate-50 text-slate-700'
-                          }`}
-                        >
-                          #{item.applicationId} · worker:{' '}
-                          {item.workerId} · status: {item.status}
-                        </div>
-                      ))}
-                    </div>
-                  </>
+                  <UsersSection
+                    isActive={activeSection === 'users'}
+                    detailId={safeDetailId}
+                    onOpenDetail={(id) => navigate(`/admin/users/${id}`)}
+                    onCloseDetail={() => navigate('/admin/users')}
+                  />
                 ) : null}
               </>
             ) : null}
 
             {activeSection === 'createAdmin' ? (
               <>
-                <p
-                  className={`mt-2 text-sm ${
-                    theme === 'dark' ? 'text-white/65' : 'text-slate-600'
-                  }`}
-                >
+                <p className={`mt-2 text-sm ${theme === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>
                   {t('dashboard.admin.register.subtitle')}
                 </p>
 
-                <form
-                  className="mt-5 grid gap-3 sm:grid-cols-2"
-                  onSubmit={handleCreateAdmin}
-                >
+                <form className="mt-5 grid gap-3 sm:grid-cols-2" onSubmit={handleCreateAdmin}>
                   <label className="space-y-1.5">
                     <span
                       className={`text-xs font-medium ${
@@ -831,18 +536,129 @@ export function AdminDashboard() {
                 ) : null}
               </>
             ) : null}
-
-            {operationError ? (
-              <p className="mt-4 rounded-xl border border-rose-400/30 bg-rose-400/10 px-3 py-2 text-sm text-rose-200">
-                {operationError}
-              </p>
-            ) : null}
-            {operationMessage ? (
-              <p className="mt-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-sm text-emerald-100">
-                {operationMessage}
-              </p>
-            ) : null}
           </article>
+
+          {activeSection === 'overview' && summaryStats ? (
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {[
+                {
+                  title: t('dashboard.admin.cards.employers.title'),
+                  value: summaryStats.overview?.activeEmployerCount ?? t('dashboard.admin.summary.loading'),
+                  hint: t('dashboard.admin.cards.activeLabel'),
+                  subValue:
+                    summaryStats.overview?.totalEmployerCount ?? t('dashboard.admin.summary.loading'),
+                  subHint: t('dashboard.admin.cards.totalLabel'),
+                  icon: <IconBriefcase className="h-5 w-5" />,
+                  tone: theme === 'dark' ? 'bg-sky-700 text-sky-50' : 'bg-sky-600 text-white',
+                },
+                {
+                  title: t('dashboard.admin.cards.candidates.title'),
+                  value: summaryStats.overview?.activeWorkerCount ?? t('dashboard.admin.summary.loading'),
+                  hint: t('dashboard.admin.cards.activeLabel'),
+                  subValue:
+                    summaryStats.overview?.totalWorkerCount ?? t('dashboard.admin.summary.loading'),
+                  subHint: t('dashboard.admin.cards.totalLabel'),
+                  icon: <IconUserCircle className="h-5 w-5" />,
+                  tone: theme === 'dark' ? 'bg-cyan-700 text-cyan-50' : 'bg-cyan-600 text-white',
+                },
+                {
+                  title: t('dashboard.admin.cards.postings.title'),
+                  value: summaryStats.overview?.openJobPostingCount ?? t('dashboard.admin.summary.loading'),
+                  hint: t('dashboard.admin.cards.activeLabel'),
+                  subValue:
+                    summaryStats.overview?.totalJobPostingCount ?? t('dashboard.admin.summary.loading'),
+                  subHint: t('dashboard.admin.cards.totalLabel'),
+                  icon: <IconClipboardList className="h-5 w-5" />,
+                  tone: theme === 'dark' ? 'bg-slate-700 text-slate-100' : 'bg-slate-600 text-white',
+                },
+                {
+                  title: t('dashboard.admin.cards.applications.title'),
+                  value:
+                    summaryStats.overview?.pendingJobApplicationCount ??
+                    t('dashboard.admin.summary.loading'),
+                  hint: t('dashboard.admin.cards.activeLabel'),
+                  subValue:
+                    summaryStats.overview?.totalJobApplicationCount ??
+                    t('dashboard.admin.summary.loading'),
+                  subHint: t('dashboard.admin.cards.totalLabel'),
+                  icon: <IconCheck className="h-5 w-5" />,
+                  tone: theme === 'dark' ? 'bg-indigo-700 text-indigo-50' : 'bg-indigo-600 text-white',
+                },
+              ].map((item) => (
+                <article key={item.title} className={`rounded-2xl p-4 shadow-sm ${item.tone}`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-2xl font-semibold">{item.value}</p>
+                      <p className="mt-1 text-sm font-medium">{item.title}</p>
+                    </div>
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-black/10">
+                      {item.icon}
+                    </span>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between gap-3 text-xs opacity-90">
+                    <p>{item.hint}</p>
+                    <p className="font-semibold">
+                      {item.subHint}: {item.subValue}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : null}
+          {activeSection === 'overview' && summaryStats?.overview ? (
+            <article
+              className={`rounded-2xl border p-4 sm:p-5 ${
+                theme === 'dark' ? 'border-white/10 bg-[#121a2b]' : 'border-slate-300/80 bg-white'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <h3 className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+                  {t('dashboard.admin.statistics.trendTitle')}
+                </h3>
+                <IconSpark className={`h-4 w-4 ${theme === 'dark' ? 'text-cyan-300' : 'text-sky-600'}`} />
+              </div>
+              <div className="mt-4 grid grid-cols-4 items-end gap-2">
+                {[
+                  parseLocalizedCount(summaryStats.overview.activeEmployerCount),
+                  parseLocalizedCount(summaryStats.overview.activeWorkerCount),
+                  parseLocalizedCount(summaryStats.overview.openJobPostingCount),
+                  parseLocalizedCount(summaryStats.overview.pendingJobApplicationCount),
+                ].map((value, index, arr) => {
+                  const safeMax = Math.max(...arr, 1)
+                  const percent = Math.max(18, Math.round((value / safeMax) * 100))
+                  return (
+                    <div key={index} className="space-y-2">
+                      <div
+                        className={`w-full rounded-t-lg ${theme === 'dark' ? 'bg-cyan-400/70' : 'bg-sky-500/80'}`}
+                        style={{ height: `${percent}px` }}
+                      />
+                    </div>
+                  )
+                })}
+              </div>
+              <div
+                className={`mt-2 grid grid-cols-4 gap-2 text-[11px] ${
+                  theme === 'dark' ? 'text-white/70' : 'text-slate-600'
+                }`}
+              >
+                <p className="truncate">{t('dashboard.admin.cards.employers.short')}</p>
+                <p className="truncate">{t('dashboard.admin.cards.candidates.short')}</p>
+                <p className="truncate">{t('dashboard.admin.cards.postings.short')}</p>
+                <p className="truncate">{t('dashboard.admin.cards.applications.short')}</p>
+              </div>
+            </article>
+          ) : null}
+          {summaryError ? (
+            <p
+              className={`rounded-xl border px-3 py-2 text-sm ${
+                theme === 'dark'
+                  ? 'border-amber-400/30 bg-amber-400/10 text-amber-100'
+                  : 'border-amber-300 bg-amber-50 text-amber-800'
+              }`}
+            >
+              {summaryError}
+            </p>
+          ) : null}
         </div>
       </div>
     </section>

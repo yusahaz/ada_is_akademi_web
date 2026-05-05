@@ -1,35 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none" role="img" aria-labelledby="adaMarkTitle">
-  <title id="adaMarkTitle">Ada 0_ Akademi mark</title>
-  <!-- Academy roof / growth arc -->
-  <path
-    d="M9.5 15.5 20 7.5 30.5 15.5"
-    stroke="#14F1D9"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <!-- Stylized A -->
-  <path
-    d="M11.25 32 20 12 28.75 32"
-    stroke="#14F1D9"
-    stroke-width="2.25"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
-  <path
-    d="M14.75 23.25H25.25"
-    stroke="#14F1D9"
-    stroke-width="2"
-    stroke-linecap="round"
-  />
-  <!-- Connection nodes (platform / matching) -->
-  <circle cx="14.75" cy="23.25" r="1.85" fill="#14F1D9" />
-  <circle cx="25.25" cy="23.25" r="1.85" fill="#14F1D9" />
-  <path
-    d="M14.75 23.25H20V29"
-    stroke="#14F1D9"
-    stroke-width="1.6"
-    stroke-linecap="round"
-    opacity=".55"
-  />
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="adaMarkTitle">
+  <title id="adaMarkTitle">Ada İş Akademi mark</title>
+  <defs>
+    <style>
+      .ada-main { fill: #0b2a66; }
+      .ada-cut { fill: #ffffff; fill-opacity: .92; }
+      .ada-arc { stroke: #0b2a66; stroke-width: 4; stroke-linecap: round; opacity: .9; }
+      @media (prefers-color-scheme: dark) {
+        .ada-main { fill: #e2e8f0; }
+        .ada-cut { fill: #0f172a; fill-opacity: .92; }
+        .ada-arc { stroke: #e2e8f0; }
+      }
+    </style>
+  </defs>
+  <path class="ada-main" d="M32 6 54 58h-10.5L32 30.2 20.5 58H10L32 6Z" />
+  <path class="ada-cut" d="M32 17.8 41.8 40.8h-4.8L32 29.3l-5 11.5h-4.8L32 17.8Z" />
+  <path class="ada-arc" d="M6.8 47.2C17.8 35.3 31.5 29.8 56.5 29.6" />
 </svg>

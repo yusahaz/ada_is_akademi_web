@@ -114,6 +114,33 @@
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Track your applications, upcoming shifts, and profile health in one place.",
+      "defaultName": "Worker",
+      "summary": {
+        "activeApplications": "Active applications",
+        "upcomingShifts": "Upcoming shifts",
+        "profileScore": "Profile score"
+      },
+      "sections": {
+        "suggestedShifts": "Suggested shifts",
+        "applicationAndPayment": "Application and payment status",
+        "loading": "Loading data...",
+        "emptyShifts": "No suggested shifts available right now.",
+        "fetchError": "Worker summary data could not be loaded."
+      },
+      "status": {
+        "pending": {
+          "label": "Pending applications",
+          "value": "In review"
+        },
+        "accepted": {
+          "label": "Approved shifts",
+          "value": "Approved"
+        },
+        "payment": {
+          "label": "Payment status",
+          "value": "In tracking"
+        }
+      },
       "cards": {
         "applications": {
           "title": "Active applications",
@@ -132,9 +159,194 @@
         }
       }
     },
+    "workerPortal": {
+      "title": "Worker Workspace",
+      "subtitle": "Manage your profile, shifts, QR flow, payouts, and reports after login.",
+      "nav": {
+        "overview": "Overview",
+        "profile": "Profile",
+        "cvImport": "CV Import",
+        "shifts": "Shifts",
+        "applications": "Applications",
+        "qrCheck": "QR Check",
+        "payouts": "Payouts",
+        "reports": "Reports"
+      },
+      "states": {
+        "loading": "Loading data...",
+        "empty": "No records found for this section.",
+        "fetchError": "Data could not be loaded."
+      },
+      "overview": {
+        "monthlyEarnings": "Monthly earnings",
+        "paidPayouts": "Paid payouts",
+        "completedShifts": "Completed shifts"
+      },
+      "profile": {
+        "basic": "Basic profile",
+        "fullName": "Full name: {{value}}",
+        "email": "Email: {{value}}",
+        "nationality": "Nationality: {{value}}",
+        "university": "University: {{value}}",
+        "studentNumber": "Student number: {{value}}",
+        "skills": "Skill tags"
+      },
+      "cv": {
+        "title": "CV Import Pipeline",
+        "description": "Track extraction state and confirm parsed sections before applying.",
+        "states": {
+          "uploaded": "Uploaded",
+          "extracting": "Extracting",
+          "awaitingReview": "Awaiting review",
+          "confirmed": "Confirmed",
+          "failed": "Failed"
+        },
+        "currentState": "Current state: {{state}}"
+      },
+      "shifts": {
+        "submit": "Apply shift",
+        "submitting": "Applying...",
+        "submitError": "Application request failed."
+      },
+      "applications": {
+        "status": {
+          "pending": "Pending",
+          "accepted": "Accepted",
+          "rejected": "Rejected",
+          "withdrawn": "Withdrawn",
+          "expired": "Expired"
+        }
+      },
+      "qr": {
+        "title": "QR Check-in / Check-out",
+        "description": "Use this area to follow token validation and shift entry status.",
+        "actions": {
+          "validate": "Validate token",
+          "success": "Set success",
+          "fail": "Set failed"
+        },
+        "status": {
+          "idle": "Waiting for scan.",
+          "validating": "Token and location are validating.",
+          "success": "Check flow completed successfully.",
+          "failed": "Validation failed. Retry is required."
+        }
+      },
+      "payouts": {
+        "status": {
+          "pending": "Pending",
+          "processing": "Processing",
+          "paid": "Paid",
+          "failed": "Failed"
+        },
+        "confirm": "Confirm payout",
+        "confirmed": "Payout confirmed"
+      }
+    },
     "employer": {
       "title": "Employer Dashboard",
       "subtitle": "Publish postings, monitor candidate flow, and keep operations on track.",
+      "sectionsNav": {
+        "overview": "Overview",
+        "postings": "Postings",
+        "candidates": "Candidates",
+        "operations": "Operations",
+        "billing": "Billing",
+        "reports": "Reports"
+      },
+      "summary": {
+        "openPostings": "Open postings",
+        "pendingApplications": "Pending applications",
+        "actionRequired": "Action required"
+      },
+      "sections": {
+        "myPostings": "My postings",
+        "candidateFlow": "Candidate flow",
+        "loading": "Loading postings...",
+        "emptyPostings": "There are no active postings yet.",
+        "selectPosting": "Select a posting to view candidate flow.",
+        "emptyApplications": "No applications found for this posting.",
+        "headCount": "people",
+        "fetchError": "Employer summary data could not be loaded."
+      },
+      "postings": {
+        "filters": {
+          "all": "All",
+          "open": "Open",
+          "draft": "Draft",
+          "completed": "Completed"
+        },
+        "mode": {
+          "instant": "Instant shift",
+          "planned": "Planned shift"
+        },
+        "detailTitle": "Posting detail",
+        "detail": {
+          "pending": "Pending",
+          "accepted": "Accepted",
+          "headCount": "Head count",
+          "status": "Status"
+        },
+        "empty": "No postings match the selected filter."
+      },
+      "candidates": {
+        "title": "Candidate flow",
+        "subtitle": "Track candidate states and match score by posting.",
+        "score": "Match score",
+        "columns": {
+          "pending": "Pending",
+          "accepted": "Accepted",
+          "rejected": "Rejected"
+        },
+        "empty": "No records in this column."
+      },
+      "operations": {
+        "title": "QR and Shift Operations",
+        "subtitle": "Follow mutual QR verification and anomaly states.",
+        "readOnly": "This section is read-only until dedicated APIs are integrated.",
+        "cards": {
+          "token": "Token lifecycle",
+          "checkin": "Check-in/Check-out status",
+          "anomaly": "Anomaly queue",
+          "supervisor": "Supervisor status"
+        }
+      },
+      "billing": {
+        "title": "Billing and Payout Tracking",
+        "filters": {
+          "all": "All"
+        },
+        "period": "Period",
+        "total": "Total",
+        "receivableStatus": {
+          "Invoiced": "Invoiced",
+          "PartiallyPaid": "Partially paid",
+          "Paid": "Paid",
+          "Overdue": "Overdue"
+        },
+        "payoutStatus": {
+          "Pending": "Pending",
+          "Processing": "Processing",
+          "Paid": "Paid",
+          "Failed": "Failed"
+        }
+      },
+      "reports": {
+        "title": "Employer reports",
+        "subtitle": "Manage report views with scope-aware filters.",
+        "queueExport": "Queue export",
+        "readOnly": "Reporting is read-only in the first delivery phase.",
+        "filters": {
+          "range": "Date range",
+          "status": "Status",
+          "category": "Category",
+          "location": "Location"
+        }
+      },
+      "fallback": {
+        "readOnlyData": "Posting detail endpoint is unavailable. Showing summary-only mode.",
+        "noBillingApi": "Billing/Payout endpoints are not available yet. Showing read-only sample data."
+      },
       "cards": {
         "postings": {
           "title": "Open postings",
@@ -157,17 +369,54 @@
       "title": "Admin Dashboard",
       "subtitle": "Manage system users, approvals, and security health from a single control center.",
       "sidebar": {
-        "overview": "Overview",
+        "overview": "Control Panel",
+        "employers": "Employers",
+        "candidates": "Candidates",
+        "userGroups": "User Groups",
         "users": "Users",
-        "approvals": "Approvals",
-        "security": "Security",
-        "createAdmin": "Create Admin"
+        "createAdmin": "Create Admin",
+        "closeAria": "Close sidebar"
       },
       "summary": {
         "loading": "Loading...",
         "fetchError": "Summary metrics could not be loaded from endpoints. Showing fallback values."
       },
+      "grid": {
+        "rowsPerPage": "Rows per page",
+        "prev": "Prev",
+        "next": "Next",
+        "pageLabel": "Page {{page}} / {{total}}",
+        "columns": {
+          "employerName": "Employer",
+          "taxNo": "Tax No",
+          "status": "Status",
+          "actions": "Actions",
+          "contact": "Contact",
+          "workerId": "Worker ID",
+          "fullName": "Candidate Full Name",
+          "systemUserId": "System User ID",
+          "email": "Email"
+        }
+      },
       "cards": {
+        "activeLabel": "Active",
+        "totalLabel": "Total",
+        "employers": {
+          "title": "Employers",
+          "short": "Employers"
+        },
+        "candidates": {
+          "title": "Candidates",
+          "short": "Candidates"
+        },
+        "postings": {
+          "title": "Job Postings",
+          "short": "Postings"
+        },
+        "applications": {
+          "title": "Job Applications",
+          "short": "Applications"
+        },
         "systemUsers": {
           "title": "Total system users",
           "value": "1,248",
@@ -187,6 +436,7 @@
       "statistics": {
         "title": "Detailed Statistics",
         "subtitle": "Dashboard overview metrics",
+        "trendTitle": "Operational Trend View",
         "groups": {
           "candidateStatus": "Candidate Status",
           "employerStatus": "Employer Status",
@@ -211,17 +461,42 @@
           "title": "System Overview",
           "body": "Track current platform status, live trends, and critical KPI metrics from this summary area."
         },
+        "employers": {
+          "body": "Summary listing screen where you can filter and quickly review employer records."
+        },
+        "candidates": {
+          "title": "Candidate Management Details",
+          "body": "Fetch candidate records by ID and filter by nationality, university, and skill tags."
+        },
         "users": {
           "title": "User Management Details",
-          "body": "Filter system users by type, suspend or reactivate accounts, and monitor lifecycle events from one place."
+          "body": "Filter system users by email, type, and account status; open Edit to suspend, reactivate, ban, or update passwords from the detail screen."
         },
-        "approvals": {
-          "title": "Approval Queue Details",
-          "body": "Review pending approvals by priority and follow their operational processing history."
+        "userGroups": {
+          "title": "User Groups Management",
+          "body": "List groups with name, active, and system filters; manage activation, deactivation, and permission additions from the detail screen."
+        }
+      },
+      "detail": {
+        "breadcrumbAria": "Breadcrumb",
+        "backAria": "Back to list",
+        "actions": {
+          "save": "Save",
+          "delete": "Delete",
+          "close": "Close",
+          "processing": "Processing...",
+          "saving": "Saving...",
+          "deleting": "Deleting..."
         },
-        "security": {
-          "title": "Security and Compliance Details",
-          "body": "Inspect suspicious activity, password updates, and access policy events inside this panel."
+        "feedback": {
+          "saveSuccess": "Changes saved.",
+          "saveError": "Save failed.",
+          "deleteSuccess": "Record removed.",
+          "deleteError": "Delete failed.",
+          "deleteConfirm": "Are you sure you want to delete?"
+        },
+        "validation": {
+          "nothingToSave": "No changes selected to save."
         }
       },
       "register": {
@@ -256,6 +531,184 @@
         "passwordResetSuccess": "User password was updated.",
         "approvalQuerySuccess": "{{count}} application records listed.",
         "genericError": "Operation failed."
+      },
+      "employers": {
+        "filters": {
+          "id": "Employer ID",
+          "name": "Filter by employer name",
+          "allStatuses": "All statuses",
+          "search": "Load list",
+          "searching": "Fetching...",
+          "searchText": "Search name / tax no",
+          "commissionMin": "Commission min",
+          "commissionMax": "Commission max"
+        },
+        "invalidId": "Enter a valid employer ID.",
+        "fetchSuccess": "Employer #{{id}} listed.",
+        "fetchError": "Employer info could not be loaded.",
+        "empty": "List is empty. Query an employer by ID and filter results on the grid.",
+        "taxNo": "Tax No",
+        "columns": {
+          "id": "ID",
+          "commission": "Commission"
+        },
+        "list": {
+          "fetchSuccess": "{{count}} employers listed.",
+          "fetchError": "Employer list could not be loaded.",
+          "empty": "No records found. Adjust filters and try again."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "Employer detail could not be loaded.",
+          "targetStatus": "Target status",
+          "pendingNotSupported": "Switching to Pending from this screen is not supported."
+        },
+        "status": {
+          "10": "Pending",
+          "20": "Active",
+          "30": "Suspended",
+          "90": "Banned"
+        }
+      },
+      "candidates": {
+        "filters": {
+          "id": "Candidate name",
+          "email": "Filter by email",
+          "allStatuses": "All statuses",
+          "search": "Fetch candidate",
+          "searching": "Fetching..."
+        },
+        "fetchSuccess": "{{count}} candidates listed.",
+        "fetchError": "Candidate info could not be loaded.",
+        "empty": "Candidate list is empty or no records match the filter.",
+        "status": {
+          "0": "Pending",
+          "10": "Active",
+          "20": "Suspended",
+          "30": "Banned"
+        },
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete",
+          "deleteConfirm": "Are you sure you want to delete?",
+          "deleteSuccess": "Candidate #{{id}} deleted successfully.",
+          "deleteError": "Failed to delete candidate.",
+          "editClicked": "Edit action triggered for candidate #{{id}}.",
+          "deleteClicked": "Delete action triggered for candidate #{{id}}."
+        },
+        "card": {
+          "workerId": "Candidate #{{id}}",
+          "systemUserId": "System user: #{{id}}",
+          "nationality": "Nationality: {{value}}",
+          "university": "University: {{value}}",
+          "notAvailable": "Not provided",
+          "noSkills": "No skill records"
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "Candidate detail could not be loaded.",
+          "lifecycle": "Account action",
+          "lifecycleNone": "Do not change account status",
+          "skillTag": "Add skill tag",
+          "systemUserEmail": "System user email",
+          "systemUserPhone": "System user phone",
+          "skillsTitle": "Skills",
+          "languagesTitle": "Languages",
+          "educationTitle": "Educations",
+          "experienceTitle": "Experiences",
+          "emptySkills": "No skills found",
+          "emptyLanguages": "No language record",
+          "emptyEducations": "No education record",
+          "emptyExperiences": "No experience record",
+          "current": "Current",
+          "tabs": {
+            "overview": "Overview",
+            "profile": "Profile",
+            "actions": "Actions"
+          },
+          "accountActionTitle": "Account Status Actions",
+          "accountActionHint": "Selecting an action asks for confirmation and submits immediately.",
+          "accountActionConfirm": "Are you sure you want to update {{candidate}} candidate's account status to {{action}}?",
+          "accountActionLabels": {
+            "suspend": "Suspend",
+            "reactivate": "Reactivate",
+            "ban": "Ban"
+          },
+          "accountActionSuccess": "Account status updated to {{action}}.",
+          "accountActionError": "Account status update failed for {{action}}."
+        }
+      },
+      "userGroups": {
+        "bool": {
+          "yes": "Yes",
+          "no": "No"
+        },
+        "columns": {
+          "id": "ID",
+          "name": "Group name",
+          "level": "Level",
+          "isActive": "Active",
+          "isSystem": "System"
+        },
+        "filters": {
+          "searchName": "Search group name",
+          "activeAll": "Active (all)",
+          "systemAll": "System group (all)"
+        },
+        "summary": {
+          "activeRows": "Active on this page",
+          "systemRows": "System on this page",
+          "pageRows": "Rows on this page"
+        },
+        "list": {
+          "fetchSuccess": "{{count}} groups listed.",
+          "fetchError": "Group list could not be loaded.",
+          "empty": "No records found."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "activeState": "Active state",
+          "invalidPermissionId": "Enter a valid permission ID.",
+          "permissions": {
+            "title": "Add permission",
+            "permissionId": "Permission ID",
+            "effect": "Effect"
+          }
+        },
+        "effect": {
+          "allow": "Allow",
+          "deny": "Deny"
+        }
+      },
+      "users": {
+        "columns": {
+          "id": "ID",
+          "email": "Email",
+          "type": "Type",
+          "status": "Status"
+        },
+        "type": {
+          "10": "Admin",
+          "20": "Employer",
+          "30": "Worker"
+        },
+        "filters": {
+          "searchEmail": "Search email",
+          "typeAll": "All types"
+        },
+        "summary": {
+          "adminRows": "Admins on this page",
+          "pageRows": "Rows on this page"
+        },
+        "list": {
+          "fetchSuccess": "{{count}} users listed.",
+          "fetchError": "User list could not be loaded.",
+          "empty": "No records found."
+        },
+        "detail": {
+          "title": "{{email}} (#{{id}})",
+          "passwordOptional": "New password (optional, min 6 characters)"
+        }
       }
     }
   },

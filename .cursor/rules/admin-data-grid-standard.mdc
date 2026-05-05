@@ -1,0 +1,19 @@
+---
+description: Enforce reusable AdminDataGrid usage for admin list and summary tables
+globs: src/components/dashboard/**/*.tsx
+alwaysApply: false
+---
+
+# Admin Data Grid Standard
+
+- Admin panelde tablo/grid tipi listeleme gereken her yerde `AdminDataGrid` kullan.
+- Aynı sayfada ikinci bir custom table/list markup yazma; kolonları `columns` prop'u ile tanımla.
+- Kolon başlıkları ve sayfalama aksiyonları (`prev`, `next`, `rowsPerPage`, `pageLabel`) i18n anahtarlarından gelsin.
+- Grid, mobilde yatay kaydırılabilir ve safe-area uyumlu kalmalı; layout taşması üretmemeli.
+- En az şu temel işlevler korunmalı: client-side sorting, paging, empty state.
+- Liste endpointleri değişse bile ekran API yanıtını `rows` modeline normalize edip grid'e bağlamalı.
+
+## Do / Don't
+
+- ✅ `AdminDataGrid` + normalize edilmiş `rows` + i18n kolon başlıkları
+- ❌ Sayfa içinde yeniden yazılmış kart-grid/table karışımı özel liste yapıları

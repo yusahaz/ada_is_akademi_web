@@ -65,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       session,
       isAuthenticated: Boolean(session?.accessToken),
+      isHydrating: !hydrated,
       signIn: ({ authResult, audience, email }) => {
         setSession({
           ...authResult,
@@ -75,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
       logout: () => setSession(null),
     }),
-    [session],
+    [hydrated, session],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

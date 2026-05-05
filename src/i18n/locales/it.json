@@ -114,6 +114,33 @@
     "worker": {
       "title": "Dashboard lavoratore",
       "subtitle": "Gestisci candidature, turni imminenti e qualità del profilo in un unico punto.",
+      "defaultName": "Lavoratore",
+      "summary": {
+        "activeApplications": "Candidature attive",
+        "upcomingShifts": "Turni imminenti",
+        "profileScore": "Punteggio profilo"
+      },
+      "sections": {
+        "suggestedShifts": "Turni suggeriti",
+        "applicationAndPayment": "Stato candidature e pagamenti",
+        "loading": "Caricamento dati...",
+        "emptyShifts": "Nessun turno suggerito al momento.",
+        "fetchError": "Impossibile caricare i dati riepilogativi del lavoratore."
+      },
+      "status": {
+        "pending": {
+          "label": "Candidature in attesa",
+          "value": "In revisione"
+        },
+        "accepted": {
+          "label": "Turni approvati",
+          "value": "Approvato"
+        },
+        "payment": {
+          "label": "Stato pagamento",
+          "value": "In monitoraggio"
+        }
+      },
       "cards": {
         "applications": {
           "title": "Candidature attive",
@@ -132,9 +159,194 @@
         }
       }
     },
+    "workerPortal": {
+      "title": "Area Worker",
+      "subtitle": "Gestisci profilo, turni, flusso QR, pagamenti e report dopo il login.",
+      "nav": {
+        "overview": "Panoramica",
+        "profile": "Profilo",
+        "cvImport": "Import CV",
+        "shifts": "Turni",
+        "applications": "Candidature",
+        "qrCheck": "Controllo QR",
+        "payouts": "Pagamenti",
+        "reports": "Report"
+      },
+      "states": {
+        "loading": "Caricamento dati...",
+        "empty": "Nessun record trovato per questa sezione.",
+        "fetchError": "Impossibile caricare i dati."
+      },
+      "overview": {
+        "monthlyEarnings": "Guadagni mensili",
+        "paidPayouts": "Pagamenti completati",
+        "completedShifts": "Turni completati"
+      },
+      "profile": {
+        "basic": "Profilo base",
+        "fullName": "Nome completo: {{value}}",
+        "email": "Email: {{value}}",
+        "nationality": "Nazionalità: {{value}}",
+        "university": "Università: {{value}}",
+        "studentNumber": "Numero studente: {{value}}",
+        "skills": "Tag competenze"
+      },
+      "cv": {
+        "title": "Flusso Import CV",
+        "description": "Monitora lo stato di estrazione e conferma le sezioni prima di applicare.",
+        "states": {
+          "uploaded": "Caricato",
+          "extracting": "Estrazione in corso",
+          "awaitingReview": "In attesa di revisione",
+          "confirmed": "Confermato",
+          "failed": "Fallito"
+        },
+        "currentState": "Stato corrente: {{state}}"
+      },
+      "shifts": {
+        "submit": "Candidati al turno",
+        "submitting": "Invio in corso...",
+        "submitError": "Richiesta candidatura non riuscita."
+      },
+      "applications": {
+        "status": {
+          "pending": "In attesa",
+          "accepted": "Accettata",
+          "rejected": "Rifiutata",
+          "withdrawn": "Ritirata",
+          "expired": "Scaduta"
+        }
+      },
+      "qr": {
+        "title": "QR Check-in / Check-out",
+        "description": "Usa quest'area per seguire validazione token e stato turno.",
+        "actions": {
+          "validate": "Valida token",
+          "success": "Imposta successo",
+          "fail": "Imposta errore"
+        },
+        "status": {
+          "idle": "In attesa scansione.",
+          "validating": "Token e posizione in validazione.",
+          "success": "Flusso QR completato con successo.",
+          "failed": "Validazione fallita. Riprovare."
+        }
+      },
+      "payouts": {
+        "status": {
+          "pending": "In attesa",
+          "processing": "In elaborazione",
+          "paid": "Pagato",
+          "failed": "Fallito"
+        },
+        "confirm": "Conferma pagamento",
+        "confirmed": "Pagamento confermato"
+      }
+    },
     "employer": {
       "title": "Dashboard azienda",
       "subtitle": "Pubblica annunci, monitora i candidati e controlla l'operativita.",
+      "sectionsNav": {
+        "overview": "Panoramica",
+        "postings": "Annunci",
+        "candidates": "Candidati",
+        "operations": "Operazioni",
+        "billing": "Fatturazione",
+        "reports": "Report"
+      },
+      "summary": {
+        "openPostings": "Annunci aperti",
+        "pendingApplications": "Candidature in attesa",
+        "actionRequired": "Azione richiesta"
+      },
+      "sections": {
+        "myPostings": "I miei annunci",
+        "candidateFlow": "Flusso candidati",
+        "loading": "Caricamento annunci...",
+        "emptyPostings": "Non ci sono ancora annunci attivi.",
+        "selectPosting": "Seleziona un annuncio per vedere il flusso candidati.",
+        "emptyApplications": "Nessuna candidatura trovata per questo annuncio.",
+        "headCount": "persone",
+        "fetchError": "Impossibile caricare i dati riepilogativi dell'azienda."
+      },
+      "postings": {
+        "filters": {
+          "all": "Tutti",
+          "open": "Aperti",
+          "draft": "Bozza",
+          "completed": "Completati"
+        },
+        "mode": {
+          "instant": "Turno immediato",
+          "planned": "Turno pianificato"
+        },
+        "detailTitle": "Dettaglio annuncio",
+        "detail": {
+          "pending": "In attesa",
+          "accepted": "Accettati",
+          "headCount": "Posti",
+          "status": "Stato"
+        },
+        "empty": "Nessun annuncio corrisponde al filtro selezionato."
+      },
+      "candidates": {
+        "title": "Flusso candidati",
+        "subtitle": "Monitora stato e punteggio di compatibilita per annuncio.",
+        "score": "Compatibilita",
+        "columns": {
+          "pending": "In attesa",
+          "accepted": "Accettati",
+          "rejected": "Rifiutati"
+        },
+        "empty": "Nessun record in questa colonna."
+      },
+      "operations": {
+        "title": "Operazioni QR e Turni",
+        "subtitle": "Segui verifica QR reciproca e code anomalie.",
+        "readOnly": "Questa sezione e in sola lettura fino all'integrazione delle API dedicate.",
+        "cards": {
+          "token": "Ciclo di vita token",
+          "checkin": "Stato check-in/check-out",
+          "anomaly": "Coda anomalie",
+          "supervisor": "Stato supervisor"
+        }
+      },
+      "billing": {
+        "title": "Fatture e pagamenti",
+        "filters": {
+          "all": "Tutti"
+        },
+        "period": "Periodo",
+        "total": "Totale",
+        "receivableStatus": {
+          "Invoiced": "Fatturato",
+          "PartiallyPaid": "Parzialmente pagato",
+          "Paid": "Pagato",
+          "Overdue": "Scaduto"
+        },
+        "payoutStatus": {
+          "Pending": "In attesa",
+          "Processing": "In lavorazione",
+          "Paid": "Pagato",
+          "Failed": "Fallito"
+        }
+      },
+      "reports": {
+        "title": "Report employer",
+        "subtitle": "Gestisci viste report con filtri per scope.",
+        "queueExport": "Accoda export",
+        "readOnly": "Il modulo report e in sola lettura nella prima consegna.",
+        "filters": {
+          "range": "Intervallo date",
+          "status": "Stato",
+          "category": "Categoria",
+          "location": "Posizione"
+        }
+      },
+      "fallback": {
+        "readOnlyData": "Endpoint dettaglio annuncio non disponibile. Mostrata vista riepilogo.",
+        "noBillingApi": "Endpoint Billing/Payout non ancora disponibili. Mostrati dati esempio in sola lettura."
+      },
       "cards": {
         "postings": {
           "title": "Annunci aperti",
@@ -157,17 +369,54 @@
       "title": "Dashboard amministratore",
       "subtitle": "Gestisci utenti di sistema, approvazioni e sicurezza da un unico pannello.",
       "sidebar": {
-        "overview": "Panoramica",
+        "overview": "Pannello di Controllo",
+        "employers": "Datori di Lavoro",
+        "candidates": "Candidati",
+        "userGroups": "Gruppi Utente",
         "users": "Utenti",
-        "approvals": "Approvazioni",
-        "security": "Sicurezza",
-        "createAdmin": "Crea admin"
+        "createAdmin": "Crea admin",
+        "closeAria": "Chiudi barra laterale"
       },
       "summary": {
         "loading": "Caricamento...",
         "fetchError": "Impossibile caricare i riepiloghi dagli endpoint. Mostrati valori di fallback."
       },
+      "grid": {
+        "rowsPerPage": "Righe per pagina",
+        "prev": "Precedente",
+        "next": "Successiva",
+        "pageLabel": "Pagina {{page}} / {{total}}",
+        "columns": {
+          "employerName": "Datore",
+          "taxNo": "Partita IVA",
+          "status": "Stato",
+          "actions": "Azioni",
+          "contact": "Contatto",
+          "workerId": "ID lavoratore",
+          "fullName": "Nome e cognome",
+          "systemUserId": "ID utente sistema",
+          "email": "Email"
+        }
+      },
       "cards": {
+        "activeLabel": "Attivo",
+        "totalLabel": "Totale",
+        "employers": {
+          "title": "Datori di lavoro",
+          "short": "Datori"
+        },
+        "candidates": {
+          "title": "Candidati",
+          "short": "Candidati"
+        },
+        "postings": {
+          "title": "Annunci di lavoro",
+          "short": "Annunci"
+        },
+        "applications": {
+          "title": "Candidature di lavoro",
+          "short": "Candidature"
+        },
         "systemUsers": {
           "title": "Utenti sistema totali",
           "value": "1.248",
@@ -187,6 +436,7 @@
       "statistics": {
         "title": "Statistiche dettagliate",
         "subtitle": "Metriche di panoramica dashboard",
+        "trendTitle": "Vista trend operativo",
         "groups": {
           "candidateStatus": "Stato candidati",
           "employerStatus": "Stato aziende",
@@ -211,17 +461,42 @@
           "title": "Panoramica sistema",
           "body": "Monitora stato corrente, trend live e KPI critici della piattaforma da questa sezione."
         },
+        "employers": {
+          "body": "Schermata riepilogativa per filtrare e controllare rapidamente i record dei datori di lavoro."
+        },
+        "candidates": {
+          "title": "Dettaglio gestione candidati",
+          "body": "Recupera candidati per ID e filtra per nazionalita, universita e tag competenze."
+        },
         "users": {
           "title": "Dettaglio gestione utenti",
-          "body": "Filtra utenti per tipo, sospendi o riattiva account e controlla gli eventi operativi."
+          "body": "Filtra per email, tipo e stato account; nel dettaglio puoi sospendere, riattivare, bloccare o aggiornare la password."
         },
-        "approvals": {
-          "title": "Dettaglio coda approvazioni",
-          "body": "Valuta le approvazioni in attesa per priorita e segui lo storico di processo."
+        "userGroups": {
+          "title": "Gestione gruppi utente",
+          "body": "Elenca i gruppi con filtri su nome, attivo e sistema; nel dettaglio gestisci attivazione, disattivazione e permessi."
+        }
+      },
+      "detail": {
+        "breadcrumbAria": "Percorso",
+        "backAria": "Torna alla lista",
+        "actions": {
+          "save": "Salva",
+          "delete": "Elimina",
+          "close": "Chiudi",
+          "processing": "Elaborazione...",
+          "saving": "Salvataggio...",
+          "deleting": "Eliminazione..."
         },
-        "security": {
-          "title": "Dettaglio sicurezza e conformita",
-          "body": "Analizza attivita sospette, cambi password e policy di accesso da questo pannello."
+        "feedback": {
+          "saveSuccess": "Modifiche salvate.",
+          "saveError": "Salvataggio non riuscito.",
+          "deleteSuccess": "Record rimosso.",
+          "deleteError": "Eliminazione non riuscita.",
+          "deleteConfirm": "Sei sicuro di voler eliminare?"
+        },
+        "validation": {
+          "nothingToSave": "Nessuna modifica selezionata da salvare."
         }
       },
       "register": {
@@ -256,6 +531,184 @@
         "passwordResetSuccess": "Password utente aggiornata.",
         "approvalQuerySuccess": "Elencate {{count}} candidature.",
         "genericError": "Operazione non riuscita."
+      },
+      "employers": {
+        "filters": {
+          "id": "ID datore di lavoro",
+          "name": "Filtra per nome datore",
+          "allStatuses": "Tutti gli stati",
+          "search": "Carica elenco",
+          "searching": "Caricamento...",
+          "searchText": "Cerca nome / P.IVA",
+          "commissionMin": "Commissione min",
+          "commissionMax": "Commissione max"
+        },
+        "invalidId": "Inserisci un ID datore valido.",
+        "fetchSuccess": "Datore #{{id}} elencato.",
+        "fetchError": "Impossibile caricare i dati del datore.",
+        "empty": "Lista vuota. Cerca un datore per ID e filtra i risultati nella griglia.",
+        "taxNo": "Partita IVA",
+        "columns": {
+          "id": "ID",
+          "commission": "Commissione"
+        },
+        "list": {
+          "fetchSuccess": "Elencati {{count}} datori di lavoro.",
+          "fetchError": "Impossibile caricare l'elenco datori.",
+          "empty": "Nessun risultato. Modifica i filtri."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "Impossibile caricare il dettaglio datore.",
+          "targetStatus": "Stato obiettivo",
+          "pendingNotSupported": "Passaggio a In attesa non supportato da questa schermata."
+        },
+        "status": {
+          "10": "In attesa",
+          "20": "Attivo",
+          "30": "Sospeso",
+          "90": "Bloccato"
+        }
+      },
+      "candidates": {
+        "filters": {
+          "id": "Nome candidato",
+          "email": "Filtra per email",
+          "allStatuses": "Tutti gli stati",
+          "search": "Carica candidato",
+          "searching": "Caricamento..."
+        },
+        "fetchSuccess": "{{count}} candidati elencati.",
+        "fetchError": "Impossibile caricare i dati del candidato.",
+        "empty": "La lista candidati e vuota o nessun record corrisponde al filtro.",
+        "status": {
+          "0": "In attesa",
+          "10": "Attivo",
+          "20": "Sospeso",
+          "30": "Bloccato"
+        },
+        "actions": {
+          "edit": "Modifica",
+          "delete": "Elimina",
+          "deleteConfirm": "Sei sicuro di voler eliminare?",
+          "deleteSuccess": "Candidato #{{id}} eliminato con successo.",
+          "deleteError": "Impossibile eliminare il candidato.",
+          "editClicked": "Azione modifica attivata per il candidato #{{id}}.",
+          "deleteClicked": "Azione elimina attivata per il candidato #{{id}}."
+        },
+        "card": {
+          "workerId": "Candidato #{{id}}",
+          "systemUserId": "Utente di sistema: #{{id}}",
+          "nationality": "Nazionalita: {{value}}",
+          "university": "Universita: {{value}}",
+          "notAvailable": "Non specificato",
+          "noSkills": "Nessuna competenza registrata"
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "Impossibile caricare il dettaglio candidato.",
+          "lifecycle": "Azione account",
+          "lifecycleNone": "Non modificare lo stato account",
+          "skillTag": "Aggiungi tag competenza",
+          "systemUserEmail": "Email utente di sistema",
+          "systemUserPhone": "Telefono utente di sistema",
+          "skillsTitle": "Competenze",
+          "languagesTitle": "Lingue",
+          "educationTitle": "Formazione",
+          "experienceTitle": "Esperienze",
+          "emptySkills": "Nessuna competenza",
+          "emptyLanguages": "Nessuna lingua",
+          "emptyEducations": "Nessuna formazione",
+          "emptyExperiences": "Nessuna esperienza",
+          "current": "Attuale",
+          "tabs": {
+            "overview": "Panoramica",
+            "profile": "Profilo",
+            "actions": "Azioni"
+          },
+          "accountActionTitle": "Azioni stato account",
+          "accountActionHint": "Quando selezioni un'azione, viene richiesta conferma e la richiesta parte subito.",
+          "accountActionConfirm": "Confermi di voler aggiornare lo stato account del candidato {{candidate}} a {{action}}?",
+          "accountActionLabels": {
+            "suspend": "Sospendi",
+            "reactivate": "Riattiva",
+            "ban": "Blocca"
+          },
+          "accountActionSuccess": "Stato account aggiornato a {{action}}.",
+          "accountActionError": "Aggiornamento stato account non riuscito per {{action}}."
+        }
+      },
+      "userGroups": {
+        "bool": {
+          "yes": "Si",
+          "no": "No"
+        },
+        "columns": {
+          "id": "ID",
+          "name": "Nome gruppo",
+          "level": "Livello",
+          "isActive": "Attivo",
+          "isSystem": "Sistema"
+        },
+        "filters": {
+          "searchName": "Cerca nome gruppo",
+          "activeAll": "Attivo (tutti)",
+          "systemAll": "Gruppo sistema (tutti)"
+        },
+        "summary": {
+          "activeRows": "Attivi in questa pagina",
+          "systemRows": "Sistema in questa pagina",
+          "pageRows": "Righe in questa pagina"
+        },
+        "list": {
+          "fetchSuccess": "Elencati {{count}} gruppi.",
+          "fetchError": "Impossibile caricare l'elenco gruppi.",
+          "empty": "Nessun risultato."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "activeState": "Stato attivo",
+          "invalidPermissionId": "Inserisci un ID permesso valido.",
+          "permissions": {
+            "title": "Aggiungi permesso",
+            "permissionId": "ID permesso",
+            "effect": "Effetto"
+          }
+        },
+        "effect": {
+          "allow": "Consenti",
+          "deny": "Nega"
+        }
+      },
+      "users": {
+        "columns": {
+          "id": "ID",
+          "email": "Email",
+          "type": "Tipo",
+          "status": "Stato"
+        },
+        "type": {
+          "10": "Admin",
+          "20": "Datore",
+          "30": "Candidato"
+        },
+        "filters": {
+          "searchEmail": "Cerca email",
+          "typeAll": "Tutti i tipi"
+        },
+        "summary": {
+          "adminRows": "Admin in questa pagina",
+          "pageRows": "Righe in questa pagina"
+        },
+        "list": {
+          "fetchSuccess": "Elencati {{count}} utenti.",
+          "fetchError": "Impossibile caricare l'elenco utenti.",
+          "empty": "Nessun risultato."
+        },
+        "detail": {
+          "title": "{{email}} (#{{id}})",
+          "passwordOptional": "Nuova password (opzionale, min 6 caratteri)"
+        }
       }
     }
   },

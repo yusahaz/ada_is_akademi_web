@@ -1,4 +1,6 @@
 import { getApiClient } from './client'
+import { API_ENDPOINTS } from './endpoints'
+import type { JobPostingStatus } from './enums'
 
 export type CancelJobPostingCommand = {
   jobPostingId: number
@@ -71,7 +73,7 @@ export type JobPostingDetail = {
   id: number
   title: string
   description: string
-  status: number
+  status: JobPostingStatus
   employerId: number
   employerLocationId: number
   jobCategoryId: number
@@ -91,70 +93,70 @@ const client = getApiClient()
 export const jobPostingsApi = {
   cancel(body: CancelJobPostingCommand) {
     return client.post<null, CancelJobPostingCommand>(
-      'JobPostings/Cancel',
+      API_ENDPOINTS.jobPostings.cancel,
       body,
       true,
     )
   },
   complete(body: CompleteJobPostingCommand) {
     return client.post<null, CompleteJobPostingCommand>(
-      'JobPostings/Complete',
+      API_ENDPOINTS.jobPostings.complete,
       body,
       true,
     )
   },
   create(body: CreateJobPostingCommand) {
     return client.post<number, CreateJobPostingCommand>(
-      'JobPostings/Create',
+      API_ENDPOINTS.jobPostings.create,
       body,
       true,
     )
   },
   addSkill(body: AddJobPostingSkillCommand) {
     return client.post<number, AddJobPostingSkillCommand>(
-      'JobPostings/AddSkill',
+      API_ENDPOINTS.jobPostings.addSkill,
       body,
       true,
     )
   },
   listOpen(body: ListOpenJobPostingsQuery = {}) {
     return client.post<JobPostingSummary[], ListOpenJobPostingsQuery>(
-      'JobPostings/ListOpen',
+      API_ENDPOINTS.jobPostings.listOpen,
       body,
       false,
     )
   },
   listByEmployer(body: ListJobPostingsByEmployerIdQuery = {}) {
     return client.post<JobPostingSummary[], ListJobPostingsByEmployerIdQuery>(
-      'JobPostings/ListByEmployer',
+      API_ENDPOINTS.jobPostings.listByEmployer,
       body,
       true,
     )
   },
   getById(body: GetJobPostingByIdQuery) {
     return client.post<JobPostingDetail, GetJobPostingByIdQuery>(
-      'JobPostings/GetById',
+      API_ENDPOINTS.jobPostings.getById,
       body,
       false,
     )
   },
   publish(body: PublishJobPostingCommand) {
     return client.post<null, PublishJobPostingCommand>(
-      'JobPostings/Publish',
+      API_ENDPOINTS.jobPostings.publish,
       body,
       true,
     )
   },
   removeSkill(body: RemoveJobPostingSkillCommand) {
     return client.post<null, RemoveJobPostingSkillCommand>(
-      'JobPostings/RemoveSkill',
+      API_ENDPOINTS.jobPostings.removeSkill,
       body,
       true,
     )
   },
   update(body: UpdateJobPostingCommand) {
     return client.put<null, UpdateJobPostingCommand>(
-      'JobPostings/Update',
+      API_ENDPOINTS.jobPostings.update,
       body,
       true,
     )

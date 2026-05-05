@@ -1,0 +1,689 @@
+{
+  "comparedAt": "2026-05-05T14:38:41.343Z",
+  "openApiSource": "http://localhost:15080/openapi/v1.json",
+  "baselineExists": true,
+  "stats": {
+    "breaking": 0,
+    "attention": 0,
+    "safe": 42,
+    "usedEndpointCalls": 42
+  },
+  "usedEndpoints": [
+    {
+      "file": "src\\api\\admin-dashboard.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.statistics.overview",
+      "resolvedPath": "Statistics/Overview"
+    },
+    {
+      "file": "src\\api\\auth.ts",
+      "method": "POST",
+      "pathArg": "ensurePath(registerAdminPath)",
+      "resolvedPath": "SystemUsers/RegisterAdmin"
+    },
+    {
+      "file": "src\\api\\auth.ts",
+      "method": "POST",
+      "pathArg": "ensurePath(registerEmployerPath)",
+      "resolvedPath": "SystemUsers/RegisterEmployer"
+    },
+    {
+      "file": "src\\api\\auth.ts",
+      "method": "POST",
+      "pathArg": "ensurePath(registerWorkerPath)",
+      "resolvedPath": "SystemUsers/RegisterWorker"
+    },
+    {
+      "file": "src\\api\\employers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.employers.activate",
+      "resolvedPath": "Employers/Activate"
+    },
+    {
+      "file": "src\\api\\employers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.employers.ban",
+      "resolvedPath": "Employers/Ban"
+    },
+    {
+      "file": "src\\api\\employers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.employers.getById",
+      "resolvedPath": "Employers/GetById"
+    },
+    {
+      "file": "src\\api\\employers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.employers.list",
+      "resolvedPath": "Employers/List"
+    },
+    {
+      "file": "src\\api\\employers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.employers.suspend",
+      "resolvedPath": "Employers/Suspend"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.cancel",
+      "resolvedPath": "JobPostings/Cancel"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.complete",
+      "resolvedPath": "JobPostings/Complete"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.create",
+      "resolvedPath": "JobPostings/Create"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.addSkill",
+      "resolvedPath": "JobPostings/AddSkill"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.listOpen",
+      "resolvedPath": "JobPostings/ListOpen"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.listByEmployer",
+      "resolvedPath": "JobPostings/ListByEmployer"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.getById",
+      "resolvedPath": "JobPostings/GetById"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.publish",
+      "resolvedPath": "JobPostings/Publish"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobPostings.removeSkill",
+      "resolvedPath": "JobPostings/RemoveSkill"
+    },
+    {
+      "file": "src\\api\\job-postings.ts",
+      "method": "PUT",
+      "pathArg": "API_ENDPOINTS.jobPostings.update",
+      "resolvedPath": "JobPostings/Update"
+    },
+    {
+      "file": "src\\api\\job-applications.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobApplications.accept",
+      "resolvedPath": "JobApplications/Accept"
+    },
+    {
+      "file": "src\\api\\job-applications.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobApplications.list",
+      "resolvedPath": "JobApplications/List"
+    },
+    {
+      "file": "src\\api\\job-applications.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobApplications.reject",
+      "resolvedPath": "JobApplications/Reject"
+    },
+    {
+      "file": "src\\api\\job-applications.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobApplications.submit",
+      "resolvedPath": "JobApplications/Submit"
+    },
+    {
+      "file": "src\\api\\job-applications.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.jobApplications.withdraw",
+      "resolvedPath": "JobApplications/Withdraw"
+    },
+    {
+      "file": "src\\api\\system-user-groups.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUserGroups.activate",
+      "resolvedPath": "SystemUserGroups/Activate"
+    },
+    {
+      "file": "src\\api\\system-user-groups.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUserGroups.addPermission",
+      "resolvedPath": "SystemUserGroups/AddPermission"
+    },
+    {
+      "file": "src\\api\\system-user-groups.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUserGroups.deactivate",
+      "resolvedPath": "SystemUserGroups/Deactivate"
+    },
+    {
+      "file": "src\\api\\system-user-groups.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUserGroups.list",
+      "resolvedPath": "SystemUserGroups/List"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.ban",
+      "resolvedPath": "SystemUsers/Ban"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.changePassword",
+      "resolvedPath": "SystemUsers/ChangePassword"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.login",
+      "resolvedPath": "SystemUsers/Login"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.list",
+      "resolvedPath": "SystemUsers/List"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.me",
+      "resolvedPath": "SystemUsers/Me"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.reactivate",
+      "resolvedPath": "SystemUsers/Reactivate"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.refreshToken",
+      "resolvedPath": "SystemUsers/RefreshToken"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.requestEmailVerification",
+      "resolvedPath": "SystemUsers/RequestEmailVerification"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.suspend",
+      "resolvedPath": "SystemUsers/Suspend"
+    },
+    {
+      "file": "src\\api\\system-users.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.systemUsers.verifyEmail",
+      "resolvedPath": "SystemUsers/VerifyEmail"
+    },
+    {
+      "file": "src\\api\\workers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.workers.addSkill",
+      "resolvedPath": "Workers/AddSkill"
+    },
+    {
+      "file": "src\\api\\workers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.workers.getDetail",
+      "resolvedPath": "Workers/GetDetail"
+    },
+    {
+      "file": "src\\api\\workers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.workers.getById",
+      "resolvedPath": "Workers/GetById"
+    },
+    {
+      "file": "src\\api\\workers.ts",
+      "method": "POST",
+      "pathArg": "API_ENDPOINTS.workers.list",
+      "resolvedPath": "Workers/List"
+    }
+  ],
+  "breaking": [],
+  "attention": [],
+  "safe": [
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\admin-dashboard.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.statistics.overview",
+        "resolvedPath": "Statistics/Overview"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\auth.ts",
+        "method": "POST",
+        "pathArg": "ensurePath(registerAdminPath)",
+        "resolvedPath": "SystemUsers/RegisterAdmin"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\auth.ts",
+        "method": "POST",
+        "pathArg": "ensurePath(registerEmployerPath)",
+        "resolvedPath": "SystemUsers/RegisterEmployer"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\auth.ts",
+        "method": "POST",
+        "pathArg": "ensurePath(registerWorkerPath)",
+        "resolvedPath": "SystemUsers/RegisterWorker"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\employers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.employers.activate",
+        "resolvedPath": "Employers/Activate"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\employers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.employers.ban",
+        "resolvedPath": "Employers/Ban"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\employers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.employers.getById",
+        "resolvedPath": "Employers/GetById"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\employers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.employers.list",
+        "resolvedPath": "Employers/List"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\employers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.employers.suspend",
+        "resolvedPath": "Employers/Suspend"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.cancel",
+        "resolvedPath": "JobPostings/Cancel"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.complete",
+        "resolvedPath": "JobPostings/Complete"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.create",
+        "resolvedPath": "JobPostings/Create"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.addSkill",
+        "resolvedPath": "JobPostings/AddSkill"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.listOpen",
+        "resolvedPath": "JobPostings/ListOpen"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.listByEmployer",
+        "resolvedPath": "JobPostings/ListByEmployer"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.getById",
+        "resolvedPath": "JobPostings/GetById"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.publish",
+        "resolvedPath": "JobPostings/Publish"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobPostings.removeSkill",
+        "resolvedPath": "JobPostings/RemoveSkill"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-postings.ts",
+        "method": "PUT",
+        "pathArg": "API_ENDPOINTS.jobPostings.update",
+        "resolvedPath": "JobPostings/Update"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-applications.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobApplications.accept",
+        "resolvedPath": "JobApplications/Accept"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-applications.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobApplications.list",
+        "resolvedPath": "JobApplications/List"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-applications.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobApplications.reject",
+        "resolvedPath": "JobApplications/Reject"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-applications.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobApplications.submit",
+        "resolvedPath": "JobApplications/Submit"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\job-applications.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.jobApplications.withdraw",
+        "resolvedPath": "JobApplications/Withdraw"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-user-groups.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUserGroups.activate",
+        "resolvedPath": "SystemUserGroups/Activate"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-user-groups.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUserGroups.addPermission",
+        "resolvedPath": "SystemUserGroups/AddPermission"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-user-groups.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUserGroups.deactivate",
+        "resolvedPath": "SystemUserGroups/Deactivate"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-user-groups.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUserGroups.list",
+        "resolvedPath": "SystemUserGroups/List"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.ban",
+        "resolvedPath": "SystemUsers/Ban"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.changePassword",
+        "resolvedPath": "SystemUsers/ChangePassword"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.login",
+        "resolvedPath": "SystemUsers/Login"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.list",
+        "resolvedPath": "SystemUsers/List"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.me",
+        "resolvedPath": "SystemUsers/Me"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.reactivate",
+        "resolvedPath": "SystemUsers/Reactivate"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.refreshToken",
+        "resolvedPath": "SystemUsers/RefreshToken"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.requestEmailVerification",
+        "resolvedPath": "SystemUsers/RequestEmailVerification"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.suspend",
+        "resolvedPath": "SystemUsers/Suspend"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\system-users.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.systemUsers.verifyEmail",
+        "resolvedPath": "SystemUsers/VerifyEmail"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\workers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.workers.addSkill",
+        "resolvedPath": "Workers/AddSkill"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "NEW_OR_UNTRACKED",
+      "endpoint": {
+        "file": "src\\api\\workers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.workers.getDetail",
+        "resolvedPath": "Workers/GetDetail"
+      },
+      "message": "Endpoint exists in current OpenAPI but not in baseline with same method."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\workers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.workers.getById",
+        "resolvedPath": "Workers/GetById"
+      },
+      "message": "No request/response schema ref change detected."
+    },
+    {
+      "type": "UNCHANGED",
+      "endpoint": {
+        "file": "src\\api\\workers.ts",
+        "method": "POST",
+        "pathArg": "API_ENDPOINTS.workers.list",
+        "resolvedPath": "Workers/List"
+      },
+      "message": "No request/response schema ref change detected."
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import {
   IconCheck,
   IconChevronDown,
   IconGlobe,
+  IconLogout,
   IconMoon,
   IconSun,
 } from './icons'
@@ -23,9 +24,16 @@ import {
 type NavbarProps = {
   onAuthAction?: () => void
   authLabel?: string
+  onSidebarToggle?: () => void
+  showSidebarToggle?: boolean
 }
 
-export function Navbar({ onAuthAction, authLabel }: NavbarProps) {
+export function Navbar({
+  onAuthAction,
+  authLabel,
+  onSidebarToggle,
+  showSidebarToggle = false,
+}: NavbarProps) {
   const { t, i18n } = useTranslation()
   const { theme, toggleTheme } = useTheme()
 
@@ -141,31 +149,75 @@ export function Navbar({ onAuthAction, authLabel }: NavbarProps) {
           : 'border-slate-300/80 bg-white/75'
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <a
-          href="#top"
-          className={`flex items-center gap-3 text-start no-underline ${
-            theme === 'dark' ? 'text-white' : 'text-slate-900'
-          }`}
-          aria-label={t('landing.nav.logoAria')}
-        >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#14f1d9]/15 ring-1 ring-[#14f1d9]/25">
-            <AdaLogoMark className="h-7 w-7 text-[#14f1d9]" />
-          </span>
-          <span className="font-display text-sm font-semibold tracking-tight sm:text-base">
-            {t('landing.nav.brand')}
-          </span>
-        </a>
+      <div className="mx-auto flex w-full items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <a
+            href="#top"
+            className={`flex items-center gap-3 text-start no-underline ${
+              theme === 'dark' ? 'text-white' : 'text-slate-900'
+            }`}
+            aria-label={t('landing.nav.logoAria')}
+          >
+            <span
+              className={`flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm ${
+                theme === 'dark'
+                  ? 'border-slate-600 bg-slate-900'
+                  : 'border-slate-200 bg-white'
+              }`}
+            >
+              <AdaLogoMark
+                className={`h-7 w-7 ${
+                  theme === 'dark' ? 'text-slate-100' : 'text-[#0b2a66]'
+                }`}
+              />
+            </span>
+            <span
+              className={`font-display text-sm font-semibold tracking-tight sm:text-base ${
+                theme === 'dark' ? 'text-white' : 'text-slate-800'
+              }`}
+            >
+              {t('landing.nav.brand')}
+            </span>
+          </a>
+
+          {showSidebarToggle ? (
+            <button
+              type="button"
+              onClick={onSidebarToggle}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition ${
+                theme === 'dark'
+                  ? 'text-white hover:bg-white/12'
+                  : 'text-slate-700 hover:bg-slate-100'
+              }`}
+              aria-label="Sidebar aç/kapat"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+                aria-hidden="true"
+              >
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
+            </button>
+          ) : null}
+        </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={toggleTheme}
-            className={`inline-flex h-10 items-center justify-center rounded-full border px-3 transition ${
+            className={`inline-flex h-10 items-center justify-center rounded-full px-3 transition ${
               theme === 'dark'
-                ? 'border-white/20 text-white hover:bg-white/10'
-                : 'border-slate-300 text-slate-700 hover:bg-slate-100'
-            }`}
+                ? 'text-white hover:bg-white/10'
+                : 'text-slate-700 hover:bg-slate-100'
+            } ${showSidebarToggle ? 'hidden' : ''}`}
             aria-label={t('landing.nav.themeToggleAria')}
             title={t('landing.nav.themeToggle')}
           >
@@ -176,7 +228,10 @@ export function Navbar({ onAuthAction, authLabel }: NavbarProps) {
             )}
           </button>
 
-          <div ref={containerRef} className="relative inline-flex">
+          <div
+            ref={containerRef}
+            className={`relative inline-flex ${showSidebarToggle ? 'hidden' : ''}`}
+          >
             <button
               ref={triggerRef}
               type="button"
@@ -309,14 +364,24 @@ export function Navbar({ onAuthAction, authLabel }: NavbarProps) {
           {onAuthAction ? (
             <button
               type="button"
-              className={`inline-flex h-11 items-center justify-center rounded-xl border px-4 text-sm font-semibold transition ${
-                theme === 'dark'
-                  ? 'border-white/20 text-white hover:border-white/35 hover:bg-white/5'
-                  : 'border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100'
-              }`}
+              className={`inline-flex h-11 items-center justify-center rounded-xl px-4 text-sm font-semibold transition ${
+                showSidebarToggle
+                  ? theme === 'dark'
+                    ? 'text-white hover:bg-white/10'
+                    : 'text-slate-700 hover:bg-slate-100'
+                  : theme === 'dark'
+                    ? 'border border-white/20 text-white hover:border-white/35 hover:bg-white/5'
+                    : 'border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100'
+              } ${showSidebarToggle ? 'hidden sm:inline-flex' : ''}`}
               onClick={onAuthAction}
+              aria-label={authLabel ?? t('landing.nav.login')}
+              title={authLabel ?? t('landing.nav.login')}
             >
-              {authLabel ?? t('landing.nav.login')}
+              {showSidebarToggle ? (
+                <IconLogout className="h-5 w-5" />
+              ) : (
+                (authLabel ?? t('landing.nav.login'))
+              )}
             </button>
           ) : (
             <a

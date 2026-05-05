@@ -11,6 +11,7 @@ export type AuthSession = AuthResult & {
 export type AuthContextValue = {
   session: AuthSession | null
   isAuthenticated: boolean
+  isHydrating: boolean
   signIn: (payload: {
     authResult: AuthResult
     audience: AuthAudience

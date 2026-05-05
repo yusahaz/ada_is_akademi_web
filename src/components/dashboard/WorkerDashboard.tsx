@@ -1,35 +1,29 @@
-import { useTranslation } from 'react-i18next'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { DashboardShell } from './DashboardShell'
-import { DashboardCard } from './DashboardCard'
-import { IconCheck, IconSpark, IconUsers } from '../landing/icons'
+import { WorkerShell } from '../../features/worker/WorkerShell'
+import { ApplicationsPage } from '../../features/worker/pages/ApplicationsPage'
+import { CvImportPage } from '../../features/worker/pages/CvImportPage'
+import { OverviewPage } from '../../features/worker/pages/OverviewPage'
+import { PayoutsPage } from '../../features/worker/pages/PayoutsPage'
+import { ProfilePage } from '../../features/worker/pages/ProfilePage'
+import { QrCheckPage } from '../../features/worker/pages/QrCheckPage'
+import { ReportsPage } from '../../features/worker/pages/ReportsPage'
+import { ShiftsPage } from '../../features/worker/pages/ShiftsPage'
 
 export function WorkerDashboard() {
-  const { t } = useTranslation()
-
   return (
-    <DashboardShell
-      titleKey="dashboard.worker.title"
-      subtitleKey="dashboard.worker.subtitle"
-    >
-      <DashboardCard
-        title={t('dashboard.worker.cards.applications.title')}
-        value={t('dashboard.worker.cards.applications.value')}
-        hint={t('dashboard.worker.cards.applications.hint')}
-        icon={<IconCheck className="h-4 w-4" />}
-      />
-      <DashboardCard
-        title={t('dashboard.worker.cards.shifts.title')}
-        value={t('dashboard.worker.cards.shifts.value')}
-        hint={t('dashboard.worker.cards.shifts.hint')}
-        icon={<IconUsers className="h-4 w-4" />}
-      />
-      <DashboardCard
-        title={t('dashboard.worker.cards.profile.title')}
-        value={t('dashboard.worker.cards.profile.value')}
-        hint={t('dashboard.worker.cards.profile.hint')}
-        icon={<IconSpark className="h-4 w-4" />}
-      />
-    </DashboardShell>
+    <WorkerShell>
+      <Routes>
+        <Route index element={<OverviewPage />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="cv-import" element={<CvImportPage />} />
+        <Route path="shifts" element={<ShiftsPage />} />
+        <Route path="applications" element={<ApplicationsPage />} />
+        <Route path="qr-check" element={<QrCheckPage />} />
+        <Route path="payouts" element={<PayoutsPage />} />
+        <Route path="reports" element={<ReportsPage />} />
+        <Route path="*" element={<Navigate to="/worker" replace />} />
+      </Routes>
+    </WorkerShell>
   )
 }

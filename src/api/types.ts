@@ -5,11 +5,14 @@ export type ApiFieldError = {
 }
 
 export type ApiEnvelope<TData> = {
-  success: boolean
+  success?: boolean
+  isSuccess?: boolean
   message: string | null
-  code: string | null
+  code?: string | null
+  errorCode?: string | null
   data: TData | null
-  fieldErrors: ApiFieldError[] | null
+  fieldErrors?: ApiFieldError[] | null
+  errors?: ApiFieldError[] | null
 }
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT'

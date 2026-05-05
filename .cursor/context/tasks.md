@@ -9,7 +9,77 @@
 
 ## Completed
 
+- [x] Build project-wide notification/toast infrastructure and provider wiring
+- [x] Redesign Candidates detail screen with professional tabbed sections
+- [x] Replace account action select with segmented action bar + confirm + immediate API call
+- [x] Analyze Admin dynamic grid + entity detail scope (list ↔ detail, lifecycle-only saves, no generic Update)
+- [x] Add `Employers/List`, `SystemUsers/List`, `SystemUserGroups/List` API wrappers + endpoint registry + exports (`PageableResult` / `normalizePageableList` pattern)
+- [x] Add `AdminEntityDetail` + `AdminFilterField` and per-entity `EmployersSection`, `CandidatesSection`, `UserGroupsSection`, `UsersSection`
+- [x] Refactor `AdminDashboard` into orchestrator (overview + sidebar + `createAdmin`); remove legacy inline approval/security/user-action forms superseded by detail flows
+- [x] i18n: `dashboard.admin.detail`, employers/userGroups/users/candidates detail copy + `grid.columns.actions` across tr/en/es/it/ru/ar (RTL-safe strings)
+- [x] Validate admin refactor with `npm run lint` + `npm run build`
+
+- [x] Restructure Employer dashboard into section-based panel shell (overview/postings/candidates/operations/billing/reports)
+- [x] Expand Employer postings and candidate flow surfaces with PRD-aligned filters, detail panels, and fallback behavior
+- [x] Add Employer operations, billing/payout, and read-only reporting sections without breaking existing role routing
+- [x] Extend Employer i18n keys for all supported locales (tr/en/es/it/ru/ar) including section navigation and fallback states
+- [x] Analyze worker PRD scope and break post-login flow into route-based web modules
+- [x] Add worker multi-route shell architecture without breaking existing admin/employer surfaces
+- [x] Implement worker screens (overview, profile, CV import, shifts, applications, QR, payouts, reports)
+- [x] Add worker portal API adapter layer using existing wrappers with safe fallback models for missing backend coverage
+- [x] Add worker portal i18n keys across tr/en/es/it/ru/ar and validate responsive/RTL-friendly layout behavior
+- [x] Validate worker portal integration with lint and production build checks
+- [x] Run strict OpenAPI diff and inspect latest reports for enum contract changes
+- [x] Analyze Candidates summary structure and align Employers section UI with same pattern
+- [x] Implement shared summary-card layout for Candidates/Employers in Admin dashboard
+- [x] Update impacted API wrapper enum types and related UI mappings
+- [x] Re-run strict OpenAPI check until breaking count is zero
+- [x] Validate enum alignment with lint and build
+- [x] Refresh OpenAPI baseline after successful alignment
+- [x] Add server-controlled mode to `AdminDataGrid` for API-driven pagination/sort state
+- [x] Wire Candidates grid paging/search flow to `Workers/List` with API `offset/limit` calls
+- [x] Replace effect-driven candidate fetching with event-driven server fetch triggers to satisfy hook lint rules
+- [x] Validate server-side grid integration with lint
+- [x] Diagnose login failure when API returns `isSuccess: true` envelope
+- [x] Add backward-compatible API envelope normalization in shared client (`success` vs `isSuccess`)
+- [x] Validate auth login flow after envelope fix with lint
+- [x] Map `src/api` endpoint usages into centralized registry references for OpenAPI diffability
+- [x] Add localhost OpenAPI diff checker with baseline/report outputs under `tools/openapi`
+- [x] Add Cursor rule for `Apiyi Güncelledim` command flow (check -> fix -> validate -> baseline update)
+- [x] Validate OpenAPI automation with strict check + baseline refresh + lint + build
+- [x] Analyze Admin "Candidates" menu UX flow/state and align with existing panel shell
+- [x] Implement Candidates section content with worker query + responsive candidate cards
+- [x] Add i18n keys for Candidates section in all supported locales (tr/en/es/it/ru/ar)
+- [x] Validate admin dashboard changes with lint
+- [x] Integrate Admin Candidates list with Workers API (`Workers/List`) and live search submit flow
+- [x] Auto-load candidate rows on Candidates section open and hydrate cards via `Workers/GetById`
+- [x] Update candidate locale copy for API-driven list/filter behavior across all supported languages
+- [x] Validate API-driven candidates integration with lint
+- [x] Analyze reusable admin grid requirements (paging, sorting, summary-grid reuse scope)
+- [x] Build generic AdminDataGrid component with mobile-first responsive table shell
+- [x] Integrate AdminDataGrid into admin listing surfaces (Candidates and Employers)
+- [x] Add admin-grid i18n keys for all supported locales
+- [x] Add persistent Cursor rule to enforce AdminDataGrid usage for admin summary/list grids
+- [x] Validate admin grid refactor with lint
+- [x] Apply selected #1 brand logo style as SVG with dark/light support in Navbar and auth surfaces
+- [x] Build Employers menu summary screen with filters and employer grid cards
+- [x] Move hamburger next to logo and remove admin logout button border
+- [x] Update admin sidebar menu order to Control Panel, Employers, Candidates, User Groups, Users
+- [x] Move admin sidebar hamburger control into main header (desktop: logo-right, mobile: right side) and bind it to sidebar state
+- [x] Make Admin dashboard full-width with left-fixed collapsible sidebar and top hamburger (desktop + mobile)
+- [x] Reshape AdminDashboard UI shell to AdminLTE-like structure (dark fixed sidebar + top bar + boxed content)
+- [x] Reintroduce classic KPI summary row and panelized content blocks without breaking existing admin actions
+- [x] Validate updated admin layout on lint checks
+- [x] Update Admin panel sidebar menu labels to Employers/Candidates/User Groups/Users and reduce menu count to four
+- [x] Refactor AdminDashboard layout to classic admin panel shell (left sidebar + right content)
+- [x] Preserve existing admin actions/forms while applying new layout structure
+- [x] Validate classic admin layout changes with lint
+- [x] Define production Docker strategy for Vite app (build + static serve)
+- [x] Add Docker artifacts (`Dockerfile`, `.dockerignore`, nginx config)
+- [x] Validate containerization flow with local image build command
 - [x] Group admin overview statistics by domain (Aday/İşveren/İlan/Başvuru/Aktivasyon) with iconized cards and inline state counts
+- [x] Revise Admin overview KPI cards to Employer/Candidate/Job Posting/Application with Active and Total values
+- [x] Add lightweight trend/chart support area for admin overview cards without breaking existing layout
 - [x] Convert detailed statistics area into iconized reusable card blocks (`DashboardCard`) for consistent admin UI
 - [x] Render `/Statistics/Overview` metrics inside Admin dashboard as responsive detailed statistics grid
 - [x] Rework Admin dashboard mobile-first layout (sidebar actions grid, tighter spacing, responsive card flow)

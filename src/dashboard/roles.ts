@@ -1,10 +1,11 @@
 import type { AuthSession } from '../auth/auth-context'
+import { SystemUserType } from '../api'
 
 export type DashboardRole = 'worker' | 'employer' | 'admin'
 
-const DEFAULT_ADMIN_TYPES = [10]
-const DEFAULT_EMPLOYER_TYPES = [20]
-const DEFAULT_WORKER_TYPES = [30]
+const DEFAULT_ADMIN_TYPES = [SystemUserType.Admin]
+const DEFAULT_EMPLOYER_TYPES = [SystemUserType.Employer]
+const DEFAULT_WORKER_TYPES = [SystemUserType.Worker]
 
 function parseTypeList(rawValue: string | undefined): number[] {
   if (!rawValue) return []

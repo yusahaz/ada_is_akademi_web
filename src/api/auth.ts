@@ -1,5 +1,6 @@
 import { ApiError, getApiClient } from './client'
 import { API_ENDPOINTS } from './endpoints'
+import { DevicePlatform, SystemUserType } from './enums'
 import { systemUsersApi, type SystemUserToken } from './system-users'
 
 export type AuthAudience = 'individual' | 'corporate'
@@ -24,7 +25,7 @@ export type RegisterRole = 'worker' | 'employer' | 'admin'
 
 export type AuthResult = {
   systemUserId: number
-  systemUserType: number
+  systemUserType: SystemUserType
   accessToken: string
   accessTokenExpiresAt: string
   refreshToken: string
@@ -94,8 +95,7 @@ export function createAuthAdapter(): AuthAdapter {
     const phone = payload.phone ?? null
 
     if (role === 'admin') {
-      const path = ensurePath(registerAdminPath)
-      return client.post<AuthResult, Record<string, string | null>>(path, {
+      return client.post<AuthResult, Record<string, string | null>>(ensurePath(registerAdminPath), {
         email: payload.email,
         password: payload.password,
         firstName,
@@ -105,8 +105,7 @@ export function createAuthAdapter(): AuthAdapter {
     }
 
     if (role === 'employer') {
-      const path = ensurePath(registerEmployerPath)
-      return client.post<AuthResult, Record<string, string | null>>(path, {
+      return client.post<AuthResult, Record<string, string | null>>(ensurePath(registerEmployerPath), {
         email: payload.email,
         password: payload.password,
         firstName,
@@ -121,8 +120,7 @@ export function createAuthAdapter(): AuthAdapter {
       }, false)
     }
 
-    const path = ensurePath(registerWorkerPath)
-    return client.post<AuthResult, Record<string, string | null>>(path, {
+    return client.post<AuthResult, Record<string, string | null>>(ensurePath(registerWorkerPath), {
       email: payload.email,
       password: payload.password,
       firstName,
@@ -137,7 +135,9 @@ export function createAuthAdapter(): AuthAdapter {
 
     return {
       systemUserId: Number.isFinite(normalizedUserId) ? normalizedUserId : 0,
-      systemUserType: Number.isFinite(normalizedUserType) ? normalizedUserType : 0,
+      systemUserType: Number.isFinite(normalizedUserType)
+        ? (normalizedUserType as SystemUserType)
+        : SystemUserType.Worker,
       accessToken: token.accessToken,
       accessTokenExpiresAt: token.accessTokenExpiresAt,
       refreshToken: token.refreshToken,
@@ -152,7 +152,7 @@ export function createAuthAdapter(): AuthAdapter {
         password: payload.password,
         deviceIdentifier: 'web-browser',
         deviceToken: null,
-        platform: 0,
+        platform: DevicePlatform.Web,
       })
       return toAuthResult(token)
     },

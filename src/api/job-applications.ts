@@ -1,4 +1,6 @@
 import { getApiClient } from './client'
+import { API_ENDPOINTS } from './endpoints'
+import type { JobApplicationStatus } from './enums'
 
 export type AcceptJobPostingApplicationCommand = {
   jobPostingId: number
@@ -29,7 +31,7 @@ export type WithdrawJobPostingApplicationCommand = {
 export type JobApplicationListItem = {
   applicationId: number
   workerId: number
-  status: number
+  status: JobApplicationStatus
   appliedAt: string
   note: string | null
 }
@@ -39,35 +41,35 @@ const client = getApiClient()
 export const jobApplicationsApi = {
   accept(body: AcceptJobPostingApplicationCommand) {
     return client.post<null, AcceptJobPostingApplicationCommand>(
-      'JobApplications/Accept',
+      API_ENDPOINTS.jobApplications.accept,
       body,
       true,
     )
   },
   list(body: ListJobApplicationsByJobPostingIdQuery) {
     return client.post<JobApplicationListItem[], ListJobApplicationsByJobPostingIdQuery>(
-      'JobApplications/List',
+      API_ENDPOINTS.jobApplications.list,
       body,
       true,
     )
   },
   reject(body: RejectJobPostingApplicationCommand) {
     return client.post<null, RejectJobPostingApplicationCommand>(
-      'JobApplications/Reject',
+      API_ENDPOINTS.jobApplications.reject,
       body,
       true,
     )
   },
   submit(body: SubmitJobPostingApplicationCommand) {
     return client.post<number, SubmitJobPostingApplicationCommand>(
-      'JobApplications/Submit',
+      API_ENDPOINTS.jobApplications.submit,
       body,
       true,
     )
   },
   withdraw(body: WithdrawJobPostingApplicationCommand) {
     return client.post<null, WithdrawJobPostingApplicationCommand>(
-      'JobApplications/Withdraw',
+      API_ENDPOINTS.jobApplications.withdraw,
       body,
       true,
     )

@@ -114,6 +114,33 @@
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Başvurularını, yaklaşan vardiyalarını ve profil gücünü tek yerden yönet.",
+      "defaultName": "Aday",
+      "summary": {
+        "activeApplications": "Aktif başvuru",
+        "upcomingShifts": "Yaklaşan vardiya",
+        "profileScore": "Profil skoru"
+      },
+      "sections": {
+        "suggestedShifts": "Sana uygun vardiyalar",
+        "applicationAndPayment": "Başvuru ve ödeme durumu",
+        "loading": "Veriler yükleniyor...",
+        "emptyShifts": "Şu an önerilen vardiya bulunamadı.",
+        "fetchError": "Worker özet verileri alınamadı."
+      },
+      "status": {
+        "pending": {
+          "label": "Bekleyen başvuru",
+          "value": "İncelemede"
+        },
+        "accepted": {
+          "label": "Onaylanan vardiya",
+          "value": "Onaylandı"
+        },
+        "payment": {
+          "label": "Ödeme durumu",
+          "value": "Takipte"
+        }
+      },
       "cards": {
         "applications": {
           "title": "Aktif başvuru",
@@ -132,9 +159,194 @@
         }
       }
     },
+    "workerPortal": {
+      "title": "Worker Çalışma Alanı",
+      "subtitle": "Giriş sonrası profilini, vardiyalarını, QR akışını, ödemelerini ve raporlarını yönet.",
+      "nav": {
+        "overview": "Genel Bakış",
+        "profile": "Profil",
+        "cvImport": "CV Aktarımı",
+        "shifts": "Vardiyalar",
+        "applications": "Başvurular",
+        "qrCheck": "QR Kontrol",
+        "payouts": "Ödemeler",
+        "reports": "Raporlar"
+      },
+      "states": {
+        "loading": "Veriler yükleniyor...",
+        "empty": "Bu bölüm için kayıt bulunamadı.",
+        "fetchError": "Veriler alınamadı."
+      },
+      "overview": {
+        "monthlyEarnings": "Aylık kazanç",
+        "paidPayouts": "Tamamlanan ödeme",
+        "completedShifts": "Tamamlanan vardiya"
+      },
+      "profile": {
+        "basic": "Temel profil",
+        "fullName": "Ad Soyad: {{value}}",
+        "email": "E-posta: {{value}}",
+        "nationality": "Uyruk: {{value}}",
+        "university": "Üniversite: {{value}}",
+        "studentNumber": "Öğrenci no: {{value}}",
+        "skills": "Yetenek etiketleri"
+      },
+      "cv": {
+        "title": "CV Aktarım Akışı",
+        "description": "Çıkarım adımlarını takip et ve profiline yazmadan önce bölümleri onayla.",
+        "states": {
+          "uploaded": "Yüklendi",
+          "extracting": "Çözümleniyor",
+          "awaitingReview": "İnceleme bekleniyor",
+          "confirmed": "Onaylandı",
+          "failed": "Başarısız"
+        },
+        "currentState": "Güncel durum: {{state}}"
+      },
+      "shifts": {
+        "submit": "Vardiyaya başvur",
+        "submitting": "Başvuruluyor...",
+        "submitError": "Başvuru isteği başarısız oldu."
+      },
+      "applications": {
+        "status": {
+          "pending": "Bekliyor",
+          "accepted": "Kabul edildi",
+          "rejected": "Reddedildi",
+          "withdrawn": "Geri çekildi",
+          "expired": "Süresi doldu"
+        }
+      },
+      "qr": {
+        "title": "QR Check-in / Check-out",
+        "description": "Token doğrulama ve vardiya giriş durumunu bu alandan takip et.",
+        "actions": {
+          "validate": "Token doğrula",
+          "success": "Başarılıya al",
+          "fail": "Hata durumuna al"
+        },
+        "status": {
+          "idle": "Tarama bekleniyor.",
+          "validating": "Token ve konum doğrulanıyor.",
+          "success": "QR işlem akışı başarıyla tamamlandı.",
+          "failed": "Doğrulama başarısız. Tekrar dene."
+        }
+      },
+      "payouts": {
+        "status": {
+          "pending": "Bekliyor",
+          "processing": "İşleniyor",
+          "paid": "Ödendi",
+          "failed": "Başarısız"
+        },
+        "confirm": "Ödemeyi onayla",
+        "confirmed": "Ödeme onaylandı"
+      }
+    },
     "employer": {
       "title": "Employer Dashboard",
       "subtitle": "İlanlarını yayınla, aday akışını takip et ve operasyon metriklerini izle.",
+      "sectionsNav": {
+        "overview": "Genel Bakış",
+        "postings": "İlanlar",
+        "candidates": "Adaylar",
+        "operations": "Operasyon",
+        "billing": "Faturalama",
+        "reports": "Raporlar"
+      },
+      "summary": {
+        "openPostings": "Açık ilan",
+        "pendingApplications": "Bekleyen başvuru",
+        "actionRequired": "Aksiyon gereken"
+      },
+      "sections": {
+        "myPostings": "İlanlarım",
+        "candidateFlow": "Aday akışı",
+        "loading": "İlanlar yükleniyor...",
+        "emptyPostings": "Henüz aktif ilan bulunmuyor.",
+        "selectPosting": "Aday akışını görmek için bir ilan seç.",
+        "emptyApplications": "Bu ilan için başvuru bulunamadı.",
+        "headCount": "kişi",
+        "fetchError": "Employer özet verileri alınamadı."
+      },
+      "postings": {
+        "filters": {
+          "all": "Tümü",
+          "open": "Açık",
+          "draft": "Taslak",
+          "completed": "Tamamlandı"
+        },
+        "mode": {
+          "instant": "Anlık vardiya",
+          "planned": "Planlı vardiya"
+        },
+        "detailTitle": "İlan Detayı",
+        "detail": {
+          "pending": "Bekleyen",
+          "accepted": "Kabul edilen",
+          "headCount": "Kontenjan",
+          "status": "Durum"
+        },
+        "empty": "Filtreye uygun ilan bulunamadı."
+      },
+      "candidates": {
+        "title": "Aday Akışı",
+        "subtitle": "İlana göre adayları durum ve uygunluk skoruyla izle.",
+        "score": "Uygunluk",
+        "columns": {
+          "pending": "Bekleyen",
+          "accepted": "Kabul",
+          "rejected": "Red"
+        },
+        "empty": "Bu kolonda kayıt yok."
+      },
+      "operations": {
+        "title": "QR ve Vardiya Operasyonları",
+        "subtitle": "Mutual QR doğrulama ve anomali süreçlerini buradan takip et.",
+        "readOnly": "Bu alan API entegrasyonu tamamlanana kadar read-only gösterimdedir.",
+        "cards": {
+          "token": "Token Yaşam Döngüsü",
+          "checkin": "Check-in/Check-out Durumu",
+          "anomaly": "Anomali Kuyruğu",
+          "supervisor": "Supervisor Durumu"
+        }
+      },
+      "billing": {
+        "title": "Fatura ve Payout Takibi",
+        "filters": {
+          "all": "Tümü"
+        },
+        "period": "Dönem",
+        "total": "Toplam",
+        "receivableStatus": {
+          "Invoiced": "Faturalandı",
+          "PartiallyPaid": "Kısmi Ödendi",
+          "Paid": "Ödendi",
+          "Overdue": "Vadesi Geçti"
+        },
+        "payoutStatus": {
+          "Pending": "Bekliyor",
+          "Processing": "İşleniyor",
+          "Paid": "Ödendi",
+          "Failed": "Başarısız"
+        }
+      },
+      "reports": {
+        "title": "Employer Raporları",
+        "subtitle": "Scope tabanlı filtrelerle rapor görünümünü yönet.",
+        "queueExport": "Export Kuyruğuna Ekle",
+        "readOnly": "Raporlama ekranı ilk fazda read-only çalışır.",
+        "filters": {
+          "range": "Tarih Aralığı",
+          "status": "Durum",
+          "category": "Kategori",
+          "location": "Lokasyon"
+        }
+      },
+      "fallback": {
+        "readOnlyData": "Detay endpointi alınamadı. Özet görünüm ile devam ediliyor.",
+        "noBillingApi": "Billing/Payout endpointleri hazır olmadığından örnek veri ve read-only görünüm gösteriliyor."
+      },
       "cards": {
         "postings": {
           "title": "Açık ilan",
@@ -157,17 +369,54 @@
       "title": "Kontrol Paneli",
       "subtitle": "Sistem kullanıcılarını, onay süreçlerini ve güvenlik durumunu merkezi olarak yönet.",
       "sidebar": {
-        "overview": "Genel Bakış",
+        "overview": "Kontrol Paneli",
+        "employers": "İş Verenler",
+        "candidates": "Adaylar",
+        "userGroups": "Kullanıcı Grupları",
         "users": "Kullanıcılar",
-        "approvals": "Onaylar",
-        "security": "Güvenlik",
-        "createAdmin": "Admin Oluştur"
+        "createAdmin": "Admin Oluştur",
+        "closeAria": "Kenar panelini kapat"
       },
       "summary": {
         "loading": "Yükleniyor...",
         "fetchError": "Özet verileri endpointlerden alınamadı, varsayılan değerler gösteriliyor."
       },
+      "grid": {
+        "rowsPerPage": "Sayfa başına",
+        "prev": "Önceki",
+        "next": "Sonraki",
+        "pageLabel": "Sayfa {{page}} / {{total}}",
+        "columns": {
+          "employerName": "İş Veren",
+          "taxNo": "Vergi No",
+          "status": "Durum",
+          "actions": "Aksiyonlar",
+          "contact": "İletişim",
+          "workerId": "Aday ID",
+          "fullName": "Aday Adı Soyadı",
+          "systemUserId": "Sistem Kullanıcı ID",
+          "email": "E-posta"
+        }
+      },
       "cards": {
+        "activeLabel": "Aktif",
+        "totalLabel": "Toplam",
+        "employers": {
+          "title": "İş Veren",
+          "short": "İş Veren"
+        },
+        "candidates": {
+          "title": "Aday",
+          "short": "Aday"
+        },
+        "postings": {
+          "title": "İş İlanları",
+          "short": "İlan"
+        },
+        "applications": {
+          "title": "İş Başvuruları",
+          "short": "Başvuru"
+        },
         "systemUsers": {
           "title": "Toplam sistem kullanıcısı",
           "value": "1.248",
@@ -187,6 +436,7 @@
       "statistics": {
         "title": "Detaylı İstatistikler",
         "subtitle": "Dashboard genel görünüm metrikleri",
+        "trendTitle": "Operasyon Trend Görünümü",
         "groups": {
           "candidateStatus": "Aday Durumu",
           "employerStatus": "İşveren Durumu",
@@ -211,17 +461,42 @@
           "title": "Sistem Genel Özeti",
           "body": "Bu alanda platformun güncel durumunu, anlık trendlerini ve kritik KPI metriklerini takip edebilirsin."
         },
+        "employers": {
+          "body": "İş veren kayıtlarını filtreleyip hızlıca inceleyebileceğin özet liste ekranı."
+        },
+        "candidates": {
+          "title": "Aday Yönetimi Detayı",
+          "body": "Aday kayıtlarını ID ile çağırabilir, milliyet, üniversite ve yetenek etiketine göre filtreleyebilirsin."
+        },
         "users": {
           "title": "Kullanıcı Yönetimi Detayı",
-          "body": "Sistem kullanıcılarını tip bazında filtreleyebilir, durumu askıya alma veya yeniden aktive etme işlemlerini buradan yönetebilirsin."
+          "body": "Sistem kullanıcılarını e-posta, tip ve hesap durumuna göre filtreleyebilir; düzenle ile detayda askıya alma, aktifleştirme, yasaklama ve şifre güncelleme işlemlerini yapabilirsin."
         },
-        "approvals": {
-          "title": "Onay Kuyruğu Detayı",
-          "body": "Bekleyen onayları öncelik sırasına göre değerlendirip işlem geçmişini izleyebileceğin operasyon ekranı."
+        "userGroups": {
+          "title": "Kullanıcı Grupları Yönetimi",
+          "body": "Grupları ad, aktiflik ve sistem grubu filtreleriyle listeleyebilir; detayda aktifleştirme, pasifleştirme ve izin ekleme işlemlerini yönetebilirsin."
+        }
+      },
+      "detail": {
+        "breadcrumbAria": "Sayfa konumu",
+        "backAria": "Önceki ekrana dön",
+        "actions": {
+          "save": "Kaydet",
+          "delete": "Sil",
+          "close": "Kapat",
+          "processing": "İşleniyor...",
+          "saving": "Kaydediliyor...",
+          "deleting": "Siliniyor..."
         },
-        "security": {
-          "title": "Güvenlik ve Uyum Detayı",
-          "body": "Şüpheli hareketler, parola değişiklikleri ve erişim politikalarıyla ilgili kayıtları bu panelden inceleyebilirsin."
+        "feedback": {
+          "saveSuccess": "Değişiklikler kaydedildi.",
+          "saveError": "Kaydetme sırasında hata oluştu.",
+          "deleteSuccess": "Kayıt silindi.",
+          "deleteError": "Silme sırasında hata oluştu.",
+          "deleteConfirm": "Silmek istediğinize emin misiniz?"
+        },
+        "validation": {
+          "nothingToSave": "Kaydedilecek bir değişiklik seçilmedi."
         }
       },
       "register": {
@@ -256,6 +531,184 @@
         "passwordResetSuccess": "Kullanıcı şifresi güncellendi.",
         "approvalQuerySuccess": "{{count}} başvuru kaydı listelendi.",
         "genericError": "İşlem sırasında hata oluştu."
+      },
+      "employers": {
+        "filters": {
+          "id": "İş Veren ID",
+          "name": "İş Veren adı ile filtrele",
+          "allStatuses": "Tüm durumlar",
+          "search": "Listeyi getir",
+          "searching": "Getiriliyor...",
+          "searchText": "Ad / vergi no ara",
+          "commissionMin": "Komisyon min",
+          "commissionMax": "Komisyon max"
+        },
+        "invalidId": "Geçerli bir İş Veren ID gir.",
+        "fetchSuccess": "İş Veren #{{id}} listelendi.",
+        "fetchError": "İş Veren bilgisi alınamadı.",
+        "empty": "Liste boş. ID ile İş Veren sorgulayıp grid üzerinde filtreleyebilirsin.",
+        "taxNo": "Vergi No",
+        "columns": {
+          "id": "ID",
+          "commission": "Komisyon"
+        },
+        "list": {
+          "fetchSuccess": "{{count}} iş veren listelendi.",
+          "fetchError": "İş veren listesi alınamadı.",
+          "empty": "Kayıt bulunamadı. Filtreleri değiştirip tekrar deneyin."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "İş veren detayı yüklenemedi.",
+          "targetStatus": "Hedef durum",
+          "pendingNotSupported": "Bu ekrandan Beklemede durumuna geçiş desteklenmiyor."
+        },
+        "status": {
+          "10": "Beklemede",
+          "20": "Aktif",
+          "30": "Askıda",
+          "90": "Yasaklı"
+        }
+      },
+      "candidates": {
+        "filters": {
+          "id": "Aday adı",
+          "email": "E-posta ile filtrele",
+          "allStatuses": "Tüm durumlar",
+          "search": "Aday getir",
+          "searching": "Getiriliyor..."
+        },
+        "fetchSuccess": "{{count}} aday listelendi.",
+        "fetchError": "Aday bilgisi alınamadı.",
+        "empty": "Aday listesi boş veya filtreye uygun sonuç bulunamadı.",
+        "status": {
+          "0": "Beklemede",
+          "10": "Aktif",
+          "20": "Askıda",
+          "30": "Yasaklı"
+        },
+        "actions": {
+          "edit": "Düzenle",
+          "delete": "Sil",
+          "deleteConfirm": "Silmek istediğinize emin misin?",
+          "deleteSuccess": "Aday #{{id}} başarıyla silindi.",
+          "deleteError": "Aday silinirken hata oluştu.",
+          "editClicked": "Aday #{{id}} için düzenle aksiyonu tetiklendi.",
+          "deleteClicked": "Aday #{{id}} için sil aksiyonu tetiklendi."
+        },
+        "card": {
+          "workerId": "Aday #{{id}}",
+          "systemUserId": "Sistem kullanıcı: #{{id}}",
+          "nationality": "Milliyet: {{value}}",
+          "university": "Üniversite: {{value}}",
+          "notAvailable": "Belirtilmedi",
+          "noSkills": "Yetenek kaydı yok"
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "Aday detayı yüklenemedi.",
+          "lifecycle": "Hesap aksiyonu",
+          "lifecycleNone": "Hesap durumunu değiştirme",
+          "skillTag": "Yetenek etiketi ekle",
+          "systemUserEmail": "Sistem kullanıcı e-posta",
+          "systemUserPhone": "Sistem kullanıcı telefon",
+          "skillsTitle": "Yetenekler",
+          "languagesTitle": "Diller",
+          "educationTitle": "Eğitimler",
+          "experienceTitle": "Deneyimler",
+          "emptySkills": "Yetenek kaydı yok",
+          "emptyLanguages": "Dil kaydı yok",
+          "emptyEducations": "Eğitim kaydı yok",
+          "emptyExperiences": "Deneyim kaydı yok",
+          "current": "Devam ediyor",
+          "tabs": {
+            "overview": "Genel Bakış",
+            "profile": "Profil",
+            "actions": "Aksiyonlar"
+          },
+          "accountActionTitle": "Hesap Durumu İşlemleri",
+          "accountActionHint": "Aksiyon seçtiğinizde onay alınır ve istek anında gönderilir.",
+          "accountActionConfirm": "{{candidate}} adayının hesap durumunu {{action}} olarak güncellemek istediğinize emin misiniz?",
+          "accountActionLabels": {
+            "suspend": "Askıya Al",
+            "reactivate": "Yeniden Aktifleştir",
+            "ban": "Yasakla"
+          },
+          "accountActionSuccess": "Hesap durumu {{action}} olarak güncellendi.",
+          "accountActionError": "Hesap durumu {{action}} işleminde hata oluştu."
+        }
+      },
+      "userGroups": {
+        "bool": {
+          "yes": "Evet",
+          "no": "Hayır"
+        },
+        "columns": {
+          "id": "ID",
+          "name": "Grup adı",
+          "level": "Seviye",
+          "isActive": "Aktif",
+          "isSystem": "Sistem"
+        },
+        "filters": {
+          "searchName": "Grup adı ara",
+          "activeAll": "Aktiflik (tümü)",
+          "systemAll": "Sistem grubu (tümü)"
+        },
+        "summary": {
+          "activeRows": "Bu sayfada aktif",
+          "systemRows": "Bu sayfada sistem",
+          "pageRows": "Bu sayfadaki satır"
+        },
+        "list": {
+          "fetchSuccess": "{{count}} grup listelendi.",
+          "fetchError": "Grup listesi alınamadı.",
+          "empty": "Kayıt bulunamadı."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "activeState": "Aktiflik",
+          "invalidPermissionId": "Geçerli bir izin ID girin.",
+          "permissions": {
+            "title": "İzin ekle",
+            "permissionId": "İzin ID",
+            "effect": "Etki"
+          }
+        },
+        "effect": {
+          "allow": "İzin ver",
+          "deny": "Reddet"
+        }
+      },
+      "users": {
+        "columns": {
+          "id": "ID",
+          "email": "E-posta",
+          "type": "Tip",
+          "status": "Durum"
+        },
+        "type": {
+          "10": "Admin",
+          "20": "İş Veren",
+          "30": "Aday"
+        },
+        "filters": {
+          "searchEmail": "E-posta ara",
+          "typeAll": "Tüm tipler"
+        },
+        "summary": {
+          "adminRows": "Bu sayfada admin",
+          "pageRows": "Bu sayfadaki satır"
+        },
+        "list": {
+          "fetchSuccess": "{{count}} kullanıcı listelendi.",
+          "fetchError": "Kullanıcı listesi alınamadı.",
+          "empty": "Kayıt bulunamadı."
+        },
+        "detail": {
+          "title": "{{email}} (#{{id}})",
+          "passwordOptional": "Yeni şifre (opsiyonel, min 6 karakter)"
+        }
       }
     }
   },

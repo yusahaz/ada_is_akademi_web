@@ -114,6 +114,33 @@
     "worker": {
       "title": "لوحة العامل",
       "subtitle": "تابع طلباتك والورديات القادمة وحالة ملفك من مكان واحد.",
+      "defaultName": "العامل",
+      "summary": {
+        "activeApplications": "الطلبات النشطة",
+        "upcomingShifts": "الورديات القادمة",
+        "profileScore": "تقييم الملف"
+      },
+      "sections": {
+        "suggestedShifts": "ورديات مقترحة",
+        "applicationAndPayment": "حالة الطلب والدفع",
+        "loading": "جار تحميل البيانات...",
+        "emptyShifts": "لا توجد ورديات مقترحة حاليا.",
+        "fetchError": "تعذر تحميل بيانات ملخص العامل."
+      },
+      "status": {
+        "pending": {
+          "label": "طلبات قيد الانتظار",
+          "value": "قيد المراجعة"
+        },
+        "accepted": {
+          "label": "ورديات معتمدة",
+          "value": "معتمد"
+        },
+        "payment": {
+          "label": "حالة الدفع",
+          "value": "قيد المتابعة"
+        }
+      },
       "cards": {
         "applications": {
           "title": "الطلبات النشطة",
@@ -132,9 +159,194 @@
         }
       }
     },
+    "workerPortal": {
+      "title": "مساحة العامل",
+      "subtitle": "أدر ملفك الشخصي والورديات وتدفق QR والمدفوعات والتقارير بعد تسجيل الدخول.",
+      "nav": {
+        "overview": "نظرة عامة",
+        "profile": "الملف الشخصي",
+        "cvImport": "استيراد السيرة الذاتية",
+        "shifts": "الورديات",
+        "applications": "الطلبات",
+        "qrCheck": "فحص QR",
+        "payouts": "المدفوعات",
+        "reports": "التقارير"
+      },
+      "states": {
+        "loading": "جار تحميل البيانات...",
+        "empty": "لا توجد سجلات لهذا القسم.",
+        "fetchError": "تعذر تحميل البيانات."
+      },
+      "overview": {
+        "monthlyEarnings": "الربح الشهري",
+        "paidPayouts": "المدفوعات المكتملة",
+        "completedShifts": "الورديات المكتملة"
+      },
+      "profile": {
+        "basic": "الملف الأساسي",
+        "fullName": "الاسم الكامل: {{value}}",
+        "email": "البريد الإلكتروني: {{value}}",
+        "nationality": "الجنسية: {{value}}",
+        "university": "الجامعة: {{value}}",
+        "studentNumber": "رقم الطالب: {{value}}",
+        "skills": "وسوم المهارات"
+      },
+      "cv": {
+        "title": "مسار استيراد السيرة الذاتية",
+        "description": "تابع حالة الاستخراج وأكد الأقسام قبل التطبيق.",
+        "states": {
+          "uploaded": "تم الرفع",
+          "extracting": "جار الاستخراج",
+          "awaitingReview": "بانتظار المراجعة",
+          "confirmed": "تم التأكيد",
+          "failed": "فشل"
+        },
+        "currentState": "الحالة الحالية: {{state}}"
+      },
+      "shifts": {
+        "submit": "التقديم على الوردية",
+        "submitting": "جار التقديم...",
+        "submitError": "فشل طلب التقديم."
+      },
+      "applications": {
+        "status": {
+          "pending": "قيد الانتظار",
+          "accepted": "مقبول",
+          "rejected": "مرفوض",
+          "withdrawn": "تم السحب",
+          "expired": "منتهي الصلاحية"
+        }
+      },
+      "qr": {
+        "title": "QR Check-in / Check-out",
+        "description": "استخدم هذه المنطقة لمتابعة تحقق الرمز وحالة الوردية.",
+        "actions": {
+          "validate": "تحقق من الرمز",
+          "success": "تعيين نجاح",
+          "fail": "تعيين فشل"
+        },
+        "status": {
+          "idle": "بانتظار المسح.",
+          "validating": "جار التحقق من الرمز والموقع.",
+          "success": "اكتمل تدفق QR بنجاح.",
+          "failed": "فشل التحقق. يلزم إعادة المحاولة."
+        }
+      },
+      "payouts": {
+        "status": {
+          "pending": "قيد الانتظار",
+          "processing": "قيد المعالجة",
+          "paid": "مدفوع",
+          "failed": "فشل"
+        },
+        "confirm": "تأكيد الدفعة",
+        "confirmed": "تم تأكيد الدفعة"
+      }
+    },
     "employer": {
       "title": "لوحة صاحب العمل",
       "subtitle": "انشر الوظائف، راقب تدفق المرشحين، وتابع مؤشرات التشغيل.",
+      "sectionsNav": {
+        "overview": "نظرة عامة",
+        "postings": "الإعلانات",
+        "candidates": "المرشحون",
+        "operations": "العمليات",
+        "billing": "الفوترة",
+        "reports": "التقارير"
+      },
+      "summary": {
+        "openPostings": "الوظائف المفتوحة",
+        "pendingApplications": "الطلبات المعلقة",
+        "actionRequired": "إجراء مطلوب"
+      },
+      "sections": {
+        "myPostings": "إعلاناتي",
+        "candidateFlow": "تدفق المرشحين",
+        "loading": "جار تحميل الإعلانات...",
+        "emptyPostings": "لا توجد إعلانات نشطة بعد.",
+        "selectPosting": "اختر إعلانا لعرض تدفق المرشحين.",
+        "emptyApplications": "لا توجد طلبات لهذا الإعلان.",
+        "headCount": "أشخاص",
+        "fetchError": "تعذر تحميل بيانات ملخص صاحب العمل."
+      },
+      "postings": {
+        "filters": {
+          "all": "الكل",
+          "open": "مفتوح",
+          "draft": "مسودة",
+          "completed": "مكتمل"
+        },
+        "mode": {
+          "instant": "وردية فورية",
+          "planned": "وردية مجدولة"
+        },
+        "detailTitle": "تفاصيل الإعلان",
+        "detail": {
+          "pending": "قيد الانتظار",
+          "accepted": "مقبول",
+          "headCount": "السعة",
+          "status": "الحالة"
+        },
+        "empty": "لا توجد إعلانات مطابقة للفلتر المحدد."
+      },
+      "candidates": {
+        "title": "تدفق المرشحين",
+        "subtitle": "تابع حالات المرشحين ونسبة المطابقة لكل إعلان.",
+        "score": "نسبة المطابقة",
+        "columns": {
+          "pending": "قيد الانتظار",
+          "accepted": "مقبول",
+          "rejected": "مرفوض"
+        },
+        "empty": "لا توجد بيانات في هذا العمود."
+      },
+      "operations": {
+        "title": "عمليات QR والورديات",
+        "subtitle": "متابعة التحقق المتبادل عبر QR وحالات الشذوذ.",
+        "readOnly": "هذا القسم للعرض فقط لحين دمج واجهات API المخصصة.",
+        "cards": {
+          "token": "دورة حياة الرمز",
+          "checkin": "حالة check-in/check-out",
+          "anomaly": "قائمة الشذوذ",
+          "supervisor": "حالة المشرف"
+        }
+      },
+      "billing": {
+        "title": "الفوترة وتتبع المدفوعات",
+        "filters": {
+          "all": "الكل"
+        },
+        "period": "الفترة",
+        "total": "الإجمالي",
+        "receivableStatus": {
+          "Invoiced": "تمت الفوترة",
+          "PartiallyPaid": "مدفوع جزئيا",
+          "Paid": "مدفوع",
+          "Overdue": "متأخر"
+        },
+        "payoutStatus": {
+          "Pending": "قيد الانتظار",
+          "Processing": "قيد المعالجة",
+          "Paid": "مدفوع",
+          "Failed": "فشل"
+        }
+      },
+      "reports": {
+        "title": "تقارير صاحب العمل",
+        "subtitle": "إدارة عرض التقارير باستخدام فلاتر نطاق الوصول.",
+        "queueExport": "إضافة التصدير إلى الطابور",
+        "readOnly": "وحدة التقارير تعمل بوضع القراءة فقط في الإصدار الأول.",
+        "filters": {
+          "range": "النطاق الزمني",
+          "status": "الحالة",
+          "category": "الفئة",
+          "location": "الموقع"
+        }
+      },
+      "fallback": {
+        "readOnlyData": "واجهة تفاصيل الإعلان غير متاحة حاليا. يتم عرض وضع الملخص.",
+        "noBillingApi": "واجهات Billing/Payout غير متاحة بعد. يتم عرض بيانات تجريبية بوضع القراءة فقط."
+      },
       "cards": {
         "postings": {
           "title": "الوظائف المفتوحة",
@@ -157,17 +369,54 @@
       "title": "لوحة المشرف",
       "subtitle": "أدر مستخدمي النظام والاعتمادات وحالة الأمان من مركز واحد.",
       "sidebar": {
-        "overview": "نظرة عامة",
+        "overview": "لوحة التحكم",
+        "employers": "أصحاب العمل",
+        "candidates": "المرشحون",
+        "userGroups": "مجموعات المستخدمين",
         "users": "المستخدمون",
-        "approvals": "الاعتمادات",
-        "security": "الأمان",
-        "createAdmin": "إنشاء مشرف"
+        "createAdmin": "إنشاء مشرف",
+        "closeAria": "إغلاق الشريط الجانبي"
       },
       "summary": {
         "loading": "جار التحميل...",
         "fetchError": "تعذر تحميل ملخص الإحصائيات من المسارات. يتم عرض قيم احتياطية."
       },
+      "grid": {
+        "rowsPerPage": "عدد الصفوف",
+        "prev": "السابق",
+        "next": "التالي",
+        "pageLabel": "الصفحة {{page}} / {{total}}",
+        "columns": {
+          "employerName": "صاحب العمل",
+          "taxNo": "الرقم الضريبي",
+          "status": "الحالة",
+          "actions": "إجراءات",
+          "contact": "التواصل",
+          "workerId": "معرف العامل",
+          "fullName": "اسم المرشح الكامل",
+          "systemUserId": "معرف مستخدم النظام",
+          "email": "البريد الإلكتروني"
+        }
+      },
       "cards": {
+        "activeLabel": "نشط",
+        "totalLabel": "الإجمالي",
+        "employers": {
+          "title": "أصحاب العمل",
+          "short": "أصحاب العمل"
+        },
+        "candidates": {
+          "title": "المرشحون",
+          "short": "مرشحون"
+        },
+        "postings": {
+          "title": "إعلانات الوظائف",
+          "short": "إعلانات"
+        },
+        "applications": {
+          "title": "طلبات التوظيف",
+          "short": "طلبات"
+        },
         "systemUsers": {
           "title": "إجمالي مستخدمي النظام",
           "value": "1,248",
@@ -187,6 +436,7 @@
       "statistics": {
         "title": "إحصائيات تفصيلية",
         "subtitle": "مؤشرات النظرة العامة للوحة",
+        "trendTitle": "عرض الاتجاه التشغيلي",
         "groups": {
           "candidateStatus": "حالة المرشحين",
           "employerStatus": "حالة أصحاب العمل",
@@ -211,17 +461,42 @@
           "title": "ملخص النظام",
           "body": "تابع حالة المنصة الحالية والاتجاهات المباشرة ومؤشرات الأداء الحرجة من هذه المساحة."
         },
+        "employers": {
+          "body": "شاشة ملخص لفلترة واستعراض سجلات أصحاب العمل بسرعة."
+        },
+        "candidates": {
+          "title": "تفاصيل إدارة المرشحين",
+          "body": "اجلب سجلات المرشحين عبر المعرّف ثم صفِّ النتائج حسب الجنسية والجامعة ووسوم المهارات."
+        },
         "users": {
           "title": "تفاصيل إدارة المستخدمين",
-          "body": "يمكنك تصفية المستخدمين حسب النوع، وتعليق أو إعادة تفعيل الحسابات، ومراجعة سجل الأحداث."
+          "body": "صفِّ حسب البريد والنوع وحالة الحساب؛ من شاشة التفاصيل يمكن التعليق أو إعادة التفعيل أو الحظر أو تحديث كلمة المرور."
         },
-        "approvals": {
-          "title": "تفاصيل قائمة الاعتمادات",
-          "body": "راجع الاعتمادات المعلقة حسب الأولوية وتابع سجل المعالجة التشغيلي."
+        "userGroups": {
+          "title": "إدارة مجموعات المستخدمين",
+          "body": "اعرض المجموعات مع تصفية الاسم والنشاط والمجموعة النظامية؛ وفي التفاصيل تفعيل أو إلغاء تفعيل وإضافة أذونات."
+        }
+      },
+      "detail": {
+        "breadcrumbAria": "مسار التنقل",
+        "backAria": "العودة إلى القائمة",
+        "actions": {
+          "save": "حفظ",
+          "delete": "حذف",
+          "close": "إغلاق",
+          "processing": "جار المعالجة...",
+          "saving": "جار الحفظ...",
+          "deleting": "جار الحذف..."
         },
-        "security": {
-          "title": "تفاصيل الأمان والامتثال",
-          "body": "افحص الأنشطة المشبوهة وتغييرات كلمات المرور وسياسات الوصول من هذا القسم."
+        "feedback": {
+          "saveSuccess": "تم حفظ التغييرات.",
+          "saveError": "فشل الحفظ.",
+          "deleteSuccess": "تمت إزالة السجل.",
+          "deleteError": "فشل الحذف.",
+          "deleteConfirm": "هل أنت متأكد أنك تريد الحذف؟"
+        },
+        "validation": {
+          "nothingToSave": "لم يتم اختيار تغييرات للحفظ."
         }
       },
       "register": {
@@ -256,6 +531,184 @@
         "passwordResetSuccess": "تم تحديث كلمة مرور المستخدم.",
         "approvalQuerySuccess": "تم عرض {{count}} سجلات طلب.",
         "genericError": "فشلت العملية."
+      },
+      "employers": {
+        "filters": {
+          "id": "معرف صاحب العمل",
+          "name": "تصفية باسم صاحب العمل",
+          "allStatuses": "كل الحالات",
+          "search": "تحميل القائمة",
+          "searching": "جار التحميل...",
+          "searchText": "بحث بالاسم / الرقم الضريبي",
+          "commissionMin": "الحد الأدنى للعمولة",
+          "commissionMax": "الحد الأقصى للعمولة"
+        },
+        "invalidId": "أدخل معرف صاحب عمل صحيح.",
+        "fetchSuccess": "تم عرض صاحب العمل #{{id}}.",
+        "fetchError": "تعذر تحميل بيانات صاحب العمل.",
+        "empty": "القائمة فارغة. ابحث بالمعرف ثم صفِّ النتائج ضمن الشبكة.",
+        "taxNo": "الرقم الضريبي",
+        "columns": {
+          "id": "المعرّف",
+          "commission": "العمولة"
+        },
+        "list": {
+          "fetchSuccess": "تم إدراج {{count}} صاحب عمل.",
+          "fetchError": "تعذر تحميل قائمة أصحاب العمل.",
+          "empty": "لا توجد نتائج. عدّل عوامل التصفية."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "تعذر تحميل تفاصيل صاحب العمل.",
+          "targetStatus": "الحالة المستهدفة",
+          "pendingNotSupported": "لا يُدعم الانتقال إلى قيد الانتظار من هذه الشاشة."
+        },
+        "status": {
+          "10": "قيد الانتظار",
+          "20": "نشط",
+          "30": "معلق",
+          "90": "محظور"
+        }
+      },
+      "candidates": {
+        "filters": {
+          "id": "اسم المرشح",
+          "email": "تصفية بالبريد الإلكتروني",
+          "allStatuses": "كل الحالات",
+          "search": "جلب المرشح",
+          "searching": "جار التحميل..."
+        },
+        "fetchSuccess": "تم إدراج {{count}} مرشحين.",
+        "fetchError": "تعذر تحميل بيانات المرشح.",
+        "empty": "قائمة المرشحين فارغة أو لا توجد نتائج مطابقة للتصفية.",
+        "status": {
+          "0": "قيد الانتظار",
+          "10": "نشط",
+          "20": "معلق",
+          "30": "محظور"
+        },
+        "actions": {
+          "edit": "تعديل",
+          "delete": "حذف",
+          "deleteConfirm": "هل أنت متأكد أنك تريد الحذف؟",
+          "deleteSuccess": "تم حذف المرشح #{{id}} بنجاح.",
+          "deleteError": "تعذر حذف المرشح.",
+          "editClicked": "تم تشغيل إجراء التعديل للمرشح #{{id}}.",
+          "deleteClicked": "تم تشغيل إجراء الحذف للمرشح #{{id}}."
+        },
+        "card": {
+          "workerId": "المرشح #{{id}}",
+          "systemUserId": "مستخدم النظام: #{{id}}",
+          "nationality": "الجنسية: {{value}}",
+          "university": "الجامعة: {{value}}",
+          "notAvailable": "غير متوفر",
+          "noSkills": "لا توجد مهارات مسجلة"
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "loadError": "تعذر تحميل تفاصيل المرشح.",
+          "lifecycle": "إجراء الحساب",
+          "lifecycleNone": "عدم تغيير حالة الحساب",
+          "skillTag": "إضافة وسم مهارة",
+          "systemUserEmail": "البريد الإلكتروني لمستخدم النظام",
+          "systemUserPhone": "هاتف مستخدم النظام",
+          "skillsTitle": "المهارات",
+          "languagesTitle": "اللغات",
+          "educationTitle": "التعليم",
+          "experienceTitle": "الخبرات",
+          "emptySkills": "لا توجد مهارات",
+          "emptyLanguages": "لا توجد سجلات لغات",
+          "emptyEducations": "لا توجد سجلات تعليم",
+          "emptyExperiences": "لا توجد سجلات خبرات",
+          "current": "حالي",
+          "tabs": {
+            "overview": "نظرة عامة",
+            "profile": "الملف الشخصي",
+            "actions": "الإجراءات"
+          },
+          "accountActionTitle": "إجراءات حالة الحساب",
+          "accountActionHint": "عند اختيار إجراء سيتم طلب التأكيد ثم إرسال الطلب مباشرة.",
+          "accountActionConfirm": "هل أنت متأكد أنك تريد تحديث حالة حساب المرشح {{candidate}} إلى {{action}}؟",
+          "accountActionLabels": {
+            "suspend": "تعليق",
+            "reactivate": "إعادة تفعيل",
+            "ban": "حظر"
+          },
+          "accountActionSuccess": "تم تحديث حالة الحساب إلى {{action}}.",
+          "accountActionError": "فشل تحديث حالة الحساب إلى {{action}}."
+        }
+      },
+      "userGroups": {
+        "bool": {
+          "yes": "نعم",
+          "no": "لا"
+        },
+        "columns": {
+          "id": "المعرّف",
+          "name": "اسم المجموعة",
+          "level": "المستوى",
+          "isActive": "نشط",
+          "isSystem": "نظام"
+        },
+        "filters": {
+          "searchName": "بحث باسم المجموعة",
+          "activeAll": "النشاط (الكل)",
+          "systemAll": "مجموعة نظام (الكل)"
+        },
+        "summary": {
+          "activeRows": "نشط في هذه الصفحة",
+          "systemRows": "نظام في هذه الصفحة",
+          "pageRows": "صفوف في هذه الصفحة"
+        },
+        "list": {
+          "fetchSuccess": "تم إدراج {{count}} مجموعة.",
+          "fetchError": "تعذر تحميل قائمة المجموعات.",
+          "empty": "لا توجد نتائج."
+        },
+        "detail": {
+          "title": "{{name}} (#{{id}})",
+          "activeState": "حالة النشاط",
+          "invalidPermissionId": "أدخل معرف إذن صالحًا.",
+          "permissions": {
+            "title": "إضافة إذن",
+            "permissionId": "معرف الإذن",
+            "effect": "التأثير"
+          }
+        },
+        "effect": {
+          "allow": "سماح",
+          "deny": "رفض"
+        }
+      },
+      "users": {
+        "columns": {
+          "id": "المعرّف",
+          "email": "البريد الإلكتروني",
+          "type": "النوع",
+          "status": "الحالة"
+        },
+        "type": {
+          "10": "مشرف",
+          "20": "صاحب عمل",
+          "30": "مرشح"
+        },
+        "filters": {
+          "searchEmail": "بحث بالبريد",
+          "typeAll": "كل الأنواع"
+        },
+        "summary": {
+          "adminRows": "مشرفون في هذه الصفحة",
+          "pageRows": "صفوف في هذه الصفحة"
+        },
+        "list": {
+          "fetchSuccess": "تم إدراج {{count}} مستخدم.",
+          "fetchError": "تعذر تحميل قائمة المستخدمين.",
+          "empty": "لا توجد نتائج."
+        },
+        "detail": {
+          "title": "{{email}} (#{{id}})",
+          "passwordOptional": "كلمة مرور جديدة (اختياري، 6 أحرف على الأقل)"
+        }
       }
     }
   },

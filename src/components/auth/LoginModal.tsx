@@ -207,8 +207,12 @@ export function LoginModal({ open, onClose }: LoginModalProps) {
         </button>
 
         <div className="mb-5 flex items-center gap-3 text-start">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#14f1d9]/15 ring-1 ring-[#14f1d9]/25">
-            <AdaLogoMark className="h-8 w-8 text-[#14f1d9]" />
+          <span
+            className={`flex h-12 w-12 items-center justify-center rounded-2xl border ${
+              isDark ? 'border-white/15 bg-white/5' : 'border-slate-200 bg-white'
+            }`}
+          >
+            <AdaLogoMark className={`h-8 w-8 ${isDark ? 'text-slate-100' : 'text-[#0b2a66]'}`} />
           </span>
           <div className="min-w-0 flex-1">
             <h2

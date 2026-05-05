@@ -1,0 +1,28 @@
+# API Update Command Rule
+
+## Trigger
+
+When the user says exactly or semantically: `Apiyi Güncelledim`.
+
+## Required Flow
+
+1. Run `npm run openapi:check:strict`.
+2. Read:
+   - `tools/openapi/reports/latest.md`
+   - `tools/openapi/reports/latest.json`
+3. Determine impacted calls under `src/api/**/*.ts`:
+   - Removed or moved endpoints
+   - HTTP method changes
+   - Request schema changes
+   - Response schema changes
+4. Apply code fixes in the affected API wrappers first (`src/api/*`), then update callers if required.
+5. Re-run `npm run openapi:check:strict` until breaking count is zero.
+6. Run `npm run lint` and (if required) `npm run build`.
+7. After successful alignment, update baseline with `npm run openapi:baseline:update`.
+
+## Constraints
+
+- OpenAPI source of truth is `http://localhost:15080/openapi/v1.json`.
+- Do not skip impacted endpoints: every endpoint used by frontend must be checked.
+- Do not make destructive git operations.
+- Keep existing page structures intact while fixing API contracts.

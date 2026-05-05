@@ -92,11 +92,53 @@ States: theme-aware (`dark` | `light`)
 Responsive Notes: single-column mobile with card grid scaling to 2-3 columns on wider breakpoints.
 
 Component: WorkerDashboard / EmployerDashboard / AdminDashboard
-Purpose: Role-based post-login home surfaces for operational metrics and actions; Admin dashboard follows classic panel layout (left sidebar + summary + section details + in-panel Create Admin form).
+Purpose: Role-based post-login home surfaces for operational metrics and actions; Employer dashboard uses section-based workspace (overview/postings/candidates/operations/billing/reports) with API-aware fallback states; Admin dashboard is an orchestrator (left sidebar + KPI overview + `createAdmin` form) delegating list/detail work to `src/components/dashboard/admin/*Section` screens (no URL routing; `activeSection` + local `list|detail` mode).
 Used In: `App` (authenticated state)
 Props: none
-States: selected by role resolver (`worker` | `employer` | `admin`); admin section `overview` | `users` | `approvals` | `security` | `createAdmin`; admin form submit `idle` | `loading` | `success` | `error`; detail actions include user suspend/reactivate/ban, password reset, and approval query by posting id; summary cards can consume optional API endpoints and fallback to i18n defaults
+States: selected by role resolver (`worker` | `employer` | `admin`); employer section `overview` | `postings` | `candidates` | `operations` | `billing` | `reports`; admin section `overview` | `employers` | `candidates` | `userGroups` | `users` | `createAdmin`; register-admin form submit `idle` | `loading` | `success` | `error`; summary cards consume `/Statistics/Overview` with i18n fallbacks
 Responsive Notes: card-first layout optimized for mobile and progressively expanded on tablet/desktop.
+
+Component: WorkerShell
+Purpose: Worker post-login route shell with responsive top navigation tabs and unified content surface.
+Used In: `WorkerDashboard`
+Props: `children`
+States: default; active tab state by route; theme-aware (`dark` | `light`)
+Responsive Notes: horizontal scrollable nav chips on mobile; full-width content layout on tablet/desktop.
+
+Component: Worker Portal Pages (Overview/Profile/CV Import/Shifts/Applications/QR/Payouts/Reports)
+Purpose: PRD-aligned worker workspace modules split into route-based screens.
+Used In: `WorkerDashboard`, `src/features/worker/pages/*`
+Props: none (page-level state + API adapters)
+States: `loading` | `empty` | `error` | `success`; interactive states for CV pipeline steps, shift apply request, payout confirm, QR validation status
+Responsive Notes: each page uses card-first composition and touch-friendly controls for mobile with progressive enhancement for larger viewports.
+
+Component: AdminDataGrid
+Purpose: Reusable admin listing table with sortable columns, paging, responsive horizontal scroll, and i18n-ready controls; supports `mode="server"` so callers own `offset/limit`, total count, and sort callbacks (see `admin-data-grid-standard.mdc`).
+Used In: `EmployersSection`, `CandidatesSection`, `UserGroupsSection`, `UsersSection`
+Props: `columns`, `rows`, `getRowId`, `pageSizeOptions?`, `defaultPageSize?`, `emptyMessage`, `mode?` (`client`|`server`), `serverState?` (`page`, `pageSize`, `totalCount`, `sortState`, `onPageChange`, `onPageSizeChange`, `onSortChange`)
+States: default; sorting `asc` | `desc`; paging state (`page`, `pageSize`); empty rows; server mode mirrors controls to parent fetch
+Responsive Notes: wraps with `overflow-x-auto` for narrow viewports; keeps touch-safe pagination controls.
+
+Component: AdminEntityDetail
+Purpose: Shared admin **detail** shell: breadcrumb + back affordance, title slot, stacked action bar (`Save` / `Delete` / `Close`), optional confirm on delete, and status message strip for async feedback.
+Used In: `EmployersSection`, `CandidatesSection`, `UserGroupsSection`, `UsersSection`
+Props: `breadcrumb` (segments + `onNavigateHome`), `title`, `children`, `onClose`, `onSave?`, `onDelete?`, `pending?`, `successMessage?`, `errorMessage?`, optional `saveDisabled` / `deleteDisabled`
+States: idle; `pending` disables actions; success/error copy from parent
+Responsive Notes: mobile-first stacked header actions; from `sm` actions align inline; breadcrumb uses `min-w-0` + truncate; RTL-safe logical alignment via parent + i18n
+
+Component: AdminFilterField
+Purpose: Small labeled field wrapper for admin list filters (reduces duplicated Tailwind for label + control spacing).
+Used In: admin `*Section` list toolbars
+Props: `label` (ReactNode), `children`, optional `className`
+States: default
+Responsive Notes: full-width on mobile; can sit in responsive grid on wider breakpoints
+
+Component: EmployersSection / CandidatesSection / UserGroupsSection / UsersSection
+Purpose: Self-contained admin workspace: server-driven `AdminDataGrid` + filters, row **Edit** opens **detail** view inside same sidebar section (`mode: list|detail`), lifecycle/permission/password actions call existing API commands (no generic Update endpoint).
+Used In: `AdminDashboard`
+Props: none
+States: list fetch/error/empty; detail load; save/delete pending + toast-style messages
+Responsive Notes: list toolbar stacks; detail uses `AdminEntityDetail` action layout
 
 Component: HeroSection
 Purpose: Dark-tech marketing hero with badge, headline, CTAs, and visual stack.

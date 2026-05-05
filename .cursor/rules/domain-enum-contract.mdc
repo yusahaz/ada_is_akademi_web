@@ -1,0 +1,165 @@
+---
+description: Domain enum value contract (immutable unless explicitly requested)
+alwaysApply: true
+---
+
+# Domain Enum Contract (Do Not Change Unless User Explicitly Requests)
+
+Bu projede aşağıdaki enum isimleri ve numerik değerleri **sabit sözleşmedir**.
+Kullanıcı açıkça "enum değerini güncelle" demediği sürece:
+
+- enum isimleri değiştirilemez
+- enum üyeleri değiştirilemez
+- enum üyelerinin sayısal değerleri değiştirilemez
+- sıralama/yeniden adlandırma ile dolaylı değişiklik yapılamaz
+
+## Canonical Enum Definitions
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum AccountStatus
+    {
+        Active = 10,
+        Banned = 30,
+        Pending = 0,
+        Suspended = 20,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum DevicePlatform
+    {
+        Android = 20,
+        iOS = 10,
+        Web = 30,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum EducationType
+    {
+        AssociateDegree = 30,
+        BachelorDegree = 40,
+        Doctorate = 60,
+        HighSchool = 10,
+        MasterDegree = 50,
+        Other = 99,
+        VocationalCourse = 20,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum EmployerStatus
+    {
+        Active = 20,
+        Banned = 90,
+        Pending = 10,
+        Suspended = 30,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum JobApplicationStatus
+    {
+        Accepted = 20,
+        Pending = 10,
+        Rejected = 30,
+        Withdrawn = 40,
+        Expired = 50,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum JobPostingStatus
+    {
+        Cancelled = 40,
+        Completed = 30,
+        Draft = 10,
+        Filled = 25,
+        Open = 20,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum LanguageLevel
+    {
+        Advanced = 50,
+        Beginner = 10,
+        Elementary = 20,
+        Intermediate = 30,
+        Native = 60,
+        UpperIntermediate = 40,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum MembershipScopeType
+    {
+        EmployerScoped = 1,
+        Global = 0,
+        LocationScoped = 2,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum PermissionEffect
+    {
+        Allow = 10,
+        Deny = 20,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum ShiftAssignmentStatus
+    {
+        Pending = 10,
+        CheckedIn = 20,
+        CheckedOut = 30,
+    }
+}
+```
+
+```csharp
+namespace Azoxia.AdaIsAkademi.Domain
+{
+    public enum SystemUserType
+    {
+        Admin = 10,
+        Employer = 20,
+        Worker = 30,
+    }
+}
+```
+
+## Change Gate
+
+Bu alanda değişiklik yapılacaksa kullanıcıdan açık ve net onay alınmalıdır.
+Onaysız enum değişikliği yasaktır.

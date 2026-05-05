@@ -3,46 +3,34 @@ type AdaLogoMarkProps = {
 }
 
 /**
- * Brand mark for Ada İş Akademi: stylized “A” with academy roof cue and connection nodes.
- * Uses currentColor for the strokes/fills so it can inherit theme tokens.
+ * Brand mark inspired by the selected "1" concept:
+ * a classic monogram A with a dynamic arc.
+ * Uses currentColor so parent theme tokens control light/dark contrast.
  */
 export function AdaLogoMark({ className }: AdaLogoMarkProps) {
   return (
     <svg
       className={className}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 40 40"
+      viewBox="0 0 64 64"
       fill="none"
       aria-hidden
     >
       <path
-        d="M9.5 15.5 20 7.5 30.5 15.5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M32 6 54 58h-10.5L32 30.2 20.5 58H10L32 6Z"
+        fill="currentColor"
       />
       <path
-        d="M11.25 32 20 12 28.75 32"
-        stroke="currentColor"
-        strokeWidth="2.25"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        d="M32 17.8 41.8 40.8h-4.8L32 29.3l-5 11.5h-4.8L32 17.8Z"
+        fill="white"
+        fillOpacity="0.92"
       />
       <path
-        d="M14.75 23.25H25.25"
+        d="M6.8 47.2C17.8 35.3 31.5 29.8 56.5 29.6"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="4"
         strokeLinecap="round"
-      />
-      <circle cx="14.75" cy="23.25" r="1.85" fill="currentColor" />
-      <circle cx="25.25" cy="23.25" r="1.85" fill="currentColor" />
-      <path
-        d="M14.75 23.25H20V29"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        opacity=".55"
+        opacity="0.9"
       />
     </svg>
   )

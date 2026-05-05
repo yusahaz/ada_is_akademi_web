@@ -92,12 +92,15 @@ export class ApiClient {
     })
 
     const payload = (await response.json()) as ApiEnvelope<TResponse>
+    const normalizedSuccess = payload.success ?? payload.isSuccess ?? response.ok
+    const normalizedCode = payload.code ?? payload.errorCode ?? null
+    const normalizedFieldErrors = payload.fieldErrors ?? payload.errors ?? null
 
-    if (!response.ok || !payload.success) {
+    if (!response.ok || !normalizedSuccess) {
       throw new ApiError(payload.message ?? 'API request failed.', {
         status: response.status,
-        code: payload.code,
-        fieldErrors: payload.fieldErrors,
+        code: normalizedCode,
+        fieldErrors: normalizedFieldErrors,
       })
     }
 
