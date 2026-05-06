@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 
-import { setApiAccessTokenProvider } from '../api/client'
+import { createAuthAdapter } from '../api/auth'
+import { setApiAccessTokenProvider, setApiRefreshHandlers } from '../api/client'
 import { AuthContext, type AuthContextValue, type AuthSession } from './auth-context'
 import { decryptAuthSession, encryptAuthSession } from './storage-crypto'
 
 const AUTH_STORAGE_KEY = 'ada-is-akademi:auth-session'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const authAdapter = useMemo(() => createAuthAdapter(), [])
   const [session, setSession] = useState<AuthSession | null>(null)
   const [hydrated, setHydrated] = useState(() => typeof window === 'undefined')
 
@@ -44,7 +46,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setApiAccessTokenProvider(() => session?.accessToken ?? null)
-  }, [session])
+    setApiRefreshHandlers({
+      getRefreshContext: () => {
+        if (!session?.refreshToken || !Number.isFinite(Number(session.systemUserId))) {
+          return null
+        }
+        return {
+          systemUserId: Number(session.systemUserId),
+          refreshToken: session.refreshToken,
+        }
+      },
+      refreshToken: ({ systemUserId, refreshToken }) =>
+        authAdapter.refreshToken({
+          systemUserId,
+          refreshToken,
+          deviceIdentifier: 'web-browser',
+        }),
+      onRefreshSuccess: (tokens) =>
+        setSession((prev) => {
+          if (!prev) return prev
+          return {
+            ...prev,
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+            accessTokenExpiresAt: tokens.accessTokenExpiresAt,
+            refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
+          }
+        }),
+      onAuthFailure: () => setSession(null),
+    })
+  }, [authAdapter, session])
 
   useEffect(() => {
     if (typeof window === 'undefined') return

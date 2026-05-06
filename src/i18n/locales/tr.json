@@ -23,7 +23,7 @@
       "fr": "Français"
     },
     "hero": {
-      "badge": "Bugün çalış — vardiya fırsatları tek uygulamada",
+      "badge": "İş ilanlarını keşfet, hemen çalışmaya başla — hepsi tek uygulamada",
       "title": "Öğrenciler ve işverenler aynı platformda, anında eşleşsin.",
       "subtitle": "Ada İş Akademi ile günlük iş fırsatlarını keşfet, hızlıca başvur; süreci ve ödemelerini tek uygulamada takip et.",
       "ctaExplore": "İş fırsatlarını keşfet",
@@ -115,6 +115,7 @@
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Başvurularını, yaklaşan vardiyalarını ve profil gücünü tek yerden yönet.",
+      "welcomeGreeting": "Hoş geldin",
       "defaultName": "Aday",
       "summary": {
         "activeApplications": "Aktif başvuru",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "Worker Çalışma Alanı",
-      "subtitle": "Giriş sonrası profilini, vardiyalarını, QR akışını, ödemelerini ve raporlarını yönet.",
       "nav": {
         "overview": "Genel Bakış",
         "profile": "Profil",
@@ -171,17 +171,109 @@
         "applications": "Başvurular",
         "qrCheck": "QR Kontrol",
         "payouts": "Ödemeler",
-        "reports": "Raporlar"
+        "reports": "Raporlar",
+        "jobs": "İş İlanları",
+        "cvProfile": "CV/Profil",
+        "myApplications": "Başvurularım",
+        "account": "Hesabım"
       },
       "states": {
         "loading": "Veriler yükleniyor...",
         "empty": "Bu bölüm için kayıt bulunamadı.",
         "fetchError": "Veriler alınamadı."
       },
+      "pages": {
+        "overview": {
+          "title": "Genel Bakış",
+          "subtitle": "Eşleşme skoru, ödemeler, QR akışı ve profiline uygun ilanları takip et."
+        },
+        "profile": {
+          "title": "Profil",
+          "subtitle": "Temel bilgilerini ve işverenlerin gördüğü yetenek etiketlerini doğrula."
+        },
+        "cvImport": {
+          "title": "CV aktarımı",
+          "subtitle": "Başvurmadan önce çıkarım adımlarını ve hazırlık durumunu simüle et."
+        },
+        "shifts": {
+          "title": "İş İlanları",
+          "subtitle": "Katılabileceğin vardiyalara göz at ve başvurunu hızlıca ilet."
+        },
+        "applications": {
+          "title": "Başvurular",
+          "subtitle": "Başvurduğun ilanların ilerleyişini izle."
+        },
+        "qrCheck": {
+          "title": "QR kontrol",
+          "subtitle": "QR jeton doğrulama akışlarını tanıtım/demo için simüle et."
+        },
+        "payouts": {
+          "title": "Ödemeler",
+          "subtitle": "Ödemeleri incele ve izinliyse onayı simüle et."
+        },
+        "reports": {
+          "title": "Raporlar",
+          "subtitle": "Ödemeler ve vardiyalardan özetlenen kritik göstergeler."
+        },
+        "recommendations": {
+          "title": "AI Oneri Listesi",
+          "subtitle": "ListSemanticMatched sonucuna gore siralanan ilanlar"
+        }
+      },
       "overview": {
         "monthlyEarnings": "Aylık kazanç",
         "paidPayouts": "Tamamlanan ödeme",
-        "completedShifts": "Tamamlanan vardiya"
+        "completedShifts": "Tamamlanan vardiya",
+        "bestMatchesTitle": "En uygun iş ilanları",
+        "bestMatchesSubtitle": "Profiline ve uygunluk durumuna göre önerilen ilanlar.",
+        "bestMatchesEmpty": "Şu an uygun ilan bulunmuyor.",
+        "employerPrefix": "İşveren #{{id}}",
+        "periodMonthly": "Aylık",
+        "completedShiftsTitle": "Tamamlanan Vardiyalar",
+        "shiftEarningLabel": "Vardiya Kazancı",
+        "periodQuarterly": "3 Aylık",
+        "periodSemiAnnual": "6 Aylık",
+        "periodYearly": "Yıllık",
+        "periodSelectedPrefix": "Seçili dönem: {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "Arama yap...",
+        "toggleThemeAria": "Temayı değiştir",
+        "notificationsAria": "Bildirimleri aç",
+        "toggleSidebarAria": "Kenar cubugunu daralt veya genislet",
+        "breadcrumbAria": "İşçi alanı konum yolu"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "Yapay Zeka Eşleşmeleri",
+          "description": "Profiline en yüksek uyumu gösteren vardiyalar senin için önceliklendirildi.",
+          "scoreLabel": "Eşleşme",
+          "action": "Hemen Başla",
+          "signal": "Veri kaynaklı öneri"
+        },
+        "earnings": {
+          "title": "Kazanç Özeti",
+          "currency": "₺",
+          "empty": "Kazanç verisi henüz oluşmadı."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "Kamerayı Aç"
+        },
+        "timeline": {
+          "title": "Yaklaşan Başvurularım",
+          "viewAll": "Tümü",
+          "status": {
+            "confirmed": "Onaylandı",
+            "active": "Aktif",
+            "completed": "Tamamlandı",
+            "disputed": "Uyuşmazlık"
+          },
+          "anomaly": {
+            "locationMismatch": "Konum uyuşmazlığı",
+            "expiredToken": "Süresi dolmuş token"
+          }
+        }
       },
       "profile": {
         "basic": "Temel profil",
@@ -190,11 +282,42 @@
         "nationality": "Uyruk: {{value}}",
         "university": "Üniversite: {{value}}",
         "studentNumber": "Öğrenci no: {{value}}",
-        "skills": "Yetenek etiketleri"
+        "skills": "Yetenek etiketleri",
+        "educations": "Eğitim kayıtları",
+        "experiences": "Deneyim kayıtları",
+        "certificates": "Sertifikalar",
+        "languages": "Diller",
+        "references": "Referanslar",
+        "completion": "Profil tamamlama",
+        "actions": {
+          "edit": "Profili düzenle",
+          "save": "Kaydet",
+          "cancel": "Vazgeç"
+        },
+        "fields": {
+          "fullName": "Ad soyad",
+          "email": "E-posta",
+          "nationality": "Uyruk",
+          "university": "Üniversite",
+          "studentNumber": "Öğrenci no"
+        },
+        "messages": {
+          "savedLocal": "Profil değişiklikleri bu oturum için kaydedildi.",
+          "validationError": "Ad soyad en az 2 karakter olmalı."
+        },
+        "settingsMenu": "Hesap ayarları",
+        "menu": {
+          "basic": "Kişisel bilgiler",
+          "contact": "İletişim bilgileri",
+          "password": "Şifre değiştir",
+          "emailNotifications": "E-posta bildirimleri",
+          "smsNotifications": "SMS bildirimleri",
+          "accountControl": "Hesap silme ve dondurma",
+          "adVisibility": "Reklam görünürlüğü"
+        },
+        "menuComingSoon": "Bu alt bölüm yakında aktif edilecek."
       },
       "cv": {
-        "title": "CV Aktarım Akışı",
-        "description": "Çıkarım adımlarını takip et ve profiline yazmadan önce bölümleri onayla.",
         "states": {
           "uploaded": "Yüklendi",
           "extracting": "Çözümleniyor",
@@ -205,9 +328,10 @@
         "currentState": "Güncel durum: {{state}}"
       },
       "shifts": {
-        "submit": "Vardiyaya başvur",
+        "submit": "İlana Başvur",
         "submitting": "Başvuruluyor...",
-        "submitError": "Başvuru isteği başarısız oldu."
+        "submitError": "Başvuru isteği başarısız oldu.",
+        "wageLabel": "Ücret"
       },
       "applications": {
         "status": {
@@ -219,8 +343,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "Token doğrulama ve vardiya giriş durumunu bu alandan takip et.",
         "actions": {
           "validate": "Token doğrula",
           "success": "Başarılıya al",
@@ -242,9 +364,54 @@
         },
         "confirm": "Ödemeyi onayla",
         "confirmed": "Ödeme onaylandı"
-      }
+      },
+      "logout": "Çıkış Yap"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "Genel Bakış",
+        "postings": "İlanlar",
+        "candidates": "Adaylar",
+        "operations": "Operasyon",
+        "billing": "Faturalama",
+        "reports": "Raporlar"
+      },
+      "topbar": {
+        "toggleThemeAria": "Temayı değiştir",
+        "notificationsAria": "Bildirimleri aç",
+        "toggleSidebarAria": "Kenar çubuğunu daralt veya genişlet",
+        "breadcrumbAria": "İşveren alanı konum yolu"
+      },
+      "pages": {
+        "overview": {
+          "title": "Genel Bakış",
+          "subtitle": "İlan özetini ve aday akışını tek ekranda izleyin."
+        },
+        "postings": {
+          "title": "İlanlar",
+          "subtitle": "İlanları filtreleyin ve detay ile kontenjan metriklerini görüntüleyin."
+        },
+        "candidates": {
+          "title": "Adaylar",
+          "subtitle": "Başvuruları durum ve uygunluk skoruna göre inceleyin."
+        },
+        "operations": {
+          "title": "Operasyon",
+          "subtitle": "QR ve vardiya operasyonlarının salt okunur önizlemesi."
+        },
+        "billing": {
+          "title": "Faturalama",
+          "subtitle": "Tahsilat ve ödeme satırlarını takip edin."
+        },
+        "reports": {
+          "title": "Raporlar",
+          "subtitle": "Dışa aktarma ve özet KPI görünümü."
+        }
+      },
+      "logout": "Çıkış Yap"
     },
     "employer": {
+      "defaultName": "İşveren",
       "title": "Employer Dashboard",
       "subtitle": "İlanlarını yayınla, aday akışını takip et ve operasyon metriklerini izle.",
       "sectionsNav": {

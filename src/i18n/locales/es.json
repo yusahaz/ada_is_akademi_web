@@ -113,6 +113,7 @@
       "welcome": "Bienvenido, {{email}}"
     },
     "worker": {
+      "welcomeGreeting": "Bienvenido",
       "title": "Panel de trabajador",
       "subtitle": "Gestiona solicitudes, próximos turnos y estado de perfil en una sola vista.",
       "defaultName": "Trabajador",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "Espacio del Worker",
-      "subtitle": "Gestiona tu perfil, turnos, flujo QR, pagos y reportes después del inicio de sesión.",
       "nav": {
         "overview": "Resumen",
         "profile": "Perfil",
@@ -171,17 +171,109 @@
         "applications": "Solicitudes",
         "qrCheck": "Control QR",
         "payouts": "Pagos",
-        "reports": "Reportes"
+        "reports": "Reportes",
+        "jobs": "Ofertas de trabajo",
+        "cvProfile": "CV/Perfil",
+        "myApplications": "Mis solicitudes",
+        "account": "Mi cuenta"
       },
       "states": {
         "loading": "Cargando datos...",
         "empty": "No se encontraron registros para esta sección.",
         "fetchError": "No se pudieron cargar los datos."
       },
+      "pages": {
+        "overview": {
+          "title": "Resumen",
+          "subtitle": "Consulta puntaje de match, cobros, flujo QR y los mejores turnos para tu perfil."
+        },
+        "profile": {
+          "title": "Perfil",
+          "subtitle": "Revisa tus datos básicos y las etiquetas de habilidades visibles para empleadores."
+        },
+        "cvImport": {
+          "title": "Importación de CV",
+          "subtitle": "Simula pasos de extracción y preparación antes de postularte."
+        },
+        "shifts": {
+          "title": "Ofertas de trabajo",
+          "subtitle": "Explora turnos disponibles y envía tu solicitud con rapidez."
+        },
+        "applications": {
+          "title": "Solicitudes",
+          "subtitle": "Sigue el avance de las ofertas a las que aplicaste."
+        },
+        "qrCheck": {
+          "title": "Control QR",
+          "subtitle": "Simula la validación del token QR para demostraciones."
+        },
+        "payouts": {
+          "title": "Pagos",
+          "subtitle": "Revisa pagos y simula la confirmación cuando esté permitido."
+        },
+        "reports": {
+          "title": "Reportes",
+          "subtitle": "Métricas clave sintetizadas desde pagos y turnos."
+        },
+        "recommendations": {
+          "title": "Recomendaciones IA",
+          "subtitle": "Ofertas ordenadas segun ListSemanticMatched"
+        }
+      },
       "overview": {
         "monthlyEarnings": "Ganancias mensuales",
         "paidPayouts": "Pagos completados",
-        "completedShifts": "Turnos completados"
+        "completedShifts": "Turnos completados",
+        "bestMatchesTitle": "Ofertas más adecuadas",
+        "bestMatchesSubtitle": "Ofertas sugeridas según tu perfil y disponibilidad.",
+        "bestMatchesEmpty": "No hay ofertas adecuadas en este momento.",
+        "employerPrefix": "Empleador #{{id}}",
+        "periodMonthly": "Mensual",
+        "completedShiftsTitle": "Turnos completados",
+        "shiftEarningLabel": "Ganancia del turno",
+        "periodQuarterly": "3 meses",
+        "periodSemiAnnual": "6 meses",
+        "periodYearly": "Anual",
+        "periodSelectedPrefix": "Periodo seleccionado: {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "Buscar...",
+        "toggleThemeAria": "Cambiar tema",
+        "notificationsAria": "Abrir notificaciones",
+        "toggleSidebarAria": "Alternar barra lateral",
+        "breadcrumbAria": "Migas de pan del espacio de trabajo"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "Coincidencias de IA",
+          "description": "Los turnos con mayor ajuste semántico se priorizan para tu perfil.",
+          "scoreLabel": "Coincidencia",
+          "action": "Comenzar ahora",
+          "signal": "Sugerencia basada en datos"
+        },
+        "earnings": {
+          "title": "Resumen de ganancias",
+          "currency": "₺",
+          "empty": "Aún no hay datos de ganancias."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "Abrir cámara"
+        },
+        "timeline": {
+          "title": "Próximos turnos",
+          "viewAll": "Ver todo",
+          "status": {
+            "confirmed": "Confirmado",
+            "active": "Activo",
+            "completed": "Completado",
+            "disputed": "En disputa"
+          },
+          "anomaly": {
+            "locationMismatch": "Incompatibilidad de ubicación",
+            "expiredToken": "Token expirado"
+          }
+        }
       },
       "profile": {
         "basic": "Perfil básico",
@@ -190,7 +282,39 @@
         "nationality": "Nacionalidad: {{value}}",
         "university": "Universidad: {{value}}",
         "studentNumber": "Número de estudiante: {{value}}",
-        "skills": "Etiquetas de habilidades"
+        "skills": "Etiquetas de habilidades",
+        "educations": "Registros de educación",
+        "experiences": "Registros de experiencia",
+        "certificates": "Certificados",
+        "languages": "Idiomas",
+        "references": "Referencias",
+        "completion": "Completitud del perfil",
+        "actions": {
+          "edit": "Editar perfil",
+          "save": "Guardar",
+          "cancel": "Cancelar"
+        },
+        "fields": {
+          "fullName": "Nombre completo",
+          "email": "Correo",
+          "nationality": "Nacionalidad",
+          "university": "Universidad",
+          "studentNumber": "Número de estudiante"
+        },
+        "messages": {
+          "savedLocal": "Los cambios del perfil se guardaron para esta sesión.",
+          "validationError": "El nombre completo debe tener al menos 2 caracteres."
+        },
+        "settingsMenu": "Configuración de la cuenta",
+        "menu": {
+          "basic": "Información personal",
+          "contact": "Información de contacto",
+          "password": "Cambiar contraseña",
+          "emailNotifications": "Notificaciones por correo",
+          "smsNotifications": "Notificaciones por SMS",
+          "accountControl": "Eliminar y congelar cuenta",
+          "adVisibility": "Visibilidad de anuncios"
+        }
       },
       "cv": {
         "title": "Flujo de Importación de CV",
@@ -205,9 +329,10 @@
         "currentState": "Estado actual: {{state}}"
       },
       "shifts": {
-        "submit": "Postular al turno",
+        "submit": "Postular al anuncio",
         "submitting": "Enviando...",
-        "submitError": "La solicitud de postulación falló."
+        "submitError": "La solicitud de postulación falló.",
+        "wageLabel": "Pago"
       },
       "applications": {
         "status": {
@@ -219,8 +344,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "Usa esta área para seguir la validación del token y estado del turno.",
         "actions": {
           "validate": "Validar token",
           "success": "Marcar éxito",
@@ -242,9 +365,54 @@
         },
         "confirm": "Confirmar pago",
         "confirmed": "Pago confirmado"
-      }
+      },
+      "logout": "Cerrar sesión"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "Resumen",
+        "postings": "Anuncios",
+        "candidates": "Candidatos",
+        "operations": "Operaciones",
+        "billing": "Facturación",
+        "reports": "Informes"
+      },
+      "topbar": {
+        "toggleThemeAria": "Cambiar tema",
+        "notificationsAria": "Abrir notificaciones",
+        "toggleSidebarAria": "Contraer o expandir la barra lateral",
+        "breadcrumbAria": "Ubicación del portal del empleador"
+      },
+      "pages": {
+        "overview": {
+          "title": "Resumen",
+          "subtitle": "Vea el resumen de anuncios y el flujo de candidatos de un vistazo."
+        },
+        "postings": {
+          "title": "Anuncios",
+          "subtitle": "Filtre anuncios y revise el detalle con métricas de cupo."
+        },
+        "candidates": {
+          "title": "Candidatos",
+          "subtitle": "Revise solicitudes por estado y puntuación de ajuste."
+        },
+        "operations": {
+          "title": "Operaciones",
+          "subtitle": "Vista previa de solo lectura de operaciones QR y de turno."
+        },
+        "billing": {
+          "title": "Facturación",
+          "subtitle": "Siga cobros y líneas de pago."
+        },
+        "reports": {
+          "title": "Informes",
+          "subtitle": "Colas de exportación e indicadores resumidos."
+        }
+      },
+      "logout": "Cerrar sesión"
     },
     "employer": {
+      "defaultName": "Empleador",
       "title": "Panel de empleador",
       "subtitle": "Publica ofertas, sigue el flujo de candidatos y controla la operación.",
       "sectionsNav": {

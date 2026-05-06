@@ -5,18 +5,23 @@ import { useTheme } from '../../theme/theme-context'
 import { IconCheck, IconShield, IconSpark, IconUsers } from './icons'
 
 function SectionFrame({
+  id,
   title,
   subtitle,
   children,
   isDark,
 }: {
+  id?: string
   title: string
   subtitle: string
   children: ReactNode
   isDark: boolean
 }) {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+    <section
+      id={id}
+      className="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 sm:px-6 sm:py-16 lg:px-8"
+    >
       <div className="mx-auto max-w-2xl text-center">
         <h2
           className={`font-display text-2xl font-semibold tracking-tight sm:text-3xl ${
@@ -34,7 +39,7 @@ function SectionFrame({
   )
 }
 
-export function LandingSections() {
+export function LandingSections({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const isDark = theme === 'dark'
@@ -80,7 +85,7 @@ export function LandingSections() {
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 pb-2 sm:px-6 lg:px-8">
+      <section id="explore" className="mx-auto max-w-6xl scroll-mt-24 px-4 pb-2 sm:px-6 lg:px-8">
         <div className="grid gap-3 sm:grid-cols-3">
           {stats.map((item) => (
             <div
@@ -98,6 +103,7 @@ export function LandingSections() {
       </section>
 
       <SectionFrame
+        id="how-it-works"
         title={t('landing.how.title')}
         subtitle={t('landing.how.subtitle')}
         isDark={isDark}
@@ -195,13 +201,14 @@ export function LandingSections() {
           >
             {t('landing.cta.subtitle')}
           </p>
-          <a
-            href="#top"
+          <button
+            type="button"
+            onClick={onOpenLogin}
             className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#14f1d9] px-5 text-sm font-semibold text-[#041014] transition hover:bg-[#62ffee]"
           >
             <IconCheck className="h-4 w-4" />
             <span>{t('landing.cta.action')}</span>
-          </a>
+          </button>
         </div>
       </section>
     </>

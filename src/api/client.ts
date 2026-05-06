@@ -24,9 +24,43 @@ export class ApiError extends Error {
 
 type TokenProvider = () => string | null
 let sharedTokenProvider: TokenProvider = () => null
+type RefreshContextProvider = () => { systemUserId: number; refreshToken: string } | null
+type RefreshTokenHandler = (payload: {
+  systemUserId: number
+  refreshToken: string
+}) => Promise<{
+  accessToken: string
+  refreshToken: string
+  accessTokenExpiresAt: string
+  refreshTokenExpiresAt: string
+}>
+type RefreshSessionUpdater = (tokens: {
+  accessToken: string
+  refreshToken: string
+  accessTokenExpiresAt: string
+  refreshTokenExpiresAt: string
+}) => void
+type AuthFailureHandler = () => void
+
+let sharedRefreshContextProvider: RefreshContextProvider = () => null
+let sharedRefreshTokenHandler: RefreshTokenHandler | null = null
+let sharedRefreshSessionUpdater: RefreshSessionUpdater = () => undefined
+let sharedAuthFailureHandler: AuthFailureHandler = () => undefined
 
 export function setApiAccessTokenProvider(provider: TokenProvider) {
   sharedTokenProvider = provider
+}
+
+export function setApiRefreshHandlers(handlers: {
+  getRefreshContext: RefreshContextProvider
+  refreshToken: RefreshTokenHandler
+  onRefreshSuccess: RefreshSessionUpdater
+  onAuthFailure: AuthFailureHandler
+}) {
+  sharedRefreshContextProvider = handlers.getRefreshContext
+  sharedRefreshTokenHandler = handlers.refreshToken
+  sharedRefreshSessionUpdater = handlers.onRefreshSuccess
+  sharedAuthFailureHandler = handlers.onAuthFailure
 }
 
 export type ApiClientOptions = {
@@ -70,6 +104,7 @@ export class ApiClient {
 
   private async request<TResponse, TBody = undefined>(
     options: RequestOptions<TBody>,
+    attempt = 0,
   ): Promise<TResponse> {
     const headers = new Headers({ 'Content-Type': 'application/json' })
 
@@ -90,6 +125,31 @@ export class ApiClient {
       headers,
       body: options.body === undefined ? undefined : JSON.stringify(options.body),
     })
+
+    if (response.status === 401 && options.requiresAuth && attempt === 0) {
+      const refreshContext = sharedRefreshContextProvider()
+      if (!refreshContext || !sharedRefreshTokenHandler) {
+        sharedAuthFailureHandler()
+        throw new ApiError('Authentication session expired.', {
+          status: 401,
+          code: 'AUTH_SESSION_EXPIRED',
+          fieldErrors: null,
+        })
+      }
+
+      try {
+        const refreshedTokens = await sharedRefreshTokenHandler(refreshContext)
+        sharedRefreshSessionUpdater(refreshedTokens)
+        return this.request<TResponse, TBody>(options, attempt + 1)
+      } catch {
+        sharedAuthFailureHandler()
+        throw new ApiError('Authentication refresh failed.', {
+          status: 401,
+          code: 'AUTH_REFRESH_FAILED',
+          fieldErrors: null,
+        })
+      }
+    }
 
     const payload = (await response.json()) as ApiEnvelope<TResponse>
     const normalizedSuccess = payload.success ?? payload.isSuccess ?? response.ok

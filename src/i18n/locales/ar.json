@@ -115,6 +115,7 @@
     "worker": {
       "title": "لوحة العامل",
       "subtitle": "تابع طلباتك والورديات القادمة وحالة ملفك من مكان واحد.",
+      "welcomeGreeting": "مرحبًا",
       "defaultName": "العامل",
       "summary": {
         "activeApplications": "الطلبات النشطة",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "مساحة العامل",
-      "subtitle": "أدر ملفك الشخصي والورديات وتدفق QR والمدفوعات والتقارير بعد تسجيل الدخول.",
       "nav": {
         "overview": "نظرة عامة",
         "profile": "الملف الشخصي",
@@ -171,17 +171,109 @@
         "applications": "الطلبات",
         "qrCheck": "فحص QR",
         "payouts": "المدفوعات",
-        "reports": "التقارير"
+        "reports": "التقارير",
+        "jobs": "إعلانات الوظائف",
+        "cvProfile": "السيرة الذاتية/الملف",
+        "myApplications": "طلباتي",
+        "account": "حسابي"
       },
       "states": {
         "loading": "جار تحميل البيانات...",
         "empty": "لا توجد سجلات لهذا القسم.",
         "fetchError": "تعذر تحميل البيانات."
       },
+      "pages": {
+        "overview": {
+          "title": "نظرة عامة",
+          "subtitle": "تتبع درجة التطابق والمدفوعات وتدفق QR وأفضل الورديات لملفك."
+        },
+        "profile": {
+          "title": "الملف الشخصي",
+          "subtitle": "تحقق من بياناتك الأساسية ووسوم المهارات الظاهرة لأصحاب العمل."
+        },
+        "cvImport": {
+          "title": "استيراد السيرة الذاتية",
+          "subtitle": "حاكِ خطوات الاستخراج والجاهزية قبل التقديم."
+        },
+        "shifts": {
+          "title": "إعلانات الوظائف",
+          "subtitle": "تصفح الورديات المفتوحة وأرسل طلبك بسرعة."
+        },
+        "applications": {
+          "title": "الطلبات",
+          "subtitle": "تابع مسار الوظائف التي تقدمت إليها."
+        },
+        "qrCheck": {
+          "title": "فحص QR",
+          "subtitle": "محاكاة التحقق من رمز QR لعروض التوضيح."
+        },
+        "payouts": {
+          "title": "المدفوعات",
+          "subtitle": "راجع الدفعات ومحاكاة التأكيد عندما يُسمح."
+        },
+        "reports": {
+          "title": "التقارير",
+          "subtitle": "أهم المؤشرات المستخلصة من المدفوعات والورديات."
+        },
+        "recommendations": {
+          "title": "توصيات الذكاء الاصطناعي",
+          "subtitle": "وظائف مرتبة حسب نتيجة ListSemanticMatched"
+        }
+      },
       "overview": {
         "monthlyEarnings": "الربح الشهري",
         "paidPayouts": "المدفوعات المكتملة",
-        "completedShifts": "الورديات المكتملة"
+        "completedShifts": "الورديات المكتملة",
+        "bestMatchesTitle": "أفضل الوظائف المناسبة",
+        "bestMatchesSubtitle": "وظائف مقترحة بناءً على ملفك وتوفرك.",
+        "bestMatchesEmpty": "لا توجد وظائف مناسبة حالياً.",
+        "employerPrefix": "صاحب العمل #{{id}}",
+        "periodMonthly": "شهري",
+        "completedShiftsTitle": "الورديات المكتملة",
+        "shiftEarningLabel": "ربح الوردية",
+        "periodQuarterly": "3 أشهر",
+        "periodSemiAnnual": "6 أشهر",
+        "periodYearly": "سنوي",
+        "periodSelectedPrefix": "الفترة المحددة: {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "بحث...",
+        "toggleThemeAria": "تبديل السمة",
+        "notificationsAria": "فتح الإشعارات",
+        "toggleSidebarAria": "تبديل طي الشريط الجانبي",
+        "breadcrumbAria": "مسار تنقل مساحة العامل"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "مطابقات الذكاء الاصطناعي",
+          "description": "تمت أولوية الورديات ذات أعلى تطابق دلالي مع ملفك.",
+          "scoreLabel": "التطابق",
+          "action": "ابدأ الآن",
+          "signal": "اقتراح مبني على البيانات"
+        },
+        "earnings": {
+          "title": "ملخص الأرباح",
+          "currency": "₺",
+          "empty": "لا توجد بيانات أرباح حتى الآن."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "فتح الكاميرا"
+        },
+        "timeline": {
+          "title": "الورديات القادمة",
+          "viewAll": "عرض الكل",
+          "status": {
+            "confirmed": "مؤكد",
+            "active": "نشط",
+            "completed": "مكتمل",
+            "disputed": "متنازع عليه"
+          },
+          "anomaly": {
+            "locationMismatch": "عدم تطابق الموقع",
+            "expiredToken": "رمز منتهي الصلاحية"
+          }
+        }
       },
       "profile": {
         "basic": "الملف الأساسي",
@@ -190,11 +282,41 @@
         "nationality": "الجنسية: {{value}}",
         "university": "الجامعة: {{value}}",
         "studentNumber": "رقم الطالب: {{value}}",
-        "skills": "وسوم المهارات"
+        "skills": "وسوم المهارات",
+        "educations": "السجل التعليمي",
+        "experiences": "سجل الخبرات",
+        "certificates": "الشهادات",
+        "languages": "اللغات",
+        "references": "المراجع",
+        "completion": "اكتمال الملف الشخصي",
+        "actions": {
+          "edit": "تعديل الملف",
+          "save": "حفظ",
+          "cancel": "إلغاء"
+        },
+        "fields": {
+          "fullName": "الاسم الكامل",
+          "email": "البريد الإلكتروني",
+          "nationality": "الجنسية",
+          "university": "الجامعة",
+          "studentNumber": "رقم الطالب"
+        },
+        "messages": {
+          "savedLocal": "تم حفظ تعديلات الملف لهذه الجلسة.",
+          "validationError": "يجب أن يكون الاسم الكامل مكوّنا من حرفين على الأقل."
+        },
+        "settingsMenu": "إعدادات الحساب",
+        "menu": {
+          "basic": "المعلومات الشخصية",
+          "contact": "معلومات التواصل",
+          "password": "تغيير كلمة المرور",
+          "emailNotifications": "إشعارات البريد الإلكتروني",
+          "smsNotifications": "إشعارات SMS",
+          "accountControl": "حذف الحساب وتجميده",
+          "adVisibility": "ظهور الإعلانات"
+        }
       },
       "cv": {
-        "title": "مسار استيراد السيرة الذاتية",
-        "description": "تابع حالة الاستخراج وأكد الأقسام قبل التطبيق.",
         "states": {
           "uploaded": "تم الرفع",
           "extracting": "جار الاستخراج",
@@ -205,9 +327,10 @@
         "currentState": "الحالة الحالية: {{state}}"
       },
       "shifts": {
-        "submit": "التقديم على الوردية",
+        "submit": "التقدم للإعلان",
         "submitting": "جار التقديم...",
-        "submitError": "فشل طلب التقديم."
+        "submitError": "فشل طلب التقديم.",
+        "wageLabel": "الأجر"
       },
       "applications": {
         "status": {
@@ -219,8 +342,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "استخدم هذه المنطقة لمتابعة تحقق الرمز وحالة الوردية.",
         "actions": {
           "validate": "تحقق من الرمز",
           "success": "تعيين نجاح",
@@ -242,9 +363,54 @@
         },
         "confirm": "تأكيد الدفعة",
         "confirmed": "تم تأكيد الدفعة"
-      }
+      },
+      "logout": "تسجيل الخروج"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "نظرة عامة",
+        "postings": "الإعلانات",
+        "candidates": "المرشحون",
+        "operations": "العمليات",
+        "billing": "الفوترة",
+        "reports": "التقارير"
+      },
+      "topbar": {
+        "toggleThemeAria": "تبديل المظهر",
+        "notificationsAria": "فتح الإشعارات",
+        "toggleSidebarAria": "طي أو توسيع الشريط الجانبي",
+        "breadcrumbAria": "مسار بوابة صاحب العمل"
+      },
+      "pages": {
+        "overview": {
+          "title": "نظرة عامة",
+          "subtitle": "ملخص الإعلانات وتدفق المرشحين في شاشة واحدة."
+        },
+        "postings": {
+          "title": "الإعلانات",
+          "subtitle": "صفِّ الإعلانات واعرض التفاصيل ومقاييس العدد."
+        },
+        "candidates": {
+          "title": "المرشحون",
+          "subtitle": "راجع الطلبات حسب الحالة ودرجة الملاءمة."
+        },
+        "operations": {
+          "title": "العمليات",
+          "subtitle": "معاينة للقراءة فقط لعمليات رمز QR والورديات."
+        },
+        "billing": {
+          "title": "الفوترة",
+          "subtitle": "تتبع المستحقات ودفعات السداد."
+        },
+        "reports": {
+          "title": "التقارير",
+          "subtitle": "قوائم التصدير ومؤشرات الأداء الملخصة."
+        }
+      },
+      "logout": "تسجيل الخروج"
     },
     "employer": {
+      "defaultName": "صاحب عمل",
       "title": "لوحة صاحب العمل",
       "subtitle": "انشر الوظائف، راقب تدفق المرشحين، وتابع مؤشرات التشغيل.",
       "sectionsNav": {

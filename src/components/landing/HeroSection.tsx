@@ -5,7 +5,7 @@ import { IconArrowRight, IconBolt, IconPlay } from './icons'
 import { HeroBackground } from './HeroBackground'
 import { HeroCards } from './HeroCards'
 
-export function HeroSection() {
+export function HeroSection({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const { t } = useTranslation()
   const { theme } = useTheme()
 
@@ -51,13 +51,14 @@ export function HeroSection() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
+              <button
+                type="button"
+                onClick={onOpenLogin}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#14f1d9] px-5 text-sm font-semibold text-[#041014] shadow-[0_18px_60px_rgba(20,241,217,0.22)] transition hover:translate-y-[-1px] hover:bg-[#62ffee]"
-                href="#explore"
               >
                 <span>{t('landing.hero.ctaExplore')}</span>
                 <IconArrowRight className="h-4 w-4" />
-              </a>
+              </button>
               <a
                 className={`inline-flex h-12 items-center justify-center gap-2 rounded-2xl border px-5 text-sm font-semibold transition ${
                   theme === 'dark'
@@ -87,7 +88,7 @@ export function HeroSection() {
                   theme === 'dark' ? 'bg-[#0b0e14]/40' : 'bg-white/80'
                 }`}
               >
-                <HeroCards />
+                <HeroCards onOpenLogin={onOpenLogin} />
               </div>
             </div>
           </div>

@@ -36,6 +36,14 @@ export type JobApplicationListItem = {
   note: string | null
 }
 
+export type MyJobApplicationItem = {
+  applicationId: number | string
+  jobPostingId: number | string
+  status: JobApplicationStatus | number | string
+  appliedAt?: string | null
+  note?: string | null
+}
+
 const client = getApiClient()
 
 export const jobApplicationsApi = {
@@ -49,6 +57,13 @@ export const jobApplicationsApi = {
   list(body: ListJobApplicationsByJobPostingIdQuery) {
     return client.post<JobApplicationListItem[], ListJobApplicationsByJobPostingIdQuery>(
       API_ENDPOINTS.jobApplications.list,
+      body,
+      true,
+    )
+  },
+  myApplications(body: Record<string, never> = {}) {
+    return client.post<MyJobApplicationItem[], Record<string, never>>(
+      API_ENDPOINTS.jobApplications.myApplications,
       body,
       true,
     )

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import type { AppLocale } from '../../i18n/languages'
 import { SUPPORTED_LOCALES } from '../../i18n/languages'
 import { useTheme } from '../../theme/theme-context'
-import { AdaLogoMark } from './AdaLogoMark'
+import { AdaLogoWordmark } from './AdaLogoWordmark'
 import {
   IconCheck,
   IconChevronDown,
@@ -144,9 +144,13 @@ export function Navbar({
   return (
     <header
       className={`sticky top-0 z-50 border-b backdrop-blur-xl ${
-        theme === 'dark'
-          ? 'border-white/10 bg-[#0b0e14]/70'
-          : 'border-slate-300/80 bg-white/75'
+        showSidebarToggle
+          ? theme === 'dark'
+            ? 'border-cyan-300/20 bg-[linear-gradient(180deg,#0f1f35_0%,#102743_100%)]'
+            : 'border-sky-300/60 bg-[linear-gradient(180deg,#dbe7f3_0%,#cedbea_100%)]'
+          : theme === 'dark'
+            ? 'border-white/10 bg-[#0b0e14]/70'
+            : 'border-slate-300/80 bg-white/75'
       }`}
     >
       <div className="mx-auto flex w-full items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
@@ -158,26 +162,10 @@ export function Navbar({
             }`}
             aria-label={t('landing.nav.logoAria')}
           >
-            <span
-              className={`flex h-10 w-10 items-center justify-center rounded-xl border shadow-sm ${
-                theme === 'dark'
-                  ? 'border-slate-600 bg-slate-900'
-                  : 'border-slate-200 bg-white'
-              }`}
-            >
-              <AdaLogoMark
-                className={`h-7 w-7 ${
-                  theme === 'dark' ? 'text-slate-100' : 'text-[#0b2a66]'
-                }`}
-              />
-            </span>
-            <span
-              className={`font-display text-sm font-semibold tracking-tight sm:text-base ${
-                theme === 'dark' ? 'text-white' : 'text-slate-800'
-              }`}
-            >
-              {t('landing.nav.brand')}
-            </span>
+            <AdaLogoWordmark
+              className="h-9 w-[190px] sm:h-10 sm:w-[210px]"
+              mode={theme === 'dark' ? 'dark' : 'light'}
+            />
           </a>
 
           {showSidebarToggle ? (
@@ -186,8 +174,8 @@ export function Navbar({
               onClick={onSidebarToggle}
               className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition ${
                 theme === 'dark'
-                  ? 'text-white hover:bg-white/12'
-                  : 'text-slate-700 hover:bg-slate-100'
+                  ? 'text-cyan-100 hover:bg-white/12'
+                  : 'text-slate-700 hover:bg-white/60'
               }`}
               aria-label="Sidebar aç/kapat"
             >
@@ -367,8 +355,8 @@ export function Navbar({
               className={`inline-flex h-11 items-center justify-center rounded-xl px-4 text-sm font-semibold transition ${
                 showSidebarToggle
                   ? theme === 'dark'
-                    ? 'text-white hover:bg-white/10'
-                    : 'text-slate-700 hover:bg-slate-100'
+                    ? 'text-cyan-100 hover:bg-white/10'
+                    : 'text-slate-700 hover:bg-white/50'
                   : theme === 'dark'
                     ? 'border border-white/20 text-white hover:border-white/35 hover:bg-white/5'
                     : 'border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100'

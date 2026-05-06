@@ -115,6 +115,7 @@
     "worker": {
       "title": "Dashboard lavoratore",
       "subtitle": "Gestisci candidature, turni imminenti e qualità del profilo in un unico punto.",
+      "welcomeGreeting": "Benvenuto",
       "defaultName": "Lavoratore",
       "summary": {
         "activeApplications": "Candidature attive",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "Area Worker",
-      "subtitle": "Gestisci profilo, turni, flusso QR, pagamenti e report dopo il login.",
       "nav": {
         "overview": "Panoramica",
         "profile": "Profilo",
@@ -171,17 +171,109 @@
         "applications": "Candidature",
         "qrCheck": "Controllo QR",
         "payouts": "Pagamenti",
-        "reports": "Report"
+        "reports": "Report",
+        "jobs": "Offerte di lavoro",
+        "cvProfile": "CV/Profilo",
+        "myApplications": "Le mie candidature",
+        "account": "Il mio account"
       },
       "states": {
         "loading": "Caricamento dati...",
         "empty": "Nessun record trovato per questa sezione.",
         "fetchError": "Impossibile caricare i dati."
       },
+      "pages": {
+        "overview": {
+          "title": "Panoramica",
+          "subtitle": "Monitora match, pagamenti, flusso QR e i migliori turni per il tuo profilo."
+        },
+        "profile": {
+          "title": "Profilo",
+          "subtitle": "Verifica anagrafica e skill tag visibili ai datori."
+        },
+        "cvImport": {
+          "title": "Import CV",
+          "subtitle": "Simula fasi di estrazione e prontezza prima di candidarti."
+        },
+        "shifts": {
+          "title": "Annunci di lavoro",
+          "subtitle": "Sfoglia turni aperti e invia la candidatura in pochi clic."
+        },
+        "applications": {
+          "title": "Candidature",
+          "subtitle": "Segui lo stato degli annunci a cui hai inviato la candidatura."
+        },
+        "qrCheck": {
+          "title": "Controllo QR",
+          "subtitle": "Simula validazione token QR per demo."
+        },
+        "payouts": {
+          "title": "Pagamenti",
+          "subtitle": "Rivedi payout e simula conferma quando consentito."
+        },
+        "reports": {
+          "title": "Report",
+          "subtitle": "Metriche chiave ricavate da pagamenti e turni."
+        },
+        "recommendations": {
+          "title": "Suggerimenti IA",
+          "subtitle": "Annunci ordinati in base a ListSemanticMatched"
+        }
+      },
       "overview": {
         "monthlyEarnings": "Guadagni mensili",
         "paidPayouts": "Pagamenti completati",
-        "completedShifts": "Turni completati"
+        "completedShifts": "Turni completati",
+        "bestMatchesTitle": "Annunci più adatti",
+        "bestMatchesSubtitle": "Annunci consigliati in base al tuo profilo e disponibilità.",
+        "bestMatchesEmpty": "Nessun annuncio adatto disponibile al momento.",
+        "employerPrefix": "Datore #{{id}}",
+        "periodMonthly": "Mensile",
+        "completedShiftsTitle": "Turni completati",
+        "shiftEarningLabel": "Guadagno turno",
+        "periodQuarterly": "3 mesi",
+        "periodSemiAnnual": "6 mesi",
+        "periodYearly": "Annuale",
+        "periodSelectedPrefix": "Periodo selezionato: {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "Cerca...",
+        "toggleThemeAria": "Cambia tema",
+        "notificationsAria": "Apri notifiche",
+        "toggleSidebarAria": "Attiva/disattiva barra laterale",
+        "breadcrumbAria": "Percorso dello spazio di lavoro"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "Match IA",
+          "description": "I turni con migliore aderenza semantica sono prioritari per il tuo profilo.",
+          "scoreLabel": "Match",
+          "action": "Inizia ora",
+          "signal": "Suggerimento data-driven"
+        },
+        "earnings": {
+          "title": "Riepilogo guadagni",
+          "currency": "₺",
+          "empty": "Nessun dato sui guadagni al momento."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "Apri fotocamera"
+        },
+        "timeline": {
+          "title": "Turni imminenti",
+          "viewAll": "Vedi tutto",
+          "status": {
+            "confirmed": "Confermato",
+            "active": "Attivo",
+            "completed": "Completato",
+            "disputed": "Contestato"
+          },
+          "anomaly": {
+            "locationMismatch": "Posizione non corrispondente",
+            "expiredToken": "Token scaduto"
+          }
+        }
       },
       "profile": {
         "basic": "Profilo base",
@@ -190,11 +282,41 @@
         "nationality": "Nazionalità: {{value}}",
         "university": "Università: {{value}}",
         "studentNumber": "Numero studente: {{value}}",
-        "skills": "Tag competenze"
+        "skills": "Tag competenze",
+        "educations": "Formazione",
+        "experiences": "Esperienze",
+        "certificates": "Certificati",
+        "languages": "Lingue",
+        "references": "Referenze",
+        "completion": "Completamento profilo",
+        "actions": {
+          "edit": "Modifica profilo",
+          "save": "Salva",
+          "cancel": "Annulla"
+        },
+        "fields": {
+          "fullName": "Nome completo",
+          "email": "Email",
+          "nationality": "Nazionalità",
+          "university": "Università",
+          "studentNumber": "Numero studente"
+        },
+        "messages": {
+          "savedLocal": "Le modifiche al profilo sono state salvate per questa sessione.",
+          "validationError": "Il nome completo deve contenere almeno 2 caratteri."
+        },
+        "settingsMenu": "Impostazioni account",
+        "menu": {
+          "basic": "Informazioni personali",
+          "contact": "Informazioni di contatto",
+          "password": "Cambia password",
+          "emailNotifications": "Notifiche email",
+          "smsNotifications": "Notifiche SMS",
+          "accountControl": "Elimina e congela account",
+          "adVisibility": "Visibilità annunci"
+        }
       },
       "cv": {
-        "title": "Flusso Import CV",
-        "description": "Monitora lo stato di estrazione e conferma le sezioni prima di applicare.",
         "states": {
           "uploaded": "Caricato",
           "extracting": "Estrazione in corso",
@@ -205,9 +327,10 @@
         "currentState": "Stato corrente: {{state}}"
       },
       "shifts": {
-        "submit": "Candidati al turno",
+        "submit": "Candidati all'annuncio",
         "submitting": "Invio in corso...",
-        "submitError": "Richiesta candidatura non riuscita."
+        "submitError": "Richiesta candidatura non riuscita.",
+        "wageLabel": "Retribuzione"
       },
       "applications": {
         "status": {
@@ -219,8 +342,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "Usa quest'area per seguire validazione token e stato turno.",
         "actions": {
           "validate": "Valida token",
           "success": "Imposta successo",
@@ -242,9 +363,54 @@
         },
         "confirm": "Conferma pagamento",
         "confirmed": "Pagamento confermato"
-      }
+      },
+      "logout": "Esci"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "Panoramica",
+        "postings": "Annunci",
+        "candidates": "Candidati",
+        "operations": "Operazioni",
+        "billing": "Fatturazione",
+        "reports": "Report"
+      },
+      "topbar": {
+        "toggleThemeAria": "Cambia tema",
+        "notificationsAria": "Apri notifiche",
+        "toggleSidebarAria": "Comprimi o espandi la barra laterale",
+        "breadcrumbAria": "Posizione nel portale datore di lavoro"
+      },
+      "pages": {
+        "overview": {
+          "title": "Panoramica",
+          "subtitle": "Riepilogo annunci e flusso candidati in un colpo d'occhio."
+        },
+        "postings": {
+          "title": "Annunci",
+          "subtitle": "Filtra gli annunci e controlla dettaglio e capacità."
+        },
+        "candidates": {
+          "title": "Candidati",
+          "subtitle": "Esamina le candidature per stato e punteggio."
+        },
+        "operations": {
+          "title": "Operazioni",
+          "subtitle": "Anteprima in sola lettura di QR e turni."
+        },
+        "billing": {
+          "title": "Fatturazione",
+          "subtitle": "Monitora crediti e pagamenti."
+        },
+        "reports": {
+          "title": "Report",
+          "subtitle": "Code di export e KPI di riepilogo."
+        }
+      },
+      "logout": "Esci"
     },
     "employer": {
+      "defaultName": "Datore di lavoro",
       "title": "Dashboard azienda",
       "subtitle": "Pubblica annunci, monitora i candidati e controlla l'operativita.",
       "sectionsNav": {

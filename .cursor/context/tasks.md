@@ -5,11 +5,98 @@
 - [ ] Wire login form submission to real auth API when backend is ready
 - [ ] Refine per-locale copy quality for ES/IT/RU content blocks
 
+### Employer layout (mirror Worker)
+
+- [x] Analyze `WorkerLayout` shell vs tek sayfalık `EmployerDashboard`
+- [x] Add `EmployerLayout` + `/employer/*` routing; paylaşımlı portal state/context
+- [x] i18n: `dashboard.employerPortal` + `dashboard.employer.defaultName` (tr/en/es/it/ru/ar/fr)
+- [x] `App.tsx`: işveren Navbar/footer worker ile gizlenir; girişte `/employer` yönlendirmesi
+
 ---
 
 ## Completed
 
+- [x] Create dedicated `WorkerLayout` and route worker pages through it for centralized shell definitions
+- [x] Verify worker-only layout path with lint
+- [x] Redesign `/worker/profile` with account-settings style layout (left section nav + right editable content) aligned to existing ocean dashboard theme
+- [x] Add profile settings section i18n keys for `tr`, `en`, `es`, `it`, `ru`, `ar`
+- [x] Validate `/worker/profile` redesign with lint
+- [x] Analyze `/worker/profile` editable UX states and convert basic info section into an editable form without affecting other worker routes
+- [x] Add `/worker/profile` edit-mode i18n keys across supported locales (`tr`, `en`, `es`, `it`, `ru`, `ar`)
+- [x] Validate `/worker/profile` scoped refactor with lint
+- [x] Add `Tamamlanan Vardiyalar` card between worker overview best-matches and earnings cards with 4 earning rows
+- [x] Extend worker overview locale keys for completed-shift earning labels across `tr/en/es/it/ru/ar/fr`
+- [x] Validate worker overview completed-shifts update with lint
+- [x] Analyze worker overview earnings card period-switch UX and chart behavior
+- [x] Add earnings period selector (`Aylık / 3 Aylık / 6 Aylık / Yıllık`) to worker overview summary card
+- [x] Render period-dependent earnings chart variants and periodized amount display in `OverviewPage`
+- [x] Extend overview period i18n keys across `tr/en/es/it/ru/ar/fr` and validate with lint
+- [x] Remove bottom worker overview stats row (`Aylık kazanç / Tamamlanan ödeme / Tamamlanan vardiya`) per latest UI request
+- [x] Analyze Worker Dashboard light theme readability + favicon ico generation scope
+- [x] Improve Worker light theme text/icon contrast in sidebar and overview cards
+- [x] Generate `public/favicon.ico` from brand mark and prioritize ico link in `index.html`
+- [x] Validate dashboard readability + favicon updates with lint
+- [x] Analyze `/worker/shifts` title/action copy update and map impacted i18n keys
+- [x] Update worker shifts copy (`Açık vardiyalar` -> `İş İlanları`, `Vardiyaya başvur` -> `İlana Başvur`) across locale files
+- [x] Validate shifts copy update with lint
+- [x] Analyze `/worker/shifts` employer display requirement and map reusable i18n key
+- [x] Show employer information in each shifts listing card using localized employer label
+- [x] Validate shifts employer info update with lint
+- [x] Analyze `/worker/shifts` wage display requirement and add localized label key
+- [x] Show wage amount and currency in each shifts listing card with localized label
+- [x] Extend shifts wage label key across `tr/en/es/it/ru/ar/fr` and validate with lint
+- [x] Analyze worker header left alignment mismatch between welcome text and page titles
+- [x] Align worker welcome header container with page content titles by removing extra left padding
+- [x] Validate worker header alignment update with lint
+- [x] Create shared dashboard typography rules for Worker layout and Admin/Employer dashboard surfaces
+- [x] Analyze worker route-level breadcrumb architecture (exclude `/worker` dashboard)
+- [x] Add shared breadcrumb in `WorkerLayout` for all `/worker/*` subpages
+- [x] Validate worker breadcrumb rollout with lint
+- [x] Analyze persistent mobile-first worker sidebar behavior with always-visible + collapsible modes
+- [x] Keep worker sidebar always visible on all breakpoints and add icon-focused collapsed mode for small screens
+- [x] Add sidebar collapse toggle control in worker topbar and sync aria labels across locales
+- [x] Validate persistent worker sidebar behavior with lint
+- [x] Analyze in-sidebar collapse control placement aligned to logo row and right border center
+- [x] Move worker sidebar collapse control into logo row and align it to the right border center line
+- [x] Remove topbar collapse toggle and validate in-sidebar control layout with lint
+- [x] Fine-tune worker sidebar collapse button to pixel-perfect border-right center alignment
+- [x] Polish worker sidebar collapse control into a panel-splitter style toggle
+- [x] Reposition worker sidebar splitter between logo and first menu item; increase content inset
+- [x] Add detailed written logo variant and wire collapsed/open sidebar logo switching with angle-chevron splitter icons
+- [x] Add persisted worker sidebar collapse preference and restore it on layout initialization
+- [x] Create project-shared written SVG logo asset and align navbar/worker usage
+- [x] Refine collapsed worker sidebar logo styling (transparent, borderless, larger mark)
+- [x] Remove worker sidebar logo flicker during expand/collapse transitions
+- [x] Tune worker written-logo typography to Syne and reduce expanded sidebar width to 12rem
+- [x] Adjust worker header typography and desktop-only visibility for top action icons
+- [x] Reduce worker welcome header size further, align content inset with sidebar, and make desktop header sticky
+- [x] Remove worker content container paddings and restyle sticky header with flat bottom border
+- [x] Wrap worker page content below sticky header in padded main container (`WorkerLayout`)
+ - [x] Build OpenAPI vs frontend endpoint matrix for post-login screens and add `docs/frontend-endpoint-map.md`
+- [x] Add global 401 refresh-token retry flow in API client via `AuthProvider` refresh handlers
+- [x] Align worker portal profile endpoint resolution to self-first strategy (`GetSelfFullDetail` -> `GetSelfSummary` -> `GetById`)
+- [x] Align employer section filters/statuses to endpoint-safe behavior (remove synthetic posting/payout statuses)
+- [x] Validate endpoint alignment with `npm run lint` and `npm run build`
+- [x] Map OpenAPI active endpoint coverage for Admin/Employer/Worker flows and align endpoint auth requirements (`JobPostings/GetById` now auth-required)
+- [x] Refactor Worker portal fetch lifecycles to shared async hook and replace synthetic worker data paths with endpoint-backed derivations (applications/payouts/reports/CV/QR)
+- [x] Replace Employer billing/reports mock blocks with live metrics derived from postings + applications endpoint outputs
+- [x] Improve Admin section error surfaces by appending `ApiError.code` context in list/detail command failures
+- [x] Validate role endpoint activation changes with `npm run lint` and `npm run build`
 - [x] Add FR locale support globally (i18n config + language switcher + locale file)
+- [x] Standardize Worker portal screens with shared page headers (`WorkerSectionHeader`) + Ocean CTA/badge tokens (`worker-ui`) across routes, including Overview loading/error/header rhythm
+- [x] Unify Worker shell/sidebar/topbar/navbar into one Ocean design language for all worker pages
+- [x] Analyze Worker Overview against requested Ocean Theme widget architecture (AI match, earnings, QR, timeline)
+- [x] Add required dashboard UI dependencies (zustand, framer-motion, lucide-react, clsx, tailwind-merge) with SPA-compatible setup
+- [x] Implement Zustand-backed Worker dashboard state and Ocean Theme widgets in `OverviewPage`
+- [x] Extend i18n keys for new Worker dashboard widgets across supported locales
+- [x] Validate responsive behavior and run lint for Worker dashboard refactor
+- [x] Revise Worker Overview with top stats cards and best-match job listing section
+- [x] Convert Worker top nav to admin-like left sidebar navigation with shared navbar toggle behavior
+- [x] Analyze Employer + Worker post-login layout gaps against new art-direction (hero rhythm, section hierarchy, CTA clarity)
+- [x] Redesign shared dashboard primitives for richer image-led premium surfaces while preserving theme parity and responsiveness
+- [x] Recompose `EmployerDashboard` sections with stronger visual hierarchy and conversion-oriented flow without breaking existing data logic
+- [x] Recompose `WorkerShell` + worker pages with cohesive premium navigation rhythm and responsive section cadence
+- [x] Validate redesigned Employer/Worker experience with lint checks and document component/memory updates
 - [x] Rollout shared post-login 3D primitives across Admin/Employer/Worker shells
 - [x] Migrate Worker portal pages to premium interactive dashboard surface system
 - [x] Validate post-login 3D refresh with lint/build and role-based smoke checks
@@ -51,6 +138,7 @@
 - [x] Add localhost OpenAPI diff checker with baseline/report outputs under `tools/openapi`
 - [x] Add Cursor rule for `Apiyi Güncelledim` command flow (check -> fix -> validate -> baseline update)
 - [x] Validate OpenAPI automation with strict check + baseline refresh + lint + build
+- [x] Re-run strict OpenAPI diff + refresh baseline after latest API update (`Apiyi Güncelledim`)
 - [x] Analyze Admin "Candidates" menu UX flow/state and align with existing panel shell
 - [x] Implement Candidates section content with worker query + responsive candidate cards
 - [x] Add i18n keys for Candidates section in all supported locales (tr/en/es/it/ru/ar)

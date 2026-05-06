@@ -11,6 +11,9 @@ export const API_ENDPOINTS = {
   },
   workers: {
     addSkill: 'Workers/AddSkill',
+    liveStatus: 'Workers/LiveStatus',
+    getSelfSummary: 'Workers/GetSelfSummary',
+    getSelfFullDetail: 'Workers/GetSelfFullDetail',
     getDetail: 'Workers/GetDetail',
     getById: 'Workers/GetById',
     list: 'Workers/List',
@@ -27,6 +30,7 @@ export const API_ENDPOINTS = {
     create: 'JobPostings/Create',
     addSkill: 'JobPostings/AddSkill',
     listOpen: 'JobPostings/ListOpen',
+    listSemanticMatched: 'JobPostings/ListSemanticMatched',
     listByEmployer: 'JobPostings/ListByEmployer',
     getById: 'JobPostings/GetById',
     publish: 'JobPostings/Publish',
@@ -36,6 +40,7 @@ export const API_ENDPOINTS = {
   jobApplications: {
     accept: 'JobApplications/Accept',
     list: 'JobApplications/List',
+    myApplications: 'JobApplications/MyApplications',
     reject: 'JobApplications/Reject',
     submit: 'JobApplications/Submit',
     withdraw: 'JobApplications/Withdraw',

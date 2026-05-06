@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { useTranslation } from 'react-i18next'
 
 import {
+  ApiError,
   AccountStatus,
   normalizePageableList,
   systemUsersApi,
@@ -27,6 +28,16 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const mapApiError = useCallback(
+    (fallbackKey: string, error: unknown) => {
+      const base = t(fallbackKey)
+      if (error instanceof ApiError && error.code) {
+        return `${base} (${error.code})`
+      }
+      return base
+    },
+    [t],
+  )
   const hasLoadedRef = useRef(false)
   const [mode, setMode] = useState<ViewMode>('list')
   const [listRow, setListRow] = useState<SystemUserListItem | null>(null)
@@ -102,15 +113,15 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
         setRows(sorted)
         setTotalCount(tc)
         setListSuccess(t('dashboard.admin.users.list.fetchSuccess', { count: tc }))
-      } catch {
-        setListError(t('dashboard.admin.users.list.fetchError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.users.list.fetchError', error))
         setRows([])
         setTotalCount(0)
       } finally {
         setQueryPending(false)
       }
     },
-    [i18n.language, sortState.columnId, sortState.direction, t],
+    [i18n.language, mapApiError, sortState.columnId, sortState.direction, t],
   )
 
   useEffect(() => {
@@ -201,13 +212,13 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
         await systemUsersApi.ban({ systemUserId })
         setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
         await refreshList()
-      } catch {
-        setListError(t('dashboard.admin.detail.feedback.deleteError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
       } finally {
         setQueryPending(false)
       }
     },
-    [refreshList, t],
+    [mapApiError, refreshList, t],
   )
 
   const handleDetailSave = useCallback(async () => {
@@ -242,12 +253,12 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
       setPasswordDraft('')
       setLifecycleAction('')
       await refreshList()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.saveError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.saveError', error))
     } finally {
       setDetailPending(false)
     }
-  }, [lifecycleAction, listRow, passwordDraft, refreshList, t])
+  }, [lifecycleAction, listRow, mapApiError, passwordDraft, refreshList, t])
 
   const handleDetailDelete = useCallback(async () => {
     if (!listRow) return
@@ -261,12 +272,12 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshList()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.deleteError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, refreshList, t])
+  }, [closeDetail, listRow, mapApiError, refreshList, t])
 
   const typeLabel = useCallback(
     (type: SystemUserType | string) =>

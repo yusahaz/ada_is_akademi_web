@@ -32,7 +32,7 @@ function ProgressRow({
   )
 }
 
-export function HeroCards() {
+export function HeroCards({ onOpenLogin }: { onOpenLogin?: () => void }) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const isDark = theme === 'dark'
@@ -78,6 +78,7 @@ export function HeroCards() {
         </div>
         <button
           type="button"
+          onClick={onOpenLogin}
           className={`mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium text-[#0ea5e9] transition hover:border-[#14f1d9]/35 hover:bg-[#14f1d9]/10 ${
             isDark ? 'border-white/10 bg-white/5' : 'border-sky-200 bg-sky-50'
           }`}

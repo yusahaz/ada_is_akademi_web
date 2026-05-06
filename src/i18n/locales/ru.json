@@ -115,6 +115,7 @@
     "worker": {
       "title": "Панель работника",
       "subtitle": "Управляйте откликами, ближайшими сменами и состоянием профиля в одном месте.",
+      "welcomeGreeting": "Добро пожаловать",
       "defaultName": "Работник",
       "summary": {
         "activeApplications": "Активные отклики",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "Рабочее пространство Worker",
-      "subtitle": "Управляйте профилем, сменами, QR-процессом, выплатами и отчетами после входа.",
       "nav": {
         "overview": "Обзор",
         "profile": "Профиль",
@@ -171,17 +171,109 @@
         "applications": "Заявки",
         "qrCheck": "QR контроль",
         "payouts": "Выплаты",
-        "reports": "Отчеты"
+        "reports": "Отчеты",
+        "jobs": "Вакансии",
+        "cvProfile": "CV/Профиль",
+        "myApplications": "Мои отклики",
+        "account": "Мой аккаунт"
       },
       "states": {
         "loading": "Загрузка данных...",
         "empty": "Для этого раздела нет записей.",
         "fetchError": "Не удалось загрузить данные."
       },
+      "pages": {
+        "overview": {
+          "title": "Обзор",
+          "subtitle": "Следите за матч‑скором, выплатами, QR-потоком и лучшими сменами под ваш профиль."
+        },
+        "profile": {
+          "title": "Профиль",
+          "subtitle": "Проверьте основные данные и теги навыков, которые видят работодатели."
+        },
+        "cvImport": {
+          "title": "Импорт CV",
+          "subtitle": "Симулируйте этапы извлечения и готовности до отклика."
+        },
+        "shifts": {
+          "title": "Объявления о работе",
+          "subtitle": "Просмотр доступных смен и быстрая отправка отклика."
+        },
+        "applications": {
+          "title": "Заявки",
+          "subtitle": "Статус объявлений, на которые вы откликнулись."
+        },
+        "qrCheck": {
+          "title": "QR контроль",
+          "subtitle": "Симуляция проверки QR‑токена для демо."
+        },
+        "payouts": {
+          "title": "Выплаты",
+          "subtitle": "Просмотр выплат и симуляция подтверждения там, где это разрешено."
+        },
+        "reports": {
+          "title": "Отчеты",
+          "subtitle": "Ключевые метрики из выплат и смен."
+        },
+        "recommendations": {
+          "title": "AI-рекомендации",
+          "subtitle": "Вакансии, отсортированные по результату ListSemanticMatched"
+        }
+      },
       "overview": {
         "monthlyEarnings": "Доход за месяц",
         "paidPayouts": "Оплаченные выплаты",
-        "completedShifts": "Завершенные смены"
+        "completedShifts": "Завершенные смены",
+        "bestMatchesTitle": "Наиболее подходящие вакансии",
+        "bestMatchesSubtitle": "Вакансии, рекомендованные по вашему профилю и доступности.",
+        "bestMatchesEmpty": "Сейчас нет подходящих вакансий.",
+        "employerPrefix": "Работодатель #{{id}}",
+        "periodMonthly": "Ежемесячно",
+        "completedShiftsTitle": "Завершенные смены",
+        "shiftEarningLabel": "Заработок за смену",
+        "periodQuarterly": "3 месяца",
+        "periodSemiAnnual": "6 месяцев",
+        "periodYearly": "Годовой",
+        "periodSelectedPrefix": "Выбранный период: {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "Поиск...",
+        "toggleThemeAria": "Сменить тему",
+        "notificationsAria": "Открыть уведомления",
+        "toggleSidebarAria": "Свернуть или развернуть боковую панель",
+        "breadcrumbAria": "Навигация в рабочей области"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "AI-совпадения",
+          "description": "Смены с наилучшим семантическим соответствием приоритизированы для вашего профиля.",
+          "scoreLabel": "Совпадение",
+          "action": "Начать",
+          "signal": "Рекомендация на основе данных"
+        },
+        "earnings": {
+          "title": "Обзор доходов",
+          "currency": "₺",
+          "empty": "Пока нет данных о доходах."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "Открыть камеру"
+        },
+        "timeline": {
+          "title": "Ближайшие смены",
+          "viewAll": "Все",
+          "status": {
+            "confirmed": "Подтверждено",
+            "active": "Активно",
+            "completed": "Завершено",
+            "disputed": "Спор"
+          },
+          "anomaly": {
+            "locationMismatch": "Несовпадение локации",
+            "expiredToken": "Просроченный токен"
+          }
+        }
       },
       "profile": {
         "basic": "Базовый профиль",
@@ -190,7 +282,39 @@
         "nationality": "Гражданство: {{value}}",
         "university": "Университет: {{value}}",
         "studentNumber": "Номер студента: {{value}}",
-        "skills": "Теги навыков"
+        "skills": "Теги навыков",
+        "educations": "Образование",
+        "experiences": "Опыт работы",
+        "certificates": "Сертификаты",
+        "languages": "Языки",
+        "references": "Рекомендации",
+        "completion": "Заполненность профиля",
+        "actions": {
+          "edit": "Редактировать профиль",
+          "save": "Сохранить",
+          "cancel": "Отменить"
+        },
+        "fields": {
+          "fullName": "Полное имя",
+          "email": "Email",
+          "nationality": "Гражданство",
+          "university": "Университет",
+          "studentNumber": "Номер студента"
+        },
+        "messages": {
+          "savedLocal": "Изменения профиля сохранены для этой сессии.",
+          "validationError": "Полное имя должно содержать минимум 2 символа."
+        },
+        "settingsMenu": "Настройки аккаунта",
+        "menu": {
+          "basic": "Личные данные",
+          "contact": "Контактная информация",
+          "password": "Сменить пароль",
+          "emailNotifications": "Email-уведомления",
+          "smsNotifications": "SMS-уведомления",
+          "accountControl": "Удаление и заморозка аккаунта",
+          "adVisibility": "Видимость объявлений"
+        }
       },
       "cv": {
         "title": "Пайплайн импорта CV",
@@ -205,9 +329,10 @@
         "currentState": "Текущий статус: {{state}}"
       },
       "shifts": {
-        "submit": "Откликнуться на смену",
+        "submit": "Откликнуться на объявление",
         "submitting": "Отправка...",
-        "submitError": "Не удалось отправить заявку."
+        "submitError": "Не удалось отправить заявку.",
+        "wageLabel": "Оплата"
       },
       "applications": {
         "status": {
@@ -219,8 +344,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "Используйте этот раздел для отслеживания проверки токена и статуса смены.",
         "actions": {
           "validate": "Проверить токен",
           "success": "Установить успех",
@@ -242,9 +365,54 @@
         },
         "confirm": "Подтвердить выплату",
         "confirmed": "Выплата подтверждена"
-      }
+      },
+      "logout": "Выйти"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "Обзор",
+        "postings": "Вакансии",
+        "candidates": "Кандидаты",
+        "operations": "Операции",
+        "billing": "Биллинг",
+        "reports": "Отчеты"
+      },
+      "topbar": {
+        "toggleThemeAria": "Сменить тему",
+        "notificationsAria": "Открыть уведомления",
+        "toggleSidebarAria": "Свернуть или развернуть боковую панель",
+        "breadcrumbAria": "Раздел портала работодателя"
+      },
+      "pages": {
+        "overview": {
+          "title": "Обзор",
+          "subtitle": "Сводка по вакансиям и поток кандидатов на одном экране."
+        },
+        "postings": {
+          "title": "Вакансии",
+          "subtitle": "Фильтруйте вакансии и смотрите детали и метрики по численности."
+        },
+        "candidates": {
+          "title": "Кандидаты",
+          "subtitle": "Анализ откликов по статусу и баллу совпадения."
+        },
+        "operations": {
+          "title": "Операции",
+          "subtitle": "Только для чтения: QR и операции со сменами."
+        },
+        "billing": {
+          "title": "Биллинг",
+          "subtitle": "Дебиторка и строки выплат."
+        },
+        "reports": {
+          "title": "Отчеты",
+          "subtitle": "Очереди экспорта и сводные показатели."
+        }
+      },
+      "logout": "Выйти"
     },
     "employer": {
+      "defaultName": "Работодатель",
       "title": "Панель работодателя",
       "subtitle": "Публикуйте вакансии, отслеживайте кандидатов и контролируйте процесс.",
       "sectionsNav": {

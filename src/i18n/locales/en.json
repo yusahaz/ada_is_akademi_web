@@ -115,6 +115,7 @@
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Track your applications, upcoming shifts, and profile health in one place.",
+      "welcomeGreeting": "Welcome",
       "defaultName": "Worker",
       "summary": {
         "activeApplications": "Active applications",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "Worker Workspace",
-      "subtitle": "Manage your profile, shifts, QR flow, payouts, and reports after login.",
       "nav": {
         "overview": "Overview",
         "profile": "Profile",
@@ -171,17 +171,109 @@
         "applications": "Applications",
         "qrCheck": "QR Check",
         "payouts": "Payouts",
-        "reports": "Reports"
+        "reports": "Reports",
+        "jobs": "Job Listings",
+        "cvProfile": "CV/Profile",
+        "myApplications": "My Applications",
+        "account": "My Account"
       },
       "states": {
         "loading": "Loading data...",
         "empty": "No records found for this section.",
         "fetchError": "Data could not be loaded."
       },
+      "pages": {
+        "overview": {
+          "title": "Overview",
+          "subtitle": "Track match score, payouts, QR flow, and the best shifts for your profile."
+        },
+        "profile": {
+          "title": "Profile",
+          "subtitle": "Verify your basics and skill tags employers see."
+        },
+        "cvImport": {
+          "title": "CV import",
+          "subtitle": "Simulate extraction steps and readiness before applying."
+        },
+        "shifts": {
+          "title": "Job Listings",
+          "subtitle": "Browse shifts you can join and submit an application quickly."
+        },
+        "applications": {
+          "title": "Applications",
+          "subtitle": "Follow the progress of postings you applied to."
+        },
+        "qrCheck": {
+          "title": "QR check-in",
+          "subtitle": "Simulate QR token validation flows for onboarding demos."
+        },
+        "payouts": {
+          "title": "Payouts",
+          "subtitle": "Review payouts and simulate confirmation when permitted."
+        },
+        "reports": {
+          "title": "Reports",
+          "subtitle": "Key metrics synthesized from payouts and shifts."
+        },
+        "recommendations": {
+          "title": "AI Recommendations",
+          "subtitle": "Jobs ranked by ListSemanticMatched result"
+        }
+      },
       "overview": {
         "monthlyEarnings": "Monthly earnings",
         "paidPayouts": "Paid payouts",
-        "completedShifts": "Completed shifts"
+        "completedShifts": "Completed shifts",
+        "bestMatchesTitle": "Best matching listings",
+        "bestMatchesSubtitle": "Listings suggested based on your profile and availability.",
+        "bestMatchesEmpty": "No suitable listings are available right now.",
+        "employerPrefix": "Employer #{{id}}",
+        "periodMonthly": "Monthly",
+        "completedShiftsTitle": "Completed Shifts",
+        "shiftEarningLabel": "Shift earning",
+        "periodQuarterly": "3M",
+        "periodSemiAnnual": "6M",
+        "periodYearly": "Yearly",
+        "periodSelectedPrefix": "Selected period: {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "Search...",
+        "toggleThemeAria": "Toggle theme",
+        "notificationsAria": "Open notifications",
+        "toggleSidebarAria": "Toggle sidebar collapse",
+        "breadcrumbAria": "Worker workspace breadcrumb"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "AI Match Opportunities",
+          "description": "Shifts with the highest semantic fit are prioritized for your profile.",
+          "scoreLabel": "Match",
+          "action": "Start Now",
+          "signal": "Data-driven suggestion"
+        },
+        "earnings": {
+          "title": "Earnings Overview",
+          "currency": "₺",
+          "empty": "No earnings data yet."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "Open Camera"
+        },
+        "timeline": {
+          "title": "Upcoming Shifts",
+          "viewAll": "View all",
+          "status": {
+            "confirmed": "Confirmed",
+            "active": "Active",
+            "completed": "Completed",
+            "disputed": "Disputed"
+          },
+          "anomaly": {
+            "locationMismatch": "Location mismatch",
+            "expiredToken": "Expired token"
+          }
+        }
       },
       "profile": {
         "basic": "Basic profile",
@@ -190,11 +282,42 @@
         "nationality": "Nationality: {{value}}",
         "university": "University: {{value}}",
         "studentNumber": "Student number: {{value}}",
-        "skills": "Skill tags"
+        "skills": "Skill tags",
+        "educations": "Education records",
+        "experiences": "Experience records",
+        "certificates": "Certificates",
+        "languages": "Languages",
+        "references": "References",
+        "completion": "Profile completion",
+        "actions": {
+          "edit": "Edit profile",
+          "save": "Save",
+          "cancel": "Cancel"
+        },
+        "fields": {
+          "fullName": "Full name",
+          "email": "Email",
+          "nationality": "Nationality",
+          "university": "University",
+          "studentNumber": "Student number"
+        },
+        "messages": {
+          "savedLocal": "Profile changes saved for this session.",
+          "validationError": "Full name must be at least 2 characters."
+        },
+        "settingsMenu": "Account settings",
+        "menu": {
+          "basic": "Personal information",
+          "contact": "Contact information",
+          "password": "Change password",
+          "emailNotifications": "Email notifications",
+          "smsNotifications": "SMS notifications",
+          "accountControl": "Delete and freeze account",
+          "adVisibility": "Ad visibility"
+        },
+        "menuComingSoon": "This subsection will be enabled soon."
       },
       "cv": {
-        "title": "CV Import Pipeline",
-        "description": "Track extraction state and confirm parsed sections before applying.",
         "states": {
           "uploaded": "Uploaded",
           "extracting": "Extracting",
@@ -205,9 +328,10 @@
         "currentState": "Current state: {{state}}"
       },
       "shifts": {
-        "submit": "Apply shift",
+        "submit": "Apply to Posting",
         "submitting": "Applying...",
-        "submitError": "Application request failed."
+        "submitError": "Application request failed.",
+        "wageLabel": "Wage"
       },
       "applications": {
         "status": {
@@ -219,8 +343,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "Use this area to follow token validation and shift entry status.",
         "actions": {
           "validate": "Validate token",
           "success": "Set success",
@@ -242,9 +364,54 @@
         },
         "confirm": "Confirm payout",
         "confirmed": "Payout confirmed"
-      }
+      },
+      "logout": "Log out"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "Overview",
+        "postings": "Postings",
+        "candidates": "Candidates",
+        "operations": "Operations",
+        "billing": "Billing",
+        "reports": "Reports"
+      },
+      "topbar": {
+        "toggleThemeAria": "Toggle theme",
+        "notificationsAria": "Open notifications",
+        "toggleSidebarAria": "Collapse or expand sidebar",
+        "breadcrumbAria": "Employer portal location"
+      },
+      "pages": {
+        "overview": {
+          "title": "Overview",
+          "subtitle": "See posting summary and candidate flow at a glance."
+        },
+        "postings": {
+          "title": "Postings",
+          "subtitle": "Filter postings and review detail with headcount metrics."
+        },
+        "candidates": {
+          "title": "Candidates",
+          "subtitle": "Review applications by status and match score."
+        },
+        "operations": {
+          "title": "Operations",
+          "subtitle": "Read-only preview of QR and shift operations."
+        },
+        "billing": {
+          "title": "Billing",
+          "subtitle": "Track receivables and payout lines."
+        },
+        "reports": {
+          "title": "Reports",
+          "subtitle": "Export queues and summary KPIs."
+        }
+      },
+      "logout": "Log out"
     },
     "employer": {
+      "defaultName": "Employer",
       "title": "Employer Dashboard",
       "subtitle": "Publish postings, monitor candidate flow, and keep operations on track.",
       "sectionsNav": {

@@ -14,6 +14,14 @@ type BadgeProps = {
   className?: string
 }
 
+type HeroProps = {
+  theme: ThemeMode
+  eyebrow?: string
+  title: string
+  description: string
+  children?: ReactNode
+}
+
 function cx(...parts: Array<string | false | null | undefined>) {
   return parts.filter(Boolean).join(' ')
 }
@@ -31,6 +39,37 @@ export function DashboardSurface({ theme, children, className }: SurfaceProps) {
       )}
     >
       {children}
+    </article>
+  )
+}
+
+export function DashboardHero({ theme, eyebrow, title, description, children }: HeroProps) {
+  return (
+    <article
+      className={cx(
+        'relative overflow-hidden rounded-3xl border p-5 sm:p-7',
+        theme === 'dark'
+          ? 'border-white/10 bg-[linear-gradient(135deg,rgba(20,241,217,0.16),rgba(15,23,42,0.92)_42%,rgba(2,6,23,0.95))]'
+          : 'border-sky-200 bg-[linear-gradient(135deg,rgba(14,165,233,0.12),rgba(255,255,255,0.97)_45%,rgba(240,249,255,0.9))]',
+      )}
+    >
+      <div className="relative z-[1] max-w-3xl">
+        {eyebrow ? <GlowBadge theme={theme}>{eyebrow}</GlowBadge> : null}
+        <h1 className={cx('mt-3 font-display text-2xl font-semibold sm:text-3xl', theme === 'dark' ? 'text-white' : 'text-slate-900')}>
+          {title}
+        </h1>
+        <p className={cx('mt-2 text-sm leading-6 sm:text-base', theme === 'dark' ? 'text-white/75' : 'text-slate-700')}>
+          {description}
+        </p>
+        {children ? <div className="mt-4">{children}</div> : null}
+      </div>
+      <div
+        aria-hidden
+        className={cx(
+          'pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl',
+          theme === 'dark' ? 'bg-cyan-300/20' : 'bg-sky-300/30',
+        )}
+      />
     </article>
   )
 }

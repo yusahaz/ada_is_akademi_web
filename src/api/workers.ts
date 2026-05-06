@@ -79,6 +79,19 @@ export type WorkerDetail = {
   }>
 }
 
+export type WorkerLiveStatusItem = {
+  id?: number | string
+  type?: string | null
+  itemType?: string | null
+  eventType?: string | null
+  message?: string | null
+  text?: string | null
+  title?: string | null
+  description?: string | null
+  createdAt?: string | null
+  timestamp?: string | null
+}
+
 export type ListWorkersQuery = {
   accountStatus?: AccountStatus | null
   limit?: number
@@ -118,6 +131,27 @@ export const workersApi = {
   async getDetail(body: GetWorkerByIdQuery) {
     return client.post<WorkerDetail, GetWorkerByIdQuery>(
       API_ENDPOINTS.workers.getDetail,
+      body,
+      true,
+    )
+  },
+  getSelfSummary() {
+    return client.post<WorkerDetail, Record<string, never>>(
+      API_ENDPOINTS.workers.getSelfSummary,
+      {},
+      true,
+    )
+  },
+  getSelfFullDetail() {
+    return client.post<WorkerDetail, Record<string, never>>(
+      API_ENDPOINTS.workers.getSelfFullDetail,
+      {},
+      true,
+    )
+  },
+  liveStatus(body: Record<string, never> = {}) {
+    return client.post<WorkerLiveStatusItem[], Record<string, never>>(
+      API_ENDPOINTS.workers.liveStatus,
       body,
       true,
     )

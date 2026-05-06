@@ -115,6 +115,7 @@
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Track your applications, upcoming shifts, and profile health in one place.",
+      "welcomeGreeting": "Bienvenue",
       "defaultName": "Worker",
       "summary": {
         "activeApplications": "Active applications",
@@ -162,7 +163,6 @@
     },
     "workerPortal": {
       "title": "Worker Workspace",
-      "subtitle": "Manage your profile, shifts, QR flow, payouts, and reports after login.",
       "nav": {
         "overview": "Overview",
         "profile": "Profile",
@@ -178,10 +178,98 @@
         "empty": "No records found for this section.",
         "fetchError": "Data could not be loaded."
       },
+      "pages": {
+        "overview": {
+          "title": "Overview",
+          "subtitle": "Suivez le score de matching, les paiements, le flux QR et les meilleurs shifts pour votre profil."
+        },
+        "profile": {
+          "title": "Profile",
+          "subtitle": "Vérifiez vos infos de base et les tags de compétences visibles côté employeur."
+        },
+        "cvImport": {
+          "title": "CV Import",
+          "subtitle": "Simulez l’extraction et la préparation avant de postuler."
+        },
+        "shifts": {
+          "title": "Offres d'emploi",
+          "subtitle": "Parcourez les créneaux disponibles et envoyez une candidature rapidement."
+        },
+        "applications": {
+          "title": "Applications",
+          "subtitle": "Suivez la progression des offres auxquelles vous avez postulé."
+        },
+        "qrCheck": {
+          "title": "QR Check",
+          "subtitle": "Simulez la validation du token QR pour des démos."
+        },
+        "payouts": {
+          "title": "Payouts",
+          "subtitle": "Consultez les paiements et simulez la confirmation si autorisé."
+        },
+        "reports": {
+          "title": "Reports",
+          "subtitle": "Indicateurs synthétiques issus des paiements et des shifts."
+        },
+        "recommendations": {
+          "title": "Recommandations IA",
+          "subtitle": "Offres triees selon le resultat ListSemanticMatched"
+        }
+      },
       "overview": {
         "monthlyEarnings": "Monthly earnings",
         "paidPayouts": "Paid payouts",
-        "completedShifts": "Completed shifts"
+        "completedShifts": "Completed shifts",
+        "bestMatchesTitle": "Offres les plus adaptées",
+        "bestMatchesSubtitle": "Offres suggérées selon votre profil et votre disponibilité.",
+        "bestMatchesEmpty": "Aucune offre adaptée n'est disponible pour le moment.",
+        "employerPrefix": "Employeur #{{id}}",
+        "periodMonthly": "Mensuel",
+        "completedShiftsTitle": "Shifts terminés",
+        "shiftEarningLabel": "Gain par shift",
+        "periodQuarterly": "3 mois",
+        "periodSemiAnnual": "6 mois",
+        "periodYearly": "Annuel",
+        "periodSelectedPrefix": "Periode selectionnee : {{period}}"
+      },
+      "topbar": {
+        "searchPlaceholder": "Rechercher...",
+        "toggleThemeAria": "Changer le thème",
+        "notificationsAria": "Ouvrir les notifications",
+        "toggleSidebarAria": "Basculer la barre laterale",
+        "breadcrumbAria": "Fil d'Ariane de l'espace travailleur"
+      },
+      "widgets": {
+        "aiMatch": {
+          "title": "Correspondances IA",
+          "description": "Les shifts avec la meilleure adéquation sémantique sont priorisés pour votre profil.",
+          "scoreLabel": "Match",
+          "action": "Commencer",
+          "signal": "Suggestion basée sur les données"
+        },
+        "earnings": {
+          "title": "Résumé des gains",
+          "currency": "₺",
+          "empty": "Aucune donnée de gains pour le moment."
+        },
+        "qr": {
+          "title": "QR Check-in",
+          "action": "Ouvrir la caméra"
+        },
+        "timeline": {
+          "title": "Shifts à venir",
+          "viewAll": "Tout voir",
+          "status": {
+            "confirmed": "Confirmé",
+            "active": "Actif",
+            "completed": "Terminé",
+            "disputed": "Litige"
+          },
+          "anomaly": {
+            "locationMismatch": "Incohérence de position",
+            "expiredToken": "Jeton expiré"
+          }
+        }
       },
       "profile": {
         "basic": "Basic profile",
@@ -190,7 +278,38 @@
         "nationality": "Nationality: {{value}}",
         "university": "University: {{value}}",
         "studentNumber": "Student number: {{value}}",
-        "skills": "Skill tags"
+        "skills": "Skill tags",
+        "educations": "Education records",
+        "experiences": "Experience records",
+        "certificates": "Certificates",
+        "languages": "Languages",
+        "references": "References",
+        "completion": "Profile completion",
+        "actions": {
+          "edit": "Edit profile",
+          "save": "Save",
+          "cancel": "Cancel"
+        },
+        "fields": {
+          "fullName": "Full name",
+          "email": "Email",
+          "nationality": "Nationality",
+          "university": "University",
+          "studentNumber": "Student number"
+        },
+        "messages": {
+          "savedLocal": "Profile changes saved for this session.",
+          "validationError": "Full name must be at least 2 characters."
+        },
+        "settingsMenu": "Paramètres du compte",
+        "menu": {
+          "basic": "Informations personnelles",
+          "contact": "Coordonnées",
+          "password": "Changer le mot de passe",
+          "emailNotifications": "Notifications e-mail",
+          "smsNotifications": "Notifications SMS",
+          "accountControl": "Suppression et gel du compte"
+        }
       },
       "cv": {
         "title": "CV Import Pipeline",
@@ -205,9 +324,10 @@
         "currentState": "Current state: {{state}}"
       },
       "shifts": {
-        "submit": "Apply shift",
+        "submit": "Postuler a l'annonce",
         "submitting": "Applying...",
-        "submitError": "Application request failed."
+        "submitError": "Application request failed.",
+        "wageLabel": "Remuneration"
       },
       "applications": {
         "status": {
@@ -219,8 +339,6 @@
         }
       },
       "qr": {
-        "title": "QR Check-in / Check-out",
-        "description": "Use this area to follow token validation and shift entry status.",
         "actions": {
           "validate": "Validate token",
           "success": "Set success",
@@ -242,9 +360,54 @@
         },
         "confirm": "Confirm payout",
         "confirmed": "Payout confirmed"
-      }
+      },
+      "logout": "Se déconnecter"
+    },
+    "employerPortal": {
+      "nav": {
+        "overview": "Aperçu",
+        "postings": "Annonces",
+        "candidates": "Candidats",
+        "operations": "Opérations",
+        "billing": "Facturation",
+        "reports": "Rapports"
+      },
+      "topbar": {
+        "toggleThemeAria": "Changer de thème",
+        "notificationsAria": "Ouvrir les notifications",
+        "toggleSidebarAria": "Réduire ou agrandir la barre latérale",
+        "breadcrumbAria": "Emplacement du portail employeur"
+      },
+      "pages": {
+        "overview": {
+          "title": "Aperçu",
+          "subtitle": "Vue d'ensemble des annonces et du flux de candidats."
+        },
+        "postings": {
+          "title": "Annonces",
+          "subtitle": "Filtrer les annonces et voir le détail et les métriques d'effectif."
+        },
+        "candidates": {
+          "title": "Candidats",
+          "subtitle": "Analyser les candidatures par statut et score."
+        },
+        "operations": {
+          "title": "Opérations",
+          "subtitle": "Aperçu en lecture seule des opérations QR et des shifts."
+        },
+        "billing": {
+          "title": "Facturation",
+          "subtitle": "Suivre créances et lignes de paiement."
+        },
+        "reports": {
+          "title": "Rapports",
+          "subtitle": "Files d'export et indicateurs récapitulatifs."
+        }
+      },
+      "logout": "Se déconnecter"
     },
     "employer": {
+      "defaultName": "Employeur",
       "title": "Employer Dashboard",
       "subtitle": "Publish postings, monitor candidate flow, and keep operations on track.",
       "sectionsNav": {

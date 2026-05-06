@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { useTranslation } from 'react-i18next'
 
 import {
+  ApiError,
   normalizePageableList,
   PermissionEffect,
   systemUserGroupsApi,
@@ -34,6 +35,16 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const mapApiError = useCallback(
+    (fallbackKey: string, error: unknown) => {
+      const base = t(fallbackKey)
+      if (error instanceof ApiError && error.code) {
+        return `${base} (${error.code})`
+      }
+      return base
+    },
+    [t],
+  )
   const hasLoadedRef = useRef(false)
   const [mode, setMode] = useState<ViewMode>('list')
   const [listRow, setListRow] = useState<SystemUserGroupListItem | null>(null)
@@ -117,15 +128,15 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
         setRows(sorted)
         setTotalCount(tc)
         setListSuccess(t('dashboard.admin.userGroups.list.fetchSuccess', { count: tc }))
-      } catch {
-        setListError(t('dashboard.admin.userGroups.list.fetchError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.userGroups.list.fetchError', error))
         setRows([])
         setTotalCount(0)
       } finally {
         setQueryPending(false)
       }
     },
-    [i18n.language, sortState.columnId, sortState.direction, t],
+    [i18n.language, mapApiError, sortState.columnId, sortState.direction, t],
   )
 
   useEffect(() => {
@@ -217,13 +228,13 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
         await systemUserGroupsApi.deactivate({ systemUserGroupId })
         setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
         await refreshList()
-      } catch {
-        setListError(t('dashboard.admin.detail.feedback.deleteError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
       } finally {
         setQueryPending(false)
       }
     },
-    [refreshList, t],
+    [mapApiError, refreshList, t],
   )
 
   const handleDetailSave = useCallback(async () => {
@@ -274,8 +285,8 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
           : prev,
       )
       await refreshList()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.saveError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.saveError', error))
     } finally {
       setDetailPending(false)
     }
@@ -283,6 +294,7 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
     listRow,
     permissionEffectDraft,
     permissionIdDraft,
+    mapApiError,
     refreshList,
     targetActive,
     t,
@@ -300,12 +312,12 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshList()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.deleteError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, refreshList, t])
+  }, [closeDetail, listRow, mapApiError, refreshList, t])
 
   const gridColumns = useMemo<AdminDataGridColumn<SystemUserGroupListItem>[]>(
     () => [

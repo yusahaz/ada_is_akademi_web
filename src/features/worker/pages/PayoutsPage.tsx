@@ -1,72 +1,88 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import type { WorkerPayoutItem } from '../../../api/worker-portal'
 import { workerPortalApi } from '../../../api/worker-portal'
 import { useTheme } from '../../../theme/theme-context'
 import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
+import { WorkerPillBadge, WorkerPrimaryButton, WorkerSectionHeader } from '../worker-ui'
+import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 
 export function PayoutsPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [items, setItems] = useState<WorkerPayoutItem[]>([])
+  const query = useCallback(() => workerPortalApi.listPayouts(), [])
+  const { loading, error, data: items } = useWorkerAsyncData<WorkerPayoutItem[]>(
+    [],
+    ['worker', 'payouts'],
+    query,
+    () => t('dashboard.workerPortal.states.fetchError'),
+  )
   const [confirmedIds, setConfirmedIds] = useState<number[]>([])
 
-  useEffect(() => {
-    let active = true
-    void workerPortalApi
-      .listPayouts()
-      .then((response) => {
-        if (!active) return
-        setItems(response)
-        setError(null)
-      })
-      .catch(() => {
-        if (!active) return
-        setError(t('dashboard.workerPortal.states.fetchError'))
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
-    return () => {
-      active = false
-    }
-  }, [t])
-
-  if (loading) return <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
-  if (error) return <StatePanel text={error} theme={theme} isError />
-  if (items.length === 0) return <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
+  if (loading) {
+    return (
+      <div className="space-y-4">
+        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+        <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
+      </div>
+    )
+  }
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+        <StatePanel text={error} theme={theme} isError />
+      </div>
+    )
+  }
+  if (items.length === 0) {
+    return (
+      <div className="space-y-4">
+        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+        <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
+      </div>
+    )
+  }
 
   return (
-    <div className="space-y-3">
-      {items.map((item) => (
-        <DashboardSurface key={item.id} theme={theme}>
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.postingTitle}</p>
-              <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`}>{item.amount}</p>
+    <div className="space-y-4">
+      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+      <div className="grid gap-3 lg:grid-cols-2">
+        {items.map((item) => (
+          <DashboardSurface key={item.id} theme={theme}>
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.postingTitle}</p>
+                <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`}>{item.amount}</p>
+              </div>
+              <WorkerPillBadge tone={theme} emphasis={payoutBadgeEmphasis(item.status)}>
+                {t(`dashboard.workerPortal.payouts.status.${item.status}`)}
+              </WorkerPillBadge>
             </div>
-            <span className={`rounded-md px-2 py-1 text-xs font-semibold ${theme === 'dark' ? 'bg-white/10 text-white/80' : 'bg-slate-100 text-slate-700'}`}>
-              {t(`dashboard.workerPortal.payouts.status.${item.status}`)}
-            </span>
-          </div>
-          {item.canConfirm ? (
-            <button
-              type="button"
-              onClick={() => setConfirmedIds((prev) => (prev.includes(item.id) ? prev : [...prev, item.id]))}
-              className={`mt-3 rounded-md px-3 py-2 text-xs font-semibold ${
-                theme === 'dark' ? 'bg-[#14f1d9]/20 text-[#14f1d9]' : 'bg-sky-100 text-sky-700'
-              }`}
-            >
-              {confirmedIds.includes(item.id)
-                ? t('dashboard.workerPortal.payouts.confirmed')
-                : t('dashboard.workerPortal.payouts.confirm')}
-            </button>
-          ) : null}
-        </DashboardSurface>
-      ))}
+            {item.canConfirm ? (
+              <WorkerPrimaryButton
+                tone={theme}
+                disabled={confirmedIds.includes(item.id)}
+                onClick={() => setConfirmedIds((prev) => (prev.includes(item.id) ? prev : [...prev, item.id]))}
+                className="mt-3 w-full sm:w-auto"
+              >
+                {confirmedIds.includes(item.id)
+                  ? t('dashboard.workerPortal.payouts.confirmed')
+                  : t('dashboard.workerPortal.payouts.confirm')}
+              </WorkerPrimaryButton>
+            ) : null}
+          </DashboardSurface>
+        ))}
+      </div>
     </div>
   )
+}
+
+function payoutBadgeEmphasis(status: WorkerPayoutItem['status']): 'success' | 'danger' | 'warning' | 'info' | 'neutral' {
+  if (status === 'paid') return 'success'
+  if (status === 'failed') return 'danger'
+  if (status === 'pending') return 'warning'
+  if (status === 'processing') return 'info'
+  return 'neutral'
 }

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { useTranslation } from 'react-i18next'
 
 import {
+  ApiError,
   AccountStatus,
   systemUsersApi,
   workersApi,
@@ -41,6 +42,16 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const notifications = useNotification()
+  const mapApiError = useCallback(
+    (fallbackKey: string, error: unknown) => {
+      const base = t(fallbackKey)
+      if (error instanceof ApiError && error.code) {
+        return `${base} (${error.code})`
+      }
+      return base
+    },
+    [t],
+  )
   const hasLoadedRef = useRef(false)
   const [mode, setMode] = useState<ViewMode>('list')
   const [listRow, setListRow] = useState<WorkerListItem | null>(null)
@@ -130,15 +141,15 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
             count: Number.isFinite(rawTotal) ? rawTotal : sorted.length,
           }),
         )
-      } catch {
-        setListError(t('dashboard.admin.candidates.fetchError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.candidates.fetchError', error))
         setRows([])
         setTotalCount(0)
       } finally {
         setQueryPending(false)
       }
     },
-    [i18n.language, sortState.columnId, sortState.direction, t],
+    [i18n.language, mapApiError, sortState.columnId, sortState.direction, t],
   )
 
   useEffect(() => {
@@ -162,10 +173,10 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
         if (!active) return
         setWorkerDetail(detail)
       })
-      .catch(() => {
+      .catch((error) => {
         if (!active) return
         setWorkerDetail(null)
-        setDetailError(t('dashboard.admin.candidates.detail.loadError'))
+        setDetailError(mapApiError('dashboard.admin.candidates.detail.loadError', error))
       })
       .finally(() => {
         if (!active) return
@@ -174,7 +185,7 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
     return () => {
       active = false
     }
-  }, [mode, t, workerIdForDetail])
+  }, [mapApiError, mode, t, workerIdForDetail])
 
   async function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -248,13 +259,13 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
         await systemUsersApi.ban({ systemUserId })
         setListSuccess(t('dashboard.admin.candidates.actions.deleteSuccess', { id: item.workerId }))
         await fetchCandidates(appliedEmail, appliedStatus, page, pageSize)
-      } catch {
-        setListError(t('dashboard.admin.candidates.actions.deleteError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.candidates.actions.deleteError', error))
       } finally {
         setQueryPending(false)
       }
     },
-    [appliedEmail, appliedStatus, fetchCandidates, page, pageSize, t],
+    [appliedEmail, appliedStatus, fetchCandidates, mapApiError, page, pageSize, t],
   )
 
   const openDetail = useCallback((item: WorkerListItem) => {
@@ -322,13 +333,14 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
         setWorkerDetail(next)
       }
       await refreshListAfterDetail()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.saveError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.saveError', error))
     } finally {
       setDetailPending(false)
     }
   }, [
     listRow,
+    mapApiError,
     passwordDraft,
     refreshListAfterDetail,
     skillTagDraft,
@@ -399,12 +411,12 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshListAfterDetail()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.deleteError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, refreshListAfterDetail, t])
+  }, [closeDetail, listRow, mapApiError, refreshListAfterDetail, t])
 
   const gridColumns = useMemo<AdminDataGridColumn<WorkerListItem>[]>(
     () => [

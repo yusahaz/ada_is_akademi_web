@@ -91,26 +91,51 @@ Props: `titleKey`, `subtitleKey`, `children`
 States: theme-aware (`dark` | `light`)
 Responsive Notes: single-column mobile with card grid scaling to 2-3 columns on wider breakpoints.
 
-Component: Dashboard UI Primitives (`DashboardSurface`, `InteractiveButton`, `GlowBadge`, `StatePanel`)
-Purpose: Unified premium post-login UI layer for 3D-like depth, micro-interactions, consistent motion feel, and reusable state rendering.
+Component: Dashboard UI Primitives (`DashboardSurface`, `DashboardHero`, `InteractiveButton`, `GlowBadge`, `StatePanel`)
+Purpose: Unified premium post-login UI layer for art-directed hero openings, 3D-like depth, micro-interactions, consistent motion feel, and reusable state rendering.
 Used In: `DashboardShell`, `AdminDashboard`, `EmployerDashboard`, `WorkerShell`, Worker portal pages, admin detail/grid surfaces
 Props: theme-aware minimal props (`theme`, `children`, optional `isActive`/`isError`/`className`)
 States: default/active/error variations with dark-light parity
 Responsive Notes: mobile-first spacing, safe-area friendly composition, touch-friendly interactive sizes.
 
+Component: Worker Portal UI primitives (`worker-ui.tsx`: `WorkerSectionHeader`, `WorkerPillBadge`, `WorkerPrimaryButton`, `WorkerGhostButton`) + shared `cn` helper (`src/lib/cn.ts`)
+Purpose: Lightweight, Ocean-token-aligned typography + CTA primitives for Worker route pages without duplicating ad-hoc title stacks and badge styles across screens.
+Used In: `src/features/worker/pages/*`
+Props: `tone` (`dark` | `light`) + standard button/`className`; `emphasis` for pill badges
+States: default/disabled/error emphasis via badges; buttons support focus-visible rings
+Responsive Notes: headers wrap cleanly on small widths; badges are max-content and wrap in card footers.
+
+Component: Worker async data hook (`useWorkerAsyncData`)
+Purpose: Shared worker-page fetch lifecycle wrapper for endpoint queries (single place for `loading/error/data/reload` behavior).
+Used In: `src/features/worker/pages/ApplicationsPage.tsx`, `CvImportPage.tsx`, `PayoutsPage.tsx`, `ReportsPage.tsx`, `ShiftsPage.tsx`
+Props: `initialData`, `query`, `resolveError`
+States: loading / success / error with explicit `reload` and `setData`
+Responsive Notes: logic-only hook, no visual output.
+
 Component: WorkerDashboard / EmployerDashboard / AdminDashboard
-Purpose: Role-based post-login home surfaces for operational metrics and actions; Employer dashboard uses section-based workspace (overview/postings/candidates/operations/billing/reports) with API-aware fallback states; Admin dashboard is an orchestrator (left sidebar + KPI overview + `createAdmin` form) delegating list/detail work to `src/components/dashboard/admin/*Section` screens (no URL routing; `activeSection` + local `list|detail` mode).
-Used In: `App` (authenticated state)
-Props: none
-States: selected by role resolver (`worker` | `employer` | `admin`); employer section `overview` | `postings` | `candidates` | `operations` | `billing` | `reports`; admin section `overview` | `employers` | `candidates` | `userGroups` | `users` | `createAdmin`; register-admin form submit `idle` | `loading` | `success` | `error`; summary cards consume `/Statistics/Overview` with i18n fallbacks
-Responsive Notes: card-first layout optimized for mobile and progressively expanded on tablet/desktop.
+Purpose: Role-based post-login surfaces. Employer mirrors worker routing (`/employer/*`) under `EmployerLayout` shell (sidebar + sticky welcome header); sections are routes with shared portal state (`EmployerPortalProvider` + `useEmployerPortal`). Admin remains sidebar orchestrator delegating `admin/*Section` grids/detail.
+Used In: `App` routes (`/worker/*`, `/employer/*`, `/admin/*`)
+Props (EmployerDashboard / WorkerDashboard): `isSidebarOpen`, `onSidebarClose`
+States: employer routes `overview` | `postings` | …; admin unchanged; summary/API fallbacks unchanged
+Responsive Notes: same shell rhythm as Worker (collapsible sidebar, padded main).
 
 Component: WorkerShell
-Purpose: Worker post-login route shell with responsive top navigation tabs and unified content surface.
-Used In: `WorkerDashboard`
-Props: `children`
-States: default; active tab state by route; theme-aware (`dark` | `light`)
-Responsive Notes: horizontal scrollable nav chips on mobile; full-width content layout on tablet/desktop.
+Purpose: Thin alias that forwards props to `WorkerLayout` for legacy imports/tests.
+Used In: optional; worker routes use `WorkerDashboard` → `WorkerLayout` directly.
+
+Component: EmployerLayout
+Purpose: Employer-only shell duplicated from worker shell structure (ocean sidebar strip, splitter toggle with persisted collapse, sticky top welcome/subtitle strip, logout row, padded main viewport).
+Used In: `EmployerDashboard`
+Props: `children`, `isSidebarOpen`, `onSidebarClose`
+States: sidebar collapsed/expander; resolves welcome name via `systemUsers/me` like worker shell.
+Responsive Notes: fixed left sidebar widths match `WorkerLayout`; safe-area padded content region.
+
+Component: WorkerLayout
+Purpose: Dedicated worker-only app layout wrapper that owns sidebar, worker top header strip, and content viewport spacing (`NavLink`-based sidebar; profile deep-link `/worker/profile?section=accountControl`).
+Used In: `WorkerDashboard` (direct), `WorkerShell` (compat re-export)
+Props: `children`, `isSidebarOpen`, `onSidebarClose`
+States: sidebar open/expanded vs collapsed breakpoints; persisted collapse preference (`ada-worker:sidebar-collapsed`)
+Responsive Notes: always-visible collapsible sidebar; sticky header + padded main consistent with EmployerLayout.
 
 Component: Worker Portal Pages (Overview/Profile/CV Import/Shifts/Applications/QR/Payouts/Reports)
 Purpose: PRD-aligned worker workspace modules split into route-based screens.
@@ -118,6 +143,13 @@ Used In: `WorkerDashboard`, `src/features/worker/pages/*`
 Props: none (page-level state + API adapters)
 States: `loading` | `empty` | `error` | `success`; interactive states for CV pipeline steps, shift apply request, payout confirm, QR validation status
 Responsive Notes: each page uses card-first composition and touch-friendly controls for mobile with progressive enhancement for larger viewports.
+
+Component: Worker Dashboard Store (`useWorkerDashboardStore`)
+Purpose: Zustand-powered overview state for Ocean Theme widgets (AI match score, earnings balance, timeline shifts, local theme mirror).
+Used In: `src/features/worker/pages/OverviewPage`
+Props: N/A (store hooks)
+States: theme `dark|light`, shift status union (`confirmed|active|completed|disputed`), anomaly union (`none|locationMismatch|expiredToken`)
+Responsive Notes: data-only store; widgets consuming it are mobile-first grid blocks.
 
 Component: AdminDataGrid
 Purpose: Reusable admin listing table with sortable columns, paging, responsive horizontal scroll, and i18n-ready controls; supports `mode="server"` so callers own `offset/limit`, total count, and sort callbacks (see `admin-data-grid-standard.mdc`).

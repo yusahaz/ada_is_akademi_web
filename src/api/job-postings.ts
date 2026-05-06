@@ -32,6 +32,7 @@ export type UpdateJobPostingCommand = CreateJobPostingCommand & {
 }
 
 export type ListOpenJobPostingsQuery = Record<string, never>
+export type ListSemanticMatchedJobPostingsQuery = Record<string, never>
 
 export type GetJobPostingByIdQuery = {
   jobPostingId: number
@@ -126,6 +127,13 @@ export const jobPostingsApi = {
       false,
     )
   },
+  listSemanticMatched(body: ListSemanticMatchedJobPostingsQuery = {}) {
+    return client.post<JobPostingSummary[], ListSemanticMatchedJobPostingsQuery>(
+      API_ENDPOINTS.jobPostings.listSemanticMatched,
+      body,
+      true,
+    )
+  },
   listByEmployer(body: ListJobPostingsByEmployerIdQuery = {}) {
     return client.post<JobPostingSummary[], ListJobPostingsByEmployerIdQuery>(
       API_ENDPOINTS.jobPostings.listByEmployer,
@@ -137,7 +145,7 @@ export const jobPostingsApi = {
     return client.post<JobPostingDetail, GetJobPostingByIdQuery>(
       API_ENDPOINTS.jobPostings.getById,
       body,
-      false,
+      true,
     )
   },
   publish(body: PublishJobPostingCommand) {

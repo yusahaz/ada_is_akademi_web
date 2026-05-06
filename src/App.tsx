@@ -22,9 +22,21 @@ export default function App() {
     if (typeof window === 'undefined') return true
     return window.innerWidth >= 1024
   })
+  const [workerSidebarOpen, setWorkerSidebarOpen] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true
+    return window.innerWidth >= 1024
+  })
+  const [employerSidebarOpen, setEmployerSidebarOpen] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true
+    return window.innerWidth >= 1024
+  })
 
   const dashboardRole = session ? resolveDashboardRole(session) : null
   const isAdminDashboard = isAuthenticated && dashboardRole === 'admin'
+  const isWorkerDashboard = isAuthenticated && dashboardRole === 'worker'
+  const isEmployerDashboard = isAuthenticated && dashboardRole === 'employer'
+  const shouldShowGlobalNavbar = !isWorkerDashboard && !isEmployerDashboard
+  const shouldShowGlobalFooter = !isWorkerDashboard && !isEmployerDashboard
 
   useEffect(() => {
     document.title = t('landing.meta.title')
@@ -41,8 +53,8 @@ export default function App() {
 
   const renderGuestLanding = (
     <>
-      <HeroSection />
-      <LandingSections />
+      <HeroSection onOpenLogin={() => setLoginOpen(true)} />
+      <LandingSections onOpenLogin={() => setLoginOpen(true)} />
     </>
   )
 
@@ -54,7 +66,7 @@ export default function App() {
           onSidebarClose={() => setAdminSidebarOpen(false)}
         />
       ) : null}
-      {dashboardRole === 'employer' ? <EmployerDashboard /> : null}
+      {dashboardRole === 'employer' ? <Navigate to="/employer" replace /> : null}
       {dashboardRole === 'worker' ? <Navigate to="/worker" replace /> : null}
     </>
   )
@@ -67,19 +79,49 @@ export default function App() {
           : 'bg-[#f4f7fb] text-[#0f172a]'
       }`}
     >
-      <Navbar
-        onAuthAction={isAuthenticated ? logout : () => setLoginOpen(true)}
-        authLabel={isAuthenticated ? t('landing.nav.logout') : t('landing.nav.login')}
-        showSidebarToggle={isAdminDashboard}
-        onSidebarToggle={() => setAdminSidebarOpen((prev) => !prev)}
-      />
+      {shouldShowGlobalNavbar ? (
+        <Navbar
+          onAuthAction={isAuthenticated ? logout : () => setLoginOpen(true)}
+          authLabel={isAuthenticated ? t('landing.nav.logout') : t('landing.nav.login')}
+          showSidebarToggle={isAdminDashboard || isWorkerDashboard || isEmployerDashboard}
+          onSidebarToggle={() => {
+            if (isAdminDashboard) {
+              setAdminSidebarOpen((prev) => !prev)
+              return
+            }
+            if (isWorkerDashboard) {
+              setWorkerSidebarOpen((prev) => !prev)
+              return
+            }
+            if (isEmployerDashboard) {
+              setEmployerSidebarOpen((prev) => !prev)
+            }
+          }}
+        />
+      ) : null}
       <main className="flex-1 pb-16">
         <Routes>
           <Route
             path="/worker/*"
             element={
               isHydrating ? renderHydrating : isAuthenticated && dashboardRole === 'worker' ? (
-                <WorkerDashboard />
+                <WorkerDashboard
+                  isSidebarOpen={workerSidebarOpen}
+                  onSidebarClose={() => setWorkerSidebarOpen(false)}
+                />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/employer/*"
+            element={
+              isHydrating ? renderHydrating : isAuthenticated && dashboardRole === 'employer' ? (
+                <EmployerDashboard
+                  isSidebarOpen={employerSidebarOpen}
+                  onSidebarClose={() => setEmployerSidebarOpen(false)}
+                />
               ) : (
                 <Navigate to="/" replace />
               )
@@ -137,15 +179,17 @@ export default function App() {
           />
         </Routes>
       </main>
-      <footer
-        className={`fixed inset-x-0 bottom-0 z-40 border-t py-3 text-center text-xs ${
-          theme === 'dark'
-            ? 'border-white/10 bg-[#0b0e14]/90 text-white/55'
-            : 'border-slate-300/70 bg-white/92 text-slate-600'
-        }`}
-      >
-        {t('landing.footer.copy')}
-      </footer>
+      {shouldShowGlobalFooter ? (
+        <footer
+          className={`fixed inset-x-0 bottom-0 z-40 border-t py-3 text-center text-xs ${
+            theme === 'dark'
+              ? 'border-white/10 bg-[#0b0e14]/90 text-white/55'
+              : 'border-slate-300/70 bg-white/92 text-slate-600'
+          }`}
+        >
+          {t('landing.footer.copy')}
+        </footer>
+      ) : null}
 
       <LoginModal
         open={loginOpen && !isAuthenticated}

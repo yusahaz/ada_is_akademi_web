@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } fro
 import { useTranslation } from 'react-i18next'
 
 import {
+  ApiError,
   EmployerStatus,
   employersApi,
   normalizePageableList,
@@ -44,6 +45,16 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const mapApiError = useCallback(
+    (fallbackKey: string, error: unknown) => {
+      const base = t(fallbackKey)
+      if (error instanceof ApiError && error.code) {
+        return `${base} (${error.code})`
+      }
+      return base
+    },
+    [t],
+  )
   const hasLoadedRef = useRef(false)
   const [mode, setMode] = useState<ViewMode>('list')
   const [listRow, setListRow] = useState<EmployerListItem | null>(null)
@@ -123,15 +134,15 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
         setRows(sorted)
         setTotalCount(tc)
         setListSuccess(t('dashboard.admin.employers.list.fetchSuccess', { count: tc }))
-      } catch {
-        setListError(t('dashboard.admin.employers.list.fetchError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.employers.list.fetchError', error))
         setRows([])
         setTotalCount(0)
       } finally {
         setQueryPending(false)
       }
     },
-    [i18n.language, sortState.columnId, sortState.direction, t],
+    [i18n.language, mapApiError, sortState.columnId, sortState.direction, t],
   )
 
   useEffect(() => {
@@ -154,10 +165,10 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
         setEmployerDetail(detail)
         setTargetStatus(normalizeEmployerStatus(detail.status) ?? EmployerStatus.Pending)
       })
-      .catch(() => {
+      .catch((error) => {
         if (!active) return
         setEmployerDetail(null)
-        setDetailError(t('dashboard.admin.employers.detail.loadError'))
+        setDetailError(mapApiError('dashboard.admin.employers.detail.loadError', error))
       })
       .finally(() => {
         if (!active) return
@@ -166,7 +177,7 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
     return () => {
       active = false
     }
-  }, [employerIdForDetail, mode, t])
+  }, [employerIdForDetail, mapApiError, mode, t])
 
   async function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -240,13 +251,13 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
         await employersApi.ban({ employerId })
         setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
         await refreshList()
-      } catch {
-        setListError(t('dashboard.admin.detail.feedback.deleteError'))
+      } catch (error) {
+        setListError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
       } finally {
         setQueryPending(false)
       }
     },
-    [refreshList, t],
+    [mapApiError, refreshList, t],
   )
 
   const openDetail = useCallback((item: EmployerListItem) => {
@@ -293,12 +304,12 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
       setEmployerDetail(next)
       setTargetStatus(normalizeEmployerStatus(next.status) ?? EmployerStatus.Pending)
       await refreshList()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.saveError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.saveError', error))
     } finally {
       setDetailPending(false)
     }
-  }, [employerDetail, listRow, refreshList, targetStatus, t])
+  }, [employerDetail, listRow, mapApiError, refreshList, targetStatus, t])
 
   const handleDetailDelete = useCallback(async () => {
     if (!listRow) return
@@ -312,12 +323,12 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshList()
-    } catch {
-      setDetailError(t('dashboard.admin.detail.feedback.deleteError'))
+    } catch (error) {
+      setDetailError(mapApiError('dashboard.admin.detail.feedback.deleteError', error))
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, refreshList, t])
+  }, [closeDetail, listRow, mapApiError, refreshList, t])
 
   const gridColumns = useMemo<AdminDataGridColumn<EmployerListItem>[]>(
     () => [
