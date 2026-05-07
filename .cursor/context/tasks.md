@@ -33,7 +33,7 @@
 ### Shared header user menu (2026-05-07)
 
 - [x] Analyzed `WorkerLayout`/`EmployerLayout`/`Navbar` user-icon points and existing theme + language primitives
-- [x] Added reusable `HeaderUserMenu` (`src/components/dashboard/HeaderUserMenu.tsx`) with trigger + popover (profile/theme/language/logout), outside-click + ESC close, RTL-aware logical alignment
+- [x] Added reusable `HeaderUserMenu` (`src/shared/ui/HeaderUserMenu.tsx`) with trigger + popover (profile/theme/language/logout), outside-click + ESC close, RTL-aware logical alignment
 - [x] Added `dashboard.userMenu.*` i18n keys (`title/triggerAria/profile/logout/theme/themeDark/themeLight/language`) across `tr/en/es/it/ru/ar/fr`
 - [x] Wired the menu into `WorkerLayout` topbar (replaces user `NavLink`), `EmployerLayout` topbar (replaces handler-less user button), and `Navbar` (admin shell, when `showSidebarToggle && isAuthenticated`) without changing landing/auth flows
 - [x] Validated via `npm run lint` and `npm run build`; updated `components.md` + `memory.md`

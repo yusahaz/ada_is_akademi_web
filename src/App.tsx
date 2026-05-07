@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 
-import { LoginModal } from './components/auth/LoginModal'
-import { AdminDashboard } from './components/dashboard/AdminDashboard'
-import { EmployerDashboard } from './components/dashboard/EmployerDashboard'
-import { WorkerDashboard } from './components/dashboard/WorkerDashboard'
-import { HeroSection } from './components/landing/HeroSection'
-import { LandingSections } from './components/landing/LandingSections'
-import { Navbar } from './components/landing/Navbar'
-import { useAuth } from './auth/auth-context'
-import { resolveDashboardRole } from './dashboard/roles'
+import { LoginModal } from './features/auth/components/LoginModal'
+import { AdminLoginPage } from './features/auth/pages/AdminLoginPage'
+import { AdminDashboard } from './features/admin/AdminDashboard'
+import { EmployerDashboard } from './features/employer/EmployerDashboard'
+import { WorkerDashboard } from './features/worker/WorkerDashboard'
+import { HeroSection } from './features/landing/components/HeroSection'
+import { LandingSections } from './features/landing/components/LandingSections'
+import { Navbar } from './features/landing/Navbar'
+import { useAuth } from './features/auth/auth-context'
+import { resolveDashboardRole } from './features/auth/roles'
 import { useTheme } from './theme/theme-context'
 
 export default function App() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const location = useLocation()
   const { isAuthenticated, isHydrating, logout, session } = useAuth()
   const [loginOpen, setLoginOpen] = useState(false)
   const [adminSidebarOpen, setAdminSidebarOpen] = useState<boolean>(() => {
@@ -35,8 +37,9 @@ export default function App() {
   const isAdminDashboard = isAuthenticated && dashboardRole === 'admin'
   const isWorkerDashboard = isAuthenticated && dashboardRole === 'worker'
   const isEmployerDashboard = isAuthenticated && dashboardRole === 'employer'
-  const shouldShowGlobalNavbar = !isWorkerDashboard && !isEmployerDashboard
-  const shouldShowGlobalFooter = !isWorkerDashboard && !isEmployerDashboard
+  const isAdminLoginRoute = location.pathname === '/admin' && !isAuthenticated
+  const shouldShowGlobalNavbar = !isWorkerDashboard && !isEmployerDashboard && !isAdminLoginRoute
+  const shouldShowGlobalFooter = !isWorkerDashboard && !isEmployerDashboard && !isAdminLoginRoute
 
   useEffect(() => {
     document.title = t('landing.meta.title')
@@ -99,7 +102,7 @@ export default function App() {
           }}
         />
       ) : null}
-      <main className="flex-1 pb-16">
+      <main className={`flex-1 ${shouldShowGlobalFooter ? 'pb-16' : ''}`}>
         <Routes>
           <Route
             path="/worker/*"
@@ -150,10 +153,10 @@ export default function App() {
           <Route
             path="/admin"
             element={
-              isHydrating ? renderHydrating : isAuthenticated && dashboardRole === 'admin' ? (
-                <Navigate to="/admin/overview" replace />
+              isHydrating ? renderHydrating : isAuthenticated ? (
+                dashboardRole === 'admin' ? <Navigate to="/admin/overview" replace /> : <Navigate to="/" replace />
               ) : (
-                <Navigate to="/" replace />
+                <AdminLoginPage />
               )
             }
           />

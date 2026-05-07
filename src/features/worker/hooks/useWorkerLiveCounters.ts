@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { workerPortalApi, type WorkerLiveCounters } from '../../../api/worker-portal'
+import { workerPortalApi, type WorkerLiveCounters } from '../../../api/worker/worker-portal'
 
 const EMPTY_COUNTERS: WorkerLiveCounters = {
   pendingPayouts: 0,

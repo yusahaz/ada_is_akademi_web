@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
-import { cn } from '../../lib/cn'
+import { cn } from '../../shared/lib/cn'
 
 import type { AppTheme } from '../../theme/theme-context'
 

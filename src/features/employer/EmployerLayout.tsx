@@ -14,14 +14,14 @@ import {
   WalletCards,
 } from 'lucide-react'
 
-import { systemUsersApi } from '../../api'
-import { useAuth } from '../../auth/auth-context'
-import { AdaLogoMark } from '../../components/landing/AdaLogoMark'
-import { AdaLogoWordmark } from '../../components/landing/AdaLogoWordmark'
-import { HeaderUserMenu } from '../../components/dashboard/HeaderUserMenu'
+import { systemUsersApi } from '../../api/core/index'
+import { useAuth } from '../auth/auth-context'
+import { AdaLogoMark } from '../landing/components/brand/AdaLogoMark'
+import { AdaLogoWordmark } from '../landing/components/brand/AdaLogoWordmark'
+import { HeaderUserMenu } from '../../shared/ui/HeaderUserMenu'
 import { useTheme } from '../../theme/theme-context'
-import { cn } from '../../lib/cn'
-import { useEmployerPortal } from './use-employer-portal'
+import { cn } from '../../shared/lib/cn'
+import { useEmployerPortal } from './portal/use-employer-portal'
 
 type EmployerNavKey =
   | 'overview'

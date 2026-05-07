@@ -1,6 +1,6 @@
 ---
 description: Enforce reusable AdminDataGrid usage for admin list and summary tables
-globs: src/components/dashboard/**/*.tsx
+globs: src/features/admin/**/*.tsx
 alwaysApply: false
 ---
 

@@ -121,7 +121,7 @@ Props: theme-aware minimal props (`theme`, `children`, optional `isActive`/`isEr
 States: default/active/error variations with dark-light parity
 Responsive Notes: mobile-first spacing, safe-area friendly composition, touch-friendly interactive sizes.
 
-Component: Worker Portal UI primitives (`worker-ui.tsx`: `WorkerSectionHeader`, `WorkerPillBadge`, `WorkerPrimaryButton`, `WorkerGhostButton`, `WorkerTabs`, `WorkerNotice`, `WorkerNavBadge`) + shared `cn` helper (`src/lib/cn.ts`)
+Component: Worker Portal UI primitives (`worker-ui.tsx`: `WorkerSectionHeader`, `WorkerPillBadge`, `WorkerPrimaryButton`, `WorkerGhostButton`, `WorkerTabs`, `WorkerNotice`, `WorkerNavBadge`) + shared `cn` helper (`src/shared/lib/cn.ts`)
 Purpose: Lightweight, Ocean-token-aligned typography + CTA primitives for Worker route pages without duplicating ad-hoc title stacks and badge styles across screens.
 Used In: `src/features/worker/pages/*`, `WorkerLayout` (sidebar badges + notice banner)
 Props:
@@ -134,7 +134,7 @@ Responsive Notes: tabs wrap with `flex-wrap` and horizontal scroll fallback; not
 
 Component: Worker async data hook (`useWorkerAsyncData`)
 Purpose: Shared worker-page fetch lifecycle wrapper for endpoint queries (single place for `loading/error/data/reload` behavior).
-Used In: `src/features/worker/pages/ApplicationsPage.tsx`, `CvImportPage.tsx`, `PayoutsPage.tsx`, `ReportsPage.tsx`, `ShiftsPage.tsx`, `JobsPage.tsx` (map tab), `MyShiftsPage.tsx`, `NotificationsPage.tsx`, `ProfilePage.tsx` (availability)
+Used In: `src/features/worker/pages/applications/ApplicationsPage.tsx`, `cv-import/CvImportPage.tsx`, `payouts/PayoutsPage.tsx`, `reports/ReportsPage.tsx`, `shifts-list/ShiftsPage.tsx`, `jobs/JobsPage.tsx` (map tab), `shifts/MyShiftsPage.tsx`, `notifications/NotificationsPage.tsx`, `profile/ProfilePage.tsx` (availability)
 Props: `initialData`, `query`, `resolveError`
 States: loading / success / error with explicit `reload` and `setData`
 Responsive Notes: logic-only hook, no visual output.
@@ -187,7 +187,7 @@ Responsive Notes: each page uses card-first composition and touch-friendly contr
 
 Component: Worker Dashboard Store (`useWorkerDashboardStore`)
 Purpose: Zustand-powered overview state for Ocean Theme widgets (AI match score, earnings balance, timeline shifts, local theme mirror).
-Used In: `src/features/worker/pages/OverviewPage`
+Used In: `src/features/worker/pages/overview/OverviewPage`
 Props: N/A (store hooks)
 States: theme `dark|light`, shift status union (`confirmed|active|completed|disputed`), anomaly union (`none|locationMismatch|expiredToken`)
 Responsive Notes: data-only store; widgets consuming it are mobile-first grid blocks.

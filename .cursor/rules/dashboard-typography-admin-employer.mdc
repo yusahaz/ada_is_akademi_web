@@ -1,6 +1,6 @@
 ---
 description: Enforce Worker typography parity on Admin/Employer dashboards
-globs: src/components/dashboard/*Dashboard.tsx
+globs: src/features/{admin,employer,worker}/*Dashboard.tsx
 alwaysApply: false
 ---
 
