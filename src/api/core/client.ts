@@ -106,7 +106,12 @@ export class ApiClient {
     options: RequestOptions<TBody>,
     attempt = 0,
   ): Promise<TResponse> {
-    const headers = new Headers({ 'Content-Type': 'application/json' })
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+    })
 
     if (options.requiresAuth) {
       const token = this.getAccessToken()
@@ -123,6 +128,7 @@ export class ApiClient {
     const response = await fetch(`${this.baseUrl}/${options.path}`, {
       method: options.method,
       headers,
+      cache: 'no-store',
       body: options.body === undefined ? undefined : JSON.stringify(options.body),
     })
 

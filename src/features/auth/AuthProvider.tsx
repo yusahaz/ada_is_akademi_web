@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 
 import { createAuthAdapter } from '../../api/auth/auth'
 import { setApiAccessTokenProvider, setApiRefreshHandlers } from '../../api/core/client'
+import { appQueryClient } from '../../query/query-client'
 import { AuthContext, type AuthContextValue, type AuthSession } from './auth-context'
 import { decryptAuthSession, encryptAuthSession } from './storage-crypto'
 
@@ -17,7 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     let isActive = true
     void (async () => {
-      const raw = window.localStorage.getItem(AUTH_STORAGE_KEY)
+      const raw = window.sessionStorage.getItem(AUTH_STORAGE_KEY)
       if (!raw) {
         if (isActive) setHydrated(true)
         return
@@ -33,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ) {
         setSession(decrypted)
       } else {
-        window.localStorage.removeItem(AUTH_STORAGE_KEY)
+        window.sessionStorage.removeItem(AUTH_STORAGE_KEY)
       }
 
       setHydrated(true)
@@ -73,7 +74,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
           }
         }),
-      onAuthFailure: () => setSession(null),
+      onAuthFailure: () => {
+        appQueryClient.clear()
+        setSession(null)
+      },
     })
   }, [authAdapter, session])
 
@@ -82,13 +86,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!hydrated) return
 
     if (!session) {
-      window.localStorage.removeItem(AUTH_STORAGE_KEY)
+      window.sessionStorage.removeItem(AUTH_STORAGE_KEY)
       return
     }
 
     void (async () => {
       const encrypted = await encryptAuthSession(session)
-      window.localStorage.setItem(AUTH_STORAGE_KEY, encrypted)
+      window.sessionStorage.setItem(AUTH_STORAGE_KEY, encrypted)
     })()
   }, [hydrated, session])
 
@@ -98,6 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: Boolean(session?.accessToken),
       isHydrating: !hydrated,
       signIn: ({ authResult, audience, email }) => {
+        appQueryClient.clear()
         setSession({
           ...authResult,
           audience,
@@ -105,7 +110,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           signedInAt: new Date().toISOString(),
         })
       },
-      logout: () => setSession(null),
+      logout: () => {
+        appQueryClient.clear()
+        setSession(null)
+      },
     }),
     [hydrated, session],
   )
