@@ -1,7 +1,9 @@
 import { jobApplicationsApi } from './job-applications'
 import { EducationType, JobPostingStatus, LanguageLevel } from './enums'
 import { jobPostingsApi, type JobPostingSummary } from './job-postings'
-import { systemUsersApi } from './system-users'
+import { normalizePageableList, type PageableListResult } from './pagination'
+import { shiftAssignmentsApi, type WorkerShiftAssignmentListItem } from './shift-assignments'
+import { systemUsersApi, type SystemUserNotificationItem } from './system-users'
 import { workersApi } from './workers'
 
 export type WorkerProfileSectionItem = {
@@ -11,12 +13,14 @@ export type WorkerProfileSectionItem = {
 }
 
 export type WorkerProfileData = {
+  workerId: number
+  systemUserId: number
   fullName: string
   email: string
   nationality: string
   university: string
   studentNumber: string
-  skills: string[]
+  skills: Array<{ id: number; tag: string }>
   educations: WorkerProfileSectionItem[]
   experiences: WorkerProfileSectionItem[]
   certificates: WorkerProfileSectionItem[]
@@ -48,6 +52,50 @@ export type WorkerReportCard = {
 
 export type WorkerCvState = 'uploaded' | 'extracting' | 'awaitingReview' | 'confirmed' | 'failed'
 export type WorkerQrStatus = 'idle' | 'validating' | 'success' | 'failed'
+
+export type WorkerReliabilityScore = {
+  value: number | null
+  sampleSize: number
+  hasData: boolean
+}
+
+export type WorkerShiftHistoryItem = {
+  assignmentId: number
+  jobPostingId: number
+  jobApplicationId: number
+  status: 'pending' | 'awaitingMutualQr' | 'checkedIn' | 'checkedOut'
+  shiftDate: string
+  shiftStartTime: string
+  shiftEndTime: string
+  isAnomalyFlagged: boolean
+  anomalyCode: string | null
+  checkedInAt: string | null
+  checkedOutAt: string | null
+}
+
+export type WorkerNotificationItem = {
+  id: string
+  title: string
+  description: string | null
+  type: 'matching' | 'payout' | 'application' | 'shift' | 'general'
+  createdAt: string | null
+  isRead: boolean
+}
+
+export type WorkerLiveCounters = {
+  pendingPayouts: number
+  newMatches: number
+  upcomingShifts: number
+  unreadNotifications: number
+}
+
+export type WorkerAvailabilitySlot = {
+  id: string
+  dayOfWeek: number
+  timeFrom: string
+  timeTo: string
+}
+
 type WorkerDataSnapshot = {
   openPostings: JobPostingSummary[]
   applications: Awaited<ReturnType<typeof jobApplicationsApi.myApplications>>
@@ -61,6 +109,8 @@ export const workerPortalApi = {
     ])
 
     const fallbackProfile: WorkerProfileData = {
+      workerId: Number(detail.id) || 0,
+      systemUserId: Number(me.systemUserId) || 0,
       fullName: `${me.firstName ?? ''} ${me.lastName ?? ''}`.trim() || 'Worker',
       email: me.email,
       nationality: 'N/A',
@@ -78,7 +128,13 @@ export const workerPortalApi = {
       ...fallbackProfile,
       nationality: detail.nationality ?? 'N/A',
       university: detail.university ?? 'N/A',
-      skills: detail.skills?.map((item) => item.tag).filter((item) => item.length > 0) ?? [],
+      skills:
+        detail.skills
+          ?.map((item) => ({
+            id: Number(item.id) || 0,
+            tag: item.tag,
+          }))
+          .filter((item) => item.tag.length > 0 && item.id > 0) ?? [],
       educations:
         detail.educations?.map((item) => ({
           id: String(item.id),
@@ -235,6 +291,208 @@ export const workerPortalApi = {
     } catch {
       return 'failed'
     }
+  },
+
+  async getReliabilityScore(): Promise<WorkerReliabilityScore> {
+    try {
+      const snapshot = await getWorkerDataSnapshot()
+      const applications = mapApplicationsFromSnapshot(snapshot)
+      const meaningful = applications.filter((item) =>
+        item.status === 'accepted' || item.status === 'rejected' || item.status === 'expired',
+      )
+      if (meaningful.length === 0) {
+        return { value: null, sampleSize: 0, hasData: false }
+      }
+      const positives = meaningful.filter((item) => item.status === 'accepted').length
+      const value = Math.round((positives / meaningful.length) * 100)
+      return { value, sampleSize: meaningful.length, hasData: true }
+    } catch {
+      return { value: null, sampleSize: 0, hasData: false }
+    }
+  },
+
+  async getUpcomingShiftAssignments(limit: number = 5): Promise<WorkerShiftHistoryItem[]> {
+    const items = await fetchMyShiftAssignments({ limit, offset: 0 })
+    return items.filter((item) => item.status === 'pending' || item.status === 'awaitingMutualQr')
+  },
+
+  async getActiveShiftAssignment(): Promise<WorkerShiftHistoryItem | null> {
+    const items = await fetchMyShiftAssignments({ limit: 10, offset: 0 })
+    return (
+      items.find((item) => item.status === 'checkedIn' || item.status === 'awaitingMutualQr') ?? null
+    )
+  },
+
+  async listShiftHistory(limit: number = 20, offset: number = 0): Promise<WorkerShiftHistoryItem[]> {
+    return fetchMyShiftAssignments({ limit, offset })
+  },
+
+  async listNotifications(): Promise<WorkerNotificationItem[]> {
+    try {
+      const response = await systemUsersApi.myNotifications({ limit: 50, offset: 0 })
+      const { rows } = normalizePageableList(response)
+      return rows
+        .map((item) => mapSystemNotificationItem(item))
+        .filter((item): item is WorkerNotificationItem => item !== null)
+    } catch {
+      return []
+    }
+  },
+
+  async markNotificationAsRead(notificationId: number): Promise<void> {
+    await systemUsersApi.markNotificationAsRead({ notificationId })
+  },
+
+  async markAllNotificationsAsRead(): Promise<void> {
+    await systemUsersApi.markAllNotificationsAsRead({})
+  },
+
+  async getLiveCounters(): Promise<WorkerLiveCounters> {
+    const [payouts, matched, upcoming, notifications] = await Promise.allSettled([
+      this.listPayouts(),
+      this.listSemanticMatchedShifts(),
+      this.getUpcomingShiftAssignments(20),
+      this.listNotifications(),
+    ])
+    return {
+      pendingPayouts:
+        payouts.status === 'fulfilled'
+          ? payouts.value.filter((item) => item.status === 'pending' || item.status === 'processing').length
+          : 0,
+      newMatches: matched.status === 'fulfilled' ? matched.value.length : 0,
+      upcomingShifts: upcoming.status === 'fulfilled' ? upcoming.value.length : 0,
+      unreadNotifications:
+        notifications.status === 'fulfilled' ? notifications.value.filter((item) => !item.isRead).length : 0,
+    }
+  },
+
+  async getAvailabilityCalendar(): Promise<WorkerAvailabilitySlot[]> {
+    try {
+      const detail = await workersApi.getSelfFullDetail()
+      return (detail.availabilities ?? []).map((slot) => ({
+        id: String(slot.id),
+        dayOfWeek: normalizeDayOfWeek(slot.dayOfWeek),
+        timeFrom: slot.timeFrom ?? '',
+        timeTo: slot.timeTo ?? '',
+      }))
+    } catch {
+      return []
+    }
+  },
+
+  async saveAvailabilityCalendar(slots: WorkerAvailabilitySlot[]): Promise<WorkerAvailabilitySlot[]> {
+    const detail = await workersApi.getSelfFullDetail()
+    const existing = (detail.availabilities ?? []).map((slot) => ({
+      id: String(slot.id),
+      dayOfWeek: Number(slot.dayOfWeek) || 0,
+      timeFrom: slot.timeFrom ?? '',
+      timeTo: slot.timeTo ?? '',
+    }))
+
+    const nextKeys = new Set(slots.map((slot) => toAvailabilityKey(slot)))
+    const existingKeys = new Set(existing.map((slot) => toAvailabilityKey(slot)))
+
+    const toRemove = existing.filter((slot) => !nextKeys.has(toAvailabilityKey(slot)))
+    const toAdd = slots.filter((slot) => !existingKeys.has(toAvailabilityKey(slot)))
+
+    await Promise.all([
+      ...toRemove.map((slot) => workersApi.removeAvailability({ availabilityId: slot.id })),
+      ...toAdd.map((slot) =>
+        workersApi.addAvailability({
+          dayOfWeek: slot.dayOfWeek,
+          timeFrom: slot.timeFrom,
+          timeTo: slot.timeTo,
+        }),
+      ),
+    ])
+
+    return this.getAvailabilityCalendar()
+  },
+
+  async requestEmailVerification(systemUserId: number): Promise<void> {
+    const tokenHash = generateClientTokenHash()
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString()
+    await systemUsersApi.requestEmailVerification({
+      systemUserId,
+      tokenHash,
+      expiresAt,
+    })
+  },
+
+  async addWorkerSkill(workerId: number, tag: string): Promise<number> {
+    return workersApi.addSkill({ workerId, tag })
+  },
+
+  async removeWorkerSkill(skillId: number): Promise<void> {
+    await workersApi.removeSkill({ skillId })
+  },
+
+  async removeAvailability(availabilityId: number): Promise<void> {
+    await workersApi.removeAvailability({ availabilityId })
+  },
+
+  async updateBasicProfile(payload: {
+    firstName: string | null
+    lastName: string | null
+    nationality: string | null
+    university: string | null
+  }): Promise<void> {
+    await workersApi.updateProfile(payload)
+  },
+
+  async addExperience(payload: {
+    companyName: string
+    position: string
+    startDate: string
+    endDate: string | null
+    description: string | null
+  }): Promise<number> {
+    return workersApi.addExperience(payload)
+  },
+
+  async removeExperience(experienceId: number): Promise<void> {
+    await workersApi.removeExperience({ experienceId })
+  },
+
+  async addCertificate(payload: {
+    name: string
+    issuingOrganization: string
+    issuedAt: string
+    expiresAt: string | null
+    documentUrl: string | null
+  }): Promise<number> {
+    return workersApi.addCertificate(payload)
+  },
+
+  async removeCertificate(certificateId: number): Promise<void> {
+    await workersApi.removeCertificate({ certificateId })
+  },
+
+  async addReference(payload: {
+    company: string
+    position: string
+    contactFirstName: string
+    contactLastName: string
+    contactEmail: string
+    contactPhone: string | null
+  }): Promise<number> {
+    return workersApi.addReference(payload)
+  },
+
+  async removeReference(referenceId: number): Promise<void> {
+    await workersApi.removeReference({ referenceId })
+  },
+
+  async suspendAccount(systemUserId: number): Promise<void> {
+    await systemUsersApi.suspend({ systemUserId })
+  },
+
+  async deleteWorker(workerId: number): Promise<void> {
+    await workersApi.delete({ workerId })
+  },
+
+  async changePassword(systemUserId: number, password: string): Promise<void> {
+    await systemUsersApi.changePassword({ systemUserId, password })
   },
 }
 
@@ -396,4 +654,92 @@ function resolveLanguageLevel(value: number): string {
   if (value === LanguageLevel.Advanced) return 'Advanced'
   if (value === LanguageLevel.Native) return 'Native'
   return String(value)
+}
+
+async function fetchMyShiftAssignments(query: { limit?: number; offset?: number }): Promise<WorkerShiftHistoryItem[]> {
+  try {
+    const response = (await shiftAssignmentsApi.myAssignments({
+      limit: query.limit,
+      offset: query.offset,
+    })) as unknown as PageableListResult<WorkerShiftAssignmentListItem>
+    const { rows } = normalizePageableList(response)
+    return rows.map(mapShiftAssignmentItem)
+  } catch {
+    return []
+  }
+}
+
+function mapShiftAssignmentItem(item: WorkerShiftAssignmentListItem): WorkerShiftHistoryItem {
+  return {
+    assignmentId: Number(item.assignmentId) || 0,
+    jobPostingId: Number(item.jobPostingId) || 0,
+    jobApplicationId: Number(item.jobApplicationId) || 0,
+    status: normalizeShiftStatus(item.status),
+    shiftDate: item.shiftDate ?? '',
+    shiftStartTime: item.shiftStartTime ?? '',
+    shiftEndTime: item.shiftEndTime ?? '',
+    isAnomalyFlagged: Boolean(item.isAnomalyFlagged),
+    anomalyCode: item.anomalyCode ?? null,
+    checkedInAt: item.checkedInAt ?? null,
+    checkedOutAt: item.checkedOutAt ?? null,
+  }
+}
+
+function normalizeShiftStatus(value: string | number | null | undefined): WorkerShiftHistoryItem['status'] {
+  const text = String(value ?? '').toLowerCase()
+  if (text.includes('checkedout') || text.includes('checked_out') || text.includes('check-out')) return 'checkedOut'
+  if (text.includes('checkedin') || text.includes('checked_in') || text.includes('check-in')) return 'checkedIn'
+  if (text.includes('mutual') || text.includes('awaiting')) return 'awaitingMutualQr'
+  return 'pending'
+}
+
+function mapSystemNotificationItem(item: SystemUserNotificationItem): WorkerNotificationItem | null {
+  const title = item.title?.trim()
+  if (!title) return null
+  const typeText = `${item.templateCode ?? ''} ${item.title ?? ''} ${item.body ?? ''}`.toLowerCase()
+  const type: WorkerNotificationItem['type'] = typeText.includes('match')
+    ? 'matching'
+    : typeText.includes('payout') || typeText.includes('payment')
+      ? 'payout'
+      : typeText.includes('application') || typeText.includes('apply')
+        ? 'application'
+        : typeText.includes('shift') || typeText.includes('assignment') || typeText.includes('checkin')
+          ? 'shift'
+          : 'general'
+  return {
+    id: String(item.id),
+    title,
+    description: item.body?.trim() || null,
+    type,
+    createdAt: item.createdAt ?? null,
+    isRead: Boolean(item.isRead),
+  }
+}
+
+function generateClientTokenHash(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID().replace(/-/g, '')
+  }
+  return Math.random().toString(36).slice(2) + Date.now().toString(36)
+}
+
+function toAvailabilityKey(slot: { dayOfWeek: number; timeFrom: string; timeTo: string }) {
+  return `${Number(slot.dayOfWeek)}|${slot.timeFrom}|${slot.timeTo}`
+}
+
+function normalizeDayOfWeek(value: unknown): number {
+  const numeric = Number(value)
+  if (Number.isFinite(numeric) && numeric >= 0 && numeric <= 6) {
+    return numeric
+  }
+
+  const text = String(value ?? '').trim().toLowerCase()
+  if (text === 'monday') return 1
+  if (text === 'tuesday') return 2
+  if (text === 'wednesday') return 3
+  if (text === 'thursday') return 4
+  if (text === 'friday') return 5
+  if (text === 'saturday') return 6
+  if (text === 'sunday') return 0
+  return 0
 }

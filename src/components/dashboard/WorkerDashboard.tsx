@@ -1,15 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { WorkerLayout } from '../../features/worker/WorkerLayout'
-import { ApplicationsPage } from '../../features/worker/pages/ApplicationsPage'
-import { CvImportPage } from '../../features/worker/pages/CvImportPage'
+import { JobsPage } from '../../features/worker/pages/JobsPage'
+import { MyShiftsPage } from '../../features/worker/pages/MyShiftsPage'
+import { NotificationsPage } from '../../features/worker/pages/NotificationsPage'
 import { OverviewPage } from '../../features/worker/pages/OverviewPage'
-import { PayoutsPage } from '../../features/worker/pages/PayoutsPage'
 import { ProfilePage } from '../../features/worker/pages/ProfilePage'
-import { QrCheckPage } from '../../features/worker/pages/QrCheckPage'
-import { RecommendationsPage } from '../../features/worker/pages/RecommendationsPage'
-import { ReportsPage } from '../../features/worker/pages/ReportsPage'
-import { ShiftsPage } from '../../features/worker/pages/ShiftsPage'
+import { WalletPage } from '../../features/worker/pages/WalletPage'
 
 type WorkerDashboardProps = {
   isSidebarOpen: boolean
@@ -22,13 +19,37 @@ export function WorkerDashboard({ isSidebarOpen, onSidebarClose }: WorkerDashboa
       <Routes>
         <Route index element={<OverviewPage />} />
         <Route path="profile" element={<ProfilePage />} />
-        <Route path="cv-import" element={<CvImportPage />} />
-        <Route path="shifts" element={<ShiftsPage />} />
-        <Route path="applications" element={<ApplicationsPage />} />
-        <Route path="recommendations" element={<RecommendationsPage />} />
-        <Route path="qr-check" element={<QrCheckPage />} />
-        <Route path="payouts" element={<PayoutsPage />} />
-        <Route path="reports" element={<ReportsPage />} />
+        <Route path="jobs" element={<JobsPage />} />
+        <Route path="shifts" element={<MyShiftsPage />} />
+        <Route path="wallet" element={<WalletPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+
+        {/* Backward-compatible redirects to new IA */}
+        <Route
+          path="applications"
+          element={<Navigate to="/worker/jobs?tab=applications" replace />}
+        />
+        <Route
+          path="recommendations"
+          element={<Navigate to="/worker/jobs?tab=recommendations" replace />}
+        />
+        <Route
+          path="qr-check"
+          element={<Navigate to="/worker/shifts?tab=active" replace />}
+        />
+        <Route
+          path="payouts"
+          element={<Navigate to="/worker/wallet?tab=payouts" replace />}
+        />
+        <Route
+          path="reports"
+          element={<Navigate to="/worker/wallet?tab=earnings" replace />}
+        />
+        <Route
+          path="cv-import"
+          element={<Navigate to="/worker/profile?section=cvImport" replace />}
+        />
+
         <Route path="*" element={<Navigate to="/worker" replace />} />
       </Routes>
     </WorkerLayout>

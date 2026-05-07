@@ -15,7 +15,11 @@ const flow: WorkerCvState[] = [
   'failed',
 ]
 
-export function CvImportPage() {
+export type CvImportPageProps = {
+  embedded?: boolean
+}
+
+export function CvImportPage({ embedded = false }: CvImportPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.getCvImportState(), [])
@@ -30,7 +34,13 @@ export function CvImportPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.cvImport.title')} subtitle={t('dashboard.workerPortal.pages.cvImport.subtitle')} />
+      {embedded ? null : (
+        <WorkerSectionHeader
+          tone={theme}
+          title={t('dashboard.workerPortal.pages.cvImport.title')}
+          subtitle={t('dashboard.workerPortal.pages.cvImport.subtitle')}
+        />
+      )}
       <DashboardSurface theme={theme}>
         {loading ? <StatePanel theme={theme} text={t('dashboard.workerPortal.states.loading')} /> : null}
         {error ? <StatePanel theme={theme} text={error} isError /> : null}

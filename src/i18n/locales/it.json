@@ -1,32 +1,32 @@
-{
+﻿{
   "landing": {
     "meta": {
-      "title": "Ada İş Akademi"
+      "title": "Ada Ä°ÅŸ Akademi"
     },
     "nav": {
-      "brand": "Ada İş Akademi",
+      "brand": "Ada Ä°ÅŸ Akademi",
       "logoMark": "A",
       "login": "Accedi",
       "logout": "Esci",
       "languageAria": "Scegli la lingua",
-      "logoAria": "Logo Ada İş Akademi",
+      "logoAria": "Logo Ada Ä°ÅŸ Akademi",
       "themeToggle": "Tema",
       "themeToggleAria": "Cambia tema"
     },
     "lang": {
-      "tr": "Türkçe",
+      "tr": "TÃ¼rkÃ§e",
       "en": "English",
-      "es": "Español",
+      "es": "EspaÃ±ol",
       "it": "Italiano",
-      "ru": "Русский",
-      "ar": "العربية",
-      "fr": "Français"
+      "ru": "Ð ÑƒÑÑÐºÐ¸Ð¹",
+      "ar": "Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©",
+      "fr": "FranÃ§ais"
     },
     "hero": {
-      "badge": "Lavora oggi — turni e opportunità in un’unica app",
-      "title": "Studenti e datori di lavoro sulla stessa piattaforma, abbinati all’istante.",
-      "subtitle": "Scopri opportunità giornaliere con Ada İş Akademi, candidati velocemente e monitora processi e pagamenti in un’unica app.",
-      "ctaExplore": "Scopri le opportunità",
+      "badge": "Lavora oggi â€” turni e opportunitÃ  in unâ€™unica app",
+      "title": "Studenti e datori di lavoro sulla stessa piattaforma, abbinati allâ€™istante.",
+      "subtitle": "Scopri opportunitÃ  giornaliere con Ada Ä°ÅŸ Akademi, candidati velocemente e monitora processi e pagamenti in unâ€™unica app.",
+      "ctaExplore": "Scopri le opportunitÃ ",
       "ctaHowItWorks": "Come funziona",
       "decorativeAria": "Illustrazione di sfondo astratta con nodi collegati"
     },
@@ -39,12 +39,12 @@
         "cta": "Esamina {{count}} annunci compatibili"
       },
       "activity": {
-        "title": "Attività settimanale",
+        "title": "AttivitÃ  settimanale",
         "stat": "+24% questa settimana"
       },
       "suggestion": {
         "title": "Suggerimento intelligente",
-        "body": "Rafforza il tuo profilo per posizionarti più in alto negli annunci giornalieri dei turni."
+        "body": "Rafforza il tuo profilo per posizionarti piÃ¹ in alto negli annunci giornalieri dei turni."
       }
     },
     "stats": {
@@ -101,7 +101,7 @@
       "action": "Plan your launch now"
     },
     "footer": {
-      "copy": "© Ada İş Akademi. All rights reserved."
+      "copy": "Â© Ada Ä°ÅŸ Akademi. All rights reserved."
     },
     "visual": {
       "avatarLetter": "A",
@@ -112,9 +112,19 @@
     "common": {
       "welcome": "Benvenuto, {{email}}"
     },
+    "userMenu": {
+      "title": "Menu account",
+      "triggerAria": "Apri menu account",
+      "profile": "Il mio profilo",
+      "logout": "Esci",
+      "theme": "Tema",
+      "themeDark": "Scuro",
+      "themeLight": "Chiaro",
+      "language": "Lingua"
+    },
     "worker": {
       "title": "Dashboard lavoratore",
-      "subtitle": "Gestisci candidature, turni imminenti e qualità del profilo in un unico punto.",
+      "subtitle": "Gestisci candidature, turni imminenti e qualitÃ  del profilo in un unico punto.",
       "welcomeGreeting": "Benvenuto",
       "defaultName": "Lavoratore",
       "summary": {
@@ -175,7 +185,12 @@
         "jobs": "Offerte di lavoro",
         "cvProfile": "CV/Profilo",
         "myApplications": "Le mie candidature",
-        "account": "Il mio account"
+        "account": "Il mio account",
+        "dashboard": "Pannello",
+        "findJobs": "Trova lavoro",
+        "myShifts": "I miei turni",
+        "wallet": "Portafoglio",
+        "notifications": "Notifiche"
       },
       "states": {
         "loading": "Caricamento dati...",
@@ -218,14 +233,30 @@
         "recommendations": {
           "title": "Suggerimenti IA",
           "subtitle": "Annunci ordinati in base a ListSemanticMatched"
+        },
+        "jobs": {
+          "title": "Trova lavoro",
+          "subtitle": "Suggerimenti personalizzati, annunci aperti, mappa delle sedi e le tue candidature in un unico posto."
+        },
+        "myShifts": {
+          "title": "I miei turni",
+          "subtitle": "Gestisci il turno attivo, la validazione QR reciproca e lo storico turni."
+        },
+        "wallet": {
+          "title": "Portafoglio e guadagni",
+          "subtitle": "Segui pagamenti e storico guadagni in un'unica area."
+        },
+        "notifications": {
+          "title": "Notifiche",
+          "subtitle": "Avvisi su match, pagamenti e attivitÃ  dei turni."
         }
       },
       "overview": {
         "monthlyEarnings": "Guadagni mensili",
         "paidPayouts": "Pagamenti completati",
         "completedShifts": "Turni completati",
-        "bestMatchesTitle": "Annunci più adatti",
-        "bestMatchesSubtitle": "Annunci consigliati in base al tuo profilo e disponibilità.",
+        "bestMatchesTitle": "Annunci piÃ¹ adatti",
+        "bestMatchesSubtitle": "Annunci consigliati in base al tuo profilo e disponibilitÃ .",
         "bestMatchesEmpty": "Nessun annuncio adatto disponibile al momento.",
         "employerPrefix": "Datore #{{id}}",
         "periodMonthly": "Mensile",
@@ -234,12 +265,96 @@
         "periodQuarterly": "3 mesi",
         "periodSemiAnnual": "6 mesi",
         "periodYearly": "Annuale",
-        "periodSelectedPrefix": "Periodo selezionato: {{period}}"
+        "periodSelectedPrefix": "Periodo selezionato: {{period}}",
+        "upcomingShifts": "Turni imminenti",
+        "upcomingShiftsHint": "Prossimo: {{date}} â€¢ {{range}}",
+        "upcomingShiftsEmpty": "Nessun turno pianificato.",
+        "reliabilityScore": "Punteggio di affidabilitÃ ",
+        "reliabilityHint": "Calcolato dalla percentuale di candidature accettate.",
+        "reliabilitySamples": "{{count}} candidature",
+        "reliabilityNoData": "Dati insufficienti",
+        "quickCheckInTitle": "Azione rapida",
+        "quickCheckInCta": "Check-in con QR",
+        "quickCheckInEmpty": "Nessun turno attivo in attesa di check-in."
+      },
+      "tabs": {
+        "jobs": {
+          "recommendations": "Per te",
+          "open": "Annunci aperti",
+          "map": "Mappa",
+          "mapEmpty": "Nessun annuncio attivo da mappare.",
+          "mapHeading": "Sedi vicine dei datori",
+          "mapHint": "Annunci raggruppati per datore; mappa completa in arrivo.",
+          "locationCount": "{{count}} annunci aperti",
+          "applications": "Le mie candidature"
+        },
+        "myShifts": {
+          "active": "Attivo",
+          "history": "Storico",
+          "activeAssignment": "Turno attivo",
+          "qrTitle": "Validazione QR reciproca",
+          "qrHint": "Scansiona insieme i codici QR del lavoratore e del supervisore per avviare il turno.",
+          "upcoming": "Turni imminenti",
+          "noActive": "Al momento non hai un turno attivo."
+        },
+        "wallet": {
+          "payouts": "Tracker pagamenti",
+          "earnings": "Storico guadagni"
+        }
+      },
+      "layout": {
+        "emailVerification": {
+          "title": "Verifica la tua email",
+          "description": "Verifica il tuo indirizzo email per attivare completamente l'account.",
+          "action": "Invia email di verifica",
+          "sending": "Invio in corso...",
+          "sentSuccess": "Email di verifica inviata.",
+          "sentHint": "Controlla la posta in arrivo e la cartella spam.",
+          "sentError": "Impossibile inviare l'email di verifica."
+        }
+      },
+      "shiftHistory": {
+        "empty": "Nessun turno completato nello storico.",
+        "anomaly": "Anomalia",
+        "status": {
+          "pending": "In attesa",
+          "awaitingMutualQr": "In attesa QR",
+          "checkedIn": "Check-in effettuato",
+          "checkedOut": "Check-out effettuato"
+        }
+      },
+      "notifications": {
+        "empty": "Nessuna notifica al momento.",
+        "type": {
+          "matching": "Match",
+          "payout": "Pagamento",
+          "application": "Candidatura",
+          "shift": "Turno",
+          "general": "Generale"
+        }
+      },
+      "availability": {
+        "description": "Gestisci le fasce di disponibilitÃ  settimanale.",
+        "editAction": "Modifica calendario",
+        "deleteAction": "Elimina",
+        "enableDay": "Abilita questo giorno",
+        "empty": "Nessuna fascia salvata per questo giorno.",
+        "comingSoon": "L'esperienza di modifica sarÃ  attiva a breve.",
+        "days": {
+          "0": "Domenica",
+          "1": "LunedÃ¬",
+          "2": "MartedÃ¬",
+          "3": "MercoledÃ¬",
+          "4": "GiovedÃ¬",
+          "5": "VenerdÃ¬",
+          "6": "Sabato"
+        }
       },
       "topbar": {
         "searchPlaceholder": "Cerca...",
         "toggleThemeAria": "Cambia tema",
         "notificationsAria": "Apri notifiche",
+        "profileAria": "Vai al profilo",
         "toggleSidebarAria": "Attiva/disattiva barra laterale",
         "breadcrumbAria": "Percorso dello spazio di lavoro"
       },
@@ -253,7 +368,7 @@
         },
         "earnings": {
           "title": "Riepilogo guadagni",
-          "currency": "₺",
+          "currency": "â‚º",
           "empty": "Nessun dato sui guadagni al momento."
         },
         "qr": {
@@ -279,8 +394,8 @@
         "basic": "Profilo base",
         "fullName": "Nome completo: {{value}}",
         "email": "Email: {{value}}",
-        "nationality": "Nazionalità: {{value}}",
-        "university": "Università: {{value}}",
+        "nationality": "NazionalitÃ : {{value}}",
+        "university": "UniversitÃ : {{value}}",
         "studentNumber": "Numero studente: {{value}}",
         "skills": "Tag competenze",
         "educations": "Formazione",
@@ -297,8 +412,8 @@
         "fields": {
           "fullName": "Nome completo",
           "email": "Email",
-          "nationality": "Nazionalità",
-          "university": "Università",
+          "nationality": "NazionalitÃ ",
+          "university": "UniversitÃ ",
           "studentNumber": "Numero studente"
         },
         "messages": {
@@ -308,12 +423,29 @@
         "settingsMenu": "Impostazioni account",
         "menu": {
           "basic": "Informazioni personali",
+          "experiences": "Esperienze",
+          "skills": "Competenze",
+          "certificates": "Certificati",
+          "references": "Referenze",
           "contact": "Informazioni di contatto",
           "password": "Cambia password",
           "emailNotifications": "Notifiche email",
           "smsNotifications": "Notifiche SMS",
           "accountControl": "Elimina e congela account",
-          "adVisibility": "Visibilità annunci"
+          "adVisibility": "VisibilitÃ  annunci",
+          "cvImport": "Caricamento CV con IA",
+          "availability": "Calendario disponibilitÃ "
+        },
+        "skillsSection": {
+          "title": "Competenze",
+          "subtitle": "Aggiungi o rimuovi tag competenze per migliorare gli abbinamenti.",
+          "inputPlaceholder": "Inserisci una competenza (es. Barista)",
+          "add": "Aggiungi competenza",
+          "empty": "Nessuna competenza salvata."
+        },
+        "accountActions": {
+          "suspend": "Sospendi account",
+          "delete": "Elimina account"
         }
       },
       "cv": {
@@ -329,7 +461,7 @@
       "shifts": {
         "submit": "Candidati all'annuncio",
         "submitting": "Invio in corso...",
-        "submitSuccess": "La candidatura è stata inviata.",
+        "submitSuccess": "La candidatura Ã¨ stata inviata.",
         "submitError": "Richiesta candidatura non riuscita.",
         "wageLabel": "Retribuzione"
       },
@@ -402,7 +534,7 @@
         },
         "postings": {
           "title": "Annunci",
-          "subtitle": "Filtra gli annunci e controlla dettaglio e capacità."
+          "subtitle": "Filtra gli annunci e controlla dettaglio e capacitÃ ."
         },
         "candidates": {
           "title": "Candidati",
@@ -429,7 +561,8 @@
     },
     "employerSpot": {
       "common": {
-        "comingSoon": "Questa area sarà attiva quando l'integrazione backend sarà pronta."
+        "comingSoon": "Questa area sarÃ  attiva quando l'integrazione backend sarÃ  pronta.",
+        "candidate": "Candidato"
       },
       "kpis": {
         "fillRateToday": "Riempimento di oggi",
@@ -439,7 +572,7 @@
         "title": "Flusso anomalie",
         "subtitle": "Monitora GPS, token scaduti e replay attack in tempo reale.",
         "empty": "Nessuna anomalia attiva.",
-        "hint": "Nota: Attualmente con dati fallback; diventerà real-time con ShiftAssignments.",
+        "hint": "Nota: Attualmente con dati fallback; diventerÃ  real-time con ShiftAssignments.",
         "itemPrefix": "Caso"
       },
       "operations": {
@@ -451,14 +584,37 @@
         },
         "createPosting": {
           "title": "Crea annuncio",
-          "subtitle": "Apri rapidamente con inserimento manuale o template."
+          "subtitle": "Apri rapidamente con inserimento manuale o template.",
+          "fields": {
+            "title": "Titolo annuncio",
+            "description": "Descrizione annuncio",
+            "employerLocationId": "Sede datore",
+            "selectLocation": "Seleziona sede",
+            "jobCategoryId": "ID categoria",
+            "selectCategory": "Seleziona categoria",
+            "categoryOption": "Categoria #{{id}}",
+            "shiftDate": "Data turno",
+            "shiftStartTime": "Ora inizio",
+            "shiftEndTime": "Ora fine",
+            "headCount": "Posti",
+            "wageAmount": "Importo paga",
+            "wageCurrency": "Valuta"
+          },
+          "validation": {
+            "requiredText": "Titolo e descrizione sono obbligatori.",
+            "requiredFields": "Compila tutti i campi obbligatori con valori validi."
+          },
+          "submit": "Crea annuncio",
+          "submitting": "Creazione...",
+          "submitSuccess": "Annuncio creato con successo.",
+          "submitError": "Creazione annuncio non riuscita."
         },
         "activeAssignments": {
           "title": "Turni attivi",
           "subtitle": "Segui i turni tramite stato QR reciproco.",
           "all": "Tutti",
           "empty": "Nessun turno attivo.",
-          "worker": "Lavoratore",
+          "worker": "Candidato",
           "qrStatus": "Stato QR"
         },
         "applications": {
@@ -481,17 +637,17 @@
         "semanticSearch": {
           "title": "Ricerca semantica",
           "subtitle": "Ricerca assistita da IA con embeddings delle skill.",
-          "placeholder": "es. barista, magazzino, cassiere…",
+          "placeholder": "es. barista, magazzino, cassiereâ€¦",
           "search": "Cerca",
-          "hint": "Nota: Si collegherà a `Workers/List` e score embedding quando pronto."
+          "hint": "Nota: Si collegherÃ  a `Workers/List` e score embedding quando pronto."
         },
         "workerPortfolio": {
           "title": "Portafoglio lavoratori",
-          "subtitle": "Lavoratori già ingaggiati e affidabili.",
+          "subtitle": "Lavoratori giÃ  ingaggiati e affidabili.",
           "empty": "Nessuna voce nel portafoglio.",
-          "reliability": "Affidabilità {{value}}%",
+          "reliability": "AffidabilitÃ  {{value}}%",
           "lastWorked": "Ultima interazione",
-          "hint": "Nota: Si arricchirà con storico e risultati contestazioni."
+          "hint": "Nota: Si arricchirÃ  con storico e risultati contestazioni."
         }
       },
       "finance": {
@@ -504,14 +660,14 @@
           "subtitle": "Gestisci WorkerPayout e transizioni di stato.",
           "empty": "Nessuna riga pagamento.",
           "status": "Stato",
-          "locked": "Record bloccato. Azioni disabilitate finché non termina l'operazione.",
+          "locked": "Record bloccato. Azioni disabilitate finchÃ© non termina l'operazione.",
           "actions": {
             "markProcessing": "In elaborazione",
             "markPaid": "Pagato",
             "fail": "Fallisci",
             "retry": "Riprova"
           },
-          "hint": "Nota: Il locking pessimistico sarà guidato da backend (423 Locked / campi lock)."
+          "hint": "Nota: Il locking pessimistico sarÃ  guidato da backend (423 Locked / campi lock)."
         },
         "commissions": {
           "title": "Fatture piattaforma",
@@ -519,7 +675,7 @@
           "empty": "Nessuna fattura.",
           "status": "Stato",
           "downloadPdf": "Scarica PDF",
-          "hint": "Nota: Si collegherà alla lista CommissionReceivable reale e ai pacchetti PDF."
+          "hint": "Nota: Si collegherÃ  alla lista CommissionReceivable reale e ai pacchetti PDF."
         }
       },
       "settings": {
@@ -532,7 +688,7 @@
           "subtitle": "Definisci coordinate e raggio di verifica.",
           "fields": {
             "locationName": "Nome location",
-            "city": "Città",
+            "city": "CittÃ ",
             "latitude": "Latitudine",
             "longitude": "Longitudine",
             "radius": "Raggio (metri)"
@@ -546,7 +702,7 @@
             "supervisors": "Assegnazioni ShiftSupervisor",
             "groups": "Permessi gruppo (scope)"
           },
-          "hint": "Nota: Integrerà `/Employers/AddSupervisor` e `/SystemUserGroups/*`."
+          "hint": "Nota: IntegrerÃ  `/Employers/AddSupervisor` e `/SystemUserGroups/*`."
         }
       },
       "disputes": {
@@ -558,8 +714,16 @@
           "expiredToken": "Token scaduto",
           "replayAttack": "Replay attack"
         },
-        "itemDetail": "Caso #{{id}} • Worker {{workerId}}",
-        "hint": "Nota: Ora mostra anomalie fallback; poi mostrerà contestazioni reali."
+        "itemDetail": "Caso #{{id}} â€¢ Candidato {{workerId}}",
+        "hint": "Nota: Ora mostra anomalie fallback; poi mostrerÃ  contestazioni reali."
+      },
+      "enums": {
+        "shiftAssignmentStatus": {
+          "Pending": "In attesa",
+          "AwaitingMutualQr": "In attesa QR reciproco",
+          "CheckedIn": "Check-in completato",
+          "CheckedOut": "Check-out completato"
+        }
       }
     },
     "employer": {
@@ -1041,7 +1205,7 @@
     "login": {
       "title": "Accedi",
       "subtitleIndividual": "Accedi al tuo account per gestire candidature, turni e notifiche.",
-      "subtitleCorporate": "Accedi con l’account organizzazione per gestire annunci e assunzioni.",
+      "subtitleCorporate": "Accedi con lâ€™account organizzazione per gestire annunci e assunzioni.",
       "emailLabel": "Email",
       "emailPlaceholder": "tu@email.com",
       "passwordLabel": "Password",
@@ -1051,7 +1215,7 @@
       "forgot": "Password dimenticata?",
       "closeAria": "Chiudi finestra di accesso",
       "goToRegister": "Crea un account",
-      "goToLogin": "Torna all’accesso"
+      "goToLogin": "Torna allâ€™accesso"
     },
     "register": {
       "title": "Crea account",
@@ -1076,3 +1240,5 @@
     }
   }
 }
+
+

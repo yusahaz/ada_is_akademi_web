@@ -1,41 +1,41 @@
-{
+﻿{
   "landing": {
     "meta": {
-      "title": "Ada İş Akademi"
+      "title": "Ada Ä°ÅŸ Akademi"
     },
     "nav": {
-      "brand": "Ada İş Akademi",
+      "brand": "Ada Ä°ÅŸ Akademi",
       "logoMark": "A",
-      "login": "Iniciar sesión",
-      "logout": "Cerrar sesión",
+      "login": "Iniciar sesiÃ³n",
+      "logout": "Cerrar sesiÃ³n",
       "languageAria": "Elegir idioma",
-      "logoAria": "Logotipo de Ada İş Akademi",
+      "logoAria": "Logotipo de Ada Ä°ÅŸ Akademi",
       "themeToggle": "Tema",
       "themeToggleAria": "Cambiar tema"
     },
     "lang": {
-      "tr": "Türkçe",
+      "tr": "TÃ¼rkÃ§e",
       "en": "English",
-      "es": "Español",
+      "es": "EspaÃ±ol",
       "it": "Italiano",
-      "ru": "Русский",
-      "ar": "العربية",
-      "fr": "Français"
+      "ru": "Ð ÑƒÑÑÐºÐ¸Ð¹",
+      "ar": "Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©",
+      "fr": "FranÃ§ais"
     },
     "hero": {
-      "badge": "Trabaja hoy — turnos y oportunidades en una sola app",
+      "badge": "Trabaja hoy â€” turnos y oportunidades en una sola app",
       "title": "Estudiantes y empleadores en la misma plataforma, emparejados al instante.",
-      "subtitle": "Descubre oportunidades diarias con Ada İş Akademi, postúlate rápido y sigue tu proceso y pagos en una sola app.",
+      "subtitle": "Descubre oportunidades diarias con Ada Ä°ÅŸ Akademi, postÃºlate rÃ¡pido y sigue tu proceso y pagos en una sola app.",
       "ctaExplore": "Explorar oportunidades",
-      "ctaHowItWorks": "Cómo funciona",
-      "decorativeAria": "Ilustración de fondo abstracta con nodos conectados"
+      "ctaHowItWorks": "CÃ³mo funciona",
+      "decorativeAria": "IlustraciÃ³n de fondo abstracta con nodos conectados"
     },
     "card": {
       "shifts": {
         "title": "Turnos cerca de ti",
         "matching": "Emparejamiento",
         "application": "Solicitud",
-        "approval": "Aprobación",
+        "approval": "AprobaciÃ³n",
         "cta": "Revisar {{count}} ofertas compatibles"
       },
       "activity": {
@@ -44,7 +44,7 @@
       },
       "suggestion": {
         "title": "Sugerencia inteligente",
-        "body": "Fortalece tu perfil para aparecer más arriba en los listados diarios de turnos."
+        "body": "Fortalece tu perfil para aparecer mÃ¡s arriba en los listados diarios de turnos."
       }
     },
     "stats": {
@@ -101,7 +101,7 @@
       "action": "Plan your launch now"
     },
     "footer": {
-      "copy": "© Ada İş Akademi. All rights reserved."
+      "copy": "Â© Ada Ä°ÅŸ Akademi. All rights reserved."
     },
     "visual": {
       "avatarLetter": "A",
@@ -112,15 +112,25 @@
     "common": {
       "welcome": "Bienvenido, {{email}}"
     },
+    "userMenu": {
+      "title": "MenÃº de cuenta",
+      "triggerAria": "Abrir menÃº de cuenta",
+      "profile": "Mi perfil",
+      "logout": "Cerrar sesiÃ³n",
+      "theme": "Tema",
+      "themeDark": "Oscuro",
+      "themeLight": "Claro",
+      "language": "Idioma"
+    },
     "worker": {
       "welcomeGreeting": "Bienvenido",
       "title": "Panel de trabajador",
-      "subtitle": "Gestiona solicitudes, próximos turnos y estado de perfil en una sola vista.",
+      "subtitle": "Gestiona solicitudes, prÃ³ximos turnos y estado de perfil en una sola vista.",
       "defaultName": "Trabajador",
       "summary": {
         "activeApplications": "Solicitudes activas",
-        "upcomingShifts": "Próximos turnos",
-        "profileScore": "Puntuación de perfil"
+        "upcomingShifts": "PrÃ³ximos turnos",
+        "profileScore": "PuntuaciÃ³n de perfil"
       },
       "sections": {
         "suggestedShifts": "Turnos sugeridos",
@@ -132,7 +142,7 @@
       "status": {
         "pending": {
           "label": "Solicitudes pendientes",
-          "value": "En revisión"
+          "value": "En revisiÃ³n"
         },
         "accepted": {
           "label": "Turnos aprobados",
@@ -155,9 +165,9 @@
           "hint": "2 turnos aprobados y 1 en espera."
         },
         "profile": {
-          "title": "Puntuación de perfil",
+          "title": "PuntuaciÃ³n de perfil",
           "value": "87%",
-          "hint": "Agrega 2 habilidades para mejorar tu posición."
+          "hint": "Agrega 2 habilidades para mejorar tu posiciÃ³n."
         }
       }
     },
@@ -166,7 +176,7 @@
       "nav": {
         "overview": "Resumen",
         "profile": "Perfil",
-        "cvImport": "Importación de CV",
+        "cvImport": "ImportaciÃ³n de CV",
         "shifts": "Turnos",
         "applications": "Solicitudes",
         "qrCheck": "Control QR",
@@ -175,11 +185,16 @@
         "jobs": "Ofertas de trabajo",
         "cvProfile": "CV/Perfil",
         "myApplications": "Mis solicitudes",
-        "account": "Mi cuenta"
+        "account": "Mi cuenta",
+        "dashboard": "Panel",
+        "findJobs": "Buscar trabajos",
+        "myShifts": "Mis turnos",
+        "wallet": "Billetera",
+        "notifications": "Notificaciones"
       },
       "states": {
         "loading": "Cargando datos...",
-        "empty": "No se encontraron registros para esta sección.",
+        "empty": "No se encontraron registros para esta secciÃ³n.",
         "fetchError": "No se pudieron cargar los datos."
       },
       "pages": {
@@ -189,15 +204,15 @@
         },
         "profile": {
           "title": "Perfil",
-          "subtitle": "Revisa tus datos básicos y las etiquetas de habilidades visibles para empleadores."
+          "subtitle": "Revisa tus datos bÃ¡sicos y las etiquetas de habilidades visibles para empleadores."
         },
         "cvImport": {
-          "title": "Importación de CV",
-          "subtitle": "Simula pasos de extracción y preparación antes de postularte."
+          "title": "ImportaciÃ³n de CV",
+          "subtitle": "Simula pasos de extracciÃ³n y preparaciÃ³n antes de postularte."
         },
         "shifts": {
           "title": "Ofertas de trabajo",
-          "subtitle": "Explora turnos disponibles y envía tu solicitud con rapidez."
+          "subtitle": "Explora turnos disponibles y envÃ­a tu solicitud con rapidez."
         },
         "applications": {
           "title": "Solicitudes",
@@ -205,27 +220,43 @@
         },
         "qrCheck": {
           "title": "Control QR",
-          "subtitle": "Simula la validación del token QR para demostraciones."
+          "subtitle": "Simula la validaciÃ³n del token QR para demostraciones."
         },
         "payouts": {
           "title": "Pagos",
-          "subtitle": "Revisa pagos y simula la confirmación cuando esté permitido."
+          "subtitle": "Revisa pagos y simula la confirmaciÃ³n cuando estÃ© permitido."
         },
         "reports": {
           "title": "Reportes",
-          "subtitle": "Métricas clave sintetizadas desde pagos y turnos."
+          "subtitle": "MÃ©tricas clave sintetizadas desde pagos y turnos."
         },
         "recommendations": {
           "title": "Recomendaciones IA",
           "subtitle": "Ofertas ordenadas segun ListSemanticMatched"
+        },
+        "jobs": {
+          "title": "Buscar trabajos",
+          "subtitle": "Recomendaciones personales, ofertas abiertas, mapa de ubicaciones y tus solicitudes en un mismo lugar."
+        },
+        "myShifts": {
+          "title": "Mis turnos",
+          "subtitle": "Gestiona tu turno activo, validaciÃ³n QR mutua e historial de turnos."
+        },
+        "wallet": {
+          "title": "Billetera y ganancias",
+          "subtitle": "Sigue los pagos y el historial de ingresos en un solo lugar."
+        },
+        "notifications": {
+          "title": "Notificaciones",
+          "subtitle": "Avisos sobre coincidencias, pagos y actividad de turnos."
         }
       },
       "overview": {
         "monthlyEarnings": "Ganancias mensuales",
         "paidPayouts": "Pagos completados",
         "completedShifts": "Turnos completados",
-        "bestMatchesTitle": "Ofertas más adecuadas",
-        "bestMatchesSubtitle": "Ofertas sugeridas según tu perfil y disponibilidad.",
+        "bestMatchesTitle": "Ofertas mÃ¡s adecuadas",
+        "bestMatchesSubtitle": "Ofertas sugeridas segÃºn tu perfil y disponibilidad.",
         "bestMatchesEmpty": "No hay ofertas adecuadas en este momento.",
         "employerPrefix": "Empleador #{{id}}",
         "periodMonthly": "Mensual",
@@ -234,34 +265,118 @@
         "periodQuarterly": "3 meses",
         "periodSemiAnnual": "6 meses",
         "periodYearly": "Anual",
-        "periodSelectedPrefix": "Periodo seleccionado: {{period}}"
+        "periodSelectedPrefix": "Periodo seleccionado: {{period}}",
+        "upcomingShifts": "PrÃ³ximos turnos",
+        "upcomingShiftsHint": "PrÃ³ximo: {{date}} â€¢ {{range}}",
+        "upcomingShiftsEmpty": "No tienes turnos programados.",
+        "reliabilityScore": "Puntaje de fiabilidad",
+        "reliabilityHint": "Calculado a partir de la proporciÃ³n de solicitudes aceptadas.",
+        "reliabilitySamples": "{{count}} solicitudes",
+        "reliabilityNoData": "Datos insuficientes",
+        "quickCheckInTitle": "AcciÃ³n inmediata",
+        "quickCheckInCta": "Hacer check-in con QR",
+        "quickCheckInEmpty": "No hay un turno activo esperando check-in."
+      },
+      "tabs": {
+        "jobs": {
+          "recommendations": "Para ti",
+          "open": "Ofertas abiertas",
+          "map": "Mapa",
+          "mapEmpty": "No hay publicaciones activas para mapear.",
+          "mapHeading": "Ubicaciones cercanas de empleadores",
+          "mapHint": "Publicaciones agrupadas por empleador; el mapa completo llegarÃ¡ pronto.",
+          "locationCount": "{{count}} ofertas abiertas",
+          "applications": "Mis solicitudes"
+        },
+        "myShifts": {
+          "active": "Activo",
+          "history": "Historial",
+          "activeAssignment": "Turno activo",
+          "qrTitle": "ValidaciÃ³n QR mutua",
+          "qrHint": "Escanea los cÃ³digos QR de trabajador y supervisor juntos para iniciar el turno.",
+          "upcoming": "PrÃ³ximos turnos",
+          "noActive": "No tienes un turno activo en este momento."
+        },
+        "wallet": {
+          "payouts": "Seguimiento de pagos",
+          "earnings": "Historial de ingresos"
+        }
+      },
+      "layout": {
+        "emailVerification": {
+          "title": "Verifica tu correo",
+          "description": "Verifica tu direcciÃ³n de correo electrÃ³nico para activar completamente tu cuenta.",
+          "action": "Enviar correo de verificaciÃ³n",
+          "sending": "Enviando...",
+          "sentSuccess": "Correo de verificaciÃ³n enviado.",
+          "sentHint": "Revisa tu bandeja de entrada y la carpeta de spam.",
+          "sentError": "No se pudo enviar el correo de verificaciÃ³n."
+        }
+      },
+      "shiftHistory": {
+        "empty": "AÃºn no hay turnos completados en tu historial.",
+        "anomaly": "AnomalÃ­a",
+        "status": {
+          "pending": "Pendiente",
+          "awaitingMutualQr": "Esperando QR",
+          "checkedIn": "Check-in realizado",
+          "checkedOut": "Check-out realizado"
+        }
+      },
+      "notifications": {
+        "empty": "AÃºn no tienes notificaciones.",
+        "type": {
+          "matching": "Coincidencia",
+          "payout": "Pago",
+          "application": "Solicitud",
+          "shift": "Turno",
+          "general": "General"
+        }
+      },
+      "availability": {
+        "description": "Gestiona tus franjas de disponibilidad semanal.",
+        "editAction": "Editar calendario",
+        "deleteAction": "Eliminar",
+        "enableDay": "Activar este dÃ­a",
+        "empty": "No hay franjas guardadas para este dÃ­a.",
+        "comingSoon": "La experiencia de ediciÃ³n se habilitarÃ¡ pronto.",
+        "days": {
+          "0": "Domingo",
+          "1": "Lunes",
+          "2": "Martes",
+          "3": "MiÃ©rcoles",
+          "4": "Jueves",
+          "5": "Viernes",
+          "6": "SÃ¡bado"
+        }
       },
       "topbar": {
         "searchPlaceholder": "Buscar...",
         "toggleThemeAria": "Cambiar tema",
         "notificationsAria": "Abrir notificaciones",
+        "profileAria": "Ir al perfil",
         "toggleSidebarAria": "Alternar barra lateral",
         "breadcrumbAria": "Migas de pan del espacio de trabajo"
       },
       "widgets": {
         "aiMatch": {
           "title": "Coincidencias de IA",
-          "description": "Los turnos con mayor ajuste semántico se priorizan para tu perfil.",
+          "description": "Los turnos con mayor ajuste semÃ¡ntico se priorizan para tu perfil.",
           "scoreLabel": "Coincidencia",
           "action": "Comenzar ahora",
           "signal": "Sugerencia basada en datos"
         },
         "earnings": {
           "title": "Resumen de ganancias",
-          "currency": "₺",
-          "empty": "Aún no hay datos de ganancias."
+          "currency": "â‚º",
+          "empty": "AÃºn no hay datos de ganancias."
         },
         "qr": {
           "title": "QR Check-in",
-          "action": "Abrir cámara"
+          "action": "Abrir cÃ¡mara"
         },
         "timeline": {
-          "title": "Próximos turnos",
+          "title": "PrÃ³ximos turnos",
           "viewAll": "Ver todo",
           "status": {
             "confirmed": "Confirmado",
@@ -270,20 +385,20 @@
             "disputed": "En disputa"
           },
           "anomaly": {
-            "locationMismatch": "Incompatibilidad de ubicación",
+            "locationMismatch": "Incompatibilidad de ubicaciÃ³n",
             "expiredToken": "Token expirado"
           }
         }
       },
       "profile": {
-        "basic": "Perfil básico",
+        "basic": "Perfil bÃ¡sico",
         "fullName": "Nombre completo: {{value}}",
         "email": "Correo: {{value}}",
         "nationality": "Nacionalidad: {{value}}",
         "university": "Universidad: {{value}}",
-        "studentNumber": "Número de estudiante: {{value}}",
+        "studentNumber": "NÃºmero de estudiante: {{value}}",
         "skills": "Etiquetas de habilidades",
-        "educations": "Registros de educación",
+        "educations": "Registros de educaciÃ³n",
         "experiences": "Registros de experiencia",
         "certificates": "Certificados",
         "languages": "Idiomas",
@@ -299,30 +414,47 @@
           "email": "Correo",
           "nationality": "Nacionalidad",
           "university": "Universidad",
-          "studentNumber": "Número de estudiante"
+          "studentNumber": "NÃºmero de estudiante"
         },
         "messages": {
-          "savedLocal": "Los cambios del perfil se guardaron para esta sesión.",
+          "savedLocal": "Los cambios del perfil se guardaron para esta sesiÃ³n.",
           "validationError": "El nombre completo debe tener al menos 2 caracteres."
         },
-        "settingsMenu": "Configuración de la cuenta",
+        "settingsMenu": "ConfiguraciÃ³n de la cuenta",
         "menu": {
-          "basic": "Información personal",
-          "contact": "Información de contacto",
-          "password": "Cambiar contraseña",
+          "basic": "InformaciÃ³n personal",
+          "experiences": "Experiencias",
+          "skills": "Habilidades",
+          "certificates": "Certificados",
+          "references": "Referencias",
+          "contact": "InformaciÃ³n de contacto",
+          "password": "Cambiar contraseÃ±a",
           "emailNotifications": "Notificaciones por correo",
           "smsNotifications": "Notificaciones por SMS",
           "accountControl": "Eliminar y congelar cuenta",
-          "adVisibility": "Visibilidad de anuncios"
+          "adVisibility": "Visibilidad de anuncios",
+          "cvImport": "Carga de CV con IA",
+          "availability": "Calendario de disponibilidad"
+        },
+        "skillsSection": {
+          "title": "Habilidades",
+          "subtitle": "Agrega o elimina etiquetas de habilidades para mejorar tus coincidencias.",
+          "inputPlaceholder": "Ingresa una habilidad (ej. Barista)",
+          "add": "Agregar habilidad",
+          "empty": "No hay habilidades guardadas."
+        },
+        "accountActions": {
+          "suspend": "Suspender cuenta",
+          "delete": "Eliminar cuenta"
         }
       },
       "cv": {
-        "title": "Flujo de Importación de CV",
-        "description": "Sigue el estado de extracción y confirma secciones antes de aplicar.",
+        "title": "Flujo de ImportaciÃ³n de CV",
+        "description": "Sigue el estado de extracciÃ³n y confirma secciones antes de aplicar.",
         "states": {
           "uploaded": "Subido",
           "extracting": "Extrayendo",
-          "awaitingReview": "Pendiente de revisión",
+          "awaitingReview": "Pendiente de revisiÃ³n",
           "confirmed": "Confirmado",
           "failed": "Fallido"
         },
@@ -332,7 +464,7 @@
         "submit": "Postular al anuncio",
         "submitting": "Enviando...",
         "submitSuccess": "Tu solicitud fue enviada.",
-        "submitError": "La solicitud de postulación falló.",
+        "submitError": "La solicitud de postulaciÃ³n fallÃ³.",
         "wageLabel": "Pago"
       },
       "applications": {
@@ -347,14 +479,14 @@
       "qr": {
         "actions": {
           "validate": "Validar token",
-          "success": "Marcar éxito",
+          "success": "Marcar Ã©xito",
           "fail": "Marcar error"
         },
         "status": {
           "idle": "Esperando escaneo.",
-          "validating": "Token y ubicación en validación.",
+          "validating": "Token y ubicaciÃ³n en validaciÃ³n.",
           "success": "Flujo QR completado correctamente.",
-          "failed": "Validación fallida. Se requiere reintento."
+          "failed": "ValidaciÃ³n fallida. Se requiere reintento."
         }
       },
       "payouts": {
@@ -367,27 +499,27 @@
         "confirm": "Confirmar pago",
         "confirmed": "Pago confirmado"
       },
-      "logout": "Cerrar sesión"
+      "logout": "Cerrar sesiÃ³n"
     },
     "employerPortal": {
       "nav": {
         "groups": {
           "dashboard": "Dashboard",
-          "operations": "Operación",
+          "operations": "OperaciÃ³n",
           "intelligence": "Talentos",
           "finance": "Centro financiero",
-          "settings": "Organización",
+          "settings": "OrganizaciÃ³n",
           "support": "Soporte"
         },
         "badges": {
-          "activeAnomalies": "Anomalías activas: {{count}}",
+          "activeAnomalies": "AnomalÃ­as activas: {{count}}",
           "pendingPayouts": "Pagos pendientes: {{count}}"
         },
         "overview": "Resumen",
         "postings": "Anuncios",
         "candidates": "Candidatos",
         "operations": "Operaciones",
-        "billing": "Facturación",
+        "billing": "FacturaciÃ³n",
         "reports": "Informes",
         "disputes": "Centro de disputas"
       },
@@ -395,7 +527,7 @@
         "toggleThemeAria": "Cambiar tema",
         "notificationsAria": "Abrir notificaciones",
         "toggleSidebarAria": "Contraer o expandir la barra lateral",
-        "breadcrumbAria": "Ubicación del portal del empleador"
+        "breadcrumbAria": "UbicaciÃ³n del portal del empleador"
       },
       "pages": {
         "overview": {
@@ -404,44 +536,45 @@
         },
         "postings": {
           "title": "Anuncios",
-          "subtitle": "Filtre anuncios y revise el detalle con métricas de cupo."
+          "subtitle": "Filtre anuncios y revise el detalle con mÃ©tricas de cupo."
         },
         "candidates": {
           "title": "Candidatos",
-          "subtitle": "Revise solicitudes por estado y puntuación de ajuste."
+          "subtitle": "Revise solicitudes por estado y puntuaciÃ³n de ajuste."
         },
         "operations": {
           "title": "Operaciones",
           "subtitle": "Vista previa de solo lectura de operaciones QR y de turno."
         },
         "billing": {
-          "title": "Facturación",
-          "subtitle": "Siga cobros y líneas de pago."
+          "title": "FacturaciÃ³n",
+          "subtitle": "Siga cobros y lÃ­neas de pago."
         },
         "reports": {
           "title": "Informes",
-          "subtitle": "Colas de exportación e indicadores resumidos."
+          "subtitle": "Colas de exportaciÃ³n e indicadores resumidos."
         },
         "disputes": {
           "title": "Centro de disputas",
-          "subtitle": "Gestione casos en disputa o marcados con anomalías."
+          "subtitle": "Gestione casos en disputa o marcados con anomalÃ­as."
         }
       },
-      "logout": "Cerrar sesión"
+      "logout": "Cerrar sesiÃ³n"
     },
     "employerSpot": {
       "common": {
-        "comingSoon": "Esta área se activará cuando la integración backend esté lista."
+        "comingSoon": "Esta Ã¡rea se activarÃ¡ cuando la integraciÃ³n backend estÃ© lista.",
+        "candidate": "Candidato"
       },
       "kpis": {
-        "fillRateToday": "Ocupación del día",
+        "fillRateToday": "OcupaciÃ³n del dÃ­a",
         "activeWorkers": "Trabajadores activos"
       },
       "anomalies": {
-        "title": "Flujo de anomalías",
-        "subtitle": "Sigue errores de GPS, tokens caducados y ataques de repetición en tiempo real.",
-        "empty": "No hay anomalías activas.",
-        "hint": "Nota: Actualmente se muestra con datos fallback; será en tiempo real con ShiftAssignments.",
+        "title": "Flujo de anomalÃ­as",
+        "subtitle": "Sigue errores de GPS, tokens caducados y ataques de repeticiÃ³n en tiempo real.",
+        "empty": "No hay anomalÃ­as activas.",
+        "hint": "Nota: Actualmente se muestra con datos fallback; serÃ¡ en tiempo real con ShiftAssignments.",
         "itemPrefix": "Caso"
       },
       "operations": {
@@ -453,22 +586,45 @@
         },
         "createPosting": {
           "title": "Crear anuncio",
-          "subtitle": "Abre un anuncio rápidamente con entrada manual o plantilla."
+          "subtitle": "Abre un anuncio rÃ¡pidamente con entrada manual o plantilla.",
+          "fields": {
+            "title": "TÃ­tulo del anuncio",
+            "description": "DescripciÃ³n del anuncio",
+            "employerLocationId": "UbicaciÃ³n del empleador",
+            "selectLocation": "Seleccione ubicaciÃ³n",
+            "jobCategoryId": "ID de categorÃ­a",
+            "selectCategory": "Seleccione categorÃ­a",
+            "categoryOption": "CategorÃ­a #{{id}}",
+            "shiftDate": "Fecha del turno",
+            "shiftStartTime": "Hora de inicio",
+            "shiftEndTime": "Hora de fin",
+            "headCount": "Cupo",
+            "wageAmount": "Monto de pago",
+            "wageCurrency": "Moneda"
+          },
+          "validation": {
+            "requiredText": "El tÃ­tulo y la descripciÃ³n son obligatorios.",
+            "requiredFields": "Complete todos los campos obligatorios con valores vÃ¡lidos."
+          },
+          "submit": "Crear anuncio",
+          "submitting": "Creando...",
+          "submitSuccess": "El anuncio se creÃ³ correctamente.",
+          "submitError": "No se pudo crear el anuncio."
         },
         "activeAssignments": {
           "title": "Turnos activos",
-          "subtitle": "Sigue el trabajo en curso según el estado de verificación QR mutua.",
+          "subtitle": "Sigue el trabajo en curso segÃºn el estado de verificaciÃ³n QR mutua.",
           "all": "Todos",
           "empty": "No hay turnos activos.",
-          "worker": "Trabajador",
+          "worker": "Candidato",
           "qrStatus": "Estado QR"
         },
         "applications": {
           "title": "Solicitudes",
-          "subtitle": "Revisa candidatos ordenados por score semántico.",
+          "subtitle": "Revisa candidatos ordenados por score semÃ¡ntico.",
           "empty": "No se encontraron solicitudes.",
           "matchScore": "{{score}}%",
-          "matchScoreAria": "Puntuación de ajuste: {{score}}%"
+          "matchScoreAria": "PuntuaciÃ³n de ajuste: {{score}}%"
         },
         "history": {
           "title": "Historial",
@@ -477,23 +633,23 @@
       },
       "intelligence": {
         "tabs": {
-          "semanticSearch": "Búsqueda semántica",
+          "semanticSearch": "BÃºsqueda semÃ¡ntica",
           "workerPortfolio": "Portafolio"
         },
         "semanticSearch": {
-          "title": "Búsqueda semántica",
-          "subtitle": "Búsqueda asistida por IA usando embeddings de habilidades.",
-          "placeholder": "p. ej. barista, almacén, cajero…",
+          "title": "BÃºsqueda semÃ¡ntica",
+          "subtitle": "BÃºsqueda asistida por IA usando embeddings de habilidades.",
+          "placeholder": "p. ej. barista, almacÃ©n, cajeroâ€¦",
           "search": "Buscar",
-          "hint": "Nota: Se conectará a `Workers/List` y scores de embedding cuando el backend esté listo."
+          "hint": "Nota: Se conectarÃ¡ a `Workers/List` y scores de embedding cuando el backend estÃ© listo."
         },
         "workerPortfolio": {
           "title": "Portafolio",
           "subtitle": "Trabajadores con alta confiabilidad y experiencia previa.",
           "empty": "Sin registros en el portafolio.",
           "reliability": "Confiabilidad {{value}}%",
-          "lastWorked": "Última interacción",
-          "hint": "Nota: Se enriquecerá con historial de asignaciones y disputas."
+          "lastWorked": "Ãšltima interacciÃ³n",
+          "hint": "Nota: Se enriquecerÃ¡ con historial de asignaciones y disputas."
         }
       },
       "finance": {
@@ -504,16 +660,16 @@
         "workerPayouts": {
           "title": "Pagos a trabajadores",
           "subtitle": "Gestione registros WorkerPayout y transiciones de estado.",
-          "empty": "No hay líneas de pago.",
+          "empty": "No hay lÃ­neas de pago.",
           "status": "Estado",
-          "locked": "Este registro está bloqueado. Las acciones están deshabilitadas hasta que finalice la operación.",
+          "locked": "Este registro estÃ¡ bloqueado. Las acciones estÃ¡n deshabilitadas hasta que finalice la operaciÃ³n.",
           "actions": {
             "markProcessing": "Procesando",
             "markPaid": "Pagado",
             "fail": "Fallar",
             "retry": "Reintentar"
           },
-          "hint": "Nota: El bloqueo pesimista vendrá del backend (423 Locked / campos de lock)."
+          "hint": "Nota: El bloqueo pesimista vendrÃ¡ del backend (423 Locked / campos de lock)."
         },
         "commissions": {
           "title": "Facturas de plataforma",
@@ -521,34 +677,34 @@
           "empty": "No hay facturas.",
           "status": "Estado",
           "downloadPdf": "Descargar PDF",
-          "hint": "Nota: Se conectará a CommissionReceivable real y paquetes PDF."
+          "hint": "Nota: Se conectarÃ¡ a CommissionReceivable real y paquetes PDF."
         }
       },
       "settings": {
         "tabs": {
-          "geofence": "Ubicación y geofence",
+          "geofence": "UbicaciÃ³n y geofence",
           "teamRBAC": "Equipo"
         },
         "geofence": {
-          "title": "Ubicación y geofence",
-          "subtitle": "Defina coordenadas y radio de verificación.",
+          "title": "UbicaciÃ³n y geofence",
+          "subtitle": "Defina coordenadas y radio de verificaciÃ³n.",
           "fields": {
-            "locationName": "Nombre de ubicación",
+            "locationName": "Nombre de ubicaciÃ³n",
             "city": "Ciudad",
             "latitude": "Latitud",
             "longitude": "Longitud",
             "radius": "Radio (metros)"
           },
-          "hint": "Nota: Se crearán registros vía `/Employers/AddLocation`."
+          "hint": "Nota: Se crearÃ¡n registros vÃ­a `/Employers/AddLocation`."
         },
         "teamRBAC": {
-          "title": "Gestión de equipo (RBAC)",
-          "subtitle": "Asigne supervisores y limite accesos por ubicación.",
+          "title": "GestiÃ³n de equipo (RBAC)",
+          "subtitle": "Asigne supervisores y limite accesos por ubicaciÃ³n.",
           "cards": {
             "supervisors": "Asignaciones ShiftSupervisor",
             "groups": "Permisos de grupo (scope)"
           },
-          "hint": "Nota: Integrará `/Employers/AddSupervisor` y `/SystemUserGroups/*`."
+          "hint": "Nota: IntegrarÃ¡ `/Employers/AddSupervisor` y `/SystemUserGroups/*`."
         }
       },
       "disputes": {
@@ -556,36 +712,44 @@
         "subtitle": "Resuelva casos `AssignmentStatus.Disputed`.",
         "empty": "No hay disputas activas.",
         "flags": {
-          "locationMismatch": "Problema GPS / discrepancia de ubicación",
+          "locationMismatch": "Problema GPS / discrepancia de ubicaciÃ³n",
           "expiredToken": "Token caducado",
-          "replayAttack": "Ataque de repetición"
+          "replayAttack": "Ataque de repeticiÃ³n"
         },
-        "itemDetail": "Caso #{{id}} • Trabajador {{workerId}}",
-        "hint": "Nota: Por ahora muestra anomalías fallback; luego listará disputas reales del backend."
+        "itemDetail": "Caso #{{id}} â€¢ Candidato {{workerId}}",
+        "hint": "Nota: Por ahora muestra anomalÃ­as fallback; luego listarÃ¡ disputas reales del backend."
+      },
+      "enums": {
+        "shiftAssignmentStatus": {
+          "Pending": "Pendiente",
+          "AwaitingMutualQr": "Esperando QR mutuo",
+          "CheckedIn": "Check-in completado",
+          "CheckedOut": "Check-out completado"
+        }
       }
     },
     "employer": {
       "defaultName": "Empleador",
       "title": "Panel de empleador",
-      "subtitle": "Publica ofertas, sigue el flujo de candidatos y controla la operación.",
+      "subtitle": "Publica ofertas, sigue el flujo de candidatos y controla la operaciÃ³n.",
       "sectionsNav": {
         "overview": "Resumen",
         "postings": "Ofertas",
         "candidates": "Candidatos",
         "operations": "Operaciones",
-        "billing": "Facturación",
+        "billing": "FacturaciÃ³n",
         "reports": "Reportes"
       },
       "summary": {
         "openPostings": "Ofertas abiertas",
         "pendingApplications": "Solicitudes pendientes",
-        "actionRequired": "Acción requerida"
+        "actionRequired": "AcciÃ³n requerida"
       },
       "sections": {
         "myPostings": "Mis ofertas",
         "candidateFlow": "Flujo de candidatos",
         "loading": "Cargando ofertas...",
-        "emptyPostings": "Aún no hay ofertas activas.",
+        "emptyPostings": "AÃºn no hay ofertas activas.",
         "selectPosting": "Selecciona una oferta para ver el flujo de candidatos.",
         "emptyApplications": "No hay solicitudes para esta oferta.",
         "headCount": "personas",
@@ -613,7 +777,7 @@
       },
       "candidates": {
         "title": "Flujo de candidatos",
-        "subtitle": "Sigue estados y puntuación de compatibilidad por oferta.",
+        "subtitle": "Sigue estados y puntuaciÃ³n de compatibilidad por oferta.",
         "score": "Compatibilidad",
         "columns": {
           "pending": "Pendiente",
@@ -624,21 +788,21 @@
       },
       "operations": {
         "title": "Operaciones QR y Turno",
-        "subtitle": "Supervisa verificación QR mutua y anomalías.",
-        "readOnly": "Esta sección se muestra en modo solo lectura hasta integrar APIs dedicadas.",
+        "subtitle": "Supervisa verificaciÃ³n QR mutua y anomalÃ­as.",
+        "readOnly": "Esta secciÃ³n se muestra en modo solo lectura hasta integrar APIs dedicadas.",
         "cards": {
           "token": "Ciclo de vida del token",
           "checkin": "Estado check-in/check-out",
-          "anomaly": "Cola de anomalías",
+          "anomaly": "Cola de anomalÃ­as",
           "supervisor": "Estado de supervisor"
         }
       },
       "billing": {
-        "title": "Facturación y pagos",
+        "title": "FacturaciÃ³n y pagos",
         "filters": {
           "all": "Todos"
         },
-        "period": "Período",
+        "period": "PerÃ­odo",
         "total": "Total",
         "receivableStatus": {
           "Invoiced": "Facturado",
@@ -656,24 +820,24 @@
       "reports": {
         "title": "Reportes del empleador",
         "subtitle": "Gestiona vistas de reporte con filtros por alcance.",
-        "queueExport": "Enviar exportación a cola",
-        "readOnly": "El módulo de reportes es solo lectura en la primera entrega.",
+        "queueExport": "Enviar exportaciÃ³n a cola",
+        "readOnly": "El mÃ³dulo de reportes es solo lectura en la primera entrega.",
         "filters": {
           "range": "Rango de fecha",
           "status": "Estado",
-          "category": "Categoría",
-          "location": "Ubicación"
+          "category": "CategorÃ­a",
+          "location": "UbicaciÃ³n"
         }
       },
       "fallback": {
         "readOnlyData": "No hay endpoint de detalle disponible. Se muestra vista resumida.",
-        "noBillingApi": "Aún no hay endpoints de facturación/pagos. Se muestran datos de ejemplo en solo lectura."
+        "noBillingApi": "AÃºn no hay endpoints de facturaciÃ³n/pagos. Se muestran datos de ejemplo en solo lectura."
       },
       "cards": {
         "postings": {
           "title": "Ofertas abiertas",
           "value": "8",
-          "hint": "Se publicaron 2 ofertas nuevas en las últimas 24 horas."
+          "hint": "Se publicaron 2 ofertas nuevas en las Ãºltimas 24 horas."
         },
         "candidates": {
           "title": "Nuevos candidatos",
@@ -683,13 +847,13 @@
         "compliance": {
           "title": "Cumplimiento del proceso",
           "value": "96%",
-          "hint": "Los objetivos SLA avanzan según lo previsto."
+          "hint": "Los objetivos SLA avanzan segÃºn lo previsto."
         }
       }
     },
     "admin": {
       "title": "Panel de administrador",
-      "subtitle": "Administra usuarios del sistema, aprobaciones y seguridad desde un único centro.",
+      "subtitle": "Administra usuarios del sistema, aprobaciones y seguridad desde un Ãºnico centro.",
       "sidebar": {
         "overview": "Panel de Control",
         "employers": "Empleadores",
@@ -747,24 +911,24 @@
         "approvals": {
           "title": "Aprobaciones pendientes",
           "value": "27",
-          "hint": "12 solicitudes están en la cola prioritaria."
+          "hint": "12 solicitudes estÃ¡n en la cola prioritaria."
         },
         "security": {
           "title": "Estado de seguridad",
           "value": "Estable",
-          "hint": "No se detectaron incidentes críticos en los últimos 7 días."
+          "hint": "No se detectaron incidentes crÃ­ticos en los Ãºltimos 7 dÃ­as."
         }
       },
       "statistics": {
-        "title": "Estadísticas detalladas",
-        "subtitle": "Métricas generales del panel",
+        "title": "EstadÃ­sticas detalladas",
+        "subtitle": "MÃ©tricas generales del panel",
         "trendTitle": "Vista de tendencia operativa",
         "groups": {
           "candidateStatus": "Estado de candidatos",
           "employerStatus": "Estado de empleadores",
           "postingStatus": "Estado de ofertas",
           "applicationStatus": "Estado de solicitudes",
-          "activationStatus": "Estado de activación"
+          "activationStatus": "Estado de activaciÃ³n"
         },
         "activatedTodayCount": "Usuarios activados hoy",
         "totalWorkerCount": "Trabajadores totales",
@@ -815,7 +979,7 @@
           "saveError": "Error al guardar.",
           "deleteSuccess": "Registro eliminado.",
           "deleteError": "Error al eliminar.",
-          "deleteConfirm": "¿Seguro que deseas eliminar?"
+          "deleteConfirm": "Â¿Seguro que deseas eliminar?"
         },
         "validation": {
           "nothingToSave": "No hay cambios seleccionados para guardar."
@@ -826,33 +990,33 @@
         "subtitle": "Completa el formulario para crear una nueva cuenta de administrador.",
         "firstName": "Nombre",
         "lastName": "Apellido",
-        "email": "Correo electrónico",
-        "phone": "Teléfono",
-        "password": "Contraseña",
+        "email": "Correo electrÃ³nico",
+        "phone": "TelÃ©fono",
+        "password": "ContraseÃ±a",
         "submit": "Crear administrador",
         "submitting": "Creando administrador...",
-        "success": "La cuenta de administrador se creó correctamente.",
+        "success": "La cuenta de administrador se creÃ³ correctamente.",
         "genericError": "No se pudo crear la cuenta de administrador.",
-        "authNotConfigured": "El endpoint de registro de administrador no está configurado."
+        "authNotConfigured": "El endpoint de registro de administrador no estÃ¡ configurado."
       },
       "actions": {
         "userIdPlaceholder": "ID de usuario del sistema",
         "postingIdPlaceholder": "ID de oferta",
-        "newPasswordPlaceholder": "Nueva contraseña",
+        "newPasswordPlaceholder": "Nueva contraseÃ±a",
         "suspend": "Suspender",
         "reactivate": "Reactivar",
         "ban": "Bloquear",
-        "resetPassword": "Restablecer contraseña",
+        "resetPassword": "Restablecer contraseÃ±a",
         "queryApprovals": "Traer aprobaciones",
-        "invalidUserId": "Introduce un ID de usuario válido.",
-        "invalidPostingId": "Introduce un ID de oferta válido.",
-        "invalidPassword": "La contraseña debe tener al menos 6 caracteres.",
+        "invalidUserId": "Introduce un ID de usuario vÃ¡lido.",
+        "invalidPostingId": "Introduce un ID de oferta vÃ¡lido.",
+        "invalidPassword": "La contraseÃ±a debe tener al menos 6 caracteres.",
         "userSuspendSuccess": "El usuario fue suspendido.",
         "userReactivateSuccess": "El usuario fue reactivado.",
         "userBanSuccess": "El usuario fue bloqueado.",
-        "passwordResetSuccess": "La contraseña del usuario fue actualizada.",
+        "passwordResetSuccess": "La contraseÃ±a del usuario fue actualizada.",
         "approvalQuerySuccess": "Se listaron {{count}} solicitudes.",
-        "genericError": "La operación falló."
+        "genericError": "La operaciÃ³n fallÃ³."
       },
       "employers": {
         "filters": {
@@ -865,10 +1029,10 @@
           "commissionMin": "Comision min",
           "commissionMax": "Comision max"
         },
-        "invalidId": "Introduce un ID de empleador válido.",
+        "invalidId": "Introduce un ID de empleador vÃ¡lido.",
         "fetchSuccess": "Empleador #{{id}} listado.",
         "fetchError": "No se pudo cargar la informacion del empleador.",
-        "empty": "La lista esta vacia. Consulta por ID y filtra los resultados en la cuadrícula.",
+        "empty": "La lista esta vacia. Consulta por ID y filtra los resultados en la cuadrÃ­cula.",
         "taxNo": "NIF",
         "columns": {
           "id": "ID",
@@ -912,7 +1076,7 @@
         "actions": {
           "edit": "Editar",
           "delete": "Eliminar",
-          "deleteConfirm": "¿Estas seguro de que quieres eliminar?",
+          "deleteConfirm": "Â¿Estas seguro de que quieres eliminar?",
           "deleteSuccess": "El candidato #{{id}} fue eliminado correctamente.",
           "deleteError": "No se pudo eliminar el candidato.",
           "editClicked": "Se activo la accion editar para el candidato #{{id}}.",
@@ -933,14 +1097,14 @@
           "lifecycleNone": "No cambiar el estado de la cuenta",
           "skillTag": "Anadir etiqueta de habilidad",
           "systemUserEmail": "Correo de usuario del sistema",
-          "systemUserPhone": "Teléfono de usuario del sistema",
+          "systemUserPhone": "TelÃ©fono de usuario del sistema",
           "skillsTitle": "Habilidades",
           "languagesTitle": "Idiomas",
-          "educationTitle": "Educación",
+          "educationTitle": "EducaciÃ³n",
           "experienceTitle": "Experiencias",
           "emptySkills": "No hay habilidades",
           "emptyLanguages": "Sin registros de idioma",
-          "emptyEducations": "Sin registros de educación",
+          "emptyEducations": "Sin registros de educaciÃ³n",
           "emptyExperiences": "Sin registros de experiencia",
           "current": "Actual",
           "tabs": {
@@ -949,14 +1113,14 @@
             "actions": "Acciones"
           },
           "accountActionTitle": "Acciones de estado de cuenta",
-          "accountActionHint": "Al elegir una acción se solicita confirmación y se envía de inmediato.",
-          "accountActionConfirm": "¿Seguro que quieres actualizar el estado de la cuenta del candidato {{candidate}} a {{action}}?",
+          "accountActionHint": "Al elegir una acciÃ³n se solicita confirmaciÃ³n y se envÃ­a de inmediato.",
+          "accountActionConfirm": "Â¿Seguro que quieres actualizar el estado de la cuenta del candidato {{candidate}} a {{action}}?",
           "accountActionLabels": {
             "suspend": "Suspender",
             "reactivate": "Reactivar",
             "ban": "Bloquear"
           },
-          "accountActionSuccess": "El estado de la cuenta se actualizó a {{action}}.",
+          "accountActionSuccess": "El estado de la cuenta se actualizÃ³ a {{action}}.",
           "accountActionError": "No se pudo actualizar el estado de cuenta a {{action}}."
         }
       },
@@ -1041,40 +1205,42 @@
       "corporate": "Empresa"
     },
     "login": {
-      "title": "Iniciar sesión",
+      "title": "Iniciar sesiÃ³n",
       "subtitleIndividual": "Accede a tu cuenta para gestionar solicitudes, turnos y notificaciones.",
-      "subtitleCorporate": "Accede con la cuenta de tu organización para gestionar ofertas y contratación.",
-      "emailLabel": "Correo electrónico",
+      "subtitleCorporate": "Accede con la cuenta de tu organizaciÃ³n para gestionar ofertas y contrataciÃ³n.",
+      "emailLabel": "Correo electrÃ³nico",
       "emailPlaceholder": "tu@correo.com",
-      "passwordLabel": "Contraseña",
-      "passwordPlaceholder": "Introduce tu contraseña",
+      "passwordLabel": "ContraseÃ±a",
+      "passwordPlaceholder": "Introduce tu contraseÃ±a",
       "submit": "Continuar",
-      "submitting": "Iniciando sesión...",
-      "forgot": "¿Has olvidado tu contraseña?",
-      "closeAria": "Cerrar ventana de inicio de sesión",
+      "submitting": "Iniciando sesiÃ³n...",
+      "forgot": "Â¿Has olvidado tu contraseÃ±a?",
+      "closeAria": "Cerrar ventana de inicio de sesiÃ³n",
       "goToRegister": "Crear una cuenta",
-      "goToLogin": "Volver al inicio de sesión"
+      "goToLogin": "Volver al inicio de sesiÃ³n"
     },
     "register": {
       "title": "Crear cuenta",
-      "subtitle": "Regístrate como candidato particular.",
+      "subtitle": "RegÃ­strate como candidato particular.",
       "fullNameLabel": "Nombre completo",
       "fullNamePlaceholder": "Tu nombre",
-      "emailLabel": "Correo electrónico",
+      "emailLabel": "Correo electrÃ³nico",
       "emailPlaceholder": "tu@correo.com",
-      "passwordLabel": "Contraseña",
-      "passwordPlaceholder": "Crea una contraseña",
-      "confirmPasswordLabel": "Confirmar contraseña",
-      "confirmPasswordPlaceholder": "Vuelve a escribir la contraseña",
+      "passwordLabel": "ContraseÃ±a",
+      "passwordPlaceholder": "Crea una contraseÃ±a",
+      "confirmPasswordLabel": "Confirmar contraseÃ±a",
+      "confirmPasswordPlaceholder": "Vuelve a escribir la contraseÃ±a",
       "submit": "Crear cuenta",
       "submitting": "Creando cuenta..."
     },
     "feedback": {
-      "authNotConfigured": "Los endpoints del servicio de autenticación no están disponibles actualmente.",
-      "genericError": "Ocurrió un error. Inténtalo de nuevo.",
-      "passwordMismatch": "Las contraseñas no coinciden.",
-      "loginSuccess": "La solicitud de inicio de sesión se envió correctamente.",
-      "registerSuccess": "La solicitud de registro se envió correctamente."
+      "authNotConfigured": "Los endpoints del servicio de autenticaciÃ³n no estÃ¡n disponibles actualmente.",
+      "genericError": "OcurriÃ³ un error. IntÃ©ntalo de nuevo.",
+      "passwordMismatch": "Las contraseÃ±as no coinciden.",
+      "loginSuccess": "La solicitud de inicio de sesiÃ³n se enviÃ³ correctamente.",
+      "registerSuccess": "La solicitud de registro se enviÃ³ correctamente."
     }
   }
 }
+
+

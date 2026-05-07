@@ -10,6 +10,9 @@ export type CommissionReceivableListItem = {
   id: number | string
   period: string
   totalAmount: number | string
+  dueDate: string | null
+  invoicePdfUrl: string | null
+  currency?: string | null
   status: string
 }
 
@@ -31,8 +34,10 @@ export type CommissionReceivableDetail = {
   id: number | string
   period: string
   totalAmount: number | string
+  dueDate: string | null
+  invoicePdfUrl: string | null
+  currency?: string | null
   status: string
-  pdfUrl?: string | null
 }
 
 export type GenerateCommissionReceivableCommand = {

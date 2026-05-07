@@ -11,9 +11,31 @@ export type RemoveEmployerSupervisorCommand = {
   locationId?: number | null
 }
 
+export type MembershipScopeType = 'Global' | 'EmployerScoped' | 'LocationScoped'
+
+export type ListEmployerSupervisorsQuery = {
+  [key: string]: never
+}
+
+export type EmployerSupervisorListItemModel = {
+  systemUserId: number
+  fullName: string
+  email: string
+  assignedLocationIds: number[]
+  groupIds: number[]
+  scopeType: MembershipScopeType
+}
+
 const client = getApiClient()
 
 export const employerSupervisorsApi = {
+  listSupervisors(body: ListEmployerSupervisorsQuery = {}) {
+    return client.post<EmployerSupervisorListItemModel[], ListEmployerSupervisorsQuery>(
+      API_ENDPOINTS.employers.listSupervisors,
+      body,
+      true,
+    )
+  },
   addSupervisor(body: AddEmployerSupervisorCommand) {
     return client.post<number, AddEmployerSupervisorCommand>(API_ENDPOINTS.employers.addSupervisor, body, true)
   },

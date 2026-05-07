@@ -10,7 +10,6 @@ import {
   LayoutGrid,
   LogOut,
   Shield,
-  UserRound,
   Users,
   WalletCards,
 } from 'lucide-react'
@@ -19,6 +18,7 @@ import { systemUsersApi } from '../../api'
 import { useAuth } from '../../auth/auth-context'
 import { AdaLogoMark } from '../../components/landing/AdaLogoMark'
 import { AdaLogoWordmark } from '../../components/landing/AdaLogoWordmark'
+import { HeaderUserMenu } from '../../components/dashboard/HeaderUserMenu'
 import { useTheme } from '../../theme/theme-context'
 import { cn } from '../../lib/cn'
 import { useEmployerPortal } from './use-employer-portal'
@@ -385,15 +385,13 @@ export function EmployerLayout({ children, isSidebarOpen, onSidebarClose }: Empl
               >
                 <Bell className="h-4 w-4" aria-hidden="true" />
               </button>
-              <button
-                type="button"
-                aria-label={t('dashboard.employerPortal.topbar.toggleThemeAria')}
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border ${
-                  theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-slate-200' : 'border-slate-200 bg-slate-50 text-slate-700'
-                }`}
-              >
-                <UserRound className="h-4 w-4" aria-hidden="true" />
-              </button>
+              <HeaderUserMenu
+                tone={theme}
+                userName={resolvedWelcomeName ?? fallbackWelcomeName}
+                userEmail={session?.email ?? null}
+                onLogout={logout}
+                align={isRtl ? 'start' : 'end'}
+              />
             </div>
           </div>
           <div className="space-y-4 px-3 py-4 pb-[max(env(safe-area-inset-bottom),1rem)] sm:px-4 sm:py-5 lg:px-6 lg:py-6">

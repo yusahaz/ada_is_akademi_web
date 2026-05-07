@@ -33,15 +33,37 @@ export type WorkerShiftAssignmentListItem = {
   assignmentId: number | string
   jobPostingId: number | string
   jobApplicationId: number | string
+  workerId: number | string
   status: ShiftAssignmentStatus
   isAnomalyFlagged: boolean
   anomalyCode: string | null
+  anomalyType: string | null
+  anomalyDetectedAt: string | null
   assignedAt: string
   checkedInAt: string | null
   checkedOutAt: string | null
   shiftDate: string
   shiftStartTime: string
   shiftEndTime: string
+}
+
+export type ListShiftAssignmentsHistoryQuery = {
+  dateFrom?: string
+  dateTo?: string
+  locationId?: number
+  status?: ShiftAssignmentStatus
+  limit?: number | string
+  offset?: number | string
+}
+
+export type ShiftAssignmentHistoryListItemModel = {
+  assignmentId: number
+  workerId: number
+  status: ShiftAssignmentStatus
+  wasNoShow: boolean
+  completedAt: string | null
+  anomalySummary: string | null
+  disputeSummary: string | null
 }
 
 export type PageableApiResponse<T> = {
@@ -76,6 +98,13 @@ export const shiftAssignmentsApi = {
   myAssignments(body: ListMyShiftAssignmentsQuery | null = null) {
     return client.post<PageableApiResponse<WorkerShiftAssignmentListItem>, ListMyShiftAssignmentsQuery | null>(
       API_ENDPOINTS.shiftAssignments.myAssignments,
+      body,
+      true,
+    )
+  },
+  listHistory(body: ListShiftAssignmentsHistoryQuery) {
+    return client.post<PageableApiResponse<ShiftAssignmentHistoryListItemModel>, ListShiftAssignmentsHistoryQuery>(
+      API_ENDPOINTS.shiftAssignments.listHistory,
       body,
       true,
     )

@@ -8,7 +8,11 @@ import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-p
 import { WorkerPillBadge, WorkerPrimaryButton, WorkerSectionHeader } from '../worker-ui'
 import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 
-export function PayoutsPage() {
+export type PayoutsPageProps = {
+  embedded?: boolean
+}
+
+export function PayoutsPage({ embedded = false }: PayoutsPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.listPayouts(), [])
@@ -20,10 +24,19 @@ export function PayoutsPage() {
   )
   const [confirmedIds, setConfirmedIds] = useState<number[]>([])
 
+  const renderHeader = () =>
+    embedded ? null : (
+      <WorkerSectionHeader
+        tone={theme}
+        title={t('dashboard.workerPortal.pages.payouts.title')}
+        subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')}
+      />
+    )
+
   if (loading) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
       </div>
     )
@@ -31,7 +44,7 @@ export function PayoutsPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+        {renderHeader()}
         <StatePanel text={error} theme={theme} isError />
       </div>
     )
@@ -39,7 +52,7 @@ export function PayoutsPage() {
   if (items.length === 0) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
       </div>
     )
@@ -47,7 +60,7 @@ export function PayoutsPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.payouts.title')} subtitle={t('dashboard.workerPortal.pages.payouts.subtitle')} />
+      {renderHeader()}
       <div className="grid gap-3 lg:grid-cols-2">
         {items.map((item) => (
           <DashboardSurface key={item.id} theme={theme}>

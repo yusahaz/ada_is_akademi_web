@@ -6,6 +6,8 @@ import type { AppTheme } from '../../theme/theme-context'
 
 export type WorkerTone = AppTheme
 
+export type WorkerEmphasis = 'neutral' | 'success' | 'warning' | 'danger' | 'info'
+
 export function WorkerSectionHeader({
   tone,
   title,
@@ -117,5 +119,162 @@ export function WorkerGhostButton({
       )}
       {...props}
     />
+  )
+}
+
+export type WorkerTabItem = {
+  id: string
+  label: ReactNode
+  badge?: number
+}
+
+export function WorkerTabs({
+  tone,
+  items,
+  value,
+  onChange,
+  ariaLabel,
+}: {
+  tone: WorkerTone
+  items: WorkerTabItem[]
+  value: string
+  onChange: (id: string) => void
+  ariaLabel?: string
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label={ariaLabel}
+      className={cn(
+        '-mx-1 flex flex-wrap items-center gap-1 overflow-x-auto px-1 pb-1',
+        '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+      )}
+    >
+      {items.map((item) => {
+        const isActive = item.id === value
+        return (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={isActive}
+            onClick={() => onChange(item.id)}
+            className={cn(
+              'inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 sm:text-sm',
+              isActive
+                ? tone === 'dark'
+                  ? 'bg-cyan-500/20 text-cyan-100 ring-1 ring-inset ring-cyan-300/40'
+                  : 'bg-sky-100 text-sky-800 ring-1 ring-inset ring-sky-300/70'
+                : tone === 'dark'
+                  ? 'text-white/65 hover:bg-white/[0.06] hover:text-white/85'
+                  : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-800',
+            )}
+          >
+            <span className="truncate">{item.label}</span>
+            {typeof item.badge === 'number' && item.badge > 0 ? (
+              <span
+                className={cn(
+                  'inline-flex min-w-[1.25rem] items-center justify-center rounded-full px-1.5 text-[10px] font-bold leading-4',
+                  isActive
+                    ? tone === 'dark'
+                      ? 'bg-cyan-300 text-slate-950'
+                      : 'bg-sky-600 text-white'
+                    : tone === 'dark'
+                      ? 'bg-white/15 text-white/85'
+                      : 'bg-slate-200 text-slate-700',
+                )}
+              >
+                {item.badge > 99 ? '99+' : item.badge}
+              </span>
+            ) : null}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+export type WorkerNoticeVariant = 'info' | 'warning' | 'success' | 'danger'
+
+export function WorkerNotice({
+  tone,
+  variant = 'info',
+  title,
+  description,
+  action,
+  icon,
+  className,
+}: {
+  tone: WorkerTone
+  variant?: WorkerNoticeVariant
+  title: ReactNode
+  description?: ReactNode
+  action?: ReactNode
+  icon?: ReactNode
+  className?: string
+}) {
+  const variantClass = resolveNoticeVariantClass(tone, variant)
+  return (
+    <div
+      role={variant === 'danger' || variant === 'warning' ? 'alert' : 'status'}
+      className={cn(
+        'flex flex-wrap items-start gap-3 rounded-2xl border px-3 py-3 sm:flex-nowrap sm:px-4',
+        variantClass,
+        className,
+      )}
+    >
+      {icon ? <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center" aria-hidden="true">{icon}</span> : null}
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold leading-snug">{title}</p>
+        {description ? <p className="mt-1 text-xs leading-relaxed opacity-90">{description}</p> : null}
+      </div>
+      {action ? <div className="flex shrink-0 items-center">{action}</div> : null}
+    </div>
+  )
+}
+
+function resolveNoticeVariantClass(tone: WorkerTone, variant: WorkerNoticeVariant) {
+  if (variant === 'success') {
+    return tone === 'dark'
+      ? 'border-emerald-300/30 bg-emerald-500/10 text-emerald-100'
+      : 'border-emerald-300/80 bg-emerald-50 text-emerald-900'
+  }
+  if (variant === 'warning') {
+    return tone === 'dark'
+      ? 'border-amber-300/30 bg-amber-500/10 text-amber-100'
+      : 'border-amber-300/80 bg-amber-50 text-amber-900'
+  }
+  if (variant === 'danger') {
+    return tone === 'dark'
+      ? 'border-rose-300/30 bg-rose-500/10 text-rose-100'
+      : 'border-rose-300/80 bg-rose-50 text-rose-900'
+  }
+  return tone === 'dark'
+    ? 'border-cyan-300/30 bg-cyan-500/10 text-cyan-100'
+    : 'border-sky-300/70 bg-sky-50 text-sky-900'
+}
+
+export function WorkerNavBadge({
+  tone,
+  value,
+  compact = false,
+}: {
+  tone: WorkerTone
+  value: number
+  compact?: boolean
+}) {
+  if (value <= 0) return null
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center justify-center rounded-full font-bold leading-none',
+        compact ? 'h-3.5 min-w-[0.875rem] px-1 text-[9px]' : 'h-5 min-w-[1.25rem] px-1.5 text-[10px]',
+        tone === 'dark'
+          ? 'bg-cyan-300 text-slate-950 shadow-[0_2px_6px_rgba(34,211,238,0.45)]'
+          : 'bg-sky-600 text-white shadow-[0_2px_6px_rgba(2,132,199,0.35)]',
+      )}
+    >
+      {value > 99 ? '99+' : value}
+    </span>
   )
 }

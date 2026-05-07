@@ -13,7 +13,7 @@ type IntelligenceView = 'semanticSearch' | 'workerPortfolio'
 export function EmployerCandidatesPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { candidateGroups } = useEmployerPortal()
+  const { candidateGroups, semanticResults, runSemanticSearch, workerPortfolio } = useEmployerPortal()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchText, setSearchText] = useState('')
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
@@ -26,13 +26,20 @@ export function EmployerCandidatesPage() {
   const sectionButtonClass = (isActiveButton: boolean) => `inline-flex ${isActiveButton ? 'is-active' : ''}`
 
   const portfolioFallback = useMemo(() => {
+    if (workerPortfolio.length > 0) {
+      return workerPortfolio.map((item) => ({
+        workerId: item.workerId,
+        reliability: item.reliabilityScore,
+        lastSeen: item.lastWorkedAt ?? '-',
+      }))
+    }
     const base = [...candidateGroups.accepted, ...candidateGroups.pending].slice(0, 12)
     return base.map((item, index) => ({
       workerId: item.workerId,
       reliability: Math.max(92 - index * 3, 60),
       lastSeen: item.appliedAt,
     }))
-  }, [candidateGroups.accepted, candidateGroups.pending])
+  }, [candidateGroups.accepted, candidateGroups.pending, workerPortfolio])
 
   return (
     <>
@@ -74,11 +81,27 @@ export function EmployerCandidatesPage() {
                     : 'border-slate-300 bg-white text-slate-900 placeholder:text-slate-400'
                 }`}
               />
-              <button type="button" className={sectionButtonClass(false)}>
+              <button type="button" className={sectionButtonClass(false)} onClick={() => void runSemanticSearch(searchText)}>
                 <InteractiveButton theme={theme}>{t('dashboard.employerSpot.intelligence.semanticSearch.search')}</InteractiveButton>
               </button>
             </div>
 
+            {semanticResults.length > 0 ? (
+              <div className="mt-2 grid gap-3 md:grid-cols-2">
+                {semanticResults.map((item) => (
+                  <div
+                    key={item.workerId}
+                    className={`rounded-xl border p-3 ${
+                      theme === 'dark' ? 'border-white/10 bg-white/[0.03]' : 'border-slate-200 bg-slate-50'
+                    }`}
+                  >
+                    <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.fullName}</p>
+                    <p className={`mt-1 text-xs ${toneClass}`}>#{item.workerId}</p>
+                    <p className={`mt-1 text-xs ${toneClass}`}>{t('dashboard.employer.candidates.score')}: {item.semanticScore}%</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
             <div className="mt-2 grid gap-3 md:grid-cols-2">
               {(
                 [
@@ -104,7 +127,9 @@ export function EmployerCandidatesPage() {
                           theme === 'dark' ? 'border-white/10 bg-white/[0.02]' : 'border-slate-200 bg-white'
                         }`}
                       >
-                        <p className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>Worker {item.workerId}</p>
+                        <p className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>
+                          {t('dashboard.employerSpot.common.candidate')} {item.workerId}
+                        </p>
                         <p className={`mt-1 ${toneClass}`}>
                           {t('dashboard.employer.candidates.score')}: {Math.max(90 - index * 4, 65)}%
                         </p>
@@ -117,6 +142,7 @@ export function EmployerCandidatesPage() {
                 </div>
               ))}
             </div>
+            )}
 
             <p className={`text-xs ${toneClass}`}>{t('dashboard.employerSpot.intelligence.semanticSearch.hint')}</p>
           </div>
@@ -142,7 +168,7 @@ export function EmployerCandidatesPage() {
                   >
                     <div className="flex items-start justify-between gap-2">
                       <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-                        Worker {row.workerId}
+                        {t('dashboard.employerSpot.common.candidate')} {row.workerId}
                       </p>
                       <span
                         className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-semibold ${

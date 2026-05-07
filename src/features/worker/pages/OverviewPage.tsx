@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ChevronRight } from 'lucide-react'
+import { CalendarClock, ChevronRight, ScanLine, ShieldCheck } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import type { JobPostingSummary } from '../../../api/job-postings'
-import { workerPortalApi } from '../../../api/worker-portal'
+import { workerPortalApi, type WorkerReliabilityScore, type WorkerShiftHistoryItem } from '../../../api/worker-portal'
 import { useTheme } from '../../../theme/theme-context'
 import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
 import {
@@ -14,6 +14,7 @@ import {
   type WorkerShiftTimelineItem,
 } from '../store/worker-dashboard-store'
 import { cn } from '../../../lib/cn'
+import { WorkerPillBadge, WorkerPrimaryButton } from '../worker-ui'
 
 type EarningsPeriod = 'monthly' | 'quarterly' | 'semiAnnual' | 'yearly'
 
@@ -55,6 +56,9 @@ export function OverviewPage() {
   const [selectedEarningsPeriod, setSelectedEarningsPeriod] = useState<EarningsPeriod>('monthly')
   const [matches, setMatches] = useState<JobPostingSummary[]>([])
   const [cards, setCards] = useState<{ key: string; value: string }[]>([])
+  const [reliability, setReliability] = useState<WorkerReliabilityScore | null>(null)
+  const [upcomingShifts, setUpcomingShifts] = useState<WorkerShiftHistoryItem[]>([])
+  const [activeShift, setActiveShift] = useState<WorkerShiftHistoryItem | null>(null)
   const {
     setTheme,
     setTimeline,
@@ -98,6 +102,21 @@ export function OverviewPage() {
         if (active) setLoading(false)
       })
 
+    void workerPortalApi.getReliabilityScore().then((score) => {
+      if (!active) return
+      setReliability(score)
+    })
+
+    void workerPortalApi.getUpcomingShiftAssignments(4).then((shifts) => {
+      if (!active) return
+      setUpcomingShifts(shifts)
+    })
+
+    void workerPortalApi.getActiveShiftAssignment().then((shift) => {
+      if (!active) return
+      setActiveShift(shift)
+    })
+
     return () => {
       active = false
     }
@@ -123,10 +142,95 @@ export function OverviewPage() {
   }
 
   const selectedPeriodLabel = t(periodLabelKeyMap[selectedEarningsPeriod])
+  const reliabilityEmphasis = (() => {
+    if (!reliability?.hasData || reliability.value === null) return 'neutral' as const
+    if (reliability.value >= 80) return 'success' as const
+    if (reliability.value >= 60) return 'info' as const
+    if (reliability.value >= 40) return 'warning' as const
+    return 'danger' as const
+  })()
   return (
     <div className="space-y-4">
       {!loading && !error ? (
         <>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <DashboardSurface theme={theme}>
+              <div className="flex items-center justify-between gap-2">
+                <p className={cn('text-xs font-semibold uppercase tracking-[0.08em]', theme === 'dark' ? 'text-white/65' : 'text-slate-500')}>
+                  {t('dashboard.workerPortal.overview.upcomingShifts')}
+                </p>
+                <CalendarClock className={cn('h-4 w-4', theme === 'dark' ? 'text-cyan-300' : 'text-sky-700')} aria-hidden="true" />
+              </div>
+              <p className={cn('mt-2 font-display text-3xl font-semibold', theme === 'dark' ? 'text-white' : 'text-slate-900')}>
+                {upcomingShifts.length}
+              </p>
+              {upcomingShifts.length > 0 ? (
+                <p className={cn('mt-1 text-xs', theme === 'dark' ? 'text-white/65' : 'text-slate-600')}>
+                  {t('dashboard.workerPortal.overview.upcomingShiftsHint', {
+                    date: upcomingShifts[0].shiftDate,
+                    range: `${upcomingShifts[0].shiftStartTime} - ${upcomingShifts[0].shiftEndTime}`,
+                  })}
+                </p>
+              ) : (
+                <p className={cn('mt-1 text-xs', theme === 'dark' ? 'text-white/55' : 'text-slate-500')}>
+                  {t('dashboard.workerPortal.overview.upcomingShiftsEmpty')}
+                </p>
+              )}
+            </DashboardSurface>
+
+            <DashboardSurface theme={theme}>
+              <div className="flex items-center justify-between gap-2">
+                <p className={cn('text-xs font-semibold uppercase tracking-[0.08em]', theme === 'dark' ? 'text-white/65' : 'text-slate-500')}>
+                  {t('dashboard.workerPortal.overview.reliabilityScore')}
+                </p>
+                <ShieldCheck className={cn('h-4 w-4', theme === 'dark' ? 'text-cyan-300' : 'text-sky-700')} aria-hidden="true" />
+              </div>
+              <div className="mt-2 flex items-end gap-2">
+                <p className={cn('font-display text-3xl font-semibold leading-none', theme === 'dark' ? 'text-white' : 'text-slate-900')}>
+                  {reliability?.hasData && reliability.value !== null ? `${reliability.value}%` : '—'}
+                </p>
+                <WorkerPillBadge tone={theme} emphasis={reliabilityEmphasis}>
+                  {reliability?.hasData
+                    ? t('dashboard.workerPortal.overview.reliabilitySamples', { count: reliability.sampleSize })
+                    : t('dashboard.workerPortal.overview.reliabilityNoData')}
+                </WorkerPillBadge>
+              </div>
+              <p className={cn('mt-1 text-xs', theme === 'dark' ? 'text-white/65' : 'text-slate-600')}>
+                {t('dashboard.workerPortal.overview.reliabilityHint')}
+              </p>
+            </DashboardSurface>
+
+            <DashboardSurface theme={theme}>
+              <div className="flex items-center justify-between gap-2">
+                <p className={cn('text-xs font-semibold uppercase tracking-[0.08em]', theme === 'dark' ? 'text-white/65' : 'text-slate-500')}>
+                  {t('dashboard.workerPortal.overview.quickCheckInTitle')}
+                </p>
+                <ScanLine className={cn('h-4 w-4', theme === 'dark' ? 'text-cyan-300' : 'text-sky-700')} aria-hidden="true" />
+              </div>
+              {activeShift ? (
+                <div className="mt-2 space-y-2">
+                  <p className={cn('text-sm font-semibold', theme === 'dark' ? 'text-white' : 'text-slate-900')}>
+                    {activeShift.shiftDate} • {activeShift.shiftStartTime} - {activeShift.shiftEndTime}
+                  </p>
+                  <p className={cn('text-xs', theme === 'dark' ? 'text-white/65' : 'text-slate-600')}>
+                    {t(`dashboard.workerPortal.shiftHistory.status.${activeShift.status}`)}
+                  </p>
+                  <WorkerPrimaryButton
+                    tone={theme}
+                    onClick={() => navigate('/worker/shifts?tab=active')}
+                    className="w-full sm:w-auto"
+                  >
+                    {t('dashboard.workerPortal.overview.quickCheckInCta')}
+                  </WorkerPrimaryButton>
+                </div>
+              ) : (
+                <p className={cn('mt-2 text-xs', theme === 'dark' ? 'text-white/55' : 'text-slate-500')}>
+                  {t('dashboard.workerPortal.overview.quickCheckInEmpty')}
+                </p>
+              )}
+            </DashboardSurface>
+          </div>
+
           <div className="grid gap-3 xl:grid-cols-[1.55fr_1fr]">
             <div className="space-y-3">
               <DashboardSurface theme={theme}>
@@ -136,7 +240,7 @@ export function OverviewPage() {
                   </h3>
                   <button
                     type="button"
-                    onClick={() => navigate('/worker/recommendations')}
+                    onClick={() => navigate('/worker/jobs?tab=recommendations')}
                     className={cn(
                       'inline-flex items-center gap-1 text-xs font-semibold',
                       theme === 'dark' ? 'text-cyan-500' : 'text-sky-700',

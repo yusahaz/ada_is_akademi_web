@@ -1,14 +1,27 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
+  employerCommissionsApi,
+  employerLocationsApi,
+  employerPayoutsApi,
+  employerSpotApi,
+  employerSupervisorsApi,
   JobApplicationStatus,
   JobPostingStatus,
   jobApplicationsApi,
   jobPostingsApi,
+  shiftAssignmentsApi,
+  workersApi,
 } from '../../api'
+import type { EmployerLocationListItemModel } from '../../api/employer-locations'
+import type { EmployerDisputeListItemModel, SpotDashboardSummaryModel, WorkerPortfolioListItemModel } from '../../api/employer-spot'
+import type { EmployerSupervisorListItemModel } from '../../api/employer-supervisors'
+import type { ShiftAssignmentHistoryListItemModel, WorkerShiftAssignmentListItem } from '../../api/shift-assignments'
 import type { JobApplicationListItem } from '../../api/job-applications'
 import type { JobPostingDetail, JobPostingSummary } from '../../api/job-postings'
+import type { SemanticSearchedWorkerListItem } from '../../api/workers'
+import { normalizePageableList } from '../../api/pagination'
 import { EmployerPortalContext } from './employer-portal-context'
 import type {
   EmployerExportFormat,
@@ -29,6 +42,43 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   const [payoutFilter, setPayoutFilter] = useState<EmployerPayoutStatus | 'all'>('all')
   const [receivableFilter, setReceivableFilter] = useState<EmployerReceivableStatus | 'all'>('all')
   const [reportFormat, setReportFormat] = useState<EmployerExportFormat>('csv')
+  const [spotSummary, setSpotSummary] = useState<SpotDashboardSummaryModel | null>(null)
+  const [activeAssignments, setActiveAssignments] = useState<WorkerShiftAssignmentListItem[]>([])
+  const [assignmentHistory, setAssignmentHistory] = useState<ShiftAssignmentHistoryListItemModel[]>([])
+  const [semanticResults, setSemanticResults] = useState<SemanticSearchedWorkerListItem[]>([])
+  const [workerPortfolio, setWorkerPortfolio] = useState<WorkerPortfolioListItemModel[]>([])
+  const [employerLocations, setEmployerLocations] = useState<EmployerLocationListItemModel[]>([])
+  const [employerSupervisors, setEmployerSupervisors] = useState<EmployerSupervisorListItemModel[]>([])
+  const [disputes, setDisputes] = useState<EmployerDisputeListItemModel[]>([])
+  const [payoutsFromApi, setPayoutsFromApi] = useState<
+    Array<{
+      workerPayoutId: number
+      workerName: string
+      amount: number
+      currency: string
+      status: EmployerPayoutStatus
+      isLocked: boolean
+    }>
+  >([])
+  const [receivablesFromApi, setReceivablesFromApi] = useState<
+    Array<{
+      id: number
+      period: string
+      totalAmount: number
+      status: EmployerReceivableStatus
+    }>
+  >([])
+
+  const reloadPostings = useCallback(async () => {
+    const items = await jobPostingsApi.listByEmployer({})
+    setError(null)
+    setPostings(items)
+    const nextSelectedPostingId = items[0]?.id ?? null
+    setSelectedPostingId(nextSelectedPostingId)
+    if (nextSelectedPostingId === null) {
+      setSelectedPosting(null)
+    }
+  }, [])
 
   useEffect(() => {
     let isActive = true
@@ -79,6 +129,125 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   }, [selectedPostingId])
 
   useEffect(() => {
+    let isActive = true
+    void employerSpotApi
+      .summary({})
+      .then((summary) => {
+        if (!isActive) return
+        setSpotSummary(summary)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setSpotSummary(null)
+      })
+
+    void shiftAssignmentsApi
+      .myAssignments({})
+      .then((res) => {
+        if (!isActive) return
+        setActiveAssignments(res.data.items ?? [])
+      })
+      .catch(() => {
+        if (!isActive) return
+        setActiveAssignments([])
+      })
+
+    void shiftAssignmentsApi
+      .listHistory({ limit: 20, offset: 0 })
+      .then((res) => {
+        if (!isActive) return
+        setAssignmentHistory(res.data.items ?? [])
+      })
+      .catch(() => {
+        if (!isActive) return
+        setAssignmentHistory([])
+      })
+
+    void employerPayoutsApi
+      .list({ limit: 30, offset: 0 })
+      .then((res) => {
+        if (!isActive) return
+        const rows = normalizePageableList(res).rows
+        setPayoutsFromApi(rows)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setPayoutsFromApi([])
+      })
+
+    void employerCommissionsApi
+      .listReceivables({ limit: 30, offset: 0 })
+      .then((res) => {
+        if (!isActive) return
+        const rows = (res.data.items ?? []).map((item) => ({
+          status: (() => {
+            const candidate = item.status
+            if (candidate === 'PartiallyPaid' || candidate === 'Paid' || candidate === 'Overdue') {
+              return candidate
+            }
+            return 'Invoiced'
+          })() as EmployerReceivableStatus,
+          id: Number(item.id),
+          period: item.period,
+          totalAmount: Number(item.totalAmount),
+        }))
+        setReceivablesFromApi(rows)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setReceivablesFromApi([])
+      })
+
+    void employerSpotApi
+      .workerPortfolio({})
+      .then((rows) => {
+        if (!isActive) return
+        setWorkerPortfolio(rows)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setWorkerPortfolio([])
+      })
+
+    void employerLocationsApi
+      .listLocations({ limit: 50, offset: 0 })
+      .then((res) => {
+        if (!isActive) return
+        setEmployerLocations(normalizePageableList(res).rows)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setEmployerLocations([])
+      })
+
+    void employerSupervisorsApi
+      .listSupervisors({})
+      .then((rows) => {
+        if (!isActive) return
+        setEmployerSupervisors(rows)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setEmployerSupervisors([])
+      })
+
+    void employerSpotApi
+      .listDisputes({ limit: 30, offset: 0 })
+      .then((res) => {
+        if (!isActive) return
+        setDisputes(normalizePageableList(res).rows)
+      })
+      .catch(() => {
+        if (!isActive) return
+        setDisputes([])
+      })
+
+    return () => {
+      isActive = false
+    }
+  }, [])
+
+  useEffect(() => {
     if (!selectedPostingId) return
     let isActive = true
     void jobPostingsApi
@@ -98,11 +267,13 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
 
   const summary = useMemo(
     () => ({
-      openPostings: postings.length,
-      pendingApplications: applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
-      actionRequired: applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
+      openPostings: spotSummary?.openPostingCount ?? postings.length,
+      pendingApplications:
+        spotSummary?.pendingApplicationCount ??
+        applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
+      actionRequired: spotSummary?.activeAnomalyCount ?? applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
     }),
-    [applications, postings.length],
+    [applications, postings.length, spotSummary],
   )
 
   const postingsWithStatus = useMemo(
@@ -136,10 +307,20 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   )
 
   const payoutItems = useMemo(
-    () =>
-      applications.map((item) => ({
+    () => {
+      if (payoutsFromApi.length > 0) {
+        return payoutsFromApi.map((item) => ({
+          id: item.workerPayoutId,
+          worker: item.workerName,
+          amount: item.amount,
+          currency: item.currency,
+          status: item.status,
+          isLocked: item.isLocked,
+        }))
+      }
+      return applications.map((item) => ({
         id: item.applicationId,
-        worker: `Worker #${item.workerId}`,
+        worker: `#${item.workerId}`,
         amount: selectedPosting?.wageAmount ?? 0,
         currency: selectedPosting?.wageCurrency ?? 'TRY',
         status:
@@ -147,16 +328,23 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
             ? ('Processing' as EmployerPayoutStatus)
             : item.status === JobApplicationStatus.Pending
               ? ('Pending' as EmployerPayoutStatus)
-              : item.status === JobApplicationStatus.Rejected
-                ? ('Failed' as EmployerPayoutStatus)
-                : ('Failed' as EmployerPayoutStatus),
-      })),
-    [applications, selectedPosting?.wageAmount, selectedPosting?.wageCurrency],
+              : ('Failed' as EmployerPayoutStatus),
+      }))
+    },
+    [applications, payoutsFromApi, selectedPosting?.wageAmount, selectedPosting?.wageCurrency],
   )
 
   const receivableItems = useMemo(
-    () =>
-      postings.slice(0, 6).map((item, index) => ({
+    () => {
+      if (receivablesFromApi.length > 0) {
+        return receivablesFromApi.map((item) => ({
+          id: item.id,
+          period: item.period,
+          total: item.totalAmount,
+          status: item.status,
+        }))
+      }
+      return postings.slice(0, 6).map((item, index) => ({
         id: item.id,
         period: item.shiftDate,
         total: item.wageAmount * item.headCount,
@@ -168,8 +356,9 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
               : index % 4 === 2
                 ? ('Paid' as EmployerReceivableStatus)
                 : ('Overdue' as EmployerReceivableStatus),
-      })),
-    [postings],
+      }))
+    },
+    [postings, receivablesFromApi],
   )
 
   const filteredPayouts = useMemo(
@@ -178,15 +367,30 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   )
 
   const badges = useMemo(() => {
-    const pendingPayouts = payoutItems.filter((item) => item.status === 'Pending').length
-    // Backend gelene kadar sentetik: pending uygulamalar / anomaly-flag tetikleyicisi gibi davranır.
-    // (ShiftAssignments/MyAssignments bağlandığında gerçek anomaly alanlarıyla değiştirilecek.)
-    const activeAnomalies = Math.min(
-      applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
-      9,
-    )
+    const pendingPayouts =
+      spotSummary?.pendingPayoutCount ?? payoutItems.filter((item) => item.status === 'Pending').length
+    const activeAnomalies =
+      spotSummary?.activeAnomalyCount ?? activeAssignments.filter((item) => item.isAnomalyFlagged).length
     return { activeAnomalies, pendingPayouts }
-  }, [applications, payoutItems])
+  }, [activeAssignments, payoutItems, spotSummary])
+
+  const runSemanticSearch = useCallback(async (queryText: string) => {
+    const term = queryText.trim()
+    if (!term) {
+      setSemanticResults([])
+      return
+    }
+    try {
+      const response = await workersApi.semanticSearch({
+        queryText: term,
+        limit: 20,
+        offset: 0,
+      })
+      setSemanticResults((response.data ?? []) as SemanticSearchedWorkerListItem[])
+    } catch {
+      setSemanticResults([])
+    }
+  }, [])
 
   const filteredReceivables = useMemo(
     () =>
@@ -232,6 +436,15 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       filteredPayouts,
       filteredReceivables,
       reportMetrics,
+      activeAssignments,
+      assignmentHistory,
+      semanticResults,
+      runSemanticSearch,
+      workerPortfolio,
+      employerLocations,
+      employerSupervisors,
+      disputes,
+      reloadPostings,
     }),
     [
       loading,
@@ -252,6 +465,15 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       filteredPayouts,
       filteredReceivables,
       reportMetrics,
+      activeAssignments,
+      assignmentHistory,
+      semanticResults,
+      runSemanticSearch,
+      workerPortfolio,
+      employerLocations,
+      employerSupervisors,
+      disputes,
+      reloadPostings,
     ],
   )
 

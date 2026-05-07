@@ -5,18 +5,24 @@ import { useSearchParams } from 'react-router-dom'
 import { DashboardSurface, InteractiveButton, StatePanel } from '../../../components/dashboard/ui-primitives'
 import { useTheme } from '../../../theme/theme-context'
 import { WorkerSectionHeader } from '../../worker/worker-ui'
+import { tShiftAssignmentStatus } from '../employer-enum-i18n'
 import { useEmployerPortal } from '../use-employer-portal'
 
-type OperationsView = 'createPosting' | 'activeAssignments' | 'applications' | 'history'
+type OperationsView = 'activeAssignments' | 'applications' | 'history'
+type AssignmentStatus = 'Pending' | 'AwaitingMutualQr' | 'CheckedIn' | 'CheckedOut'
 
 export function EmployerOperationsPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { postings, applications, selectedPostingId, setSelectedPostingId } = useEmployerPortal()
+  const { postings, applications, selectedPostingId, setSelectedPostingId, activeAssignments, assignmentHistory } = useEmployerPortal()
   const [searchParams, setSearchParams] = useSearchParams()
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
 
-  const activeView = (searchParams.get('view') as OperationsView | null) ?? 'activeAssignments'
+  const viewParam = searchParams.get('view')
+  const activeView: OperationsView =
+    viewParam === 'applications' || viewParam === 'history' || viewParam === 'activeAssignments'
+      ? viewParam
+      : 'activeAssignments'
   const setView = (view: OperationsView) => {
     const next = new URLSearchParams(searchParams)
     next.set('view', view)
@@ -25,14 +31,21 @@ export function EmployerOperationsPage() {
   const sectionButtonClass = (isActiveButton: boolean) => `inline-flex ${isActiveButton ? 'is-active' : ''}`
 
   const activeAssignmentsFallback = useMemo(() => {
+    if (activeAssignments.length > 0) {
+      return activeAssignments.map((item) => ({
+        assignmentId: Number(item.assignmentId),
+        workerId: Number(item.workerId),
+        status: item.status as AssignmentStatus,
+      }))
+    }
     // ShiftAssignments endpoint bağlanana kadar sentetik: seçili ilana gelen başvuruları “assignment” gibi göster.
     const source = selectedPostingId ? applications : applications.slice(0, 8)
     return source.slice(0, 8).map((item, index) => ({
       assignmentId: item.applicationId,
       workerId: item.workerId,
-      status: index % 3 === 0 ? 'AwaitingMutualQr' : index % 3 === 1 ? 'CheckedIn' : 'Pending',
+      status: (index % 3 === 0 ? 'AwaitingMutualQr' : index % 3 === 1 ? 'CheckedIn' : 'Pending') as AssignmentStatus,
     }))
-  }, [applications, selectedPostingId])
+  }, [activeAssignments, applications, selectedPostingId])
 
   return (
     <>
@@ -46,7 +59,6 @@ export function EmployerOperationsPage() {
         <div className="flex flex-wrap items-center gap-2">
           {(
             [
-              ['createPosting', t('dashboard.employerSpot.operations.tabs.createPosting')],
               ['activeAssignments', t('dashboard.employerSpot.operations.tabs.activeAssignments')],
               ['applications', t('dashboard.employerSpot.operations.tabs.applications')],
               ['history', t('dashboard.employerSpot.operations.tabs.history')],
@@ -59,16 +71,6 @@ export function EmployerOperationsPage() {
             </button>
           ))}
         </div>
-
-        {activeView === 'createPosting' ? (
-          <div className="mt-4 space-y-3">
-            <h2 className={`font-display text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-              {t('dashboard.employerSpot.operations.createPosting.title')}
-            </h2>
-            <p className={`text-sm ${toneClass}`}>{t('dashboard.employerSpot.operations.createPosting.subtitle')}</p>
-            <StatePanel theme={theme} text={t('dashboard.employerSpot.common.comingSoon')} />
-          </div>
-        ) : null}
 
         {activeView === 'activeAssignments' ? (
           <div className="mt-4 space-y-3">
@@ -122,7 +124,7 @@ export function EmployerOperationsPage() {
                       {t('dashboard.employerSpot.operations.activeAssignments.worker')}: {row.workerId}
                     </p>
                     <p className={`mt-1 text-xs ${toneClass}`}>
-                      {t('dashboard.employerSpot.operations.activeAssignments.qrStatus')}: {row.status}
+                      {t('dashboard.employerSpot.operations.activeAssignments.qrStatus')}: {tShiftAssignmentStatus(t, row.status)}
                     </p>
                   </div>
                 ))}
@@ -150,7 +152,7 @@ export function EmployerOperationsPage() {
                   >
                     <div className="min-w-0">
                       <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-                        Worker {item.workerId}
+                        {t('dashboard.employerSpot.common.candidate')} {item.workerId}
                       </p>
                       <p className={`mt-1 text-xs ${toneClass}`}>#{item.applicationId}</p>
                     </div>
@@ -175,7 +177,28 @@ export function EmployerOperationsPage() {
               {t('dashboard.employerSpot.operations.history.title')}
             </h2>
             <p className={`text-sm ${toneClass}`}>{t('dashboard.employerSpot.operations.history.subtitle')}</p>
-            <StatePanel theme={theme} text={t('dashboard.employerSpot.common.comingSoon')} />
+            {assignmentHistory.length === 0 ? (
+              <StatePanel theme={theme} text={t('dashboard.employerSpot.common.comingSoon')} />
+            ) : (
+              <div className="space-y-2">
+                {assignmentHistory.map((row) => (
+                  <div
+                    key={row.assignmentId}
+                    className={`rounded-xl border px-3 py-2 text-xs ${
+                      theme === 'dark' ? 'border-white/10 bg-white/[0.03]' : 'border-slate-200 bg-slate-50'
+                    }`}
+                  >
+                    <p className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>#{row.assignmentId}</p>
+                    <p className={toneClass}>
+                      {t('dashboard.employerSpot.operations.activeAssignments.worker')}: {row.workerId}
+                    </p>
+                    <p className={toneClass}>
+                      {t('dashboard.employerSpot.operations.activeAssignments.qrStatus')}: {tShiftAssignmentStatus(t, row.status)}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ) : null}
       </DashboardSurface>

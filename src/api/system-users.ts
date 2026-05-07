@@ -77,6 +77,28 @@ export type ListSystemUsersQuery = {
   type?: SystemUserType | null
 }
 
+export type ListMyNotificationsQuery = {
+  isRead?: boolean | null
+  limit?: number
+  offset?: number
+}
+
+export type SystemUserNotificationItem = {
+  id: number | string
+  title: string
+  body: string
+  templateCode: string
+  isRead: boolean
+  createdAt: string
+  readAt: string | null
+}
+
+export type MarkNotificationAsReadCommand = {
+  notificationId: number | string
+}
+
+export type MarkAllNotificationsAsReadCommand = Record<string, never>
+
 export type SystemUserListItem = {
   id: number | string
   email: string
@@ -85,6 +107,7 @@ export type SystemUserListItem = {
 }
 
 export type SystemUsersListResult = PageableListResult<SystemUserListItem>
+export type SystemUserNotificationsListResult = PageableListResult<SystemUserNotificationItem>
 
 const client = getApiClient()
 
@@ -116,6 +139,27 @@ export const systemUsersApi = {
   me(body: GetSystemUserMeQuery = {}) {
     return client.post<SystemUserMe, GetSystemUserMeQuery>(
       API_ENDPOINTS.systemUsers.me,
+      body,
+      true,
+    )
+  },
+  myNotifications(body: ListMyNotificationsQuery = {}) {
+    return client.post<SystemUserNotificationsListResult, ListMyNotificationsQuery>(
+      API_ENDPOINTS.systemUsers.myNotifications,
+      body,
+      true,
+    )
+  },
+  markNotificationAsRead(body: MarkNotificationAsReadCommand) {
+    return client.post<null, MarkNotificationAsReadCommand>(
+      API_ENDPOINTS.systemUsers.markNotificationAsRead,
+      body,
+      true,
+    )
+  },
+  markAllNotificationsAsRead(body: MarkAllNotificationsAsReadCommand = {}) {
+    return client.post<null, MarkAllNotificationsAsReadCommand>(
+      API_ENDPOINTS.systemUsers.markAllNotificationsAsRead,
       body,
       true,
     )

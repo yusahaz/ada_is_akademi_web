@@ -10,7 +10,9 @@ import { useTranslation } from 'react-i18next'
 
 import type { AppLocale } from '../../i18n/languages'
 import { SUPPORTED_LOCALES } from '../../i18n/languages'
+import { useAuth } from '../../auth/auth-context'
 import { useTheme } from '../../theme/theme-context'
+import { HeaderUserMenu } from '../dashboard/HeaderUserMenu'
 import { AdaLogoWordmark } from './AdaLogoWordmark'
 import {
   IconCheck,
@@ -36,6 +38,7 @@ export function Navbar({
 }: NavbarProps) {
   const { t, i18n } = useTranslation()
   const { theme, toggleTheme } = useTheme()
+  const { isAuthenticated, session } = useAuth()
 
   const listboxId = useId()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -349,7 +352,15 @@ export function Navbar({
             ) : null}
           </div>
 
-          {onAuthAction ? (
+          {showSidebarToggle && isAuthenticated && onAuthAction ? (
+            <HeaderUserMenu
+              tone={theme}
+              userName={session?.email ?? null}
+              userEmail={session?.email ?? null}
+              onLogout={onAuthAction}
+              align={i18n.dir() === 'rtl' ? 'start' : 'end'}
+            />
+          ) : onAuthAction ? (
             <button
               type="button"
               className={`inline-flex h-11 items-center justify-center rounded-xl px-4 text-sm font-semibold transition ${

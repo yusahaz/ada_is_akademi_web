@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { DashboardSurface, InteractiveButton, StatePanel } from '../../../components/dashboard/ui-primitives'
 import { useTheme } from '../../../theme/theme-context'
 import { WorkerSectionHeader } from '../../worker/worker-ui'
+import { tPayoutStatus, tReceivableStatus } from '../employer-enum-i18n'
 import type { EmployerPayoutStatus, EmployerReceivableStatus } from '../employer-portal-types'
 import { useEmployerPortal } from '../use-employer-portal'
 
@@ -82,7 +83,7 @@ export function EmployerBillingPage() {
             ) : (
               <div className="space-y-2">
                 {filteredPayouts.map((item) => {
-                  const isLocked = false
+                  const isLocked = item.isLocked === true
                   return (
                     <div
                       key={item.id}
@@ -92,12 +93,16 @@ export function EmployerBillingPage() {
                     >
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div>
-                          <p className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>{item.worker}</p>
+                          <p className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>
+                            {item.worker.startsWith('#')
+                              ? `${t('dashboard.employerSpot.common.candidate')} ${item.worker.replace('#', '')}`
+                              : item.worker}
+                          </p>
                           <p className={`mt-1 ${toneClass}`}>
                             {item.amount.toLocaleString()} {item.currency}
                           </p>
                           <p className={`mt-1 ${toneClass}`}>
-                            {t('dashboard.employerSpot.finance.workerPayouts.status')}: {item.status}
+                            {t('dashboard.employerSpot.finance.workerPayouts.status')}: {tPayoutStatus(t, item.status)}
                           </p>
                         </div>
 
@@ -183,7 +188,7 @@ export function EmployerBillingPage() {
                           {t('dashboard.employer.billing.total')}: {item.total.toLocaleString()} TRY
                         </p>
                         <p className={toneClass}>
-                          {t('dashboard.employerSpot.finance.commissions.status')}: {t(`dashboard.employer.billing.receivableStatus.${item.status}`)}
+                          {t('dashboard.employerSpot.finance.commissions.status')}: {tReceivableStatus(t, item.status)}
                         </p>
                       </div>
                       <div className="flex flex-wrap items-center gap-2">

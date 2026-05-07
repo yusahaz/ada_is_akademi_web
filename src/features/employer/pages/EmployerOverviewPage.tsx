@@ -22,6 +22,7 @@ export function EmployerOverviewPage() {
     summary,
     badges,
     postings,
+    activeAssignments,
     selectedPostingId,
     setSelectedPostingId,
     applications,
@@ -34,25 +35,34 @@ export function EmployerOverviewPage() {
     999,
   )
   const anomalies: SpotAnomalyItem[] = (() => {
-    if (badges.activeAnomalies === 0) return []
     const prefix = t('dashboard.employerSpot.anomalies.itemPrefix')
+    if (badges.activeAnomalies === 0) return []
+    const assignmentAnomalies = activeAssignments.filter((item) => item.isAnomalyFlagged).slice(0, 3)
+    if (assignmentAnomalies.length > 0) {
+      return assignmentAnomalies.map((item) => ({
+        key: String(item.assignmentId),
+        title: item.anomalyType ?? t('dashboard.employerSpot.anomalies.gpsError'),
+        detail: `${prefix} #${item.assignmentId} • ${t('dashboard.employerSpot.common.candidate')} ${item.workerId}`,
+        severity: item.anomalyType?.toLowerCase().includes('replay') ? 'danger' : 'warning',
+      }))
+    }
     const base: SpotAnomalyItem[] = [
       {
         key: 'gps',
         title: t('dashboard.employerSpot.anomalies.gpsError'),
-        detail: `${prefix} #${applications[0]?.applicationId ?? '-'} • Worker ${applications[0]?.workerId ?? '-'}`,
+        detail: `${prefix} #${applications[0]?.applicationId ?? '-'} • ${t('dashboard.employerSpot.common.candidate')} ${applications[0]?.workerId ?? '-'}`,
         severity: 'warning',
       },
       {
         key: 'expired',
         title: t('dashboard.employerSpot.anomalies.expiredToken'),
-        detail: `${prefix} #${applications[1]?.applicationId ?? '-'} • Worker ${applications[1]?.workerId ?? '-'}`,
+        detail: `${prefix} #${applications[1]?.applicationId ?? '-'} • ${t('dashboard.employerSpot.common.candidate')} ${applications[1]?.workerId ?? '-'}`,
         severity: 'warning',
       },
       {
         key: 'replay',
         title: t('dashboard.employerSpot.anomalies.replayAttack'),
-        detail: `${prefix} #${applications[2]?.applicationId ?? '-'} • Worker ${applications[2]?.workerId ?? '-'}`,
+        detail: `${prefix} #${applications[2]?.applicationId ?? '-'} • ${t('dashboard.employerSpot.common.candidate')} ${applications[2]?.workerId ?? '-'}`,
         severity: 'danger',
       },
     ]
@@ -235,7 +245,7 @@ export function EmployerOverviewPage() {
                     theme === 'dark' ? 'border-white/10 bg-white/[0.03]' : 'border-slate-200 bg-slate-50'
                   }`}
                 >
-                  <p className={`text-xs ${toneClass}`}>#{item.applicationId} • Worker {item.workerId}</p>
+                  <p className={`text-xs ${toneClass}`}>#{item.applicationId} • {t('dashboard.employerSpot.common.candidate')} {item.workerId}</p>
                   <span
                     className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold ${
                       theme === 'dark' ? 'bg-sky-500/15 text-sky-100' : 'bg-sky-100 text-sky-700'

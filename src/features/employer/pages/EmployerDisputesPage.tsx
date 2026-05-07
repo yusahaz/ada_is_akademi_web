@@ -16,10 +16,21 @@ type DisputeItem = {
 export function EmployerDisputesPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { badges, applications } = useEmployerPortal()
+  const { badges, applications, disputes: disputesFromApi } = useEmployerPortal()
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
 
   const disputes = useMemo<DisputeItem[]>(() => {
+    if (disputesFromApi.length > 0) {
+      return disputesFromApi.map((item) => ({
+        id: item.disputeId,
+        title: item.reasonText || item.reasonCode,
+        detail: t('dashboard.employerSpot.disputes.itemDetail', {
+          id: item.assignmentId,
+          workerId: item.workerId,
+        }),
+        severity: item.isAnomalyRelated ? 'danger' : 'warning',
+      }))
+    }
     if (badges.activeAnomalies === 0) return []
     const base = applications.slice(0, 6)
     return base.map((item, index) => ({
@@ -36,7 +47,7 @@ export function EmployerDisputesPage() {
       }),
       severity: index % 3 === 2 ? 'danger' : 'warning',
     }))
-  }, [applications, badges.activeAnomalies, t])
+  }, [applications, badges.activeAnomalies, disputesFromApi, t])
 
   return (
     <div className="space-y-4">

@@ -8,7 +8,11 @@ import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-p
 import { WorkerSectionHeader } from '../worker-ui'
 import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 
-export function ReportsPage() {
+export type ReportsPageProps = {
+  embedded?: boolean
+}
+
+export function ReportsPage({ embedded = false }: ReportsPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.getReportCards(), [])
@@ -19,10 +23,19 @@ export function ReportsPage() {
     () => t('dashboard.workerPortal.states.fetchError'),
   )
 
+  const renderHeader = () =>
+    embedded ? null : (
+      <WorkerSectionHeader
+        tone={theme}
+        title={t('dashboard.workerPortal.pages.reports.title')}
+        subtitle={t('dashboard.workerPortal.pages.reports.subtitle')}
+      />
+    )
+
   if (loading) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.reports.title')} subtitle={t('dashboard.workerPortal.pages.reports.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
       </div>
     )
@@ -30,7 +43,7 @@ export function ReportsPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.reports.title')} subtitle={t('dashboard.workerPortal.pages.reports.subtitle')} />
+        {renderHeader()}
         <StatePanel text={error} theme={theme} isError />
       </div>
     )
@@ -38,7 +51,7 @@ export function ReportsPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.reports.title')} subtitle={t('dashboard.workerPortal.pages.reports.subtitle')} />
+      {renderHeader()}
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {cards.map((card, index) => (
           <DashboardSurface key={card.key} theme={theme} className={index === 0 ? 'sm:col-span-2' : ''}>

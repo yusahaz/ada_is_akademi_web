@@ -8,7 +8,11 @@ import { useTheme } from '../../../theme/theme-context'
 import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 import { WorkerSectionHeader } from '../worker-ui'
 
-export function RecommendationsPage() {
+export type RecommendationsPageProps = {
+  embedded?: boolean
+}
+
+export function RecommendationsPage({ embedded = false }: RecommendationsPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.listSemanticMatchedShifts(), [])
@@ -19,14 +23,19 @@ export function RecommendationsPage() {
     () => t('dashboard.workerPortal.states.fetchError'),
   )
 
+  const renderHeader = () =>
+    embedded ? null : (
+      <WorkerSectionHeader
+        tone={theme}
+        title={t('dashboard.workerPortal.pages.recommendations.title')}
+        subtitle={t('dashboard.workerPortal.pages.recommendations.subtitle')}
+      />
+    )
+
   if (loading) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader
-          tone={theme}
-          title={t('dashboard.workerPortal.pages.recommendations.title')}
-          subtitle={t('dashboard.workerPortal.pages.recommendations.subtitle')}
-        />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
       </div>
     )
@@ -35,11 +44,7 @@ export function RecommendationsPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader
-          tone={theme}
-          title={t('dashboard.workerPortal.pages.recommendations.title')}
-          subtitle={t('dashboard.workerPortal.pages.recommendations.subtitle')}
-        />
+        {renderHeader()}
         <StatePanel text={error} theme={theme} isError />
       </div>
     )
@@ -48,11 +53,7 @@ export function RecommendationsPage() {
   if (items.length === 0) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader
-          tone={theme}
-          title={t('dashboard.workerPortal.pages.recommendations.title')}
-          subtitle={t('dashboard.workerPortal.pages.recommendations.subtitle')}
-        />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.overview.bestMatchesEmpty')} theme={theme} />
       </div>
     )
@@ -60,11 +61,7 @@ export function RecommendationsPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader
-        tone={theme}
-        title={t('dashboard.workerPortal.pages.recommendations.title')}
-        subtitle={t('dashboard.workerPortal.pages.recommendations.subtitle')}
-      />
+      {renderHeader()}
       <div className="grid gap-3 md:grid-cols-2">
         {items.map((item) => (
           <DashboardSurface key={item.id} theme={theme}>

@@ -112,6 +112,16 @@
     "common": {
       "welcome": "Welcome, {{email}}"
     },
+    "userMenu": {
+      "title": "Account menu",
+      "triggerAria": "Open account menu",
+      "profile": "My profile",
+      "logout": "Sign out",
+      "theme": "Theme",
+      "themeDark": "Dark",
+      "themeLight": "Light",
+      "language": "Language"
+    },
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Track your applications, upcoming shifts, and profile health in one place.",
@@ -175,7 +185,12 @@
         "jobs": "Job Listings",
         "cvProfile": "CV/Profile",
         "myApplications": "My Applications",
-        "account": "My Account"
+        "account": "My Account",
+        "dashboard": "Dashboard",
+        "findJobs": "Find Jobs",
+        "myShifts": "My Shifts",
+        "wallet": "Wallet",
+        "notifications": "Notifications"
       },
       "states": {
         "loading": "Loading data...",
@@ -218,6 +233,22 @@
         "recommendations": {
           "title": "AI Recommendations",
           "subtitle": "Jobs ranked by ListSemanticMatched result"
+        },
+        "jobs": {
+          "title": "Find Jobs",
+          "subtitle": "Personalized matches, open postings, location map and your applications in one place."
+        },
+        "myShifts": {
+          "title": "My Shifts",
+          "subtitle": "Track your active assignment, mutual QR validation and shift history."
+        },
+        "wallet": {
+          "title": "Wallet & Earnings",
+          "subtitle": "Follow payouts and historical earnings from a single hub."
+        },
+        "notifications": {
+          "title": "Notifications",
+          "subtitle": "Alerts for matches, payouts and shift activity."
         }
       },
       "overview": {
@@ -234,12 +265,96 @@
         "periodQuarterly": "3M",
         "periodSemiAnnual": "6M",
         "periodYearly": "Yearly",
-        "periodSelectedPrefix": "Selected period: {{period}}"
+        "periodSelectedPrefix": "Selected period: {{period}}",
+        "upcomingShifts": "Upcoming shifts",
+        "upcomingShiftsHint": "Next: {{date}} • {{range}}",
+        "upcomingShiftsEmpty": "No scheduled shifts yet.",
+        "reliabilityScore": "Reliability score",
+        "reliabilityHint": "Calculated from the ratio of accepted applications.",
+        "reliabilitySamples": "{{count}} applications",
+        "reliabilityNoData": "Not enough data",
+        "quickCheckInTitle": "Quick action",
+        "quickCheckInCta": "Check in with QR",
+        "quickCheckInEmpty": "No active shift waiting for check-in."
+      },
+      "tabs": {
+        "jobs": {
+          "recommendations": "For You",
+          "open": "Open Listings",
+          "map": "Map",
+          "mapEmpty": "No active postings to map.",
+          "mapHeading": "Nearby employer locations",
+          "mapHint": "Postings grouped by employer; full map coming soon.",
+          "locationCount": "{{count}} open postings",
+          "applications": "My Applications"
+        },
+        "myShifts": {
+          "active": "Active",
+          "history": "History",
+          "activeAssignment": "Active shift",
+          "qrTitle": "Mutual QR validation",
+          "qrHint": "Scan worker and supervisor QR codes together to start the shift.",
+          "upcoming": "Upcoming shifts",
+          "noActive": "You have no active shift right now."
+        },
+        "wallet": {
+          "payouts": "Payout Tracker",
+          "earnings": "Earnings History"
+        }
+      },
+      "layout": {
+        "emailVerification": {
+          "title": "Verify your email",
+          "description": "Verify your email address to fully activate your account.",
+          "action": "Send verification email",
+          "sending": "Sending...",
+          "sentSuccess": "Verification email sent.",
+          "sentHint": "Check your inbox and the spam folder.",
+          "sentError": "Verification email could not be sent."
+        }
+      },
+      "shiftHistory": {
+        "empty": "No completed shifts in your history yet.",
+        "anomaly": "Anomaly",
+        "status": {
+          "pending": "Pending",
+          "awaitingMutualQr": "Awaiting QR",
+          "checkedIn": "Checked in",
+          "checkedOut": "Checked out"
+        }
+      },
+      "notifications": {
+        "empty": "You have no notifications yet.",
+        "type": {
+          "matching": "Match",
+          "payout": "Payout",
+          "application": "Application",
+          "shift": "Shift",
+          "general": "General"
+        }
+      },
+      "availability": {
+        "description": "Manage your weekly availability slots.",
+        "editAction": "Edit Calendar",
+        "deleteAction": "Delete",
+        "enableDay": "Enable this day",
+        "empty": "No saved slots for this day.",
+        "comingSoon": "Editing experience will be enabled soon.",
+        "days": {
+          "0": "Sunday",
+          "1": "Monday",
+          "2": "Tuesday",
+          "3": "Wednesday",
+          "4": "Thursday",
+          "5": "Friday",
+          "6": "Saturday"
+        }
       },
       "topbar": {
         "searchPlaceholder": "Search...",
         "toggleThemeAria": "Toggle theme",
         "notificationsAria": "Open notifications",
+        "profileAria": "Go to profile",
         "toggleSidebarAria": "Toggle sidebar collapse",
         "breadcrumbAria": "Worker workspace breadcrumb"
       },
@@ -291,6 +406,7 @@
         "completion": "Profile completion",
         "actions": {
           "edit": "Edit profile",
+          "add": "Add",
           "save": "Save",
           "cancel": "Cancel"
         },
@@ -308,12 +424,29 @@
         "settingsMenu": "Account settings",
         "menu": {
           "basic": "Personal information",
+          "experiences": "Experiences",
+          "skills": "Skills",
+          "certificates": "Certificates",
+          "references": "References",
           "contact": "Contact information",
           "password": "Change password",
           "emailNotifications": "Email notifications",
           "smsNotifications": "SMS notifications",
           "accountControl": "Delete and freeze account",
-          "adVisibility": "Ad visibility"
+          "adVisibility": "Ad visibility",
+          "cvImport": "AI CV upload",
+          "availability": "Availability calendar"
+        },
+        "skillsSection": {
+          "title": "Skills",
+          "subtitle": "Add or remove skill tags to improve your matching quality.",
+          "inputPlaceholder": "Enter a skill tag (e.g. Barista)",
+          "add": "Add Skill",
+          "empty": "No saved skills yet."
+        },
+        "accountActions": {
+          "suspend": "Suspend account",
+          "delete": "Delete account"
         },
         "menuComingSoon": "This subsection will be enabled soon."
       },
@@ -430,11 +563,12 @@
     },
     "employerSpot": {
       "common": {
-        "comingSoon": "This area will be enabled when backend integration is ready."
+        "comingSoon": "This area will be enabled when backend integration is ready.",
+        "candidate": "Candidate"
       },
       "kpis": {
         "fillRateToday": "Fill rate today",
-        "activeWorkers": "Active workers"
+        "activeWorkers": "Active candidates"
       },
       "anomalies": {
         "title": "Anomaly flow",
@@ -452,14 +586,37 @@
         },
         "createPosting": {
           "title": "Create posting",
-          "subtitle": "Open a posting quickly via manual entry or a template."
+          "subtitle": "Open a posting quickly via manual entry or a template.",
+          "fields": {
+            "title": "Posting title",
+            "description": "Posting description",
+            "employerLocationId": "Employer location",
+            "selectLocation": "Select location",
+            "jobCategoryId": "Job category ID",
+            "selectCategory": "Select category",
+            "categoryOption": "Category #{{id}}",
+            "shiftDate": "Shift date",
+            "shiftStartTime": "Start time",
+            "shiftEndTime": "End time",
+            "headCount": "Headcount",
+            "wageAmount": "Wage amount",
+            "wageCurrency": "Wage currency"
+          },
+          "validation": {
+            "requiredText": "Title and description are required.",
+            "requiredFields": "Please fill all required fields with valid values."
+          },
+          "submit": "Create Posting",
+          "submitting": "Creating...",
+          "submitSuccess": "Job posting created successfully.",
+          "submitError": "Failed to create job posting."
         },
         "activeAssignments": {
           "title": "Active shifts",
           "subtitle": "Track ongoing work via mutual QR verification status.",
           "all": "All",
           "empty": "No active shifts.",
-          "worker": "Worker",
+          "worker": "Candidate",
           "qrStatus": "QR status"
         },
         "applications": {
@@ -477,7 +634,7 @@
       "intelligence": {
         "tabs": {
           "semanticSearch": "Semantic search",
-          "workerPortfolio": "Worker portfolio"
+          "workerPortfolio": "Candidate portfolio"
         },
         "semanticSearch": {
           "title": "Semantic search",
@@ -487,7 +644,7 @@
           "hint": "Note: Will connect to `Workers/List` and embedding scores when backend is ready."
         },
         "workerPortfolio": {
-          "title": "Worker portfolio",
+          "title": "Candidate portfolio",
           "subtitle": "Previously worked and high-reliability workers.",
           "empty": "No portfolio entries.",
           "reliability": "Reliability {{value}}%",
@@ -497,11 +654,11 @@
       },
       "finance": {
         "tabs": {
-          "workerPayouts": "Worker payouts",
+          "workerPayouts": "Candidate payouts",
           "commissionReceivables": "Platform invoices"
         },
         "workerPayouts": {
-          "title": "Worker payouts",
+          "title": "Candidate payouts",
           "subtitle": "Manage WorkerPayout records and control status transitions.",
           "empty": "No payout lines.",
           "status": "Status",
@@ -559,8 +716,16 @@
           "expiredToken": "Expired token",
           "replayAttack": "Replay attack"
         },
-        "itemDetail": "Case #{{id}} • Worker {{workerId}}",
+        "itemDetail": "Case #{{id}} • Candidate {{workerId}}",
         "hint": "Note: Currently shows fallback anomaly list; will list disputed cases from backend."
+      },
+      "enums": {
+        "shiftAssignmentStatus": {
+          "Pending": "Pending",
+          "AwaitingMutualQr": "Awaiting mutual QR",
+          "CheckedIn": "Checked in",
+          "CheckedOut": "Checked out"
+        }
       }
     },
     "employer": {

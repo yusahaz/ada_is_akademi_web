@@ -9,7 +9,11 @@ import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-p
 import { WorkerPrimaryButton, WorkerSectionHeader } from '../worker-ui'
 import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 
-export function ShiftsPage() {
+export type ShiftsPageProps = {
+  embedded?: boolean
+}
+
+export function ShiftsPage({ embedded = false }: ShiftsPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const { runWithToast } = useActionToasts()
@@ -22,6 +26,15 @@ export function ShiftsPage() {
   )
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submittingId, setSubmittingId] = useState<number | null>(null)
+
+  const renderHeader = () =>
+    embedded ? null : (
+      <WorkerSectionHeader
+        tone={theme}
+        title={t('dashboard.workerPortal.pages.shifts.title')}
+        subtitle={t('dashboard.workerPortal.pages.shifts.subtitle')}
+      />
+    )
 
   const applyShift = async (id: number) => {
     setSubmittingId(id)
@@ -42,7 +55,7 @@ export function ShiftsPage() {
   if (loading) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.shifts.title')} subtitle={t('dashboard.workerPortal.pages.shifts.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
       </div>
     )
@@ -50,7 +63,7 @@ export function ShiftsPage() {
   if (error && items.length === 0) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.shifts.title')} subtitle={t('dashboard.workerPortal.pages.shifts.subtitle')} />
+        {renderHeader()}
         <StatePanel text={error} theme={theme} isError />
       </div>
     )
@@ -58,7 +71,7 @@ export function ShiftsPage() {
   if (items.length === 0) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.shifts.title')} subtitle={t('dashboard.workerPortal.pages.shifts.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
       </div>
     )
@@ -66,7 +79,7 @@ export function ShiftsPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.shifts.title')} subtitle={t('dashboard.workerPortal.pages.shifts.subtitle')} />
+      {renderHeader()}
       {submitError ? <StatePanel text={submitError} theme={theme} isError /> : null}
       {items.map((item) => (
         <DashboardSurface key={item.id} theme={theme} className="relative">

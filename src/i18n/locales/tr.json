@@ -112,6 +112,16 @@
     "common": {
       "welcome": "Hoş geldin, {{email}}"
     },
+    "userMenu": {
+      "title": "Hesap menüsü",
+      "triggerAria": "Hesap menüsünü aç",
+      "profile": "Profilim",
+      "logout": "Çıkış Yap",
+      "theme": "Tema",
+      "themeDark": "Koyu",
+      "themeLight": "Açık",
+      "language": "Dil"
+    },
     "worker": {
       "title": "Worker Dashboard",
       "subtitle": "Başvurularını, yaklaşan vardiyalarını ve profil gücünü tek yerden yönet.",
@@ -175,7 +185,12 @@
         "jobs": "İş İlanları",
         "cvProfile": "CV/Profil",
         "myApplications": "Başvurularım",
-        "account": "Hesabım"
+        "account": "Hesabım",
+        "dashboard": "Panel",
+        "findJobs": "İş Bul",
+        "myShifts": "Vardiyalarım",
+        "wallet": "Cüzdan",
+        "notifications": "Bildirimler"
       },
       "states": {
         "loading": "Veriler yükleniyor...",
@@ -218,6 +233,22 @@
         "recommendations": {
           "title": "AI Oneri Listesi",
           "subtitle": "ListSemanticMatched sonucuna gore siralanan ilanlar"
+        },
+        "jobs": {
+          "title": "İş Bul",
+          "subtitle": "Sana özel öneriler, açık ilanlar, lokasyon haritası ve başvurularını tek ekranda yönet."
+        },
+        "myShifts": {
+          "title": "Vardiyalarım",
+          "subtitle": "Aktif görevini, karşılıklı QR doğrulamasını ve geçmiş vardiyalarını izle."
+        },
+        "wallet": {
+          "title": "Cüzdan ve Kazançlar",
+          "subtitle": "Ödeme akışını ve kazanç geçmişini tek bir alandan takip et."
+        },
+        "notifications": {
+          "title": "Bildirimler",
+          "subtitle": "Eşleşme, ödeme ve görev durumuna ilişkin uyarıların."
         }
       },
       "overview": {
@@ -234,12 +265,96 @@
         "periodQuarterly": "3 Aylık",
         "periodSemiAnnual": "6 Aylık",
         "periodYearly": "Yıllık",
-        "periodSelectedPrefix": "Seçili dönem: {{period}}"
+        "periodSelectedPrefix": "Seçili dönem: {{period}}",
+        "upcomingShifts": "Yaklaşan vardiyalar",
+        "upcomingShiftsHint": "Sıradaki vardiya: {{date}} • {{range}}",
+        "upcomingShiftsEmpty": "Planlanmış vardiyan bulunmuyor.",
+        "reliabilityScore": "Güvenilirlik skoru",
+        "reliabilityHint": "Kabul edilen başvurularının oranından hesaplanır.",
+        "reliabilitySamples": "{{count}} başvuru",
+        "reliabilityNoData": "Yetersiz veri",
+        "quickCheckInTitle": "Anlık aksiyon",
+        "quickCheckInCta": "QR ile check-in yap",
+        "quickCheckInEmpty": "Şu an check-in bekleyen vardiyan yok."
+      },
+      "tabs": {
+        "jobs": {
+          "recommendations": "Sana Özel",
+          "open": "Açık İlanlar",
+          "map": "Harita",
+          "mapEmpty": "Harita için aktif ilan bulunmuyor.",
+          "mapHeading": "Yakın işveren lokasyonları",
+          "mapHint": "İşveren bazında gruplanmış vardiya kartları; tam harita yakında.",
+          "locationCount": "{{count}} açık ilan",
+          "applications": "Başvurularım"
+        },
+        "myShifts": {
+          "active": "Aktif Görev",
+          "history": "Geçmiş",
+          "activeAssignment": "Aktif vardiya",
+          "qrTitle": "Karşılıklı QR doğrulama",
+          "qrHint": "Vardiya başlangıcı için işveren ve çalışan QR kodlarını birlikte tarayın.",
+          "upcoming": "Yaklaşan vardiyalar",
+          "noActive": "Şu an aktif bir vardiyan yok."
+        },
+        "wallet": {
+          "payouts": "Ödeme Takibi",
+          "earnings": "Kazanç Geçmişi"
+        }
+      },
+      "layout": {
+        "emailVerification": {
+          "title": "E-posta adresini doğrula",
+          "description": "Hesabını aktifleştirmek için e-postanı doğrulamalısın.",
+          "action": "Doğrulama maili gönder",
+          "sending": "Gönderiliyor...",
+          "sentSuccess": "Doğrulama maili gönderildi.",
+          "sentHint": "Gelen kutunu ve spam klasörünü kontrol et.",
+          "sentError": "Doğrulama maili gönderilemedi."
+        }
+      },
+      "shiftHistory": {
+        "empty": "Geçmişte tamamlanmış vardiya bulunmuyor.",
+        "anomaly": "Anomali",
+        "status": {
+          "pending": "Bekliyor",
+          "awaitingMutualQr": "QR bekleniyor",
+          "checkedIn": "Check-in yapıldı",
+          "checkedOut": "Check-out yapıldı"
+        }
+      },
+      "notifications": {
+        "empty": "Henüz bildirim bulunmuyor.",
+        "type": {
+          "matching": "Eşleşme",
+          "payout": "Ödeme",
+          "application": "Başvuru",
+          "shift": "Vardiya",
+          "general": "Genel"
+        }
+      },
+      "availability": {
+        "description": "Haftalık uygun olduğun zaman dilimlerini yönet.",
+        "editAction": "Takvimi Düzenle",
+        "deleteAction": "Sil",
+        "enableDay": "Bu günü aktif et",
+        "empty": "Bu güne ait kayıtlı zaman dilimi yok.",
+        "comingSoon": "Düzenleme arayüzü yakında etkin olacak.",
+        "days": {
+          "0": "Pazar",
+          "1": "Pazartesi",
+          "2": "Salı",
+          "3": "Çarşamba",
+          "4": "Perşembe",
+          "5": "Cuma",
+          "6": "Cumartesi"
+        }
       },
       "topbar": {
         "searchPlaceholder": "Arama yap...",
         "toggleThemeAria": "Temayı değiştir",
         "notificationsAria": "Bildirimleri aç",
+        "profileAria": "Profile git",
         "toggleSidebarAria": "Kenar cubugunu daralt veya genislet",
         "breadcrumbAria": "İşçi alanı konum yolu"
       },
@@ -284,13 +399,14 @@
         "studentNumber": "Öğrenci no: {{value}}",
         "skills": "Yetenek etiketleri",
         "educations": "Eğitim kayıtları",
-        "experiences": "Deneyim kayıtları",
+        "experiences": "Deneyimlerim",
         "certificates": "Sertifikalar",
         "languages": "Diller",
         "references": "Referanslar",
         "completion": "Profil tamamlama",
         "actions": {
           "edit": "Profili düzenle",
+          "add": "Ekle",
           "save": "Kaydet",
           "cancel": "Vazgeç"
         },
@@ -308,12 +424,29 @@
         "settingsMenu": "Hesap ayarları",
         "menu": {
           "basic": "Kişisel bilgiler",
+          "experiences": "Deneyimler",
+          "skills": "Yetenekler",
+          "certificates": "Sertifikalar",
+          "references": "Referanslar",
           "contact": "İletişim bilgileri",
           "password": "Şifre değiştir",
           "emailNotifications": "E-posta bildirimleri",
           "smsNotifications": "SMS bildirimleri",
           "accountControl": "Hesap silme ve dondurma",
-          "adVisibility": "Reklam görünürlüğü"
+          "adVisibility": "Reklam görünürlüğü",
+          "cvImport": "AI CV Yükleme",
+          "availability": "Müsaitlik takvimi"
+        },
+        "skillsSection": {
+          "title": "Yetenekler",
+          "subtitle": "Yetenek etiketlerini ekle veya kaldır; iş eşleşmelerin buna göre güçlenir.",
+          "inputPlaceholder": "Yetenek etiketi gir (ör. Barista)",
+          "add": "Yetenek Ekle",
+          "empty": "Kayıtlı yetenek bulunmuyor."
+        },
+        "accountActions": {
+          "suspend": "Hesabı dondur",
+          "delete": "Hesabı sil"
         },
         "menuComingSoon": "Bu alt bölüm yakında aktif edilecek."
       },
@@ -430,11 +563,12 @@
     },
     "employerSpot": {
       "common": {
-        "comingSoon": "Bu alan backend entegrasyonu tamamlanınca aktif olacak."
+        "comingSoon": "Bu alan backend entegrasyonu tamamlanınca aktif olacak.",
+        "candidate": "Aday"
       },
       "kpis": {
         "fillRateToday": "Günlük doluluk",
-        "activeWorkers": "Aktif çalışan"
+        "activeWorkers": "Aktif aday"
       },
       "anomalies": {
         "title": "Anomali Akışı",
@@ -452,14 +586,37 @@
         },
         "createPosting": {
           "title": "İlan Oluştur",
-          "subtitle": "Manuel giriş veya şablon seçimi ile hızlı ilan açın."
+          "subtitle": "Manuel giriş veya şablon seçimi ile hızlı ilan açın.",
+          "fields": {
+            "title": "İlan başlığı",
+            "description": "İlan açıklaması",
+            "employerLocationId": "İşveren lokasyonu",
+            "selectLocation": "Lokasyon seçin",
+            "jobCategoryId": "İş kategorisi ID",
+            "selectCategory": "Kategori seçin",
+            "categoryOption": "Kategori #{{id}}",
+            "shiftDate": "Vardiya tarihi",
+            "shiftStartTime": "Başlangıç saati",
+            "shiftEndTime": "Bitiş saati",
+            "headCount": "Kontenjan",
+            "wageAmount": "Ücret tutarı",
+            "wageCurrency": "Ücret para birimi"
+          },
+          "validation": {
+            "requiredText": "Başlık ve açıklama zorunludur.",
+            "requiredFields": "Lütfen tüm zorunlu alanları geçerli değerlerle doldurun."
+          },
+          "submit": "İlanı Oluştur",
+          "submitting": "Oluşturuluyor...",
+          "submitSuccess": "İş ilanı başarıyla oluşturuldu.",
+          "submitError": "İş ilanı oluşturulamadı."
         },
         "activeAssignments": {
           "title": "Aktif Vardiyalar",
           "subtitle": "Karşılıklı QR doğrulama statüsüne göre devam eden görevleri izleyin.",
           "all": "Tümü",
           "empty": "Aktif vardiya kaydı yok.",
-          "worker": "Çalışan",
+          "worker": "Aday",
           "qrStatus": "QR durumu"
         },
         "applications": {
@@ -477,7 +634,7 @@
       "intelligence": {
         "tabs": {
           "semanticSearch": "Semantik Arama",
-          "workerPortfolio": "Worker Portföyü"
+          "workerPortfolio": "Aday Portföyü"
         },
         "semanticSearch": {
           "title": "Semantik Arama",
@@ -487,7 +644,7 @@
           "hint": "Not: Backend hazır olduğunda arama `Workers/List` ve embedding skoru ile gerçek sonuçlara bağlanacak."
         },
         "workerPortfolio": {
-          "title": "Worker Portföyü",
+          "title": "Aday Portföyü",
           "subtitle": "Daha önce çalışılmış ve güven puanı yüksek çalışanlar.",
           "empty": "Portföyde kayıt yok.",
           "reliability": "Güven {{value}}%",
@@ -497,11 +654,11 @@
       },
       "finance": {
         "tabs": {
-          "workerPayouts": "İşçi Ödemeleri",
+          "workerPayouts": "Aday Ödemeleri",
           "commissionReceivables": "Platform Faturaları"
         },
         "workerPayouts": {
-          "title": "İşçi Ödemeleri",
+          "title": "Aday Ödemeleri",
           "subtitle": "WorkerPayout kayıtlarını yönetip durum geçişlerini kontrol edin.",
           "empty": "Ödeme satırı yok.",
           "status": "Durum",
@@ -559,8 +716,16 @@
           "expiredToken": "Süresi dolmuş token",
           "replayAttack": "Mükerrer saldırı (replay attack)"
         },
-        "itemDetail": "Vaka #{{id}} • Worker {{workerId}}",
+        "itemDetail": "Vaka #{{id}} • Aday {{workerId}}",
         "hint": "Not: Şu an fallback anomaly listesi gösteriliyor; backend ile disputed vakalar doğrudan listelenecek."
+      },
+      "enums": {
+        "shiftAssignmentStatus": {
+          "Pending": "Beklemede",
+          "AwaitingMutualQr": "Karşılıklı QR Bekleniyor",
+          "CheckedIn": "Giriş Yapıldı",
+          "CheckedOut": "Çıkış Yapıldı"
+        }
       }
     },
     "employer": {

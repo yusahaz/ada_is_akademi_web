@@ -1,21 +1,45 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Bell, BriefcaseBusiness, ChevronLeft, ChevronRight, FileText, LayoutGrid, LogOut, UserRound, WalletCards } from 'lucide-react'
+import {
+  BellRing,
+  Briefcase,
+  ChevronLeft,
+  ChevronRight,
+  ClipboardCheck,
+  LayoutGrid,
+  LogOut,
+  Mail,
+  UserRound,
+  Wallet,
+} from 'lucide-react'
 
 import { systemUsersApi } from '../../api'
+import { workerPortalApi } from '../../api/worker-portal'
+import { AccountStatus } from '../../api/enums'
 import { useAuth } from '../../auth/auth-context'
 import { AdaLogoMark } from '../../components/landing/AdaLogoMark'
 import { AdaLogoWordmark } from '../../components/landing/AdaLogoWordmark'
+import { HeaderUserMenu } from '../../components/dashboard/HeaderUserMenu'
+import { useActionToasts } from '../../notifications/use-action-toasts'
 import { useTheme } from '../../theme/theme-context'
 import { cn } from '../../lib/cn'
+import { useWorkerLiveCounters } from './hooks/useWorkerLiveCounters'
+import { WorkerNavBadge, WorkerNotice } from './worker-ui'
 
-const navItems = [
-  { to: '/worker', key: 'overview' },
-  { to: '/worker/shifts', key: 'jobs' },
-  { to: '/worker/profile', key: 'cvProfile' },
-  { to: '/worker/applications', key: 'myApplications' },
-  { to: '/worker/profile?section=accountControl', key: 'account' },
+type WorkerNavItem = {
+  to: string
+  key: 'dashboard' | 'findJobs' | 'myShifts' | 'wallet' | 'profile' | 'notifications'
+  badgeKey?: 'newMatches' | 'pendingPayouts' | 'unreadNotifications'
+}
+
+const navItems: WorkerNavItem[] = [
+  { to: '/worker', key: 'dashboard' },
+  { to: '/worker/jobs', key: 'findJobs', badgeKey: 'newMatches' },
+  { to: '/worker/shifts', key: 'myShifts' },
+  { to: '/worker/wallet', key: 'wallet', badgeKey: 'pendingPayouts' },
+  { to: '/worker/profile', key: 'profile' },
+  { to: '/worker/notifications', key: 'notifications', badgeKey: 'unreadNotifications' },
 ]
 
 const WORKER_SIDEBAR_COLLAPSE_KEY = 'ada-worker:sidebar-collapsed'
@@ -43,12 +67,13 @@ function useIsBelowWorkerShellLg() {
   return isBelowLg
 }
 
-const navItemIcons: Record<string, ReactNode> = {
-  overview: <LayoutGrid className="h-4 w-4" aria-hidden="true" />,
-  jobs: <BriefcaseBusiness className="h-4 w-4" aria-hidden="true" />,
-  cvProfile: <FileText className="h-4 w-4" aria-hidden="true" />,
-  myApplications: <WalletCards className="h-4 w-4" aria-hidden="true" />,
-  account: <UserRound className="h-4 w-4" aria-hidden="true" />,
+const navItemIcons: Record<WorkerNavItem['key'], ReactNode> = {
+  dashboard: <LayoutGrid className="h-4 w-4" aria-hidden="true" />,
+  findJobs: <Briefcase className="h-4 w-4" aria-hidden="true" />,
+  myShifts: <ClipboardCheck className="h-4 w-4" aria-hidden="true" />,
+  wallet: <Wallet className="h-4 w-4" aria-hidden="true" />,
+  profile: <UserRound className="h-4 w-4" aria-hidden="true" />,
+  notifications: <BellRing className="h-4 w-4" aria-hidden="true" />,
 }
 
 export type WorkerLayoutProps = {
@@ -61,7 +86,13 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
   const { t } = useTranslation()
   const { theme } = useTheme()
   const { session, logout } = useAuth()
+  const { runWithToast } = useActionToasts()
+  const counters = useWorkerLiveCounters()
   const [resolvedWelcomeName, setResolvedWelcomeName] = useState<string | null>(null)
+  const [accountStatus, setAccountStatus] = useState<AccountStatus | null>(null)
+  const [systemUserId, setSystemUserId] = useState<number | null>(null)
+  const [verificationSent, setVerificationSent] = useState(false)
+  const [verificationPending, setVerificationPending] = useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false
     const stored = window.localStorage.getItem(WORKER_SIDEBAR_COLLAPSE_KEY)
@@ -74,6 +105,15 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
   const tightMobileCollapsed = isBelowLg && isSidebarCollapsed
   const fallbackWelcomeName = session?.email.split('@')[0]?.trim() || t('dashboard.worker.defaultName')
   const welcomeName = session ? resolvedWelcomeName ?? fallbackWelcomeName : t('dashboard.worker.defaultName')
+
+  const navBadgeMap = useMemo<Record<NonNullable<WorkerNavItem['badgeKey']>, number>>(
+    () => ({
+      newMatches: counters.newMatches,
+      pendingPayouts: counters.pendingPayouts,
+      unreadNotifications: counters.unreadNotifications,
+    }),
+    [counters.newMatches, counters.pendingPayouts, counters.unreadNotifications],
+  )
 
   useEffect(() => {
     let isActive = true
@@ -91,12 +131,20 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
         const fullName = `${me.firstName ?? ''} ${me.lastName ?? ''}`.trim()
         if (fullName.length > 0) {
           setResolvedWelcomeName(fullName)
-          return
+        } else {
+          const emailAlias = session.email.split('@')[0]?.trim()
+          setResolvedWelcomeName(
+            emailAlias && emailAlias.length > 0 ? emailAlias : t('dashboard.worker.defaultName'),
+          )
         }
-        const emailAlias = session.email.split('@')[0]?.trim()
-        setResolvedWelcomeName(
-          emailAlias && emailAlias.length > 0 ? emailAlias : t('dashboard.worker.defaultName'),
-        )
+        const numericStatus = Number(me.accountStatus)
+        if (Number.isFinite(numericStatus)) {
+          setAccountStatus(numericStatus as AccountStatus)
+        }
+        const numericUserId = Number(me.systemUserId)
+        if (Number.isFinite(numericUserId) && numericUserId > 0) {
+          setSystemUserId(numericUserId)
+        }
       })
       .catch(() => {
         if (!isActive) return
@@ -126,6 +174,24 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
     : WORKER_SIDEBAR_EXPANDED_WIDTH
   const contentGutterPx = tightMobileCollapsed ? 0 : 8
   const contentInset = sidebarWidth + contentGutterPx
+
+  const handleSendVerification = async () => {
+    if (!systemUserId || verificationPending) return
+    setVerificationPending(true)
+    try {
+      await runWithToast(workerPortalApi.requestEmailVerification(systemUserId), {
+        success: { messageKey: 'dashboard.workerPortal.layout.emailVerification.sentSuccess' },
+        error: { messageKey: 'dashboard.workerPortal.layout.emailVerification.sentError' },
+      })
+      setVerificationSent(true)
+    } catch {
+      setVerificationSent(false)
+    } finally {
+      setVerificationPending(false)
+    }
+  }
+
+  const showVerificationBanner = accountStatus === AccountStatus.Pending
 
   return (
     <section className="w-full">
@@ -177,6 +243,7 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
 
           <nav className="mt-1 flex flex-col gap-0 pb-16">
             {navItems.map((item) => {
+              const badgeValue = item.badgeKey ? navBadgeMap[item.badgeKey] : 0
               return (
                 <NavLink
                   key={item.key}
@@ -209,19 +276,30 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
                         }`}
                       >
                         <span
-                          className={
+                          className={cn(
+                            'relative inline-flex',
                             isActive
                               ? theme === 'dark'
                                 ? 'text-cyan-200'
                                 : 'text-sky-700'
                               : theme === 'dark'
                                 ? 'text-slate-300'
-                                : 'text-slate-500'
-                          }
+                                : 'text-slate-500',
+                          )}
                         >
                           {navItemIcons[item.key]}
+                          {isSidebarCollapsed && badgeValue > 0 ? (
+                            <span className="absolute -end-1 -top-1.5 inline-flex">
+                              <WorkerNavBadge tone={theme} value={badgeValue} compact />
+                            </span>
+                          ) : null}
                         </span>
-                        {!isSidebarCollapsed ? <span className="block truncate">{t(`dashboard.workerPortal.nav.${item.key}`)}</span> : null}
+                        {!isSidebarCollapsed ? (
+                          <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                            <span className="block truncate">{t(`dashboard.workerPortal.nav.${item.key}`)}</span>
+                            {badgeValue > 0 ? <WorkerNavBadge tone={theme} value={badgeValue} /> : null}
+                          </span>
+                        ) : null}
                       </span>
                     </span>
                   )}
@@ -272,29 +350,73 @@ export function WorkerLayout({ children, isSidebarOpen, onSidebarClose }: Worker
             </div>
 
             <div className="hidden items-center gap-2 lg:flex">
-              <button
-                type="button"
+              <NavLink
+                to="/worker/notifications"
                 aria-label={t('dashboard.workerPortal.topbar.notificationsAria')}
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border ${
+                className={`relative inline-flex h-10 w-10 items-center justify-center rounded-xl border ${
                   theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-slate-200' : 'border-slate-200 bg-slate-50 text-slate-700'
                 }`}
               >
-                <Bell className="h-4 w-4" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                aria-label={t('dashboard.workerPortal.topbar.toggleThemeAria')}
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border ${
-                  theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-slate-200' : 'border-slate-200 bg-slate-50 text-slate-700'
-                }`}
-              >
-                <UserRound className="h-4 w-4" aria-hidden="true" />
-              </button>
+                <BellRing className="h-4 w-4" aria-hidden="true" />
+                {counters.unreadNotifications > 0 ? (
+                  <span className="absolute -end-1 -top-1 inline-flex">
+                    <WorkerNavBadge
+                      tone={theme}
+                      value={counters.unreadNotifications}
+                      compact
+                    />
+                  </span>
+                ) : null}
+              </NavLink>
+              <HeaderUserMenu
+                tone={theme}
+                userName={resolvedWelcomeName ?? fallbackWelcomeName}
+                userEmail={session?.email ?? null}
+                profileTo="/worker/profile"
+                onLogout={logout}
+                triggerAriaLabel={t('dashboard.workerPortal.topbar.profileAria')}
+              />
             </div>
           </div>
           <div
             className="space-y-4 px-3 py-4 pb-[max(env(safe-area-inset-bottom),1rem)] sm:px-4 sm:py-5 lg:px-6 lg:py-6"
           >
+            {showVerificationBanner ? (
+              <WorkerNotice
+                tone={theme}
+                variant={verificationSent ? 'success' : 'warning'}
+                icon={<Mail className="h-4 w-4" aria-hidden="true" />}
+                title={
+                  verificationSent
+                    ? t('dashboard.workerPortal.layout.emailVerification.sentSuccess')
+                    : t('dashboard.workerPortal.layout.emailVerification.title')
+                }
+                description={
+                  verificationSent
+                    ? t('dashboard.workerPortal.layout.emailVerification.sentHint')
+                    : t('dashboard.workerPortal.layout.emailVerification.description')
+                }
+                action={
+                  verificationSent ? null : (
+                    <button
+                      type="button"
+                      onClick={() => void handleSendVerification()}
+                      disabled={verificationPending || !systemUserId}
+                      className={cn(
+                        'inline-flex items-center justify-center rounded-full px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 disabled:opacity-60',
+                        theme === 'dark'
+                          ? 'bg-amber-300/20 text-amber-100 ring-1 ring-inset ring-amber-300/40 hover:bg-amber-300/30'
+                          : 'bg-amber-200 text-amber-900 ring-1 ring-inset ring-amber-300 hover:bg-amber-300',
+                      )}
+                    >
+                      {verificationPending
+                        ? t('dashboard.workerPortal.layout.emailVerification.sending')
+                        : t('dashboard.workerPortal.layout.emailVerification.action')}
+                    </button>
+                  )
+                }
+              />
+            ) : null}
             {children}
           </div>
         </div>

@@ -8,7 +8,11 @@ import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-p
 import { WorkerPillBadge, WorkerSectionHeader } from '../worker-ui'
 import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 
-export function ApplicationsPage() {
+export type ApplicationsPageProps = {
+  embedded?: boolean
+}
+
+export function ApplicationsPage({ embedded = false }: ApplicationsPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.listApplications(), [])
@@ -19,10 +23,19 @@ export function ApplicationsPage() {
     () => t('dashboard.workerPortal.states.fetchError'),
   )
 
+  const renderHeader = () =>
+    embedded ? null : (
+      <WorkerSectionHeader
+        tone={theme}
+        title={t('dashboard.workerPortal.pages.applications.title')}
+        subtitle={t('dashboard.workerPortal.pages.applications.subtitle')}
+      />
+    )
+
   if (loading) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.applications.title')} subtitle={t('dashboard.workerPortal.pages.applications.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.loading')} theme={theme} />
       </div>
     )
@@ -30,7 +43,7 @@ export function ApplicationsPage() {
   if (error) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.applications.title')} subtitle={t('dashboard.workerPortal.pages.applications.subtitle')} />
+        {renderHeader()}
         <StatePanel text={error} theme={theme} isError />
       </div>
     )
@@ -38,7 +51,7 @@ export function ApplicationsPage() {
   if (items.length === 0) {
     return (
       <div className="space-y-4">
-        <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.applications.title')} subtitle={t('dashboard.workerPortal.pages.applications.subtitle')} />
+        {renderHeader()}
         <StatePanel text={t('dashboard.workerPortal.states.empty')} theme={theme} />
       </div>
     )
@@ -46,7 +59,7 @@ export function ApplicationsPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.applications.title')} subtitle={t('dashboard.workerPortal.pages.applications.subtitle')} />
+      {renderHeader()}
       <div className="grid gap-3 lg:grid-cols-2">
         {items.map((item) => (
           <DashboardSurface key={item.id} theme={theme}>

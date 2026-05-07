@@ -6,7 +6,11 @@ import { useTheme } from '../../../theme/theme-context'
 import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
 import { WorkerGhostButton, WorkerPrimaryButton, WorkerSectionHeader } from '../worker-ui'
 
-export function QrCheckPage() {
+export type QrCheckPageProps = {
+  embedded?: boolean
+}
+
+export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const [status, setStatus] = useState<WorkerQrStatus>('idle')
@@ -20,7 +24,13 @@ export function QrCheckPage() {
 
   return (
     <div className="space-y-4">
-      <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.qrCheck.title')} subtitle={t('dashboard.workerPortal.pages.qrCheck.subtitle')} />
+      {embedded ? null : (
+        <WorkerSectionHeader
+          tone={theme}
+          title={t('dashboard.workerPortal.pages.qrCheck.title')}
+          subtitle={t('dashboard.workerPortal.pages.qrCheck.subtitle')}
+        />
+      )}
       <DashboardSurface theme={theme}>
         <div className="flex flex-wrap gap-2">
           <input
