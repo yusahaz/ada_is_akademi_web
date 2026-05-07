@@ -4,6 +4,7 @@ import { EmployerLayout } from '../../features/employer/EmployerLayout'
 import { EmployerPortalProvider } from '../../features/employer/employer-portal-provider'
 import { EmployerBillingPage } from '../../features/employer/pages/EmployerBillingPage'
 import { EmployerCandidatesPage } from '../../features/employer/pages/EmployerCandidatesPage'
+import { EmployerDisputesPage } from '../../features/employer/pages/EmployerDisputesPage'
 import { EmployerOperationsPage } from '../../features/employer/pages/EmployerOperationsPage'
 import { EmployerOverviewPage } from '../../features/employer/pages/EmployerOverviewPage'
 import { EmployerPostingsPage } from '../../features/employer/pages/EmployerPostingsPage'
@@ -25,6 +26,7 @@ export function EmployerDashboard({ isSidebarOpen, onSidebarClose }: EmployerDas
           <Route path="operations" element={<EmployerOperationsPage />} />
           <Route path="billing" element={<EmployerBillingPage />} />
           <Route path="reports" element={<EmployerReportsPage />} />
+          <Route path="disputes" element={<EmployerDisputesPage />} />
           <Route path="*" element={<Navigate to="/employer" replace />} />
         </Routes>
       </EmployerLayout>

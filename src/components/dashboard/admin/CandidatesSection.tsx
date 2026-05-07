@@ -7,7 +7,7 @@ import {
   systemUsersApi,
   workersApi,
 } from '../../../api'
-import { useNotification } from '../../../notifications/notification-context'
+import { useActionToasts } from '../../../notifications/use-action-toasts'
 import type { WorkerDetail, WorkerListItem, WorkersListResult } from '../../../api/workers'
 import { AdminDataGrid, type AdminDataGridColumn } from '../AdminDataGrid'
 import { useTheme } from '../../../theme/theme-context'
@@ -41,7 +41,7 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
-  const notifications = useNotification()
+  const { runWithToast } = useActionToasts()
   const mapApiError = useCallback(
     (fallbackKey: string, error: unknown) => {
       const base = t(fallbackKey)
@@ -366,34 +366,41 @@ export function CandidatesSection({ isActive, detailId, onOpenDetail, onCloseDet
       setAccountActionPending(true)
       setDetailError(null)
       try {
-        if (action === 'suspend') {
-          await systemUsersApi.suspend({ systemUserId })
-        } else if (action === 'reactivate') {
-          await systemUsersApi.reactivate({ systemUserId })
-        } else {
-          await systemUsersApi.ban({ systemUserId })
-        }
+        await runWithToast(
+          (async () => {
+            if (action === 'suspend') {
+              await systemUsersApi.suspend({ systemUserId })
+            } else if (action === 'reactivate') {
+              await systemUsersApi.reactivate({ systemUserId })
+            } else {
+              await systemUsersApi.ban({ systemUserId })
+            }
 
-        const nextStatus =
-          action === 'reactivate'
-            ? AccountStatus.Active
-            : action === 'suspend'
-              ? AccountStatus.Suspended
-              : AccountStatus.Banned
-        setListRow((prev) => (prev ? { ...prev, accountStatus: nextStatus } : prev))
-        await refreshListAfterDetail()
-        notifications.success(
-          t('dashboard.admin.candidates.detail.accountActionSuccess', { action: actionLabel }),
-        )
-      } catch {
-        notifications.error(
-          t('dashboard.admin.candidates.detail.accountActionError', { action: actionLabel }),
+            const nextStatus =
+              action === 'reactivate'
+                ? AccountStatus.Active
+                : action === 'suspend'
+                  ? AccountStatus.Suspended
+                  : AccountStatus.Banned
+            setListRow((prev) => (prev ? { ...prev, accountStatus: nextStatus } : prev))
+            await refreshListAfterDetail()
+          })(),
+          {
+            success: {
+              messageKey: 'dashboard.admin.candidates.detail.accountActionSuccess',
+              interpolation: { action: actionLabel },
+            },
+            error: {
+              messageKey: 'dashboard.admin.candidates.detail.accountActionError',
+              interpolation: { action: actionLabel },
+            },
+          },
         )
       } finally {
         setAccountActionPending(false)
       }
     },
-    [accountActionPending, listRow, notifications, refreshListAfterDetail, t],
+    [accountActionPending, listRow, refreshListAfterDetail, runWithToast, t],
   )
 
   const handleDetailDelete = useCallback(async () => {

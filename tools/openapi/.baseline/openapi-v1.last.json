@@ -122,6 +122,227 @@
         }
       }
     },
+    "/Employers/AddLocation": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Add employer location",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddEmployerLocationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddEmployerLocationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/AddSupervisor": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Add employer supervisor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddEmployerSupervisorCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddEmployerSupervisorCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/RemoveSupervisor": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Remove employer supervisor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveEmployerSupervisorCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveEmployerSupervisorCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/Delete": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Delete employer",
+        "description": "Soft deletes employer and all users scoped to the employer.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteEmployerCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteEmployerCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Employers/GetById": {
       "post": {
         "tags": [
@@ -151,6 +372,62 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponseOfEmployerDetailModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/GetDetail": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Get employer detail",
+        "description": "Returns full employer profile detail with locations and supervisor list.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetEmployerDetailQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetEmployerDetailQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfEmployerFullDetailModel"
                 }
               }
             }
@@ -500,6 +777,230 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/CreateWorkerPayout": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Create worker payout",
+        "description": "Creates or returns existing worker payout row for a checked-out assignment.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkerPayoutCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkerPayoutCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/MarkWorkerPayoutAsProcessing": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Mark worker payout as processing",
+        "description": "Employer marks payout as paid and waits for worker confirmation.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkWorkerPayoutAsProcessingCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkWorkerPayoutAsProcessingCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/FailWorkerPayout": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Fail worker payout",
+        "description": "Marks payout as failed and increments retry counter.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FailWorkerPayoutCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FailWorkerPayoutCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Employers/RetryWorkerPayout": {
+      "post": {
+        "tags": [
+          "Employers"
+        ],
+        "summary": "Retry worker payout",
+        "description": "Moves failed payout back to pending when retry threshold allows.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetryWorkerPayoutCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetryWorkerPayoutCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
                 }
               }
             }
@@ -1828,6 +2329,62 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/CheckInShiftAssignmentCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ShiftAssignments/SupervisorCheckIn": {
+      "post": {
+        "tags": [
+          "Shift assignments"
+        ],
+        "summary": "Supervisor check in shift assignment",
+        "description": "Completes mutual QR check-in when employer/supervisor confirms assignment check-in token.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupervisorCheckInShiftAssignmentCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupervisorCheckInShiftAssignmentCommand"
               }
             }
           },
@@ -3345,6 +3902,777 @@
         }
       }
     },
+    "/Workers/AddAvailability": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Add worker availability",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerAvailabilityCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerAvailabilityCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveAvailability": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker availability",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerAvailabilityCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerAvailabilityCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/AddCertificate": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Add worker certificate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerCertificateCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerCertificateCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveCertificate": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker certificate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerCertificateCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerCertificateCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/AddEducation": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Add worker education",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerEducationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerEducationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveEducation": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker education",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerEducationCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerEducationCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/AddExperience": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Add worker experience",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerExperienceCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerExperienceCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveExperience": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker experience",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerExperienceCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerExperienceCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/AddLanguage": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Add worker language",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerLanguageCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerLanguageCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveLanguage": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker language",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerLanguageCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerLanguageCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/AddReference": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Add worker reference",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerReferenceCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddWorkerReferenceCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfint"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveReference": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker reference",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerReferenceCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerReferenceCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/RemoveSkill": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Remove worker skill",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerSkillCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveWorkerSkillCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/Delete": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Delete worker",
+        "description": "Soft deletes worker and its linked system user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteWorkerCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteWorkerCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Workers/GetById": {
       "post": {
         "tags": [
@@ -3374,6 +4702,62 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponseOfWorkerDetailModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/GetDetail": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Get worker detail",
+        "description": "Returns full worker profile detail with account summary and all profile collections.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetWorkerDetailQuery"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetWorkerDetailQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseOfWorkerFullDetailModel"
                 }
               }
             }
@@ -3512,6 +4896,118 @@
           }
         }
       }
+    },
+    "/Workers/ConfirmPayout": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Confirm worker payout",
+        "description": "Worker confirms payout transfer and closes payout lifecycle.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmWorkerPayoutCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmWorkerPayoutCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Workers/UpdateProfile": {
+      "post": {
+        "tags": [
+          "Workers"
+        ],
+        "summary": "Update worker profile",
+        "description": "Updates nationality and university fields for the authenticated worker.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWorkerProfileCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateWorkerProfileCommand"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3571,6 +5067,75 @@
           }
         }
       },
+      "AddEmployerLocationCommand": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "geofenceRadiusMetres": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "country": {
+            "type": "string"
+          },
+          "latitude": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "line1": {
+            "type": "string"
+          },
+          "longitude": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "AddEmployerSupervisorCommand": {
+        "type": "object",
+        "properties": {
+          "locationId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "systemUserId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "AddJobPostingSkillCommand": {
         "type": "object",
         "properties": {
@@ -3611,6 +5176,149 @@
               "string"
             ],
             "format": "int32"
+          }
+        }
+      },
+      "AddWorkerAvailabilityCommand": {
+        "type": "object",
+        "properties": {
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "timeFrom": {
+            "type": "string",
+            "format": "time"
+          },
+          "timeTo": {
+            "type": "string",
+            "format": "time"
+          }
+        }
+      },
+      "AddWorkerCertificateCommand": {
+        "type": "object",
+        "properties": {
+          "documentUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "expiresAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "issuedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "issuingOrganization": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "AddWorkerEducationCommand": {
+        "type": "object",
+        "properties": {
+          "department": {
+            "type": "string"
+          },
+          "educationType": {
+            "$ref": "#/components/schemas/EducationType"
+          },
+          "endYear": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isOngoing": {
+            "type": "boolean"
+          },
+          "school": {
+            "type": "string"
+          },
+          "startYear": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "AddWorkerExperienceCommand": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "endDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "AddWorkerLanguageCommand": {
+        "type": "object",
+        "properties": {
+          "language": {
+            "type": "string"
+          },
+          "level": {
+            "$ref": "#/components/schemas/LanguageLevel"
+          }
+        }
+      },
+      "AddWorkerReferenceCommand": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "contactEmail": {
+            "type": "string"
+          },
+          "contactFirstName": {
+            "type": "string"
+          },
+          "contactLastName": {
+            "type": "string"
+          },
+          "contactPhone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "position": {
+            "type": "string"
           }
         }
       },
@@ -3882,6 +5590,48 @@
               },
               {
                 "$ref": "#/components/schemas/EmployerDetailModel"
+              }
+            ]
+          },
+          "errorCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errors": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          }
+        }
+      },
+      "ApiResponseOfEmployerFullDetailModel": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/EmployerFullDetailModel"
               }
             ]
           },
@@ -4330,6 +6080,48 @@
           }
         }
       },
+      "ApiResponseOfWorkerFullDetailModel": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/WorkerFullDetailModel"
+              }
+            ]
+          },
+          "errorCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errors": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "isSuccess": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "statusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          }
+        }
+      },
       "ApiResponseOfWorkerNotificationPreviewModel": {
         "type": "object",
         "properties": {
@@ -4566,6 +6358,19 @@
           }
         }
       },
+      "ConfirmWorkerPayoutCommand": {
+        "type": "object",
+        "properties": {
+          "workerPayoutId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "CreateJobPostingCommand": {
         "type": "object",
         "properties": {
@@ -4630,7 +6435,23 @@
           "checkInTokenHash": {
             "type": "string"
           },
+          "supervisorCheckInTokenHash": {
+            "type": "string"
+          },
           "jobApplicationId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "CreateWorkerPayoutCommand": {
+        "type": "object",
+        "properties": {
+          "assignmentId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "integer",
@@ -4890,10 +6711,47 @@
           }
         }
       },
+      "DayOfWeek": {
+        "enum": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ]
+      },
       "DeactivateSystemUserGroupCommand": {
         "type": "object",
         "properties": {
           "systemUserGroupId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "DeleteEmployerCommand": {
+        "type": "object",
+        "properties": {
+          "employerId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "DeleteWorkerCommand": {
+        "type": "object",
+        "properties": {
+          "workerId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "integer",
@@ -4908,6 +6766,17 @@
           "iOS",
           "Android",
           "Web"
+        ]
+      },
+      "EducationType": {
+        "enum": [
+          "HighSchool",
+          "VocationalCourse",
+          "AssociateDegree",
+          "BachelorDegree",
+          "MasterDegree",
+          "Doctorate",
+          "Other"
         ]
       },
       "EmployerCommissionEstimateModel": {
@@ -5144,6 +7013,75 @@
           }
         }
       },
+      "EmployerFullDetailModel": {
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status",
+          "taxNumber",
+          "commissionRate",
+          "contact",
+          "locations",
+          "supervisors"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/EmployerStatus"
+          },
+          "taxNumber": {
+            "type": "string"
+          },
+          "commissionRate": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "contact": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/EmployerContactModel"
+              }
+            ]
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployerLocationDetailModel"
+            }
+          },
+          "supervisors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployerSupervisorDetailModel"
+            }
+          }
+        }
+      },
       "EmployerListItemModel": {
         "required": [
           "commissionRate",
@@ -5181,6 +7119,42 @@
           }
         }
       },
+      "EmployerLocationDetailModel": {
+        "required": [
+          "id",
+          "name",
+          "description",
+          "geofenceRadiusMetres"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "geofenceRadiusMetres": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "EmployerStatus": {
         "enum": [
           "Pending",
@@ -5189,11 +7163,118 @@
           "Banned"
         ]
       },
+      "EmployerSupervisorDetailModel": {
+        "required": [
+          "id",
+          "systemUserId",
+          "locationId",
+          "isActive",
+          "systemUser"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "systemUserId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "locationId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "systemUser": {
+            "$ref": "#/components/schemas/EmployerSupervisorUserSummaryModel"
+          }
+        }
+      },
+      "EmployerSupervisorUserSummaryModel": {
+        "required": [
+          "id",
+          "email",
+          "firstName",
+          "lastName",
+          "phone",
+          "accountStatus"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "lastName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "accountStatus": {
+            "$ref": "#/components/schemas/AccountStatus"
+          }
+        }
+      },
       "ExportEmployerCommissionPoliciesCsvQuery": {
         "type": "object"
       },
       "ExportOverdueAlarmsCsvQuery": {
         "type": "object"
+      },
+      "FailWorkerPayoutCommand": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "workerPayoutId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
       },
       "GenerateCommissionReceivableCommand": {
         "type": "object",
@@ -5290,6 +7371,19 @@
           }
         }
       },
+      "GetEmployerDetailQuery": {
+        "type": "object",
+        "properties": {
+          "employerId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "GetJobPostingByIdQuery": {
         "type": "object",
         "properties": {
@@ -5313,6 +7407,19 @@
         "type": "object"
       },
       "GetWorkerByIdQuery": {
+        "type": "object",
+        "properties": {
+          "workerId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "GetWorkerDetailQuery": {
         "type": "object",
         "properties": {
           "workerId": {
@@ -5666,6 +7773,16 @@
           }
         }
       },
+      "LanguageLevel": {
+        "enum": [
+          "Beginner",
+          "Elementary",
+          "Intermediate",
+          "UpperIntermediate",
+          "Advanced",
+          "Native"
+        ]
+      },
       "ListCommissionReceivablesByEmployerQuery": {
         "type": "object",
         "properties": {
@@ -5858,6 +7975,12 @@
       "ListOpenJobPostingsQuery": {
         "type": "object",
         "properties": {
+          "countryCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
           "limit": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
@@ -6053,6 +8176,19 @@
             "type": "string"
           },
           "systemUserId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "MarkWorkerPayoutAsProcessingCommand": {
+        "type": "object",
+        "properties": {
+          "workerPayoutId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "integer",
@@ -6961,6 +9097,19 @@
           }
         }
       },
+      "RemoveEmployerSupervisorCommand": {
+        "type": "object",
+        "properties": {
+          "systemUserId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "RemoveJobPostingSkillCommand": {
         "type": "object",
         "properties": {
@@ -6972,6 +9121,97 @@
             ],
             "format": "int32"
           },
+          "skillId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerAvailabilityCommand": {
+        "type": "object",
+        "properties": {
+          "availabilityId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerCertificateCommand": {
+        "type": "object",
+        "properties": {
+          "certificateId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerEducationCommand": {
+        "type": "object",
+        "properties": {
+          "educationId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerExperienceCommand": {
+        "type": "object",
+        "properties": {
+          "experienceId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerLanguageCommand": {
+        "type": "object",
+        "properties": {
+          "languageId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerReferenceCommand": {
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "RemoveWorkerSkillCommand": {
+        "type": "object",
+        "properties": {
           "skillId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
@@ -6999,6 +9239,19 @@
           },
           "tokenHash": {
             "type": "string"
+          }
+        }
+      },
+      "RetryWorkerPayoutCommand": {
+        "type": "object",
+        "properties": {
+          "workerPayoutId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           }
         }
       },
@@ -7070,6 +9323,7 @@
       "ShiftAssignmentStatus": {
         "enum": [
           "Pending",
+          "AwaitingMutualQr",
           "CheckedIn",
           "CheckedOut"
         ]
@@ -7093,6 +9347,22 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "SupervisorCheckInShiftAssignmentCommand": {
+        "type": "object",
+        "properties": {
+          "assignmentId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "supervisorCheckInTokenHash": {
+            "type": "string"
           }
         }
       },
@@ -7365,6 +9635,23 @@
           }
         }
       },
+      "UpdateWorkerProfileCommand": {
+        "type": "object",
+        "properties": {
+          "nationality": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "university": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "VerifySystemUserEmailCommand": {
         "type": "object",
         "properties": {
@@ -7399,6 +9686,85 @@
               "string"
             ],
             "format": "int32"
+          }
+        }
+      },
+      "WorkerAvailabilityDetailModel": {
+        "required": [
+          "id",
+          "dayOfWeek",
+          "timeFrom",
+          "timeTo"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "timeFrom": {
+            "type": "string",
+            "format": "time"
+          },
+          "timeTo": {
+            "type": "string",
+            "format": "time"
+          }
+        }
+      },
+      "WorkerCertificateDetailModel": {
+        "required": [
+          "id",
+          "name",
+          "issuingOrganization",
+          "issuedAt",
+          "expiresAt",
+          "documentUrl",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "issuingOrganization": {
+            "type": "string"
+          },
+          "issuedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "expiresAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "documentUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -7452,6 +9818,205 @@
             "type": "array",
             "items": {
               "type": "string"
+            }
+          }
+        }
+      },
+      "WorkerEducationDetailModel": {
+        "required": [
+          "id",
+          "school",
+          "department",
+          "educationType",
+          "startYear",
+          "endYear",
+          "isOngoing"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "school": {
+            "type": "string"
+          },
+          "department": {
+            "type": "string"
+          },
+          "educationType": {
+            "$ref": "#/components/schemas/EducationType"
+          },
+          "startYear": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "endYear": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isOngoing": {
+            "type": "boolean"
+          }
+        }
+      },
+      "WorkerExperienceDetailModel": {
+        "required": [
+          "id",
+          "companyName",
+          "position",
+          "startDate",
+          "endDate",
+          "isCurrent",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "isCurrent": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "WorkerFullDetailModel": {
+        "required": [
+          "id",
+          "systemUserId",
+          "nationality",
+          "university",
+          "embeddingUpdatedAt",
+          "systemUser",
+          "skills",
+          "availabilities",
+          "certificates",
+          "educations",
+          "experiences",
+          "languages",
+          "references"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "systemUserId": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "nationality": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "university": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "embeddingUpdatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "systemUser": {
+            "$ref": "#/components/schemas/WorkerSystemUserSummaryModel"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerSkillDetailModel"
+            }
+          },
+          "availabilities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerAvailabilityDetailModel"
+            }
+          },
+          "certificates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerCertificateDetailModel"
+            }
+          },
+          "educations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerEducationDetailModel"
+            }
+          },
+          "experiences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerExperienceDetailModel"
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerLanguageDetailModel"
+            }
+          },
+          "references": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkerReferenceDetailModel"
             }
           }
         }
@@ -7512,10 +10077,36 @@
           }
         }
       },
+      "WorkerLanguageDetailModel": {
+        "required": [
+          "id",
+          "language",
+          "level"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "language": {
+            "type": "string"
+          },
+          "level": {
+            "$ref": "#/components/schemas/LanguageLevel"
+          }
+        }
+      },
       "WorkerListItemModel": {
         "required": [
           "accountStatus",
           "email",
+          "firstName",
+          "lastName",
           "systemUserId",
           "workerId"
         ],
@@ -7526,6 +10117,18 @@
           },
           "email": {
             "type": "string"
+          },
+          "firstName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "lastName": {
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "systemUserId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
@@ -7542,6 +10145,12 @@
               "string"
             ],
             "format": "int32"
+          },
+          "fullName": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -7570,7 +10179,11 @@
           "jobPostingId",
           "channel",
           "message",
-          "fallbackApplied"
+          "fallbackApplied",
+          "fallbackReason",
+          "personalizationScore",
+          "personalizationSource",
+          "generatedAtUtc"
         ],
         "type": "object",
         "properties": {
@@ -7590,6 +10203,79 @@
           },
           "fallbackApplied": {
             "type": "boolean"
+          },
+          "fallbackReason": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "personalizationScore": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "personalizationSource": {
+            "type": "string"
+          },
+          "generatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WorkerReferenceDetailModel": {
+        "required": [
+          "id",
+          "company",
+          "position",
+          "contactFirstName",
+          "contactLastName",
+          "contactEmail",
+          "contactPhone"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "company": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "contactFirstName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "contactLastName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "contactEmail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "contactPhone": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -7599,6 +10285,8 @@
           "jobPostingId",
           "jobApplicationId",
           "status",
+          "isAnomalyFlagged",
+          "anomalyCode",
           "assignedAt",
           "checkedInAt",
           "checkedOutAt",
@@ -7635,6 +10323,15 @@
           "status": {
             "$ref": "#/components/schemas/ShiftAssignmentStatus"
           },
+          "isAnomalyFlagged": {
+            "type": "boolean"
+          },
+          "anomalyCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
           "assignedAt": {
             "type": "string",
             "format": "date-time"
@@ -7664,6 +10361,76 @@
           "shiftEndTime": {
             "type": "string",
             "format": "time"
+          }
+        }
+      },
+      "WorkerSkillDetailModel": {
+        "required": [
+          "id",
+          "tag",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "WorkerSystemUserSummaryModel": {
+        "required": [
+          "id",
+          "email",
+          "firstName",
+          "lastName",
+          "phone",
+          "accountStatus"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "lastName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "phone": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "accountStatus": {
+            "$ref": "#/components/schemas/AccountStatus"
           }
         }
       }

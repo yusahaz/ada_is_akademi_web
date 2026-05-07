@@ -330,6 +330,7 @@
       "shifts": {
         "submit": "İlana Başvur",
         "submitting": "Başvuruluyor...",
+        "submitSuccess": "Başvurunuz alındı.",
         "submitError": "Başvuru isteği başarısız oldu.",
         "wageLabel": "Ücret"
       },
@@ -369,12 +370,25 @@
     },
     "employerPortal": {
       "nav": {
+        "groups": {
+          "dashboard": "Dashboard",
+          "operations": "Vardiya Yönetimi",
+          "intelligence": "Yetenek Havuzu",
+          "finance": "Finans Merkezi",
+          "settings": "Kurumsal Ayarlar",
+          "support": "Yardım ve İtiraz"
+        },
+        "badges": {
+          "activeAnomalies": "Aktif anomaliler: {{count}}",
+          "pendingPayouts": "Bekleyen ödemeler: {{count}}"
+        },
         "overview": "Genel Bakış",
         "postings": "İlanlar",
         "candidates": "Adaylar",
         "operations": "Operasyon",
         "billing": "Faturalama",
-        "reports": "Raporlar"
+        "reports": "Raporlar",
+        "disputes": "İtiraz Merkezi"
       },
       "topbar": {
         "toggleThemeAria": "Temayı değiştir",
@@ -406,9 +420,148 @@
         "reports": {
           "title": "Raporlar",
           "subtitle": "Dışa aktarma ve özet KPI görünümü."
+        },
+        "disputes": {
+          "title": "İtiraz Merkezi",
+          "subtitle": "Uyuşmazlık ve anomali bayraklı vakaları tek yerden yönetin."
         }
       },
       "logout": "Çıkış Yap"
+    },
+    "employerSpot": {
+      "common": {
+        "comingSoon": "Bu alan backend entegrasyonu tamamlanınca aktif olacak."
+      },
+      "kpis": {
+        "fillRateToday": "Günlük doluluk",
+        "activeWorkers": "Aktif çalışan"
+      },
+      "anomalies": {
+        "title": "Anomali Akışı",
+        "subtitle": "GPS hataları, süresi dolmuş tokenlar ve replay saldırılarını gerçek zamanlı takip edin.",
+        "empty": "Aktif anomali yok.",
+        "hint": "Not: Şu an fallback verilerle gösterim yapılıyor; ShiftAssignments entegrasyonu ile gerçek zamanlı hale gelecek.",
+        "itemPrefix": "Vaka"
+      },
+      "operations": {
+        "tabs": {
+          "createPosting": "İlan Oluştur",
+          "activeAssignments": "Aktif Vardiyalar",
+          "applications": "Başvurular",
+          "history": "Vardiya Geçmişi"
+        },
+        "createPosting": {
+          "title": "İlan Oluştur",
+          "subtitle": "Manuel giriş veya şablon seçimi ile hızlı ilan açın."
+        },
+        "activeAssignments": {
+          "title": "Aktif Vardiyalar",
+          "subtitle": "Karşılıklı QR doğrulama statüsüne göre devam eden görevleri izleyin.",
+          "all": "Tümü",
+          "empty": "Aktif vardiya kaydı yok.",
+          "worker": "Çalışan",
+          "qrStatus": "QR durumu"
+        },
+        "applications": {
+          "title": "Başvurular",
+          "subtitle": "Semantik eşleşme skorlarına göre adayları inceleyin.",
+          "empty": "Başvuru bulunamadı.",
+          "matchScore": "%{{score}}",
+          "matchScoreAria": "Eşleşme skoru: %{{score}}"
+        },
+        "history": {
+          "title": "Vardiya Geçmişi",
+          "subtitle": "Tamamlanan görevler ve no-show raporları."
+        }
+      },
+      "intelligence": {
+        "tabs": {
+          "semanticSearch": "Semantik Arama",
+          "workerPortfolio": "Worker Portföyü"
+        },
+        "semanticSearch": {
+          "title": "Semantik Arama",
+          "subtitle": "Yetenek embedding'leri ile AI destekli çalışan araması yapın.",
+          "placeholder": "Örn: barista, depo, kasiyer…",
+          "search": "Ara",
+          "hint": "Not: Backend hazır olduğunda arama `Workers/List` ve embedding skoru ile gerçek sonuçlara bağlanacak."
+        },
+        "workerPortfolio": {
+          "title": "Worker Portföyü",
+          "subtitle": "Daha önce çalışılmış ve güven puanı yüksek çalışanlar.",
+          "empty": "Portföyde kayıt yok.",
+          "reliability": "Güven {{value}}%",
+          "lastWorked": "Son etkileşim",
+          "hint": "Not: Portföy, assignment geçmişi ve itiraz sonuçlarıyla zenginleşecek."
+        }
+      },
+      "finance": {
+        "tabs": {
+          "workerPayouts": "İşçi Ödemeleri",
+          "commissionReceivables": "Platform Faturaları"
+        },
+        "workerPayouts": {
+          "title": "İşçi Ödemeleri",
+          "subtitle": "WorkerPayout kayıtlarını yönetip durum geçişlerini kontrol edin.",
+          "empty": "Ödeme satırı yok.",
+          "status": "Durum",
+          "locked": "Bu kayıt kilitli. Çakışmayı önlemek için işlem tamamlanana kadar aksiyonlar devre dışıdır.",
+          "actions": {
+            "markProcessing": "İşleniyor",
+            "markPaid": "Ödendi",
+            "fail": "Başarısız",
+            "retry": "Tekrar Dene"
+          },
+          "hint": "Not: Pessimistic locking backend tarafında 423 Locked/alan bilgisiyle aktif olacaktır."
+        },
+        "commissions": {
+          "title": "Platform Faturaları",
+          "subtitle": "Aylık komisyon faturalarını ve gecikmiş ödemeleri takip edin.",
+          "empty": "Fatura kaydı yok.",
+          "status": "Durum",
+          "downloadPdf": "PDF İndir",
+          "hint": "Not: Backend ile gerçek CommissionReceivable listesi ve PDF paketleri bağlanacak."
+        }
+      },
+      "settings": {
+        "tabs": {
+          "geofence": "Lokasyon & Geofence",
+          "teamRBAC": "Ekip Yönetimi"
+        },
+        "geofence": {
+          "title": "Lokasyon ve Geofence",
+          "subtitle": "EmployerLocation koordinatlarını ve doğrulama yarıçapını tanımlayın.",
+          "fields": {
+            "locationName": "Lokasyon adı",
+            "city": "Şehir",
+            "latitude": "Enlem (lat)",
+            "longitude": "Boylam (lng)",
+            "radius": "Yarıçap (metre)"
+          },
+          "hint": "Not: `/Employers/AddLocation` entegrasyonu ile kayıt oluşturulacak."
+        },
+        "teamRBAC": {
+          "title": "Ekip Yönetimi (RBAC)",
+          "subtitle": "Lokasyon bazlı vardiya sorumluları atayın ve erişimleri sınırlandırın.",
+          "cards": {
+            "supervisors": "ShiftSupervisor Atamaları",
+            "groups": "Grup Yetkileri (Scope)"
+          },
+          "hint": "Not: `/Employers/AddSupervisor` ve `/SystemUserGroups/*` ile entegre edilecek."
+        }
+      },
+      "disputes": {
+        "title": "İtiraz Merkezi",
+        "subtitle": "`AssignmentStatus.Disputed` vakalarını çözümleyin.",
+        "empty": "Aktif itiraz kaydı yok.",
+        "flags": {
+          "locationMismatch": "GPS hatası / Konum uyuşmazlığı",
+          "expiredToken": "Süresi dolmuş token",
+          "replayAttack": "Mükerrer saldırı (replay attack)"
+        },
+        "itemDetail": "Vaka #{{id}} • Worker {{workerId}}",
+        "hint": "Not: Şu an fallback anomaly listesi gösteriliyor; backend ile disputed vakalar doğrudan listelenecek."
+      }
     },
     "employer": {
       "defaultName": "İşveren",

@@ -8,6 +8,7 @@ import {
   systemUsersApi,
   SystemUserType,
 } from '../../../api'
+import { useActionToasts } from '../../../notifications/use-action-toasts'
 import type { SystemUserListItem, SystemUsersListResult } from '../../../api/system-users'
 import { AdminDataGrid, type AdminDataGridColumn } from '../AdminDataGrid'
 import { useTheme } from '../../../theme/theme-context'
@@ -28,6 +29,7 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const { runWithToast } = useActionToasts()
   const mapApiError = useCallback(
     (fallbackKey: string, error: unknown) => {
       const base = t(fallbackKey)
@@ -209,7 +211,10 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
       setQueryPending(true)
       setListError(null)
       try {
-        await systemUsersApi.ban({ systemUserId })
+        await runWithToast(systemUsersApi.ban({ systemUserId }), {
+          success: { messageKey: 'dashboard.admin.detail.feedback.deleteSuccess' },
+          error: { messageKey: 'dashboard.admin.detail.feedback.deleteError' },
+        })
         setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
         await refreshList()
       } catch (error) {
@@ -218,7 +223,7 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
         setQueryPending(false)
       }
     },
-    [mapApiError, refreshList, t],
+    [mapApiError, refreshList, runWithToast, t],
   )
 
   const handleDetailSave = useCallback(async () => {
@@ -239,16 +244,24 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
     setDetailError(null)
     setDetailSuccess(null)
     try {
-      if (lifecycleAction === 'suspend') {
-        await systemUsersApi.suspend({ systemUserId })
-      } else if (lifecycleAction === 'reactivate') {
-        await systemUsersApi.reactivate({ systemUserId })
-      } else if (lifecycleAction === 'ban') {
-        await systemUsersApi.ban({ systemUserId })
-      }
-      if (password.length >= 6) {
-        await systemUsersApi.changePassword({ systemUserId, password })
-      }
+      await runWithToast(
+        (async () => {
+          if (lifecycleAction === 'suspend') {
+            await systemUsersApi.suspend({ systemUserId })
+          } else if (lifecycleAction === 'reactivate') {
+            await systemUsersApi.reactivate({ systemUserId })
+          } else if (lifecycleAction === 'ban') {
+            await systemUsersApi.ban({ systemUserId })
+          }
+          if (password.length >= 6) {
+            await systemUsersApi.changePassword({ systemUserId, password })
+          }
+        })(),
+        {
+          success: { messageKey: 'dashboard.admin.detail.feedback.saveSuccess' },
+          error: { messageKey: 'dashboard.admin.detail.feedback.saveError' },
+        },
+      )
       setDetailSuccess(t('dashboard.admin.detail.feedback.saveSuccess'))
       setPasswordDraft('')
       setLifecycleAction('')
@@ -258,7 +271,7 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
     } finally {
       setDetailPending(false)
     }
-  }, [lifecycleAction, listRow, mapApiError, passwordDraft, refreshList, t])
+  }, [lifecycleAction, listRow, mapApiError, passwordDraft, refreshList, runWithToast, t])
 
   const handleDetailDelete = useCallback(async () => {
     if (!listRow) return
@@ -268,7 +281,10 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
     setDetailError(null)
     setDetailSuccess(null)
     try {
-      await systemUsersApi.ban({ systemUserId })
+      await runWithToast(systemUsersApi.ban({ systemUserId }), {
+        success: { messageKey: 'dashboard.admin.detail.feedback.deleteSuccess' },
+        error: { messageKey: 'dashboard.admin.detail.feedback.deleteError' },
+      })
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshList()
@@ -277,7 +293,7 @@ export function UsersSection({ isActive, detailId, onOpenDetail, onCloseDetail }
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, mapApiError, refreshList, t])
+  }, [closeDetail, listRow, mapApiError, refreshList, runWithToast, t])
 
   const typeLabel = useCallback(
     (type: SystemUserType | string) =>

@@ -16,6 +16,7 @@
 
 ## Completed
 
+- [x] Add generic `useActionToasts` hook (`src/notifications/use-action-toasts.ts`) and wire mutation toasts: worker shifts apply (`submitSuccess` i18n), admin Candidates account actions, Users/Employers/UserGroups save-delete flows
 - [x] Create dedicated `WorkerLayout` and route worker pages through it for centralized shell definitions
 - [x] Verify worker-only layout path with lint
 - [x] Redesign `/worker/profile` with account-settings style layout (left section nav + right editable content) aligned to existing ocean dashboard theme

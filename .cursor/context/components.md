@@ -17,6 +17,15 @@
 - Input
 - Navbar
 
+## Notifications
+
+Component: `useActionToasts` (hook)
+Purpose: Mutation aksiyonlarında `NotificationProvider` üzerinden i18n anahtarlarıyla success/error toast gösterir; hatayı yeniden fırlatarak mevcut `try/catch` ve inline banner akışını korur.
+Used In: `ShiftsPage` (ilan başvurusu); `CandidatesSection` (hesap aksiyonları); `UsersSection`, `EmployersSection`, `UserGroupsSection` (kaydet/sil lifecycle).
+Props: Yok — `runWithToast(request, { success?: { messageKey, interpolation? }, error: { messageKey, interpolation? } })` döner.
+States: logic-only
+Responsive Notes: Toast görünümü `NotificationProvider` içinde (`fixed end-3 top-20`, mobil genişlik sınırı).
+
 ---
 
 ## Rules

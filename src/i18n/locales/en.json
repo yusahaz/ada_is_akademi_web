@@ -330,6 +330,7 @@
       "shifts": {
         "submit": "Apply to Posting",
         "submitting": "Applying...",
+        "submitSuccess": "Your application was submitted.",
         "submitError": "Application request failed.",
         "wageLabel": "Wage"
       },
@@ -369,12 +370,25 @@
     },
     "employerPortal": {
       "nav": {
+        "groups": {
+          "dashboard": "Dashboard",
+          "operations": "Operations",
+          "intelligence": "Talent pool",
+          "finance": "Finance center",
+          "settings": "Organization",
+          "support": "Support"
+        },
+        "badges": {
+          "activeAnomalies": "Active anomalies: {{count}}",
+          "pendingPayouts": "Pending payouts: {{count}}"
+        },
         "overview": "Overview",
         "postings": "Postings",
         "candidates": "Candidates",
         "operations": "Operations",
         "billing": "Billing",
-        "reports": "Reports"
+        "reports": "Reports",
+        "disputes": "Dispute center"
       },
       "topbar": {
         "toggleThemeAria": "Toggle theme",
@@ -406,9 +420,148 @@
         "reports": {
           "title": "Reports",
           "subtitle": "Export queues and summary KPIs."
+        },
+        "disputes": {
+          "title": "Dispute center",
+          "subtitle": "Resolve disputed or anomaly-flagged cases."
         }
       },
       "logout": "Log out"
+    },
+    "employerSpot": {
+      "common": {
+        "comingSoon": "This area will be enabled when backend integration is ready."
+      },
+      "kpis": {
+        "fillRateToday": "Fill rate today",
+        "activeWorkers": "Active workers"
+      },
+      "anomalies": {
+        "title": "Anomaly flow",
+        "subtitle": "Track GPS issues, expired tokens, and replay attacks in real time.",
+        "empty": "No active anomalies.",
+        "hint": "Note: Currently rendered with fallback data; will become real-time with ShiftAssignments integration.",
+        "itemPrefix": "Case"
+      },
+      "operations": {
+        "tabs": {
+          "createPosting": "Create posting",
+          "activeAssignments": "Active shifts",
+          "applications": "Applications",
+          "history": "Shift history"
+        },
+        "createPosting": {
+          "title": "Create posting",
+          "subtitle": "Open a posting quickly via manual entry or a template."
+        },
+        "activeAssignments": {
+          "title": "Active shifts",
+          "subtitle": "Track ongoing work via mutual QR verification status.",
+          "all": "All",
+          "empty": "No active shifts.",
+          "worker": "Worker",
+          "qrStatus": "QR status"
+        },
+        "applications": {
+          "title": "Applications",
+          "subtitle": "Review candidates ordered by semantic match score.",
+          "empty": "No applications found.",
+          "matchScore": "{{score}}%",
+          "matchScoreAria": "Match score: {{score}}%"
+        },
+        "history": {
+          "title": "Shift history",
+          "subtitle": "Archive completed shifts and no-show reports."
+        }
+      },
+      "intelligence": {
+        "tabs": {
+          "semanticSearch": "Semantic search",
+          "workerPortfolio": "Worker portfolio"
+        },
+        "semanticSearch": {
+          "title": "Semantic search",
+          "subtitle": "AI-assisted search using skill embeddings.",
+          "placeholder": "e.g. barista, warehouse, cashier…",
+          "search": "Search",
+          "hint": "Note: Will connect to `Workers/List` and embedding scores when backend is ready."
+        },
+        "workerPortfolio": {
+          "title": "Worker portfolio",
+          "subtitle": "Previously worked and high-reliability workers.",
+          "empty": "No portfolio entries.",
+          "reliability": "Reliability {{value}}%",
+          "lastWorked": "Last interaction",
+          "hint": "Note: Portfolio will be enriched by assignment history and dispute outcomes."
+        }
+      },
+      "finance": {
+        "tabs": {
+          "workerPayouts": "Worker payouts",
+          "commissionReceivables": "Platform invoices"
+        },
+        "workerPayouts": {
+          "title": "Worker payouts",
+          "subtitle": "Manage WorkerPayout records and control status transitions.",
+          "empty": "No payout lines.",
+          "status": "Status",
+          "locked": "This record is locked. Actions are disabled until the operation completes.",
+          "actions": {
+            "markProcessing": "Processing",
+            "markPaid": "Paid",
+            "fail": "Fail",
+            "retry": "Retry"
+          },
+          "hint": "Note: Pessimistic locking will be driven by backend 423 Locked / lock fields."
+        },
+        "commissions": {
+          "title": "Platform invoices",
+          "subtitle": "Track monthly commission receivables and overdue payments.",
+          "empty": "No invoice records.",
+          "status": "Status",
+          "downloadPdf": "Download PDF",
+          "hint": "Note: Will connect to real CommissionReceivable list and PDF packages."
+        }
+      },
+      "settings": {
+        "tabs": {
+          "geofence": "Location & geofence",
+          "teamRBAC": "Team management"
+        },
+        "geofence": {
+          "title": "Location and geofence",
+          "subtitle": "Define coordinates and verification radius for employer locations.",
+          "fields": {
+            "locationName": "Location name",
+            "city": "City",
+            "latitude": "Latitude",
+            "longitude": "Longitude",
+            "radius": "Radius (meters)"
+          },
+          "hint": "Note: Will create records via `/Employers/AddLocation`."
+        },
+        "teamRBAC": {
+          "title": "Team management (RBAC)",
+          "subtitle": "Assign shift supervisors and scope access per location.",
+          "cards": {
+            "supervisors": "ShiftSupervisor assignments",
+            "groups": "Group permissions (scope)"
+          },
+          "hint": "Note: Will integrate with `/Employers/AddSupervisor` and `/SystemUserGroups/*`."
+        }
+      },
+      "disputes": {
+        "title": "Dispute center",
+        "subtitle": "Resolve `AssignmentStatus.Disputed` cases.",
+        "empty": "No active disputes.",
+        "flags": {
+          "locationMismatch": "GPS issue / location mismatch",
+          "expiredToken": "Expired token",
+          "replayAttack": "Replay attack"
+        },
+        "itemDetail": "Case #{{id}} • Worker {{workerId}}",
+        "hint": "Note: Currently shows fallback anomaly list; will list disputed cases from backend."
+      }
     },
     "employer": {
       "defaultName": "Employer",

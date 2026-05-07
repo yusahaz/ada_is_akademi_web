@@ -177,6 +177,17 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
     [payoutFilter, payoutItems],
   )
 
+  const badges = useMemo(() => {
+    const pendingPayouts = payoutItems.filter((item) => item.status === 'Pending').length
+    // Backend gelene kadar sentetik: pending uygulamalar / anomaly-flag tetikleyicisi gibi davranır.
+    // (ShiftAssignments/MyAssignments bağlandığında gerçek anomaly alanlarıyla değiştirilecek.)
+    const activeAnomalies = Math.min(
+      applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
+      9,
+    )
+    return { activeAnomalies, pendingPayouts }
+  }, [applications, payoutItems])
+
   const filteredReceivables = useMemo(
     () =>
       receivableFilter === 'all'
@@ -200,6 +211,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
     () => ({
       loading,
       error,
+      badges,
       postings,
       selectedPostingId,
       setSelectedPostingId,
@@ -224,6 +236,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
     [
       loading,
       error,
+      badges,
       postings,
       selectedPostingId,
       selectedPosting,

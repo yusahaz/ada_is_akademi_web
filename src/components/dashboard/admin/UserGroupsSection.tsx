@@ -7,6 +7,7 @@ import {
   PermissionEffect,
   systemUserGroupsApi,
 } from '../../../api'
+import { useActionToasts } from '../../../notifications/use-action-toasts'
 import type { SystemUserGroupListItem, SystemUserGroupsListResult } from '../../../api/system-user-groups'
 import { AdminDataGrid, type AdminDataGridColumn } from '../AdminDataGrid'
 import { useTheme } from '../../../theme/theme-context'
@@ -35,6 +36,7 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const { runWithToast } = useActionToasts()
   const mapApiError = useCallback(
     (fallbackKey: string, error: unknown) => {
       const base = t(fallbackKey)
@@ -225,7 +227,10 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
       setQueryPending(true)
       setListError(null)
       try {
-        await systemUserGroupsApi.deactivate({ systemUserGroupId })
+        await runWithToast(systemUserGroupsApi.deactivate({ systemUserGroupId }), {
+          success: { messageKey: 'dashboard.admin.detail.feedback.deleteSuccess' },
+          error: { messageKey: 'dashboard.admin.detail.feedback.deleteError' },
+        })
         setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
         await refreshList()
       } catch (error) {
@@ -234,7 +239,7 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
         setQueryPending(false)
       }
     },
-    [mapApiError, refreshList, t],
+    [mapApiError, refreshList, runWithToast, t],
   )
 
   const handleDetailSave = useCallback(async () => {
@@ -260,20 +265,28 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
     setDetailError(null)
     setDetailSuccess(null)
     try {
-      if (activeChanged) {
-        if (targetActive) {
-          await systemUserGroupsApi.activate({ systemUserGroupId })
-        } else {
-          await systemUserGroupsApi.deactivate({ systemUserGroupId })
-        }
-      }
-      if (wantsPermission) {
-        await systemUserGroupsApi.addPermission({
-          systemUserGroupId,
-          permissionId: permId,
-          effect: Number(permissionEffectDraft),
-        })
-      }
+      await runWithToast(
+        (async () => {
+          if (activeChanged) {
+            if (targetActive) {
+              await systemUserGroupsApi.activate({ systemUserGroupId })
+            } else {
+              await systemUserGroupsApi.deactivate({ systemUserGroupId })
+            }
+          }
+          if (wantsPermission) {
+            await systemUserGroupsApi.addPermission({
+              systemUserGroupId,
+              permissionId: permId,
+              effect: Number(permissionEffectDraft),
+            })
+          }
+        })(),
+        {
+          success: { messageKey: 'dashboard.admin.detail.feedback.saveSuccess' },
+          error: { messageKey: 'dashboard.admin.detail.feedback.saveError' },
+        },
+      )
       setDetailSuccess(t('dashboard.admin.detail.feedback.saveSuccess'))
       setPermissionIdDraft('')
       setListRow((prev) =>
@@ -296,6 +309,7 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
     permissionIdDraft,
     mapApiError,
     refreshList,
+    runWithToast,
     targetActive,
     t,
   ])
@@ -308,7 +322,10 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
     setDetailError(null)
     setDetailSuccess(null)
     try {
-      await systemUserGroupsApi.deactivate({ systemUserGroupId })
+      await runWithToast(systemUserGroupsApi.deactivate({ systemUserGroupId }), {
+        success: { messageKey: 'dashboard.admin.detail.feedback.deleteSuccess' },
+        error: { messageKey: 'dashboard.admin.detail.feedback.deleteError' },
+      })
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshList()
@@ -317,7 +334,7 @@ export function UserGroupsSection({ isActive, detailId, onOpenDetail, onCloseDet
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, mapApiError, refreshList, t])
+  }, [closeDetail, listRow, mapApiError, refreshList, runWithToast, t])
 
   const gridColumns = useMemo<AdminDataGridColumn<SystemUserGroupListItem>[]>(
     () => [

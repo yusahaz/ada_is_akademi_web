@@ -9,6 +9,10 @@ export type EmployerExportFormat = 'json' | 'csv' | 'pdf' | 'excel'
 export type EmployerPortalValue = {
   loading: boolean
   error: string | null
+  badges: {
+    activeAnomalies: number
+    pendingPayouts: number
+  }
   postings: JobPostingSummary[]
   selectedPostingId: number | null
   setSelectedPostingId: (id: number | null) => void

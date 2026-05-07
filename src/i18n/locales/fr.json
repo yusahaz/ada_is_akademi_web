@@ -326,6 +326,7 @@
       "shifts": {
         "submit": "Postuler a l'annonce",
         "submitting": "Applying...",
+        "submitSuccess": "Votre candidature a bien été envoyée.",
         "submitError": "Application request failed.",
         "wageLabel": "Remuneration"
       },
@@ -365,12 +366,25 @@
     },
     "employerPortal": {
       "nav": {
+        "groups": {
+          "dashboard": "Dashboard",
+          "operations": "Opérations",
+          "intelligence": "Talents",
+          "finance": "Finance",
+          "settings": "Organisation",
+          "support": "Support"
+        },
+        "badges": {
+          "activeAnomalies": "Anomalies actives : {{count}}",
+          "pendingPayouts": "Paiements en attente : {{count}}"
+        },
         "overview": "Aperçu",
         "postings": "Annonces",
         "candidates": "Candidats",
         "operations": "Opérations",
         "billing": "Facturation",
-        "reports": "Rapports"
+        "reports": "Rapports",
+        "disputes": "Centre de litiges"
       },
       "topbar": {
         "toggleThemeAria": "Changer de thème",
@@ -402,9 +416,148 @@
         "reports": {
           "title": "Rapports",
           "subtitle": "Files d'export et indicateurs récapitulatifs."
+        },
+        "disputes": {
+          "title": "Centre de litiges",
+          "subtitle": "Résoudre les cas litigieux ou signalés comme anomalie."
         }
       },
       "logout": "Se déconnecter"
+    },
+    "employerSpot": {
+      "common": {
+        "comingSoon": "Cette zone sera activée lorsque l'intégration backend sera prête."
+      },
+      "kpis": {
+        "fillRateToday": "Taux de remplissage (aujourd'hui)",
+        "activeWorkers": "Travailleurs actifs"
+      },
+      "anomalies": {
+        "title": "Flux d'anomalies",
+        "subtitle": "Suivre GPS, tokens expirés et attaques de rejeu en temps réel.",
+        "empty": "Aucune anomalie active.",
+        "hint": "Note : affichage avec données fallback ; deviendra temps réel avec ShiftAssignments.",
+        "itemPrefix": "Cas"
+      },
+      "operations": {
+        "tabs": {
+          "createPosting": "Créer une annonce",
+          "activeAssignments": "Shifts actifs",
+          "applications": "Candidatures",
+          "history": "Historique"
+        },
+        "createPosting": {
+          "title": "Créer une annonce",
+          "subtitle": "Ouvrir rapidement via saisie manuelle ou modèle."
+        },
+        "activeAssignments": {
+          "title": "Shifts actifs",
+          "subtitle": "Suivre le travail via l'état de vérification QR mutuelle.",
+          "all": "Tous",
+          "empty": "Aucun shift actif.",
+          "worker": "Travailleur",
+          "qrStatus": "Statut QR"
+        },
+        "applications": {
+          "title": "Candidatures",
+          "subtitle": "Candidats triés par score sémantique.",
+          "empty": "Aucune candidature.",
+          "matchScore": "{{score}}%",
+          "matchScoreAria": "Score de correspondance : {{score}}%"
+        },
+        "history": {
+          "title": "Historique des shifts",
+          "subtitle": "Archives et rapports no-show."
+        }
+      },
+      "intelligence": {
+        "tabs": {
+          "semanticSearch": "Recherche sémantique",
+          "workerPortfolio": "Portefeuille"
+        },
+        "semanticSearch": {
+          "title": "Recherche sémantique",
+          "subtitle": "Recherche assistée par IA via embeddings de compétences.",
+          "placeholder": "ex. barista, entrepôt, caissier…",
+          "search": "Rechercher",
+          "hint": "Note : se connectera à `Workers/List` et aux scores d'embedding."
+        },
+        "workerPortfolio": {
+          "title": "Portefeuille travailleurs",
+          "subtitle": "Travailleurs déjà employés et fiables.",
+          "empty": "Aucune entrée.",
+          "reliability": "Fiabilité {{value}}%",
+          "lastWorked": "Dernière interaction",
+          "hint": "Note : enrichi par l'historique et les résultats de litiges."
+        }
+      },
+      "finance": {
+        "tabs": {
+          "workerPayouts": "Paiements travailleurs",
+          "commissionReceivables": "Factures plateforme"
+        },
+        "workerPayouts": {
+          "title": "Paiements travailleurs",
+          "subtitle": "Gérer les enregistrements WorkerPayout et les transitions.",
+          "empty": "Aucune ligne de paiement.",
+          "status": "Statut",
+          "locked": "Cet enregistrement est verrouillé. Actions désactivées jusqu'à la fin de l'opération.",
+          "actions": {
+            "markProcessing": "En cours",
+            "markPaid": "Payé",
+            "fail": "Échec",
+            "retry": "Réessayer"
+          },
+          "hint": "Note : le verrou pessimiste viendra du backend (423 Locked / champs lock)."
+        },
+        "commissions": {
+          "title": "Factures plateforme",
+          "subtitle": "Suivre les commissions mensuelles et les retards.",
+          "empty": "Aucune facture.",
+          "status": "Statut",
+          "downloadPdf": "Télécharger PDF",
+          "hint": "Note : connexion à CommissionReceivable réel et aux PDF."
+        }
+      },
+      "settings": {
+        "tabs": {
+          "geofence": "Lieu & geofence",
+          "teamRBAC": "Équipe"
+        },
+        "geofence": {
+          "title": "Lieu et geofence",
+          "subtitle": "Définir coordonnées et rayon de vérification.",
+          "fields": {
+            "locationName": "Nom du lieu",
+            "city": "Ville",
+            "latitude": "Latitude",
+            "longitude": "Longitude",
+            "radius": "Rayon (mètres)"
+          },
+          "hint": "Note : création via `/Employers/AddLocation`."
+        },
+        "teamRBAC": {
+          "title": "Gestion d'équipe (RBAC)",
+          "subtitle": "Assigner des superviseurs et limiter l'accès par lieu.",
+          "cards": {
+            "supervisors": "Affectations ShiftSupervisor",
+            "groups": "Permissions de groupe (scope)"
+          },
+          "hint": "Note : intégration `/Employers/AddSupervisor` et `/SystemUserGroups/*`."
+        }
+      },
+      "disputes": {
+        "title": "Centre de litiges",
+        "subtitle": "Résoudre les cas `AssignmentStatus.Disputed`.",
+        "empty": "Aucun litige actif.",
+        "flags": {
+          "locationMismatch": "GPS / incohérence de lieu",
+          "expiredToken": "Token expiré",
+          "replayAttack": "Attaque de rejeu"
+        },
+        "itemDetail": "Cas #{{id}} • Worker {{workerId}}",
+        "hint": "Note : liste fallback d'anomalies pour l'instant ; ensuite litiges backend."
+      }
     },
     "employer": {
       "defaultName": "Employeur",

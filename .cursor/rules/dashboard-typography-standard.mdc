@@ -1,0 +1,24 @@
+---
+description: Typography standard for dashboard layout surfaces
+globs: src/features/worker/**/*.tsx
+alwaysApply: false
+---
+
+# Dashboard Typography Standard
+
+Apply this standard to Worker layout pages and mirror the same structure in Admin/Employer dashboard shells.
+
+- Base body/content text uses `DM Sans` (default body font, no custom override).
+- Section/page titles use `Syne` via `h1/h2/h3` or explicit `.font-display`.
+- Numeric highlight metrics (KPI/value blocks) use `Syne` with `font-semibold`.
+- Descriptive helper text, metadata lines, and button labels stay on `DM Sans`.
+- Do not introduce third font families in dashboard surfaces.
+- Keep typography consistent across `WorkerLayout`, `AdminDashboard`, and `EmployerDashboard`.
+- For new dashboard components, reuse `WorkerSectionHeader`/dashboard primitives typography rhythm instead of ad-hoc font decisions.
+
+## Quick Mapping
+
+- **Title / Heading** -> `Syne` (`h1/h2/h3` or `.font-display`)
+- **Body / Supporting Text** -> `DM Sans`
+- **Action Labels (buttons/nav)** -> `DM Sans`
+- **KPI / Emphasis Values** -> `Syne`

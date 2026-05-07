@@ -331,6 +331,7 @@
       "shifts": {
         "submit": "Откликнуться на объявление",
         "submitting": "Отправка...",
+        "submitSuccess": "Заявка отправлена.",
         "submitError": "Не удалось отправить заявку.",
         "wageLabel": "Оплата"
       },
@@ -370,12 +371,25 @@
     },
     "employerPortal": {
       "nav": {
+        "groups": {
+          "dashboard": "Дашборд",
+          "operations": "Операции",
+          "intelligence": "Таланты",
+          "finance": "Финансы",
+          "settings": "Организация",
+          "support": "Поддержка"
+        },
+        "badges": {
+          "activeAnomalies": "Активные аномалии: {{count}}",
+          "pendingPayouts": "Ожидающие выплаты: {{count}}"
+        },
         "overview": "Обзор",
         "postings": "Вакансии",
         "candidates": "Кандидаты",
         "operations": "Операции",
         "billing": "Биллинг",
-        "reports": "Отчеты"
+        "reports": "Отчеты",
+        "disputes": "Центр споров"
       },
       "topbar": {
         "toggleThemeAria": "Сменить тему",
@@ -407,9 +421,148 @@
         "reports": {
           "title": "Отчеты",
           "subtitle": "Очереди экспорта и сводные показатели."
+        },
+        "disputes": {
+          "title": "Центр споров",
+          "subtitle": "Решайте спорные или помеченные аномалией случаи."
         }
       },
       "logout": "Выйти"
+    },
+    "employerSpot": {
+      "common": {
+        "comingSoon": "Раздел будет доступен после интеграции с backend."
+      },
+      "kpis": {
+        "fillRateToday": "Заполняемость сегодня",
+        "activeWorkers": "Активные работники"
+      },
+      "anomalies": {
+        "title": "Поток аномалий",
+        "subtitle": "Отслеживайте GPS ошибки, просроченные токены и replay атаки в реальном времени.",
+        "empty": "Нет активных аномалий.",
+        "hint": "Примечание: Сейчас используются fallback данные; real-time появится с ShiftAssignments.",
+        "itemPrefix": "Случай"
+      },
+      "operations": {
+        "tabs": {
+          "createPosting": "Создать вакансию",
+          "activeAssignments": "Активные смены",
+          "applications": "Отклики",
+          "history": "История"
+        },
+        "createPosting": {
+          "title": "Создать вакансию",
+          "subtitle": "Быстрое создание вручную или по шаблону."
+        },
+        "activeAssignments": {
+          "title": "Активные смены",
+          "subtitle": "Отслеживайте задания по статусу взаимной QR проверки.",
+          "all": "Все",
+          "empty": "Нет активных смен.",
+          "worker": "Работник",
+          "qrStatus": "Статус QR"
+        },
+        "applications": {
+          "title": "Отклики",
+          "subtitle": "Кандидаты, отсортированные по семантическому скору.",
+          "empty": "Откликов нет.",
+          "matchScore": "{{score}}%",
+          "matchScoreAria": "Скор совпадения: {{score}}%"
+        },
+        "history": {
+          "title": "История смен",
+          "subtitle": "Архив и no-show отчеты."
+        }
+      },
+      "intelligence": {
+        "tabs": {
+          "semanticSearch": "Семантический поиск",
+          "workerPortfolio": "Портфолио"
+        },
+        "semanticSearch": {
+          "title": "Семантический поиск",
+          "subtitle": "AI поиск по эмбеддингам навыков.",
+          "placeholder": "например: бариста, склад, кассир…",
+          "search": "Искать",
+          "hint": "Примечание: подключим `Workers/List` и embedding score при готовности backend."
+        },
+        "workerPortfolio": {
+          "title": "Портфолио работников",
+          "subtitle": "Ранее работавшие и надежные работники.",
+          "empty": "Нет записей портфолио.",
+          "reliability": "Надежность {{value}}%",
+          "lastWorked": "Последнее взаимодействие",
+          "hint": "Примечание: обогатим историей заданий и итогами споров."
+        }
+      },
+      "finance": {
+        "tabs": {
+          "workerPayouts": "Выплаты работникам",
+          "commissionReceivables": "Счета платформы"
+        },
+        "workerPayouts": {
+          "title": "Выплаты работникам",
+          "subtitle": "Управляйте WorkerPayout и переходами статусов.",
+          "empty": "Нет выплат.",
+          "status": "Статус",
+          "locked": "Запись заблокирована. Действия отключены до завершения операции.",
+          "actions": {
+            "markProcessing": "В обработке",
+            "markPaid": "Оплачено",
+            "fail": "Ошибка",
+            "retry": "Повторить"
+          },
+          "hint": "Примечание: pessimistic locking будет от backend (423 Locked / поля lock)."
+        },
+        "commissions": {
+          "title": "Счета платформы",
+          "subtitle": "Ежемесячные комиссии и просрочки (overdue).",
+          "empty": "Нет счетов.",
+          "status": "Статус",
+          "downloadPdf": "Скачать PDF",
+          "hint": "Примечание: подключим реальный CommissionReceivable и PDF пакеты."
+        }
+      },
+      "settings": {
+        "tabs": {
+          "geofence": "Локации и геофенс",
+          "teamRBAC": "Команда"
+        },
+        "geofence": {
+          "title": "Локации и геофенс",
+          "subtitle": "Задайте координаты и радиус проверки.",
+          "fields": {
+            "locationName": "Название локации",
+            "city": "Город",
+            "latitude": "Широта",
+            "longitude": "Долгота",
+            "radius": "Радиус (м)"
+          },
+          "hint": "Примечание: создание через `/Employers/AddLocation`."
+        },
+        "teamRBAC": {
+          "title": "Управление командой (RBAC)",
+          "subtitle": "Назначайте супервайзеров и ограничивайте доступ по локациям.",
+          "cards": {
+            "supervisors": "Назначения ShiftSupervisor",
+            "groups": "Права групп (scope)"
+          },
+          "hint": "Примечание: интеграция `/Employers/AddSupervisor` и `/SystemUserGroups/*`."
+        }
+      },
+      "disputes": {
+        "title": "Центр споров",
+        "subtitle": "Решайте случаи `AssignmentStatus.Disputed`.",
+        "empty": "Нет активных споров.",
+        "flags": {
+          "locationMismatch": "GPS / несоответствие локации",
+          "expiredToken": "Токен истек",
+          "replayAttack": "Replay атака"
+        },
+        "itemDetail": "Случай #{{id}} • Worker {{workerId}}",
+        "hint": "Примечание: сейчас показываем fallback аномалии; позже — реальные споры с backend."
+      }
     },
     "employer": {
       "defaultName": "Работодатель",

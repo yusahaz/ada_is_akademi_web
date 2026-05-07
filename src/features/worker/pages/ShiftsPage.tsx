@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { JobPostingSummary } from '../../../api/job-postings'
 import { workerPortalApi } from '../../../api/worker-portal'
+import { useActionToasts } from '../../../notifications/use-action-toasts'
 import { useTheme } from '../../../theme/theme-context'
 import { DashboardSurface, StatePanel } from '../../../components/dashboard/ui-primitives'
 import { WorkerPrimaryButton, WorkerSectionHeader } from '../worker-ui'
@@ -11,6 +12,7 @@ import { useWorkerAsyncData } from '../hooks/useWorkerAsyncData'
 export function ShiftsPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
+  const { runWithToast } = useActionToasts()
   const query = useCallback(() => workerPortalApi.listOpenShifts(), [])
   const { loading, error, data: items, reload } = useWorkerAsyncData<JobPostingSummary[]>(
     [],
@@ -24,7 +26,10 @@ export function ShiftsPage() {
   const applyShift = async (id: number) => {
     setSubmittingId(id)
     try {
-      await workerPortalApi.submitApplication(id)
+      await runWithToast(workerPortalApi.submitApplication(id), {
+        success: { messageKey: 'dashboard.workerPortal.shifts.submitSuccess' },
+        error: { messageKey: 'dashboard.workerPortal.shifts.submitError' },
+      })
       setSubmitError(null)
       await reload()
     } catch {

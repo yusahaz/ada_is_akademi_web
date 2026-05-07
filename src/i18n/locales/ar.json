@@ -329,6 +329,7 @@
       "shifts": {
         "submit": "التقدم للإعلان",
         "submitting": "جار التقديم...",
+        "submitSuccess": "تم استلام طلبك.",
         "submitError": "فشل طلب التقديم.",
         "wageLabel": "الأجر"
       },
@@ -368,12 +369,25 @@
     },
     "employerPortal": {
       "nav": {
+        "groups": {
+          "dashboard": "لوحة التحكم",
+          "operations": "العمليات",
+          "intelligence": "المواهب",
+          "finance": "المالية",
+          "settings": "المؤسسة",
+          "support": "الدعم"
+        },
+        "badges": {
+          "activeAnomalies": "الشذوذات النشطة: {{count}}",
+          "pendingPayouts": "المدفوعات المعلقة: {{count}}"
+        },
         "overview": "نظرة عامة",
         "postings": "الإعلانات",
         "candidates": "المرشحون",
         "operations": "العمليات",
         "billing": "الفوترة",
-        "reports": "التقارير"
+        "reports": "التقارير",
+        "disputes": "مركز الاعتراضات"
       },
       "topbar": {
         "toggleThemeAria": "تبديل المظهر",
@@ -405,9 +419,148 @@
         "reports": {
           "title": "التقارير",
           "subtitle": "قوائم التصدير ومؤشرات الأداء الملخصة."
+        },
+        "disputes": {
+          "title": "مركز الاعتراضات",
+          "subtitle": "حل الحالات المتنازع عليها أو المعلّمة كشذوذ."
         }
       },
       "logout": "تسجيل الخروج"
+    },
+    "employerSpot": {
+      "common": {
+        "comingSoon": "سيتم تفعيل هذه المنطقة عند جاهزية تكامل الخادم الخلفي."
+      },
+      "kpis": {
+        "fillRateToday": "نسبة الإشغال اليوم",
+        "activeWorkers": "العمال النشطون"
+      },
+      "anomalies": {
+        "title": "تدفق الشذوذ",
+        "subtitle": "تتبّع أخطاء GPS والرموز المنتهية وهجمات الإعادة بشكل فوري.",
+        "empty": "لا توجد شذوذات نشطة.",
+        "hint": "ملاحظة: يتم العرض ببيانات بديلة حالياً؛ سيصبح فورياً مع ShiftAssignments.",
+        "itemPrefix": "حالة"
+      },
+      "operations": {
+        "tabs": {
+          "createPosting": "إنشاء إعلان",
+          "activeAssignments": "الورديات النشطة",
+          "applications": "الطلبات",
+          "history": "السجل"
+        },
+        "createPosting": {
+          "title": "إنشاء إعلان",
+          "subtitle": "افتح إعلاناً بسرعة عبر إدخال يدوي أو قالب."
+        },
+        "activeAssignments": {
+          "title": "الورديات النشطة",
+          "subtitle": "تتبّع المهام حسب حالة التحقق المتبادل عبر QR.",
+          "all": "الكل",
+          "empty": "لا توجد ورديات نشطة.",
+          "worker": "العامل",
+          "qrStatus": "حالة QR"
+        },
+        "applications": {
+          "title": "الطلبات",
+          "subtitle": "راجع المرشحين حسب درجة التطابق الدلالي.",
+          "empty": "لا توجد طلبات.",
+          "matchScore": "{{score}}%",
+          "matchScoreAria": "درجة التطابق: {{score}}%"
+        },
+        "history": {
+          "title": "سجل الورديات",
+          "subtitle": "أرشفة الورديات المكتملة وتقارير عدم الحضور."
+        }
+      },
+      "intelligence": {
+        "tabs": {
+          "semanticSearch": "بحث دلالي",
+          "workerPortfolio": "ملف العامل"
+        },
+        "semanticSearch": {
+          "title": "بحث دلالي",
+          "subtitle": "بحث بمساعدة الذكاء الاصطناعي باستخدام تضمينات المهارات.",
+          "placeholder": "مثال: باريستا، مستودع، أمين صندوق…",
+          "search": "بحث",
+          "hint": "ملاحظة: سيتم ربطه بـ `Workers/List` ودرجات التضمين عند جاهزية الخادم."
+        },
+        "workerPortfolio": {
+          "title": "ملف العامل",
+          "subtitle": "عمال تم التعامل معهم سابقاً وبموثوقية عالية.",
+          "empty": "لا توجد سجلات.",
+          "reliability": "الموثوقية {{value}}%",
+          "lastWorked": "آخر تفاعل",
+          "hint": "ملاحظة: سيتم إثراؤه بسجل المهام ونتائج الاعتراضات."
+        }
+      },
+      "finance": {
+        "tabs": {
+          "workerPayouts": "مدفوعات العمال",
+          "commissionReceivables": "فواتير المنصة"
+        },
+        "workerPayouts": {
+          "title": "مدفوعات العمال",
+          "subtitle": "إدارة سجلات WorkerPayout والتحكم بحالاتها.",
+          "empty": "لا توجد مدفوعات.",
+          "status": "الحالة",
+          "locked": "هذا السجل مقفل. تم تعطيل الإجراءات حتى تكتمل العملية.",
+          "actions": {
+            "markProcessing": "قيد المعالجة",
+            "markPaid": "مدفوع",
+            "fail": "فشل",
+            "retry": "إعادة المحاولة"
+          },
+          "hint": "ملاحظة: سيتم تفعيل القفل التشاؤمي عبر الخادم (423 Locked / حقول القفل)."
+        },
+        "commissions": {
+          "title": "فواتير المنصة",
+          "subtitle": "تتبّع مستحقات العمولة الشهرية والتأخيرات.",
+          "empty": "لا توجد فواتير.",
+          "status": "الحالة",
+          "downloadPdf": "تنزيل PDF",
+          "hint": "ملاحظة: سيتم ربطه بقائمة CommissionReceivable الحقيقية وحزم PDF."
+        }
+      },
+      "settings": {
+        "tabs": {
+          "geofence": "الموقع و Geofence",
+          "teamRBAC": "إدارة الفريق"
+        },
+        "geofence": {
+          "title": "الموقع و Geofence",
+          "subtitle": "حدد الإحداثيات ونطاق التحقق.",
+          "fields": {
+            "locationName": "اسم الموقع",
+            "city": "المدينة",
+            "latitude": "خط العرض",
+            "longitude": "خط الطول",
+            "radius": "النطاق (متر)"
+          },
+          "hint": "ملاحظة: سيتم إنشاء السجلات عبر `/Employers/AddLocation`."
+        },
+        "teamRBAC": {
+          "title": "إدارة الفريق (RBAC)",
+          "subtitle": "عيّن مشرفي الورديات وحدد الوصول حسب الموقع.",
+          "cards": {
+            "supervisors": "تعيينات ShiftSupervisor",
+            "groups": "صلاحيات المجموعات (النطاق)"
+          },
+          "hint": "ملاحظة: سيتم دمجه مع `/Employers/AddSupervisor` و `/SystemUserGroups/*`."
+        }
+      },
+      "disputes": {
+        "title": "مركز الاعتراضات",
+        "subtitle": "حل حالات `AssignmentStatus.Disputed`.",
+        "empty": "لا توجد اعتراضات نشطة.",
+        "flags": {
+          "locationMismatch": "GPS / عدم تطابق الموقع",
+          "expiredToken": "رمز منتهي",
+          "replayAttack": "هجوم إعادة"
+        },
+        "itemDetail": "حالة #{{id}} • العامل {{workerId}}",
+        "hint": "ملاحظة: يعرض حالياً قائمة شذوذ بديلة؛ لاحقاً سيعرض الاعتراضات الفعلية."
+      }
     },
     "employer": {
       "defaultName": "صاحب عمل",

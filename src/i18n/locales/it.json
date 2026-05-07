@@ -329,6 +329,7 @@
       "shifts": {
         "submit": "Candidati all'annuncio",
         "submitting": "Invio in corso...",
+        "submitSuccess": "La candidatura è stata inviata.",
         "submitError": "Richiesta candidatura non riuscita.",
         "wageLabel": "Retribuzione"
       },
@@ -368,12 +369,25 @@
     },
     "employerPortal": {
       "nav": {
+        "groups": {
+          "dashboard": "Dashboard",
+          "operations": "Operazioni",
+          "intelligence": "Talenti",
+          "finance": "Centro finanza",
+          "settings": "Organizzazione",
+          "support": "Supporto"
+        },
+        "badges": {
+          "activeAnomalies": "Anomalie attive: {{count}}",
+          "pendingPayouts": "Pagamenti in attesa: {{count}}"
+        },
         "overview": "Panoramica",
         "postings": "Annunci",
         "candidates": "Candidati",
         "operations": "Operazioni",
         "billing": "Fatturazione",
-        "reports": "Report"
+        "reports": "Report",
+        "disputes": "Centro contestazioni"
       },
       "topbar": {
         "toggleThemeAria": "Cambia tema",
@@ -405,9 +419,148 @@
         "reports": {
           "title": "Report",
           "subtitle": "Code di export e KPI di riepilogo."
+        },
+        "disputes": {
+          "title": "Centro contestazioni",
+          "subtitle": "Gestisci casi contestati o segnalati come anomalia."
         }
       },
       "logout": "Esci"
+    },
+    "employerSpot": {
+      "common": {
+        "comingSoon": "Questa area sarà attiva quando l'integrazione backend sarà pronta."
+      },
+      "kpis": {
+        "fillRateToday": "Riempimento di oggi",
+        "activeWorkers": "Lavoratori attivi"
+      },
+      "anomalies": {
+        "title": "Flusso anomalie",
+        "subtitle": "Monitora GPS, token scaduti e replay attack in tempo reale.",
+        "empty": "Nessuna anomalia attiva.",
+        "hint": "Nota: Attualmente con dati fallback; diventerà real-time con ShiftAssignments.",
+        "itemPrefix": "Caso"
+      },
+      "operations": {
+        "tabs": {
+          "createPosting": "Crea annuncio",
+          "activeAssignments": "Turni attivi",
+          "applications": "Candidature",
+          "history": "Storico"
+        },
+        "createPosting": {
+          "title": "Crea annuncio",
+          "subtitle": "Apri rapidamente con inserimento manuale o template."
+        },
+        "activeAssignments": {
+          "title": "Turni attivi",
+          "subtitle": "Segui i turni tramite stato QR reciproco.",
+          "all": "Tutti",
+          "empty": "Nessun turno attivo.",
+          "worker": "Lavoratore",
+          "qrStatus": "Stato QR"
+        },
+        "applications": {
+          "title": "Candidature",
+          "subtitle": "Candidati ordinati per score semantico.",
+          "empty": "Nessuna candidatura trovata.",
+          "matchScore": "{{score}}%",
+          "matchScoreAria": "Punteggio match: {{score}}%"
+        },
+        "history": {
+          "title": "Storico turni",
+          "subtitle": "Archivio e report no-show."
+        }
+      },
+      "intelligence": {
+        "tabs": {
+          "semanticSearch": "Ricerca semantica",
+          "workerPortfolio": "Portafoglio"
+        },
+        "semanticSearch": {
+          "title": "Ricerca semantica",
+          "subtitle": "Ricerca assistita da IA con embeddings delle skill.",
+          "placeholder": "es. barista, magazzino, cassiere…",
+          "search": "Cerca",
+          "hint": "Nota: Si collegherà a `Workers/List` e score embedding quando pronto."
+        },
+        "workerPortfolio": {
+          "title": "Portafoglio lavoratori",
+          "subtitle": "Lavoratori già ingaggiati e affidabili.",
+          "empty": "Nessuna voce nel portafoglio.",
+          "reliability": "Affidabilità {{value}}%",
+          "lastWorked": "Ultima interazione",
+          "hint": "Nota: Si arricchirà con storico e risultati contestazioni."
+        }
+      },
+      "finance": {
+        "tabs": {
+          "workerPayouts": "Pagamenti lavoratori",
+          "commissionReceivables": "Fatture piattaforma"
+        },
+        "workerPayouts": {
+          "title": "Pagamenti lavoratori",
+          "subtitle": "Gestisci WorkerPayout e transizioni di stato.",
+          "empty": "Nessuna riga pagamento.",
+          "status": "Stato",
+          "locked": "Record bloccato. Azioni disabilitate finché non termina l'operazione.",
+          "actions": {
+            "markProcessing": "In elaborazione",
+            "markPaid": "Pagato",
+            "fail": "Fallisci",
+            "retry": "Riprova"
+          },
+          "hint": "Nota: Il locking pessimistico sarà guidato da backend (423 Locked / campi lock)."
+        },
+        "commissions": {
+          "title": "Fatture piattaforma",
+          "subtitle": "Monitora commissioni e ritardi (overdue).",
+          "empty": "Nessuna fattura.",
+          "status": "Stato",
+          "downloadPdf": "Scarica PDF",
+          "hint": "Nota: Si collegherà alla lista CommissionReceivable reale e ai pacchetti PDF."
+        }
+      },
+      "settings": {
+        "tabs": {
+          "geofence": "Location & geofence",
+          "teamRBAC": "Team"
+        },
+        "geofence": {
+          "title": "Location e geofence",
+          "subtitle": "Definisci coordinate e raggio di verifica.",
+          "fields": {
+            "locationName": "Nome location",
+            "city": "Città",
+            "latitude": "Latitudine",
+            "longitude": "Longitudine",
+            "radius": "Raggio (metri)"
+          },
+          "hint": "Nota: Creazione via `/Employers/AddLocation`."
+        },
+        "teamRBAC": {
+          "title": "Gestione team (RBAC)",
+          "subtitle": "Assegna supervisori e limita accesso per location.",
+          "cards": {
+            "supervisors": "Assegnazioni ShiftSupervisor",
+            "groups": "Permessi gruppo (scope)"
+          },
+          "hint": "Nota: Integrerà `/Employers/AddSupervisor` e `/SystemUserGroups/*`."
+        }
+      },
+      "disputes": {
+        "title": "Centro contestazioni",
+        "subtitle": "Risolvi casi `AssignmentStatus.Disputed`.",
+        "empty": "Nessuna contestazione attiva.",
+        "flags": {
+          "locationMismatch": "Problema GPS / mismatch posizione",
+          "expiredToken": "Token scaduto",
+          "replayAttack": "Replay attack"
+        },
+        "itemDetail": "Caso #{{id}} • Worker {{workerId}}",
+        "hint": "Nota: Ora mostra anomalie fallback; poi mostrerà contestazioni reali."
+      }
     },
     "employer": {
       "defaultName": "Datore di lavoro",

@@ -1,0 +1,15 @@
+---
+description: Enforce Worker typography parity on Admin/Employer dashboards
+globs: src/components/dashboard/*Dashboard.tsx
+alwaysApply: false
+---
+
+# Admin/Employer Typography Parity
+
+When editing `AdminDashboard` or `EmployerDashboard`, keep typography aligned with Worker dashboard standards:
+
+- Titles/headings -> `Syne` (`h1/h2/h3` or `.font-display`)
+- KPI/value emphasis -> `Syne` with clear weight hierarchy
+- Body/meta/helper/button labels -> `DM Sans`
+- Keep contrast and size rhythm consistent between role dashboards
+- Avoid introducing additional font families or one-off font overrides

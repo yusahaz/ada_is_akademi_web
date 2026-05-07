@@ -1,12 +1,12 @@
 {
-  "comparedAt": "2026-05-05T14:38:41.343Z",
+  "comparedAt": "2026-05-06T06:40:25.451Z",
   "openApiSource": "http://localhost:15080/openapi/v1.json",
   "baselineExists": true,
   "stats": {
     "breaking": 0,
     "attention": 0,
-    "safe": 42,
-    "usedEndpointCalls": 42
+    "safe": 41,
+    "usedEndpointCalls": 41
   },
   "usedEndpoints": [
     {
@@ -248,12 +248,6 @@
       "method": "POST",
       "pathArg": "API_ENDPOINTS.workers.getDetail",
       "resolvedPath": "Workers/GetDetail"
-    },
-    {
-      "file": "src\\api\\workers.ts",
-      "method": "POST",
-      "pathArg": "API_ENDPOINTS.workers.getById",
-      "resolvedPath": "Workers/GetById"
     },
     {
       "file": "src\\api\\workers.ts",
@@ -664,16 +658,6 @@
         "resolvedPath": "Workers/GetDetail"
       },
       "message": "Endpoint exists in current OpenAPI but not in baseline with same method."
-    },
-    {
-      "type": "UNCHANGED",
-      "endpoint": {
-        "file": "src\\api\\workers.ts",
-        "method": "POST",
-        "pathArg": "API_ENDPOINTS.workers.getById",
-        "resolvedPath": "Workers/GetById"
-      },
-      "message": "No request/response schema ref change detected."
     },
     {
       "type": "UNCHANGED",

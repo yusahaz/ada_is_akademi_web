@@ -21,14 +21,63 @@ import { AdaLogoMark } from '../../components/landing/AdaLogoMark'
 import { AdaLogoWordmark } from '../../components/landing/AdaLogoWordmark'
 import { useTheme } from '../../theme/theme-context'
 import { cn } from '../../lib/cn'
+import { useEmployerPortal } from './use-employer-portal'
 
-const navItems = [
-  { to: '/employer', key: 'overview' },
-  { to: '/employer/postings', key: 'postings' },
-  { to: '/employer/candidates', key: 'candidates' },
-  { to: '/employer/operations', key: 'operations' },
-  { to: '/employer/billing', key: 'billing' },
-  { to: '/employer/reports', key: 'reports' },
+type EmployerNavKey =
+  | 'overview'
+  | 'operations'
+  | 'postings'
+  | 'candidates'
+  | 'billing'
+  | 'reports'
+  | 'disputes'
+
+type EmployerNavItemConfig = {
+  key: EmployerNavKey
+  to: string
+  showBadge?: boolean
+}
+
+type EmployerNavGroupConfig = {
+  id: 'dashboard' | 'operations' | 'intelligence' | 'finance' | 'settings' | 'support'
+  titleKey: string
+  items: EmployerNavItemConfig[]
+}
+
+const navGroups: EmployerNavGroupConfig[] = [
+  {
+    id: 'dashboard',
+    titleKey: 'dashboard.employerPortal.nav.groups.dashboard',
+    items: [{ to: '/employer', key: 'overview' }],
+  },
+  {
+    id: 'operations',
+    titleKey: 'dashboard.employerPortal.nav.groups.operations',
+    items: [
+      { to: '/employer/operations', key: 'operations', showBadge: true },
+      { to: '/employer/postings', key: 'postings' },
+    ],
+  },
+  {
+    id: 'intelligence',
+    titleKey: 'dashboard.employerPortal.nav.groups.intelligence',
+    items: [{ to: '/employer/candidates', key: 'candidates' }],
+  },
+  {
+    id: 'finance',
+    titleKey: 'dashboard.employerPortal.nav.groups.finance',
+    items: [{ to: '/employer/billing', key: 'billing', showBadge: true }],
+  },
+  {
+    id: 'settings',
+    titleKey: 'dashboard.employerPortal.nav.groups.settings',
+    items: [{ to: '/employer/reports', key: 'reports' }],
+  },
+  {
+    id: 'support',
+    titleKey: 'dashboard.employerPortal.nav.groups.support',
+    items: [{ to: '/employer/disputes', key: 'disputes' }],
+  },
 ]
 
 const EMPLOYER_SIDEBAR_COLLAPSE_KEY = 'ada-employer:sidebar-collapsed'
@@ -55,13 +104,14 @@ function useIsBelowEmployerShellLg() {
   return isBelowLg
 }
 
-const navItemIcons: Record<string, ReactNode> = {
+const navItemIcons: Record<EmployerNavKey, ReactNode> = {
   overview: <LayoutGrid className="h-4 w-4" aria-hidden="true" />,
   postings: <BriefcaseBusiness className="h-4 w-4" aria-hidden="true" />,
   candidates: <Users className="h-4 w-4" aria-hidden="true" />,
   operations: <Shield className="h-4 w-4" aria-hidden="true" />,
   billing: <WalletCards className="h-4 w-4" aria-hidden="true" />,
   reports: <BarChart3 className="h-4 w-4" aria-hidden="true" />,
+  disputes: <Shield className="h-4 w-4" aria-hidden="true" />,
 }
 
 export type EmployerLayoutProps = {
@@ -71,9 +121,11 @@ export type EmployerLayoutProps = {
 }
 
 export function EmployerLayout({ children, isSidebarOpen, onSidebarClose }: EmployerLayoutProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const { session, logout } = useAuth()
+  const { badges } = useEmployerPortal()
+  const isRtl = i18n.dir() === 'rtl'
   const [resolvedWelcomeName, setResolvedWelcomeName] = useState<string | null>(null)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false
@@ -142,9 +194,10 @@ export function EmployerLayout({ children, isSidebarOpen, onSidebarClose }: Empl
       <div className="relative">
         <aside
           className={cn(
-            'fixed inset-y-0 left-0 z-40 h-[100svh] overflow-visible border-r transition-[width,padding] before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_45%)]',
+            'fixed inset-y-0 z-40 h-[100svh] overflow-visible transition-[width,padding] before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_45%)]',
             employerSidebarTransitionClass,
             tightMobileCollapsed ? 'px-0 py-2.5' : 'p-2.5',
+            isRtl ? 'right-0 border-l' : 'left-0 border-r',
             theme === 'dark'
               ? 'border-cyan-300/20 bg-[radial-gradient(circle_at_left,rgba(56,189,248,0.12)_0%,rgba(11,14,20,0)_52%),linear-gradient(90deg,#0b0e14_0%,#0f172a_100%)]'
               : 'border-sky-300/55 bg-[radial-gradient(circle_at_left,rgba(56,189,248,0.18)_0%,rgba(248,250,252,0)_52%),linear-gradient(90deg,#f8fafc_0%,#e2e8f0_100%)]',
@@ -172,71 +225,113 @@ export function EmployerLayout({ children, isSidebarOpen, onSidebarClose }: Empl
               type="button"
               aria-label={t('dashboard.employerPortal.topbar.toggleSidebarAria')}
               onClick={() => setIsSidebarCollapsed((prev) => !prev)}
-              className={`absolute left-full top-1/2 z-50 inline-flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border shadow-[0_4px_12px_rgba(2,6,23,0.2)] transition-[transform,box-shadow] ${employerSidebarTransitionClass} active:scale-95 ${
+              className={cn(
+                `absolute top-1/2 z-50 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border shadow-[0_4px_12px_rgba(2,6,23,0.2)] transition-[transform,box-shadow] ${employerSidebarTransitionClass} active:scale-95`,
+                isRtl ? 'right-full translate-x-1/2' : 'left-full -translate-x-1/2',
                 theme === 'dark'
                   ? 'border-cyan-300/40 bg-slate-900/95 text-slate-100'
                   : 'border-sky-300 bg-white/95 text-slate-700'
-              }`}
+              )}
             >
-              {isSidebarCollapsed ? <ChevronRight className="h-4 w-4" aria-hidden="true" /> : <ChevronLeft className="h-4 w-4" aria-hidden="true" />}
+              {isSidebarCollapsed ? (
+                isRtl ? (
+                  <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                )
+              ) : isRtl ? (
+                <ChevronRight className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <ChevronLeft className="h-4 w-4" aria-hidden="true" />
+              )}
             </button>
           </div>
 
-          <nav className="mt-1 flex flex-col gap-0 pb-16">
-            {navItems.map((item) => {
-              return (
-                <NavLink
-                  key={item.key}
-                  to={item.to}
-                  end={item.to === '/employer'}
-                  className="block w-full"
-                  onClick={() => {
-                    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-                      onSidebarClose()
-                    }
-                  }}
-                >
-                  {({ isActive }) => (
-                    <span
-                      className={`block w-full py-2.5 text-sm font-semibold tracking-[0.01em] transition-[padding,border-radius,background-color,color,border-color] ${employerSidebarTransitionClass} ${
-                        isSidebarCollapsed ? 'px-0 text-center' : 'px-2 text-start'
-                      } ${
-                        isActive
-                          ? theme === 'dark'
-                            ? 'rounded-xl border-l-2 border-l-cyan-300 bg-cyan-300/8 text-cyan-100'
-                            : 'rounded-xl border-l-2 border-l-sky-500 bg-sky-100 text-sky-900'
-                          : theme === 'dark'
-                            ? 'text-slate-200 hover:bg-white/[0.08]'
-                            : 'text-slate-700 hover:bg-slate-200/70'
-                      }`}
+          <nav className="mt-1 flex flex-col gap-2 pb-16">
+            {navGroups.map((group) => (
+              <div key={group.id} className="space-y-1">
+                {!isSidebarCollapsed ? (
+                  <p
+                    className={cn(
+                      'px-2 text-[10px] font-semibold uppercase tracking-[0.16em]',
+                      theme === 'dark' ? 'text-slate-400' : 'text-slate-500',
+                    )}
+                  >
+                    {t(group.titleKey)}
+                  </p>
+                ) : null}
+                <div className="flex flex-col gap-0">
+                  {group.items.map((item) => (
+                    <NavLink
+                      key={item.key}
+                      to={item.to}
+                      end={item.to === '/employer'}
+                      className="block w-full"
+                      onClick={() => {
+                        if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+                          onSidebarClose()
+                        }
+                      }}
                     >
-                      <span
-                        className={`inline-flex min-w-0 items-center transition-[gap] ${employerSidebarTransitionClass} ${
-                          isSidebarCollapsed ? 'justify-center' : 'gap-2'
-                        }`}
-                      >
+                      {({ isActive }) => (
                         <span
-                          className={
+                          className={`block w-full py-2.5 text-sm font-semibold tracking-[0.01em] transition-[padding,border-radius,background-color,color,border-color] ${employerSidebarTransitionClass} ${
+                            isSidebarCollapsed ? 'px-0 text-center' : 'px-2 text-start'
+                          } ${
                             isActive
                               ? theme === 'dark'
-                                ? 'text-cyan-200'
-                                : 'text-sky-700'
+                                ? 'rounded-xl border-l-2 border-l-cyan-300 bg-cyan-300/8 text-cyan-100'
+                                : 'rounded-xl border-l-2 border-l-sky-500 bg-sky-100 text-sky-900'
                               : theme === 'dark'
-                                ? 'text-slate-300'
-                                : 'text-slate-500'
-                          }
+                                ? 'text-slate-200 hover:bg-white/[0.08]'
+                                : 'text-slate-700 hover:bg-slate-200/70'
+                          }`}
                         >
-                          {navItemIcons[item.key]}
+                          <span
+                            className={`inline-flex min-w-0 items-center transition-[gap] ${employerSidebarTransitionClass} ${
+                              isSidebarCollapsed ? 'justify-center' : 'gap-2'
+                            }`}
+                          >
+                            <span
+                              className={
+                                isActive
+                                  ? theme === 'dark'
+                                    ? 'text-cyan-200'
+                                    : 'text-sky-700'
+                                  : theme === 'dark'
+                                    ? 'text-slate-300'
+                                    : 'text-slate-500'
+                              }
+                            >
+                              {navItemIcons[item.key]}
+                            </span>
+                            {!isSidebarCollapsed ? (
+                              <span className="flex min-w-0 flex-1 items-center justify-between gap-1 truncate">
+                                <span className="block truncate">
+                                  {t(`dashboard.employerPortal.nav.${item.key}`)}
+                                </span>
+                                {item.showBadge ? (
+                                  <span
+                                    className="inline-flex items-center rounded-full bg-sky-500/10 px-2 text-[10px] font-semibold text-sky-700 dark:bg-cyan-400/15 dark:text-cyan-100"
+                                    aria-label={
+                                      item.key === 'billing'
+                                        ? t('dashboard.employerPortal.nav.badges.pendingPayouts', { count: badges.pendingPayouts })
+                                        : t('dashboard.employerPortal.nav.badges.activeAnomalies', { count: badges.activeAnomalies })
+                                    }
+                                  >
+                                    {item.key === 'billing' ? badges.pendingPayouts : badges.activeAnomalies}
+                                  </span>
+                                ) : null}
+                              </span>
+                            ) : null}
+                          </span>
                         </span>
-                        {!isSidebarCollapsed ? (
-                          <span className="block truncate">{t(`dashboard.employerPortal.nav.${item.key}`)}</span>
-                        ) : null}
-                      </span>
-                    </span>
-                  )}
-                </NavLink>
-              )
-            })}
+                      )}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+            ))}
           </nav>
 
           <div className={tightMobileCollapsed ? 'absolute inset-x-0 bottom-3 px-0' : 'absolute inset-x-3 bottom-3'}>
@@ -256,8 +351,8 @@ export function EmployerLayout({ children, isSidebarOpen, onSidebarClose }: Empl
         </aside>
 
         <div
-          className={cn('min-w-0 space-y-4 transition-[margin-left]', employerSidebarTransitionClass)}
-          style={{ marginLeft: `${contentInset}px` }}
+          className={cn('min-w-0 space-y-4 transition-[margin-inline-start]', employerSidebarTransitionClass)}
+          style={{ marginInlineStart: `${contentInset}px` }}
         >
           <div
             className={cn(

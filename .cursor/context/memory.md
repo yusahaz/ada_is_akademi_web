@@ -2,6 +2,7 @@
 
 ## Current Decisions
 
+- 2026-05-07: Mutation sonrası bildirimler için `useActionToasts` + mevcut `NotificationProvider` kullanılıyor; mesajlar yalnızca i18n anahtarlarından (`runWithToast`), GET/list için toast yok.
 - Tailwind is used
 - Mobile-first approach
 - Component reuse required

@@ -7,6 +7,7 @@ import {
   employersApi,
   normalizePageableList,
 } from '../../../api'
+import { useActionToasts } from '../../../notifications/use-action-toasts'
 import type { EmployerDetail, EmployerListItem, EmployersListResult } from '../../../api/employers'
 import { AdminDataGrid, type AdminDataGridColumn } from '../AdminDataGrid'
 import { useTheme } from '../../../theme/theme-context'
@@ -45,6 +46,7 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
   void detailId
   const { t, i18n } = useTranslation()
   const { theme } = useTheme()
+  const { runWithToast } = useActionToasts()
   const mapApiError = useCallback(
     (fallbackKey: string, error: unknown) => {
       const base = t(fallbackKey)
@@ -248,7 +250,10 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
       setQueryPending(true)
       setListError(null)
       try {
-        await employersApi.ban({ employerId })
+        await runWithToast(employersApi.ban({ employerId }), {
+          success: { messageKey: 'dashboard.admin.detail.feedback.deleteSuccess' },
+          error: { messageKey: 'dashboard.admin.detail.feedback.deleteError' },
+        })
         setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
         await refreshList()
       } catch (error) {
@@ -257,7 +262,7 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
         setQueryPending(false)
       }
     },
-    [mapApiError, refreshList, t],
+    [mapApiError, refreshList, runWithToast, t],
   )
 
   const openDetail = useCallback((item: EmployerListItem) => {
@@ -287,17 +292,26 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
     setDetailSuccess(null)
     try {
       if (target !== current) {
-        if (target === EmployerStatus.Active) {
-          await employersApi.activate({ employerId })
-        } else if (target === EmployerStatus.Suspended) {
-          await employersApi.suspend({ employerId })
-        } else if (target === EmployerStatus.Banned) {
-          await employersApi.ban({ employerId })
-        } else if (target === EmployerStatus.Pending) {
+        if (target === EmployerStatus.Pending) {
           setDetailError(t('dashboard.admin.employers.detail.pendingNotSupported'))
           setDetailPending(false)
           return
         }
+        await runWithToast(
+          (async () => {
+            if (target === EmployerStatus.Active) {
+              await employersApi.activate({ employerId })
+            } else if (target === EmployerStatus.Suspended) {
+              await employersApi.suspend({ employerId })
+            } else if (target === EmployerStatus.Banned) {
+              await employersApi.ban({ employerId })
+            }
+          })(),
+          {
+            success: { messageKey: 'dashboard.admin.detail.feedback.saveSuccess' },
+            error: { messageKey: 'dashboard.admin.detail.feedback.saveError' },
+          },
+        )
       }
       setDetailSuccess(t('dashboard.admin.detail.feedback.saveSuccess'))
       const next = await employersApi.getById({ employerId })
@@ -309,7 +323,7 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
     } finally {
       setDetailPending(false)
     }
-  }, [employerDetail, listRow, mapApiError, refreshList, targetStatus, t])
+  }, [employerDetail, listRow, mapApiError, refreshList, runWithToast, targetStatus, t])
 
   const handleDetailDelete = useCallback(async () => {
     if (!listRow) return
@@ -319,7 +333,10 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
     setDetailError(null)
     setDetailSuccess(null)
     try {
-      await employersApi.ban({ employerId })
+      await runWithToast(employersApi.ban({ employerId }), {
+        success: { messageKey: 'dashboard.admin.detail.feedback.deleteSuccess' },
+        error: { messageKey: 'dashboard.admin.detail.feedback.deleteError' },
+      })
       closeDetail()
       setListSuccess(t('dashboard.admin.detail.feedback.deleteSuccess'))
       await refreshList()
@@ -328,7 +345,7 @@ export function EmployersSection({ isActive, detailId, onOpenDetail, onCloseDeta
     } finally {
       setDetailPending(false)
     }
-  }, [closeDetail, listRow, mapApiError, refreshList, t])
+  }, [closeDetail, listRow, mapApiError, refreshList, runWithToast, t])
 
   const gridColumns = useMemo<AdminDataGridColumn<EmployerListItem>[]>(
     () => [

@@ -1,13 +1,13 @@
 # OpenAPI Diff Report
 
-Compared at: 2026-05-05T14:38:41.343Z
+Compared at: 2026-05-06T06:40:25.451Z
 OpenAPI source: http://localhost:15080/openapi/v1.json
 
 ## Summary
-- Used endpoint calls scanned: 42
+- Used endpoint calls scanned: 41
 - Breaking changes: 0
 - Attention items: 0
-- Safe/unchanged checks: 42
+- Safe/unchanged checks: 41
 
 ## Breaking
 - None
@@ -56,5 +56,4 @@ OpenAPI source: http://localhost:15080/openapi/v1.json
 - `POST SystemUsers/VerifyEmail` in `src\api\system-users.ts`: No request/response schema ref change detected.
 - `POST Workers/AddSkill` in `src\api\workers.ts`: No request/response schema ref change detected.
 - `POST Workers/GetDetail` in `src\api\workers.ts`: Endpoint exists in current OpenAPI but not in baseline with same method.
-- `POST Workers/GetById` in `src\api\workers.ts`: No request/response schema ref change detected.
 - `POST Workers/List` in `src\api\workers.ts`: No request/response schema ref change detected.
