@@ -394,6 +394,7 @@
         "basic": "Basic profile",
         "fullName": "Full name: {{value}}",
         "email": "Email: {{value}}",
+        "phone": "Phone: {{value}}",
         "nationality": "Nationality: {{value}}",
         "university": "University: {{value}}",
         "studentNumber": "Student number: {{value}}",
@@ -413,6 +414,7 @@
         "fields": {
           "fullName": "Full name",
           "email": "Email",
+          "phone": "Phone",
           "nationality": "Nationality",
           "university": "University",
           "studentNumber": "Student number"

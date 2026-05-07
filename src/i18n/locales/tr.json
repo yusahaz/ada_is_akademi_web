@@ -394,6 +394,7 @@
         "basic": "Temel profil",
         "fullName": "Ad Soyad: {{value}}",
         "email": "E-posta: {{value}}",
+        "phone": "Telefon: {{value}}",
         "nationality": "Uyruk: {{value}}",
         "university": "Üniversite: {{value}}",
         "studentNumber": "Öğrenci no: {{value}}",
@@ -413,6 +414,7 @@
         "fields": {
           "fullName": "Ad soyad",
           "email": "E-posta",
+          "phone": "Telefon",
           "nationality": "Uyruk",
           "university": "Üniversite",
           "studentNumber": "Öğrenci no"

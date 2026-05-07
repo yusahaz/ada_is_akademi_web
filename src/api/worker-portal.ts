@@ -17,6 +17,7 @@ export type WorkerProfileData = {
   systemUserId: number
   fullName: string
   email: string
+  phone: string
   nationality: string
   university: string
   studentNumber: string
@@ -113,6 +114,7 @@ export const workerPortalApi = {
       systemUserId: Number(me.systemUserId) || 0,
       fullName: `${me.firstName ?? ''} ${me.lastName ?? ''}`.trim() || 'Worker',
       email: me.email,
+      phone: me.phone ?? 'N/A',
       nationality: 'N/A',
       university: 'N/A',
       studentNumber: 'N/A',

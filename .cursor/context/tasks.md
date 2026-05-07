@@ -5,6 +5,8 @@
 - [ ] Wire login form submission to real auth API when backend is ready
 - [ ] Refine per-locale copy quality for ES/IT/RU content blocks
 
+### Shared Header User Menu (Worker / Employer / Admin) — done 2026-05-07
+
 ### Employer layout (mirror Worker)
 
 - [x] Analyze `WorkerLayout` shell vs tek sayfalık `EmployerDashboard`
@@ -16,6 +18,47 @@
 
 ## Completed
 
+### Employer ilan oluştur sayfası ayrıştırma (2026-05-07)
+
+- [x] `İlan Oluştur` formunu `Operasyon` sekmesinden ayırıp yeni rota/sayfa (`/employer/postings/create`) olarak taşıdım.
+- [x] `İlanlar` ekranına `İlan Oluştur` aksiyon butonu ekleyip yeni sayfaya yönlendirdim.
+- [x] Form input/select/textarea genişliklerini `w-full` ile standartlaştırarak bozulan yerleşimi düzelttim.
+
+### Employer create-posting UX düzeni (2026-05-07)
+
+- [x] Create-posting formundaki tüm input/textarea/select alanlarına üst label eklendi.
+- [x] Kategori alanı combobox'a çevrilip `JobPostings/GetById` çağrılarından toplanan `jobCategoryId` değerleriyle API tabanlı beslendi.
+- [x] Başlangıç ve bitiş saatleri varsayılan `00:00` olarak ayarlandı, submit success/error toast akışı doğrulandı.
+
+### Shared header user menu (2026-05-07)
+
+- [x] Analyzed `WorkerLayout`/`EmployerLayout`/`Navbar` user-icon points and existing theme + language primitives
+- [x] Added reusable `HeaderUserMenu` (`src/components/dashboard/HeaderUserMenu.tsx`) with trigger + popover (profile/theme/language/logout), outside-click + ESC close, RTL-aware logical alignment
+- [x] Added `dashboard.userMenu.*` i18n keys (`title/triggerAria/profile/logout/theme/themeDark/themeLight/language`) across `tr/en/es/it/ru/ar/fr`
+- [x] Wired the menu into `WorkerLayout` topbar (replaces user `NavLink`), `EmployerLayout` topbar (replaces handler-less user button), and `Navbar` (admin shell, when `showSidebarToggle && isAuthenticated`) without changing landing/auth flows
+- [x] Validated via `npm run lint` and `npm run build`; updated `components.md` + `memory.md`
+
+### Worker portal PRD revize (2026-05-07)
+
+- [x] Worker portal sidebar 6 ana menüye yenilendi: `Panel`, `İş Bul`, `Vardiyalarım`, `Cüzdan`, `Profil`, `Bildirimler`.
+- [x] Yeni parent ekranlar (`JobsPage`, `MyShiftsPage`, `WalletPage`, `NotificationsPage`) eski sayfaları (`Recommendations`, `Applications`, `Shifts`, `QrCheck`, `Payouts`, `Reports`) `embedded` modda tab içeriği olarak yeniden kullanır.
+- [x] Eski URL'ler (`/worker/applications`, `/recommendations`, `/qr-check`, `/payouts`, `/reports`, `/cv-import`) yeni IA'ye redirect ile bağlandı.
+- [x] `worker-ui.tsx` içine `WorkerTabs`, `WorkerNotice`, `WorkerNavBadge` primitive'leri eklendi (Ocean/8pt grid uyumlu, RTL-friendly).
+- [x] `WorkerLayout` `AccountStatus.Pending` kullanıcılar için sticky doğrulama banner'ı + `useWorkerLiveCounters` hook'u ile dinamic sidebar badge desteği.
+- [x] `OverviewPage`'e Yaklaşan Vardiyalar / Güvenilirlik Skoru / Aktif Check-in CTA kartları eklendi (mevcut yapı bozulmadı).
+- [x] `ProfilePage` yan menüsüne `cvImport` (CvImportPage embedded) ve `availability` (UI stub) bölümleri ile in-page section nav eklendi.
+- [x] `workerPortalApi`'ye yeni metodlar eklendi: `getReliabilityScore`, `getUpcomingShiftAssignments`, `getActiveShiftAssignment`, `listShiftHistory`, `listNotifications`, `getLiveCounters`, `getAvailabilityCalendar`, `requestEmailVerification` (mevcut metodlar dokunulmadı).
+- [x] 7 locale (tr/en/es/it/ru/ar/fr) için yeni nav, page, tab, banner, badge, overview ve menu anahtarları eklendi.
+- [x] `npm run lint` ve `npm run build` başarıyla doğrulandı.
+
+> Not: `/worker/shifts` rotası anlam değiştirdi: artık "Vardiyalarım" sayfasını gösterir (eski "açık ilanlar" listesi `/worker/jobs?tab=open` segmentinde erişilebilir).
+
+
+
+- [x] Analyze employer operations `createPosting` flow and required API/i18n contracts
+- [x] Implement live `Yeni İş İlanı Oluştur` form in `EmployerOperationsPage` with field validation and submit to `POST JobPostings/Create`
+- [x] Add submit success/error toast integration and refresh employer postings after create
+- [x] Extend `createPosting` i18n keys (fields, validation, submit states) across `tr/en/es/it/ru/ar/fr`
 - [x] Add generic `useActionToasts` hook (`src/notifications/use-action-toasts.ts`) and wire mutation toasts: worker shifts apply (`submitSuccess` i18n), admin Candidates account actions, Users/Employers/UserGroups save-delete flows
 - [x] Create dedicated `WorkerLayout` and route worker pages through it for centralized shell definitions
 - [x] Verify worker-only layout path with lint

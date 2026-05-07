@@ -72,6 +72,20 @@ Props: `open`, `onClose`
 States: open / closed; theme-aware (`dark` | `light`); audience `individual` | `corporate`; view `login` | `register` (individual only); submit `idle` | `loading` | `success` | `error`; successful login writes global auth session
 Responsive Notes: bottom-sheet layout on small viewports; centered card from `sm` upward; safe-area bottom padding on mobile.
 
+Component: HeaderUserMenu
+Purpose: Shared post-login header user menu rendered behind the user icon. Single popover exposes profile shortcut (optional), theme switch (Dark/Light), language switch (all `SUPPORTED_LOCALES`), and logout (optional). Closes on outside click and `Escape`; aligns to inline-end by default for RTL safety.
+Used In: `WorkerLayout` topbar, `EmployerLayout` topbar, `Navbar` (admin shell when `showSidebarToggle && isAuthenticated`)
+Props:
+- `tone`: `'dark' | 'light'` - matches surrounding header surface
+- `userName?`, `userEmail?`: optional identity shown at the top of the popover
+- `profileTo?`: route path; when set renders a `Profil` menu item
+- `onLogout?`: when set renders a destructive `Çıkış` menu item
+- `triggerAriaLabel?`: aria-label override for the trigger button
+- `triggerClassName?`: override classes for trigger size/colors
+- `align?`: `'start' | 'end'` (defaults to `'end'`)
+States: open/closed; theme `dark|light`; tracks active language from `i18n.language`; selected theme button is highlighted
+Responsive Notes: trigger is 40x40 touch target; popover width clamps via `min(18rem, calc(100vw - 1.5rem))`; language list scrolls within `max-h-56`; menu uses logical `start/end` for RTL parity.
+
 Component: AdaLogoMark
 Purpose: Vector brand mark (academy roof + stylized “A” + connection nodes) for Navbar and static asset parity.
 Used In: `Navbar`, `public/brand/ada-is-akademi-mark.svg`
@@ -107,19 +121,37 @@ Props: theme-aware minimal props (`theme`, `children`, optional `isActive`/`isEr
 States: default/active/error variations with dark-light parity
 Responsive Notes: mobile-first spacing, safe-area friendly composition, touch-friendly interactive sizes.
 
-Component: Worker Portal UI primitives (`worker-ui.tsx`: `WorkerSectionHeader`, `WorkerPillBadge`, `WorkerPrimaryButton`, `WorkerGhostButton`) + shared `cn` helper (`src/lib/cn.ts`)
+Component: Worker Portal UI primitives (`worker-ui.tsx`: `WorkerSectionHeader`, `WorkerPillBadge`, `WorkerPrimaryButton`, `WorkerGhostButton`, `WorkerTabs`, `WorkerNotice`, `WorkerNavBadge`) + shared `cn` helper (`src/lib/cn.ts`)
 Purpose: Lightweight, Ocean-token-aligned typography + CTA primitives for Worker route pages without duplicating ad-hoc title stacks and badge styles across screens.
-Used In: `src/features/worker/pages/*`
-Props: `tone` (`dark` | `light`) + standard button/`className`; `emphasis` for pill badges
-States: default/disabled/error emphasis via badges; buttons support focus-visible rings
-Responsive Notes: headers wrap cleanly on small widths; badges are max-content and wrap in card footers.
+Used In: `src/features/worker/pages/*`, `WorkerLayout` (sidebar badges + notice banner)
+Props:
+- `WorkerTabs`: `tone`, `items` (`{ id, label, badge? }[]`), `value`, `onChange`, `ariaLabel?`
+- `WorkerNotice`: `tone`, `variant` (`info`|`warning`|`success`|`danger`), `title`, `description?`, `action?`, `icon?`, `className?`
+- `WorkerNavBadge`: `tone`, `value`, `compact?`
+- shared: `tone` (`dark` | `light`) + standard button/`className`; `emphasis` for pill badges
+States: tabs `active|inactive`; notice variants `info|warning|success|danger`; nav badge auto-hides on `value <= 0`; buttons support focus-visible rings
+Responsive Notes: tabs wrap with `flex-wrap` and horizontal scroll fallback; notice uses logical paddings + safe-area friendly; nav badge shrinks to `compact` size for collapsed sidebar/icon overlays. RTL: badge anchors via `-end-1` to mirror automatically.
 
 Component: Worker async data hook (`useWorkerAsyncData`)
 Purpose: Shared worker-page fetch lifecycle wrapper for endpoint queries (single place for `loading/error/data/reload` behavior).
-Used In: `src/features/worker/pages/ApplicationsPage.tsx`, `CvImportPage.tsx`, `PayoutsPage.tsx`, `ReportsPage.tsx`, `ShiftsPage.tsx`
+Used In: `src/features/worker/pages/ApplicationsPage.tsx`, `CvImportPage.tsx`, `PayoutsPage.tsx`, `ReportsPage.tsx`, `ShiftsPage.tsx`, `JobsPage.tsx` (map tab), `MyShiftsPage.tsx`, `NotificationsPage.tsx`, `ProfilePage.tsx` (availability)
 Props: `initialData`, `query`, `resolveError`
 States: loading / success / error with explicit `reload` and `setData`
 Responsive Notes: logic-only hook, no visual output.
+
+Component: Worker live counters hook (`useWorkerLiveCounters`)
+Purpose: Reactive counter source for sidebar badges and tab badges (`pendingPayouts`, `newMatches`, `upcomingShifts`); fetches from `workerPortalApi.getLiveCounters()` with 60s revalidation; gracefully returns zeros on failure.
+Used In: `WorkerLayout` (sidebar badges + topbar bell counter), `JobsPage` (tab badge), `WalletPage` (tab badge), `MyShiftsPage` (tab badge)
+Props: none
+States: data-only; consumers read `{ pendingPayouts, newMatches, upcomingShifts }`.
+Responsive Notes: logic-only hook; visual treatment is delegated to `WorkerNavBadge` / `WorkerTabs`.
+
+Component: Worker Portal Parent Pages (`JobsPage`, `MyShiftsPage`, `WalletPage`, `NotificationsPage`)
+Purpose: PRD-aligned IA containers that group existing worker screens via `WorkerTabs`. URL `?tab=` param controls the active tab so deep-link redirects keep working (e.g. `/worker/applications` → `/worker/jobs?tab=applications`).
+Used In: `WorkerDashboard` routes
+Props: none (consume `useSearchParams` directly)
+States: tab `recommendations|open|map|applications` (Jobs), `active|history` (My Shifts), `payouts|earnings` (Wallet); each child page receives `embedded` so duplicate headers are suppressed.
+Responsive Notes: `WorkerTabs` overflow-x scroll on mobile, wrap on desktop; map tab renders responsive 2-column employer cards; QR + active assignment surfaces stack on small screens.
 
 Component: WorkerDashboard / EmployerDashboard / AdminDashboard
 Purpose: Role-based post-login surfaces. Employer mirrors worker routing (`/employer/*`) under `EmployerLayout` shell (sidebar + sticky welcome header); sections are routes with shared portal state (`EmployerPortalProvider` + `useEmployerPortal`). Admin remains sidebar orchestrator delegating `admin/*Section` grids/detail.
