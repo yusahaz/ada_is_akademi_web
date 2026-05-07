@@ -13,10 +13,11 @@ export function useWorkerLiveCounters(): WorkerLiveCounters {
   const result = useQuery<WorkerLiveCounters>({
     queryKey: ['worker', 'live-counters'],
     queryFn: () => workerPortalApi.getLiveCounters(),
-    staleTime: 60_000,
-    gcTime: 5 * 60_000,
+    staleTime: 0,
+    gcTime: 0,
     refetchInterval: 60_000,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: 'always',
   })
   return result.data ?? EMPTY_COUNTERS
 }

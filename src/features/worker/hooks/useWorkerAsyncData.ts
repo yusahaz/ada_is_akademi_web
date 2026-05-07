@@ -19,9 +19,10 @@ export function useWorkerAsyncData<TData>(
   const result = useQuery<TData, unknown>({
     queryKey,
     queryFn: query,
-    staleTime: 60_000,
-    gcTime: 5 * 60_000,
-    refetchOnWindowFocus: false,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: 'always',
   })
   const { refetch } = result
 
