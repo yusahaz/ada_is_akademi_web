@@ -20,6 +20,14 @@ import {
 } from './helpers'
 import { WorkerGhostButton, WorkerPrimaryButton } from '../../../worker-ui'
 
+const COUNTRY_CODE_OPTIONS = ['+90', '+1', '+44', '+49', '+39', '+34', '+33', '+7', '+971'] as const
+
+function formatPhoneMasked(digitsRaw: string): string {
+  const digits = digitsRaw.replace(/\D/g, '').slice(0, 10)
+  const parts = [digits.slice(0, 3), digits.slice(3, 6), digits.slice(6, 8), digits.slice(8, 10)].filter(Boolean)
+  return parts.join(' ')
+}
+
 export function BasicInfoSection({
   profile,
   theme,
@@ -67,6 +75,7 @@ export function BasicInfoSection({
           lastName: lastName || null,
           nationality: draft.nationality.trim() || null,
           university: draft.university.trim() || null,
+          phone: draft.phoneNumber ? `${draft.phoneCountryCode}${draft.phoneNumber.replace(/\D/g, '')}` : null,
         }),
         {
           success: { messageKey: 'dashboard.workerPortal.profile.messages.savedLocal' },
@@ -78,6 +87,9 @@ export function BasicInfoSection({
         fullName,
         nationality: draft.nationality.trim() || sectionProfile.nationality,
         university: draft.university.trim() || sectionProfile.university,
+        phone: draft.phoneNumber
+          ? `${draft.phoneCountryCode} ${formatPhoneMasked(draft.phoneNumber)}`
+          : sectionProfile.phone,
       }))
       setSaveState('success')
       setDraft(null)
@@ -155,48 +167,104 @@ export function BasicInfoSection({
               label={t('dashboard.workerPortal.profile.fields.email')}
               value={normalizeValue(currentProfile.email, t)}
             />
-            <ProfileReadOnlyField
-              theme={theme}
-              label={t('dashboard.workerPortal.profile.fields.phone')}
-              value={normalizeValue(currentProfile.phone, t)}
-            />
+            <label className="space-y-1 text-sm sm:col-span-2">
+              <span className={resolveMuted(theme)}>{t('dashboard.workerPortal.profile.fields.phone')}</span>
+              <div className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-2">
+                <select
+                  value={draft.phoneCountryCode}
+                  onChange={(event) =>
+                    setDraft((prev) => (prev ? { ...prev, phoneCountryCode: event.target.value } : prev))
+                  }
+                  className={`w-full rounded-xl border px-3 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${
+                    theme === 'dark'
+                      ? 'border-white/20 bg-white/[0.03] text-white'
+                      : 'border-slate-200 bg-white text-slate-900'
+                  }`}
+                >
+                  {COUNTRY_CODE_OPTIONS.map((code) => (
+                    <option key={code} value={code}>
+                      {code}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  value={formatPhoneMasked(draft.phoneNumber)}
+                  onChange={(event) =>
+                    setDraft((prev) =>
+                      prev
+                        ? {
+                            ...prev,
+                            phoneNumber: event.target.value.replace(/\D/g, '').slice(0, 10),
+                          }
+                        : prev,
+                    )
+                  }
+                  placeholder="5xx xxx xx xx"
+                  className={`w-full rounded-xl border px-3 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${
+                    theme === 'dark'
+                      ? 'border-white/20 bg-white/[0.03] text-white placeholder:text-white/40'
+                      : 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400'
+                  }`}
+                />
+              </div>
+            </label>
           </>
         ) : (
           [
             {
               key: 'fullName',
               label: t('dashboard.workerPortal.profile.fields.fullName'),
-              value: normalizeValue(currentProfile.fullName, t),
+              rawValue: currentProfile.fullName,
             },
             {
               key: 'email',
               label: t('dashboard.workerPortal.profile.fields.email'),
-              value: normalizeValue(currentProfile.email, t),
+              rawValue: currentProfile.email,
             },
             {
               key: 'phone',
               label: t('dashboard.workerPortal.profile.fields.phone'),
-              value: normalizeValue(currentProfile.phone, t),
+              rawValue: currentProfile.phone,
             },
             {
               key: 'nationality',
               label: t('dashboard.workerPortal.profile.fields.nationality'),
-              value: normalizeValue(currentProfile.nationality, t),
+              rawValue: currentProfile.nationality,
             },
             {
               key: 'university',
               label: t('dashboard.workerPortal.profile.fields.university'),
-              value: normalizeValue(currentProfile.university, t),
+              rawValue: currentProfile.university,
             },
-          ].map((row) => (
-            <div
-              key={row.key}
-              className={`grid grid-cols-[120px_minmax(0,1fr)] items-start gap-2 rounded-xl px-3 py-2 text-sm ${theme === 'dark' ? 'bg-transparent text-white/80' : 'bg-transparent text-slate-700'}`}
-            >
-              <span className={resolveMuted(theme)}>{row.label}</span>
-              <span className={resolveTitle(theme)}>{row.value}</span>
-            </div>
-          ))
+          ].map((row) => {
+            const raw = typeof row.rawValue === 'string' ? row.rawValue.trim() : ''
+            const isMissing = !raw || raw === 'N/A'
+            return (
+              <div
+                key={row.key}
+                className={`rounded-2xl border px-3 py-3 text-sm sm:px-4 ${
+                  theme === 'dark'
+                    ? 'border-white/10 bg-white/[0.03]'
+                    : 'border-slate-200 bg-slate-50/80'
+                }`}
+              >
+                <p className={`text-[11px] font-semibold uppercase tracking-wide ${resolveMuted(theme)}`}>
+                  {row.label}
+                </p>
+                <p
+                  className={`mt-1.5 min-w-0 text-sm leading-snug [overflow-wrap:anywhere] ${
+                    isMissing
+                      ? theme === 'dark'
+                        ? 'italic text-white/55'
+                        : 'italic text-slate-500'
+                      : resolveTitle(theme)
+                  }`}
+                >
+                  {isMissing ? '—' : raw}
+                </p>
+              </div>
+            )
+          })
         )}
       </div>
     </div>

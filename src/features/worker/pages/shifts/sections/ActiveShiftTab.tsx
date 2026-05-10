@@ -6,7 +6,6 @@ import { DashboardSurface, StatePanel } from '../../../../../shared/ui/ui-primit
 import { useTheme } from '../../../../../theme/theme-context'
 import { useWorkerAsyncData } from '../../../hooks/useWorkerAsyncData'
 import { WorkerPillBadge } from '../../../worker-ui'
-import { QrCheckPage } from '../../qr-check/QrCheckPage'
 import { ShiftRow } from './ShiftRow'
 import { shiftStatusEmphasis } from './shift-utils'
 
@@ -58,17 +57,6 @@ export function ActiveShiftTab() {
               {t(`dashboard.workerPortal.shiftHistory.status.${data.active.status}`)}
             </WorkerPillBadge>
           ) : null}
-        </div>
-      </DashboardSurface>
-      <DashboardSurface theme={theme}>
-        <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-          {t('dashboard.workerPortal.tabs.myShifts.qrTitle')}
-        </p>
-        <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>
-          {t('dashboard.workerPortal.tabs.myShifts.qrHint')}
-        </p>
-        <div className="mt-3">
-          <QrCheckPage embedded />
         </div>
       </DashboardSurface>
       {data.upcoming.length > 0 ? (

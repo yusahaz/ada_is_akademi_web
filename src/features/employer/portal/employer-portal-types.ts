@@ -1,7 +1,11 @@
 import type { JobPostingStatus } from '../../../api/core/index'
 import type { JobApplicationListItem } from '../../../api/jobs/job-applications'
 import type { EmployerLocationListItemModel } from '../../../api/employer/employer-locations'
-import type { EmployerDisputeListItemModel, WorkerPortfolioListItemModel } from '../../../api/employer/employer-spot'
+import type {
+  EmployerDisputeListItemModel,
+  SpotDashboardSummaryModel,
+  WorkerPortfolioListItemModel,
+} from '../../../api/employer/employer-spot'
 import type { EmployerSupervisorListItemModel } from '../../../api/employer/employer-supervisors'
 import type { ShiftAssignmentHistoryListItemModel, WorkerShiftAssignmentListItem } from '../../../api/jobs/shift-assignments'
 import type { JobPostingDetail, JobPostingSummary } from '../../../api/jobs/job-postings'
@@ -76,5 +80,6 @@ export type EmployerPortalValue = {
   employerLocations: EmployerLocationListItemModel[]
   employerSupervisors: EmployerSupervisorListItemModel[]
   disputes: EmployerDisputeListItemModel[]
+  spotSummary: SpotDashboardSummaryModel | null
   reloadPostings: () => Promise<void>
 }

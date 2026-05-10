@@ -86,6 +86,7 @@ export const API_ENDPOINTS = {
     checkIn: 'ShiftAssignments/CheckIn',
     checkOut: 'ShiftAssignments/CheckOut',
     create: 'ShiftAssignments/Create',
+    listEmployerAssignments: 'ShiftAssignments/ListEmployerAssignments',
     listHistory: 'ShiftAssignments/ListHistory',
     myAssignments: 'ShiftAssignments/MyAssignments',
     supervisorCheckIn: 'ShiftAssignments/SupervisorCheckIn',

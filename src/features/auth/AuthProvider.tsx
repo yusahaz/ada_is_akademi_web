@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useState, type ReactNode } from 'react'
 
 import { createAuthAdapter } from '../../api/auth/auth'
 import { setApiAccessTokenProvider, setApiRefreshHandlers } from '../../api/core/client'
@@ -45,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setApiAccessTokenProvider(() => session?.accessToken ?? null)
     setApiRefreshHandlers({
       getRefreshContext: () => {

@@ -31,8 +31,32 @@ export type UpdateJobPostingCommand = CreateJobPostingCommand & {
   jobPostingId: number
 }
 
-export type ListOpenJobPostingsQuery = Record<string, never>
-export type ListSemanticMatchedJobPostingsQuery = Record<string, never>
+export type ListOpenJobPostingsQuery = {
+  countryCode?: string
+  limit?: number
+  offset?: number
+  /** WGS84 degrees; must be sent together with nearLongitude for server-side distance filtering. */
+  nearLatitude?: number
+  nearLongitude?: number
+  /** Metres; server default is 50 km when coordinates are set. */
+  radiusMetres?: number
+}
+
+/** Matches <c>SemanticMatchedJobPostingModel</c> from the API (cosine similarity 0–1, or 0 in fallback rows). */
+export type SemanticMatchedJobPosting = {
+  jobPostingId: number
+  title: string
+  shiftDate: string
+  shiftStartTime: string
+  shiftEndTime: string
+  similarityScore: number
+}
+
+export type ListSemanticMatchedJobPostingsQuery = {
+  limit?: number
+  /** Ignored by server; worker scope comes from JWT. */
+  workerId?: number
+}
 
 export type GetJobPostingByIdQuery = {
   jobPostingId: number
@@ -63,6 +87,52 @@ export type JobPostingSummary = {
   wageCurrency: string
   employerId: number
   headCount: number
+  /** API may send string enum name (JsonStringEnumConverter) or number. */
+  status?: JobPostingStatus | string
+  /** ListOpen / employer list: şehir, ülke vb. metin. */
+  locationText?: string | null
+  employerName?: string | null
+  applicationCount?: number
+  tags?: string[]
+  requiredTags?: string[]
+  /** Kısa ilan metni; ListOpen cevabında varsa. */
+  description?: string | null
+  /** Employer location coordinate when returned by ListOpen. */
+  locationLatitude?: number
+  locationLongitude?: number
+  /** Great-circle distance in metres when ListOpen was called with near lat/lon. */
+  distanceMetres?: number | null
+}
+
+export function normalizeSemanticMatchedList(payload: unknown): SemanticMatchedJobPosting[] {
+  if (!Array.isArray(payload)) {
+    return []
+  }
+  return payload.map((row) => {
+    const r = row as Record<string, unknown>
+    return {
+      jobPostingId: Number(r.jobPostingId ?? r.JobPostingId ?? 0),
+      title: String(r.title ?? r.Title ?? ''),
+      shiftDate: String(r.shiftDate ?? r.ShiftDate ?? ''),
+      shiftStartTime: String(r.shiftStartTime ?? r.ShiftStartTime ?? ''),
+      shiftEndTime: String(r.shiftEndTime ?? r.ShiftEndTime ?? ''),
+      similarityScore: Number(r.similarityScore ?? r.SimilarityScore ?? 0),
+    }
+  })
+}
+
+/** API cosine similarity is typically 0–1; display as 0–100%. */
+export function semanticSimilarityToPercent(score: number): number {
+  if (!Number.isFinite(score)) {
+    return 0
+  }
+  if (score >= 0 && score <= 1) {
+    return Math.round(score * 100)
+  }
+  if (score > 1 && score <= 100) {
+    return Math.round(score)
+  }
+  return Math.max(0, Math.min(100, Math.round(score)))
 }
 
 export type JobPostingSkillItem = {
@@ -127,12 +197,13 @@ export const jobPostingsApi = {
       false,
     )
   },
-  listSemanticMatched(body: ListSemanticMatchedJobPostingsQuery = {}) {
-    return client.post<JobPostingSummary[], ListSemanticMatchedJobPostingsQuery>(
+  async listSemanticMatched(body: ListSemanticMatchedJobPostingsQuery = {}) {
+    const res = await client.post<unknown, ListSemanticMatchedJobPostingsQuery>(
       API_ENDPOINTS.jobPostings.listSemanticMatched,
       body,
       true,
     )
+    return normalizeSemanticMatchedList(res)
   },
   listByEmployer(body: ListJobPostingsByEmployerIdQuery = {}) {
     return client.post<JobPostingSummary[], ListJobPostingsByEmployerIdQuery>(

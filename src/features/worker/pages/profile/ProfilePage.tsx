@@ -1,4 +1,4 @@
-﻿import { useCallback, useMemo, useState } from 'react'
+﻿import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
@@ -49,7 +49,7 @@ export function ProfilePage() {
     !isAccountControlSection
   const sectionLabelKey = getProfileSectionLabelKey(activeSection)
   const query = useCallback(() => workerPortalApi.getProfile(), [])
-  const { loading, error, data: profile } = useWorkerAsyncData<WorkerProfileData | null>(
+  const { loading, error, data: profile, setData: setProfileData } = useWorkerAsyncData<WorkerProfileData | null>(
     null,
     ['worker', 'profile'],
     query,
@@ -60,6 +60,46 @@ export function ProfilePage() {
   const [experienceItems, setExperienceItems] = useState<WorkerProfileSectionItem[]>(profile?.experiences ?? [])
   const [experienceEditorDraft, setExperienceEditorDraft] = useState<ExperienceEditorDraft | null>(null)
   const [showExperienceEditor, setShowExperienceEditor] = useState(false)
+  const shouldRenderSectionSurface =
+    isComingSoonSection ||
+    isBasicSection ||
+    (isExperiencesSection && showExperienceEditor) ||
+    isSkillsSection ||
+    isCertificatesSection ||
+    isReferencesSection ||
+    isAvailabilitySection ||
+    isPasswordSection ||
+    isAccountControlSection
+
+  useEffect(() => {
+    if (profile) {
+      setExperienceItems(profile.experiences ?? [])
+    }
+  }, [profile])
+
+  useEffect(() => {
+    if (!isExperiencesSection) {
+      setShowExperienceEditor(false)
+      setExperienceEditorDraft(null)
+    }
+  }, [isExperiencesSection])
+
+  const setExperienceItemsSynced = useCallback(
+    (value: WorkerProfileSectionItem[] | ((prevState: WorkerProfileSectionItem[]) => WorkerProfileSectionItem[])) => {
+      setExperienceItems((prevItems) => {
+        const nextItems = typeof value === 'function' ? value(prevItems) : value
+        setProfileData((prevProfile) => {
+          if (!prevProfile) return prevProfile
+          return {
+            ...prevProfile,
+            experiences: nextItems,
+          }
+        })
+        return nextItems
+      })
+    },
+    [setProfileData],
+  )
 
   if (loading) {
     return (
@@ -90,6 +130,37 @@ export function ProfilePage() {
     <div className="space-y-4">
       <WorkerSectionHeader tone={theme} title={t('dashboard.workerPortal.pages.profile.title')} subtitle={t('dashboard.workerPortal.pages.profile.subtitle')} />
       <ProfileSectionMenu theme={theme} t={t} active={activeSection} onChange={(next) => setSearchParams({ section: next })} />
+      {shouldRenderSectionSurface ? (
+        <DashboardSurface theme={theme}>
+          {isComingSoonSection ? (
+            <div className="mb-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white/80">
+              <p className={theme === 'dark' ? 'text-sm font-semibold text-white' : 'text-sm font-semibold text-slate-900'}>{t(sectionLabelKey)}</p>
+              <p className={theme === 'dark' ? 'mt-1 text-xs text-white/75' : 'mt-1 text-xs text-slate-600'}>{t('dashboard.workerPortal.profile.menuComingSoon')}</p>
+            </div>
+          ) : null}
+          {isBasicSection ? <BasicInfoSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
+          {isExperiencesSection && showExperienceEditor ? (
+            <ExperiencesSection
+              key={experienceEditorDraft?.id ?? 'new'}
+              setItems={setExperienceItemsSynced}
+              externalDraft={experienceEditorDraft}
+              theme={theme}
+              t={t}
+              runWithToast={runWithToast}
+              onClose={() => {
+                setShowExperienceEditor(false)
+                setExperienceEditorDraft(null)
+              }}
+            />
+          ) : null}
+          {isSkillsSection ? <SkillsSection workerId={currentProfile.workerId} initialSkills={currentProfile.skills} /> : null}
+          {isCertificatesSection ? <CertificatesSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
+          {isReferencesSection ? <ReferencesSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
+          {isAvailabilitySection ? <AvailabilitySection /> : null}
+          {isPasswordSection ? <PasswordSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
+          {isAccountControlSection ? <AccountControlSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
+        </DashboardSurface>
+      ) : null}
       {isExperiencesSection ? (
         <ExperiencesOverviewCard
           items={experienceItems}
@@ -104,7 +175,7 @@ export function ProfilePage() {
                 success: { messageKey: 'dashboard.workerPortal.profile.messages.savedLocal' },
                 error: { messageKey: 'dashboard.workerPortal.states.fetchError' },
               })
-              setExperienceItems((prev) => prev.filter((item) => item.id !== id))
+              setExperienceItemsSynced((prev) => prev.filter((item) => item.id !== id))
             } catch {
               // toast already handled
             }
@@ -115,32 +186,6 @@ export function ProfilePage() {
           }}
         />
       ) : null}
-      <DashboardSurface theme={theme}>
-        {isComingSoonSection ? (
-          <div className="mb-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white/80">
-            <p className={theme === 'dark' ? 'text-sm font-semibold text-white' : 'text-sm font-semibold text-slate-900'}>{t(sectionLabelKey)}</p>
-            <p className={theme === 'dark' ? 'mt-1 text-xs text-white/75' : 'mt-1 text-xs text-slate-600'}>{t('dashboard.workerPortal.profile.menuComingSoon')}</p>
-          </div>
-        ) : null}
-        {isBasicSection ? <BasicInfoSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
-        {isExperiencesSection && showExperienceEditor ? (
-          <ExperiencesSection
-            key={experienceEditorDraft?.id ?? 'new'}
-            items={experienceItems}
-            setItems={setExperienceItems}
-            externalDraft={experienceEditorDraft}
-            theme={theme}
-            t={t}
-            runWithToast={runWithToast}
-          />
-        ) : null}
-        {isSkillsSection ? <SkillsSection workerId={currentProfile.workerId} initialSkills={currentProfile.skills} /> : null}
-        {isCertificatesSection ? <CertificatesSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
-        {isReferencesSection ? <ReferencesSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
-        {isAvailabilitySection ? <AvailabilitySection /> : null}
-        {isPasswordSection ? <PasswordSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
-        {isAccountControlSection ? <AccountControlSection profile={currentProfile} theme={theme} t={t} runWithToast={runWithToast} /> : null}
-      </DashboardSurface>
     </div>
   )
 }

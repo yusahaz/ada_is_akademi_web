@@ -2,10 +2,12 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { WorkerLayout } from './WorkerLayout'
 import { JobsPage } from './pages/jobs/JobsPage'
+import { JobPostingDetailPage } from './pages/jobs/JobPostingDetailPage'
 import { MyShiftsPage } from './pages/shifts/MyShiftsPage'
 import { NotificationsPage } from './pages/notifications/NotificationsPage'
 import { OverviewPage } from './pages/overview/OverviewPage'
 import { ProfilePage } from './pages/profile/ProfilePage'
+import { QrCheckPage } from './pages/qr-check/QrCheckPage'
 import { WalletPage } from './pages/wallet/WalletPage'
 
 type WorkerDashboardProps = {
@@ -20,7 +22,9 @@ export function WorkerDashboard({ isSidebarOpen, onSidebarClose }: WorkerDashboa
         <Route index element={<OverviewPage />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route path="jobs" element={<JobsPage />} />
+        <Route path="jobs/:postingId" element={<JobPostingDetailPage />} />
         <Route path="shifts" element={<MyShiftsPage />} />
+        <Route path="qr-check" element={<QrCheckPage />} />
         <Route path="wallet" element={<WalletPage />} />
         <Route path="notifications" element={<NotificationsPage />} />
 
@@ -32,10 +36,6 @@ export function WorkerDashboard({ isSidebarOpen, onSidebarClose }: WorkerDashboa
         <Route
           path="recommendations"
           element={<Navigate to="/worker/jobs?tab=recommendations" replace />}
-        />
-        <Route
-          path="qr-check"
-          element={<Navigate to="/worker/shifts?tab=active" replace />}
         />
         <Route
           path="payouts"

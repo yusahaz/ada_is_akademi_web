@@ -14,7 +14,8 @@ type AssignmentStatus = 'Pending' | 'AwaitingMutualQr' | 'CheckedIn' | 'CheckedO
 export function EmployerOperationsPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { postings, applications, selectedPostingId, setSelectedPostingId, activeAssignments, assignmentHistory } = useEmployerPortal()
+  const { postings, applications, selectedPostingId, setSelectedPostingId, activeAssignments, assignmentHistory } =
+    useEmployerPortal()
   const [searchParams, setSearchParams] = useSearchParams()
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
 
@@ -29,22 +30,15 @@ export function EmployerOperationsPage() {
     setSearchParams(next, { replace: true })
   }
 
-  const activeAssignmentsFallback = useMemo(() => {
-    if (activeAssignments.length > 0) {
-      return activeAssignments.map((item) => ({
+  const activeAssignmentRows = useMemo(
+    () =>
+      activeAssignments.map((item) => ({
         assignmentId: Number(item.assignmentId),
         workerId: Number(item.workerId),
         status: item.status as AssignmentStatus,
-      }))
-    }
-    // ShiftAssignments endpoint bağlanana kadar sentetik: seçili ilana gelen başvuruları “assignment” gibi göster.
-    const source = selectedPostingId ? applications : applications.slice(0, 8)
-    return source.slice(0, 8).map((item, index) => ({
-      assignmentId: item.applicationId,
-      workerId: item.workerId,
-      status: (index % 3 === 0 ? 'AwaitingMutualQr' : index % 3 === 1 ? 'CheckedIn' : 'Pending') as AssignmentStatus,
-    }))
-  }, [activeAssignments, applications, selectedPostingId])
+      })),
+    [activeAssignments],
+  )
 
   return (
     <>
@@ -58,7 +52,14 @@ export function EmployerOperationsPage() {
         <OperationsTabs theme={theme} activeView={activeView} setView={setView} t={t} />
 
         {activeView === 'activeAssignments' ? (
-          <ActiveAssignmentsView theme={theme} toneClass={toneClass} postings={postings} selectedPostingId={selectedPostingId} setSelectedPostingId={setSelectedPostingId} activeAssignmentsFallback={activeAssignmentsFallback} />
+          <ActiveAssignmentsView
+            theme={theme}
+            toneClass={toneClass}
+            postings={postings}
+            selectedPostingId={selectedPostingId}
+            setSelectedPostingId={setSelectedPostingId}
+            activeAssignmentsFallback={activeAssignmentRows}
+          />
         ) : null}
 
         {activeView === 'applications' ? (

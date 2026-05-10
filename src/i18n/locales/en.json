@@ -23,7 +23,7 @@
       "fr": "Français"
     },
     "hero": {
-      "badge": "Work today — shift opportunities in one app",
+      "badge": "Work today — job opportunities in one app",
       "title": "Students and employers on the same platform, matched instantly.",
       "subtitle": "Discover daily job opportunities with Ada İş Akademi, apply fast, and track your process and payouts in one app.",
       "ctaExplore": "Explore opportunities",
@@ -32,7 +32,7 @@
     },
     "card": {
       "shifts": {
-        "title": "Shifts near you",
+        "title": "Jobs near you",
         "matching": "Matching",
         "application": "Application",
         "approval": "Approval",
@@ -44,7 +44,7 @@
       },
       "suggestion": {
         "title": "Smart suggestion",
-        "body": "Strengthen your profile to rank higher in daily shift listings."
+        "body": "Strengthen your profile to rank higher in daily job listings."
       }
     },
     "stats": {
@@ -64,7 +64,7 @@
         },
         {
           "title": "Apply instantly",
-          "body": "Apply to suitable shifts in one tap and track status in real time."
+          "body": "Apply to suitable jobs in one tap and track status in real time."
         },
         {
           "title": "Get approved and start",
@@ -124,19 +124,19 @@
     },
     "worker": {
       "title": "Worker Dashboard",
-      "subtitle": "Track your applications, upcoming shifts, and profile health in one place.",
+      "subtitle": "Track your applications, upcoming jobs, and profile health in one place.",
       "welcomeGreeting": "Welcome",
       "defaultName": "Worker",
       "summary": {
         "activeApplications": "Active applications",
-        "upcomingShifts": "Upcoming shifts",
+        "upcomingShifts": "Upcoming jobs",
         "profileScore": "Profile score"
       },
       "sections": {
-        "suggestedShifts": "Suggested shifts",
+        "suggestedShifts": "Suggested jobs",
         "applicationAndPayment": "Application and payment status",
         "loading": "Loading data...",
-        "emptyShifts": "No suggested shifts available right now.",
+        "emptyShifts": "No suggested jobs available right now.",
         "fetchError": "Worker summary data could not be loaded."
       },
       "status": {
@@ -145,7 +145,7 @@
           "value": "In review"
         },
         "accepted": {
-          "label": "Approved shifts",
+          "label": "Approved jobs",
           "value": "Approved"
         },
         "payment": {
@@ -160,9 +160,9 @@
           "hint": "3 listings changed status today."
         },
         "shifts": {
-          "title": "Shifts this week",
+          "title": "Jobs this week",
           "value": "4",
-          "hint": "2 shifts approved, 1 pending confirmation."
+          "hint": "2 jobs approved, 1 pending confirmation."
         },
         "profile": {
           "title": "Profile score",
@@ -177,7 +177,7 @@
         "overview": "Overview",
         "profile": "Profile",
         "cvImport": "CV Import",
-        "shifts": "Shifts",
+        "shifts": "Jobs",
         "applications": "Applications",
         "qrCheck": "QR Check",
         "payouts": "Payouts",
@@ -188,7 +188,7 @@
         "account": "My Account",
         "dashboard": "Dashboard",
         "findJobs": "Find Jobs",
-        "myShifts": "My Shifts",
+        "myShifts": "My Jobs",
         "wallet": "Wallet",
         "notifications": "Notifications"
       },
@@ -200,7 +200,7 @@
       "pages": {
         "overview": {
           "title": "Overview",
-          "subtitle": "Track match score, payouts, QR flow, and the best shifts for your profile."
+          "subtitle": "Track match score, payouts, QR flow, and the best jobs for your profile."
         },
         "profile": {
           "title": "Profile",
@@ -212,7 +212,7 @@
         },
         "shifts": {
           "title": "Job Listings",
-          "subtitle": "Browse shifts you can join and submit an application quickly."
+          "subtitle": "Browse jobs you can join and submit an application quickly."
         },
         "applications": {
           "title": "Applications",
@@ -228,7 +228,7 @@
         },
         "reports": {
           "title": "Reports",
-          "subtitle": "Key metrics synthesized from payouts and shifts."
+          "subtitle": "Key metrics synthesized from payouts and jobs."
         },
         "recommendations": {
           "title": "AI Recommendations",
@@ -239,8 +239,8 @@
           "subtitle": "Personalized matches, open postings, location map and your applications in one place."
         },
         "myShifts": {
-          "title": "My Shifts",
-          "subtitle": "Track your active assignment, mutual QR validation and shift history."
+          "title": "My Jobs",
+          "subtitle": "Track your active assignment, mutual QR validation and work history."
         },
         "wallet": {
           "title": "Wallet & Earnings",
@@ -248,34 +248,36 @@
         },
         "notifications": {
           "title": "Notifications",
-          "subtitle": "Alerts for matches, payouts and shift activity."
+          "subtitle": "Alerts for matches, payouts and work activity."
         }
       },
       "overview": {
         "monthlyEarnings": "Monthly earnings",
         "paidPayouts": "Paid payouts",
-        "completedShifts": "Completed shifts",
+        "completedShifts": "Completed jobs",
         "bestMatchesTitle": "Best matching listings",
         "bestMatchesSubtitle": "Listings suggested based on your profile and availability.",
         "bestMatchesEmpty": "No suitable listings are available right now.",
         "employerPrefix": "Employer #{{id}}",
+        "jobPostingRef": "Posting #{{id}}",
+        "semanticMatchSchedule": "{{date}} • {{start}} - {{end}}",
         "periodMonthly": "Monthly",
-        "completedShiftsTitle": "Completed Shifts",
-        "shiftEarningLabel": "Shift earning",
+        "completedShiftsTitle": "Completed Jobs",
+        "shiftEarningLabel": "Job earning",
         "periodQuarterly": "3M",
         "periodSemiAnnual": "6M",
         "periodYearly": "Yearly",
         "periodSelectedPrefix": "Selected period: {{period}}",
-        "upcomingShifts": "Upcoming shifts",
+        "upcomingShifts": "Upcoming jobs",
         "upcomingShiftsHint": "Next: {{date}} • {{range}}",
-        "upcomingShiftsEmpty": "No scheduled shifts yet.",
+        "upcomingShiftsEmpty": "No scheduled jobs yet.",
         "reliabilityScore": "Reliability score",
         "reliabilityHint": "Calculated from the ratio of accepted applications.",
         "reliabilitySamples": "{{count}} applications",
         "reliabilityNoData": "Not enough data",
         "quickCheckInTitle": "Quick action",
         "quickCheckInCta": "Check in with QR",
-        "quickCheckInEmpty": "No active shift waiting for check-in."
+        "quickCheckInEmpty": "No active job waiting for check-in."
       },
       "tabs": {
         "jobs": {
@@ -285,17 +287,48 @@
           "mapEmpty": "No active postings to map.",
           "mapHeading": "Nearby employer locations",
           "mapHint": "Postings grouped by employer; full map coming soon.",
+          "mapGeoResolving": "Asking for your location to sort nearby listings…",
+          "mapGeoNear": "Listings within {{radius}} of you, sorted by distance.",
+          "mapRadiusLabel": "Search radius",
+          "mapGeoFallback": "Location unavailable; showing all open listings.",
+          "mapDistanceLabel": "{{distance}} away",
+          "mapPostingMeta": "{{headCount}} positions · {{applicationCount}} applications",
           "locationCount": "{{count}} open postings",
-          "applications": "My Applications"
+          "applications": "My Applications",
+          "actions": {
+            "viewDetails": "View Details",
+            "backToJobs": "Back to listings"
+          },
+          "filters": {
+            "searchPlaceholder": "Search title or keyword…",
+            "dateLabel": "Job date",
+            "statusLabel": "Application status",
+            "statusAll": "All",
+            "sortLabel": "Sort",
+            "sort": {
+              "matchDesc": "Best match first",
+              "dateAsc": "Job date: soonest first",
+              "dateDesc": "Job date: latest first",
+              "titleAsc": "Title (A–Z)"
+            },
+            "date": {
+              "all": "Any date",
+              "today": "Today",
+              "week": "Next 7 days",
+              "month": "This month"
+            },
+            "clear": "Clear filters",
+            "noResults": "No entries match your filters."
+          }
         },
         "myShifts": {
           "active": "Active",
           "history": "History",
-          "activeAssignment": "Active shift",
+          "activeAssignment": "Active job",
           "qrTitle": "Mutual QR validation",
-          "qrHint": "Scan worker and supervisor QR codes together to start the shift.",
-          "upcoming": "Upcoming shifts",
-          "noActive": "You have no active shift right now."
+          "qrHint": "Scan worker and supervisor QR codes together to start the work session.",
+          "upcoming": "Upcoming jobs",
+          "noActive": "You have no active job right now."
         },
         "wallet": {
           "payouts": "Payout Tracker",
@@ -314,7 +347,7 @@
         }
       },
       "shiftHistory": {
-        "empty": "No completed shifts in your history yet.",
+        "empty": "No completed jobs in your history yet.",
         "anomaly": "Anomaly",
         "status": {
           "pending": "Pending",
@@ -329,7 +362,7 @@
           "matching": "Match",
           "payout": "Payout",
           "application": "Application",
-          "shift": "Shift",
+          "shift": "Job",
           "general": "General"
         }
       },
@@ -361,7 +394,7 @@
       "widgets": {
         "aiMatch": {
           "title": "AI Match Opportunities",
-          "description": "Shifts with the highest semantic fit are prioritized for your profile.",
+          "description": "Jobs with the highest semantic fit are prioritized for your profile.",
           "scoreLabel": "Match",
           "action": "Start Now",
           "signal": "Data-driven suggestion"
@@ -376,7 +409,7 @@
           "action": "Open Camera"
         },
         "timeline": {
-          "title": "Upcoming Shifts",
+          "title": "Upcoming Jobs",
           "viewAll": "View all",
           "status": {
             "confirmed": "Confirmed",
@@ -423,6 +456,20 @@
           "savedLocal": "Profile changes saved for this session.",
           "validationError": "Full name must be at least 2 characters."
         },
+        "experienceSection": {
+          "listSubtitle": "Employers see this timeline when reviewing your profile.",
+          "emptyHint": "Add your work history to improve matches. You can edit or remove entries anytime.",
+          "formAddTitle": "Add experience",
+          "formEditTitle": "Edit experience",
+          "formSubtitle": "Company, role, and start date are required to save.",
+          "company": "Company",
+          "position": "Role / title",
+          "startDate": "Start date",
+          "endDate": "End date",
+          "endDateHint": "Leave empty if this is your current role.",
+          "ongoing": "Present",
+          "periodLabel": "Dates"
+        },
         "settingsMenu": "Account settings",
         "menu": {
           "basic": "Personal information",
@@ -467,9 +514,22 @@
         "submitting": "Applying...",
         "submitSuccess": "Your application was submitted.",
         "submitError": "Application request failed.",
-        "wageLabel": "Wage"
+        "wageLabel": "Wage",
+        "card": {
+          "employer": "Employer",
+          "location": "Work location",
+          "when": "Job date",
+          "hours": "Working hours",
+          "pay": "Pay",
+          "vacancy": "Openings & applications",
+          "skills": "Skills",
+          "requiredSkills": "Required",
+          "about": "About this role",
+          "postingRef": "Posting ID: #{{id}}"
+        }
       },
       "applications": {
+        "rejectionReasonLabel": "Rejection reason",
         "status": {
           "pending": "Pending",
           "accepted": "Accepted",
@@ -546,7 +606,7 @@
         },
         "operations": {
           "title": "Operations",
-          "subtitle": "Read-only preview of QR and shift operations."
+          "subtitle": "Read-only preview of QR and work operations."
         },
         "billing": {
           "title": "Billing",
@@ -582,9 +642,9 @@
       "operations": {
         "tabs": {
           "createPosting": "Create posting",
-          "activeAssignments": "Active shifts",
+          "activeAssignments": "Active jobs",
           "applications": "Applications",
-          "history": "Shift history"
+          "history": "Work history"
         },
         "createPosting": {
           "title": "Create posting",
@@ -597,7 +657,7 @@
             "jobCategoryId": "Job category ID",
             "selectCategory": "Select category",
             "categoryOption": "Category #{{id}}",
-            "shiftDate": "Shift date",
+            "shiftDate": "Job date",
             "shiftStartTime": "Start time",
             "shiftEndTime": "End time",
             "headCount": "Headcount",
@@ -614,10 +674,10 @@
           "submitError": "Failed to create job posting."
         },
         "activeAssignments": {
-          "title": "Active shifts",
+          "title": "Active jobs",
           "subtitle": "Track ongoing work via mutual QR verification status.",
           "all": "All",
-          "empty": "No active shifts.",
+          "empty": "No active jobs.",
           "worker": "Candidate",
           "qrStatus": "QR status"
         },
@@ -629,8 +689,8 @@
           "matchScoreAria": "Match score: {{score}}%"
         },
         "history": {
-          "title": "Shift history",
-          "subtitle": "Archive completed shifts and no-show reports."
+          "title": "Work history",
+          "subtitle": "Archive completed jobs and no-show reports."
         }
       },
       "intelligence": {
@@ -701,7 +761,7 @@
         },
         "teamRBAC": {
           "title": "Team management (RBAC)",
-          "subtitle": "Assign shift supervisors and scope access per location.",
+          "subtitle": "Assign supervisors and scope access per location.",
           "cards": {
             "supervisors": "ShiftSupervisor assignments",
             "groups": "Group permissions (scope)"
@@ -765,8 +825,8 @@
           "completed": "Completed"
         },
         "mode": {
-          "instant": "Instant shift",
-          "planned": "Planned shift"
+          "instant": "Instant job",
+          "planned": "Planned job"
         },
         "detailTitle": "Posting detail",
         "detail": {
@@ -789,7 +849,7 @@
         "empty": "No records in this column."
       },
       "operations": {
-        "title": "QR and Shift Operations",
+        "title": "QR and Work Operations",
         "subtitle": "Follow mutual QR verification and anomaly states.",
         "readOnly": "This section is read-only until dedicated APIs are integrated.",
         "cards": {
@@ -1208,7 +1268,7 @@
     },
     "login": {
       "title": "Sign in",
-      "subtitleIndividual": "Access your account to manage applications, shifts, and notifications.",
+      "subtitleIndividual": "Access your account to manage applications, jobs, and notifications.",
       "subtitleCorporate": "Sign in with your organization account to manage listings and hiring.",
       "emailLabel": "Email",
       "emailPlaceholder": "you@example.com",

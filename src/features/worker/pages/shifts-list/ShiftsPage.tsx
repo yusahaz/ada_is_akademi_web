@@ -1,31 +1,41 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import type { JobPostingSummary } from '../../../../api/jobs/job-postings'
 import { workerPortalApi } from '../../../../api/worker/worker-portal'
-import { useActionToasts } from '../../../../notifications/use-action-toasts'
 import { useTheme } from '../../../../theme/theme-context'
-import { DashboardSurface, StatePanel } from '../../../../shared/ui/ui-primitives'
-import { WorkerPrimaryButton, WorkerSectionHeader } from '../../worker-ui'
+import { StatePanel } from '../../../../shared/ui/ui-primitives'
+import { WorkerSectionHeader } from '../../worker-ui'
 import { useWorkerAsyncData } from '../../hooks/useWorkerAsyncData'
+import { filterAndSortOpenPostings } from '../jobs/job-browse-utils'
+import { useJobsBrowseFilters } from '../jobs/jobs-browse-filters-context'
+import { formatPostingScheduleFriendly } from '../jobs/posting-detail-lines'
+import { WorkerPostingListItem } from '../jobs/components/WorkerPostingListItem'
 
 export type ShiftsPageProps = {
   embedded?: boolean
 }
 
 export function ShiftsPage({ embedded = false }: ShiftsPageProps = {}) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
-  const { runWithToast } = useActionToasts()
   const query = useCallback(() => workerPortalApi.listOpenShifts(), [])
-  const { loading, error, data: items, reload } = useWorkerAsyncData<JobPostingSummary[]>(
+  const { loading, error, data: items } = useWorkerAsyncData<JobPostingSummary[]>(
     [],
     ['worker', 'open-shifts'],
     query,
     () => t('dashboard.workerPortal.states.fetchError'),
   )
-  const [submitError, setSubmitError] = useState<string | null>(null)
-  const [submittingId, setSubmittingId] = useState<number | null>(null)
+  const { searchQuery, datePreset, postingSort } = useJobsBrowseFilters()
+  const visibleItems = useMemo(
+    () =>
+      filterAndSortOpenPostings(items, {
+        searchQuery,
+        datePreset,
+        sort: postingSort,
+      }),
+    [items, searchQuery, datePreset, postingSort],
+  )
 
   const renderHeader = () =>
     embedded ? null : (
@@ -35,22 +45,6 @@ export function ShiftsPage({ embedded = false }: ShiftsPageProps = {}) {
         subtitle={t('dashboard.workerPortal.pages.shifts.subtitle')}
       />
     )
-
-  const applyShift = async (id: number) => {
-    setSubmittingId(id)
-    try {
-      await runWithToast(workerPortalApi.submitApplication(id), {
-        success: { messageKey: 'dashboard.workerPortal.shifts.submitSuccess' },
-        error: { messageKey: 'dashboard.workerPortal.shifts.submitError' },
-      })
-      setSubmitError(null)
-      await reload()
-    } catch {
-      setSubmitError(t('dashboard.workerPortal.shifts.submitError'))
-    } finally {
-      setSubmittingId(null)
-    }
-  }
 
   if (loading) {
     return (
@@ -77,35 +71,41 @@ export function ShiftsPage({ embedded = false }: ShiftsPageProps = {}) {
     )
   }
 
+  if (visibleItems.length === 0) {
+    return (
+      <div className="space-y-4">
+        {renderHeader()}
+        <StatePanel text={t('dashboard.workerPortal.tabs.jobs.filters.noResults')} theme={theme} />
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       {renderHeader()}
-      {submitError ? <StatePanel text={submitError} theme={theme} isError /> : null}
-      {items.map((item) => (
-        <DashboardSurface key={item.id} theme={theme} className="relative">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <h2 className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{item.title}</h2>
-              <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>
-                {t('dashboard.workerPortal.overview.employerPrefix', { id: item.employerId })}
-              </p>
-              <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/75' : 'text-slate-700'}`}>
-                {t('dashboard.workerPortal.shifts.wageLabel')}: {item.wageAmount} {item.wageCurrency}
-              </p>
-              <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`}>
-                {item.shiftDate} - {item.shiftStartTime} / {item.shiftEndTime}
-              </p>
-            </div>
-            <WorkerPrimaryButton
-              tone={theme}
-              onClick={() => applyShift(item.id)}
-              disabled={submittingId === item.id}
-            >
-              {submittingId === item.id ? t('dashboard.workerPortal.shifts.submitting') : t('dashboard.workerPortal.shifts.submit')}
-            </WorkerPrimaryButton>
-          </div>
-        </DashboardSurface>
-      ))}
+      <div className="flex flex-col gap-3">
+        {visibleItems.map((item) => (
+          <WorkerPostingListItem
+            key={item.id}
+            theme={theme}
+            postingId={item.id}
+            title={item.title}
+            employerName={
+              item.employerName?.trim()
+                ? item.employerName
+                : t('dashboard.workerPortal.overview.employerPrefix', { id: item.employerId })
+            }
+            locationText={item.locationText}
+            scheduleText={formatPostingScheduleFriendly(item, i18n.language)}
+            wageText={`${item.wageAmount} ${item.wageCurrency}`}
+            metaText={t('dashboard.workerPortal.tabs.jobs.mapPostingMeta', {
+              headCount: item.headCount,
+              applicationCount: item.applicationCount ?? 0,
+            })}
+            tags={[...(item.requiredTags ?? []), ...(item.tags ?? [])]}
+          />
+        ))}
+      </div>
     </div>
   )
 }
