@@ -70,8 +70,31 @@ export type VerifySystemUserEmailCommand = {
   tokenHash: string
 }
 
+export type RegisterEmployerCommand = {
+  employerName: string
+  employerDescription?: string | null
+  employerAddressCity: string
+  employerAddressCountry: string
+  employerAddressLine1: string
+  employerTaxNumber: string
+  email: string
+  firstName: string
+  lastName: string
+  password: string
+  phone: string
+}
+
+export type RegisterAdminCommand = {
+  email: string
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  password: string
+}
+
 export type ListSystemUsersQuery = {
   accountStatus?: AccountStatus | null
+  employerId?: number | null
   limit?: number
   offset?: number
   searchEmail?: string | null
@@ -105,6 +128,9 @@ export type SystemUserListItem = {
   email: string
   type: SystemUserType
   accountStatus: AccountStatus
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
 }
 
 export type SystemUsersListResult = PageableListResult<SystemUserListItem>
@@ -170,6 +196,13 @@ export const systemUsersApi = {
       API_ENDPOINTS.systemUsers.reactivate,
       body,
       true,
+    )
+  },
+  registerEmployer(body: RegisterEmployerCommand) {
+    return client.post<number, RegisterEmployerCommand>(
+      API_ENDPOINTS.systemUsers.registerEmployer,
+      body,
+      false,
     )
   },
   refreshToken(body: RefreshSystemUserTokenCommand) {
