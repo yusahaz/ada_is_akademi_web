@@ -23,7 +23,7 @@ export function ProfileInput({
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className={`w-full rounded-xl border px-3 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white placeholder:text-white/40' : 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400'}`}
+        className={`min-w-0 w-full rounded-xl border px-3 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white placeholder:text-white/40' : 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400'}`}
       />
     </label>
   )
@@ -42,7 +42,9 @@ export function ProfileReadOnlyField({
     <div className="space-y-1 text-sm">
       <p className={resolveMuted(theme)}>{label}</p>
       <p
-        className={`rounded-xl border px-3 py-2 ${theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-white/80' : 'border-slate-200 bg-slate-50 text-slate-700'}`}
+        className={`min-w-0 rounded-xl border px-3 py-2 leading-snug [overflow-wrap:anywhere] ${
+          theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-white/80' : 'border-slate-200 bg-slate-50 text-slate-700'
+        }`}
       >
         {value}
       </p>

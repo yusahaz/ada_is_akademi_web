@@ -23,6 +23,7 @@ import type { JobPostingDetail, JobPostingSummary } from '../../../api/jobs/job-
 import type { SemanticSearchedWorkerListItem } from '../../../api/worker/workers'
 import { normalizePageableList } from '../../../api/core/pagination'
 import { EmployerPortalContext } from './employer-portal-context'
+import { isPostingShiftUpcoming, normalizeJobPostingStatus } from './job-posting-status'
 import type {
   EmployerExportFormat,
   EmployerPayoutStatus,
@@ -142,7 +143,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       })
 
     void shiftAssignmentsApi
-      .myAssignments({})
+      .listEmployerAssignments({ excludeCompleted: true, limit: 50, offset: 0 })
       .then((res) => {
         if (!isActive) return
         setActiveAssignments(res.data.items ?? [])
@@ -271,7 +272,9 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       pendingApplications:
         spotSummary?.pendingApplicationCount ??
         applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
-      actionRequired: spotSummary?.activeAnomalyCount ?? applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
+      actionRequired:
+        spotSummary?.activeAnomalyCount ??
+        applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
     }),
     [applications, postings.length, spotSummary],
   )
@@ -280,8 +283,8 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
     () =>
       postings.map((item) => ({
         ...item,
-        status: JobPostingStatus.Open,
-        isPlanned: true,
+        status: normalizeJobPostingStatus(item.status),
+        isPlanned: isPostingShiftUpcoming(item.shiftDate),
       })),
     [postings],
   )
@@ -289,10 +292,18 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   const filteredPostings = useMemo(() => {
     if (postingsFilter === 'all') return postingsWithStatus
     if (postingsFilter === 'open') {
-      return postingsWithStatus.filter((item) => item.status === JobPostingStatus.Open)
+      return postingsWithStatus.filter(
+        (item) => item.status === JobPostingStatus.Open || item.status === JobPostingStatus.Filled,
+      )
     }
-    if (postingsFilter === 'draft' || postingsFilter === 'completed') {
-      return []
+    if (postingsFilter === 'draft') {
+      return postingsWithStatus.filter((item) => item.status === JobPostingStatus.Draft)
+    }
+    if (postingsFilter === 'completed') {
+      return postingsWithStatus.filter(
+        (item) =>
+          item.status === JobPostingStatus.Completed || item.status === JobPostingStatus.Cancelled,
+      )
     }
     return postingsWithStatus
   }, [postingsFilter, postingsWithStatus])
@@ -306,60 +317,31 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
     [applications],
   )
 
-  const payoutItems = useMemo(
-    () => {
-      if (payoutsFromApi.length > 0) {
-        return payoutsFromApi.map((item) => ({
-          id: item.workerPayoutId,
-          worker: item.workerName,
-          amount: item.amount,
-          currency: item.currency,
-          status: item.status,
-          isLocked: item.isLocked,
-        }))
-      }
-      return applications.map((item) => ({
-        id: item.applicationId,
-        worker: `#${item.workerId}`,
-        amount: selectedPosting?.wageAmount ?? 0,
-        currency: selectedPosting?.wageCurrency ?? 'TRY',
-        status:
-          item.status === JobApplicationStatus.Accepted
-            ? ('Processing' as EmployerPayoutStatus)
-            : item.status === JobApplicationStatus.Pending
-              ? ('Pending' as EmployerPayoutStatus)
-              : ('Failed' as EmployerPayoutStatus),
-      }))
-    },
-    [applications, payoutsFromApi, selectedPosting?.wageAmount, selectedPosting?.wageCurrency],
-  )
+  const payoutItems = useMemo(() => {
+    if (payoutsFromApi.length === 0) {
+      return []
+    }
+    return payoutsFromApi.map((item) => ({
+      id: item.workerPayoutId,
+      worker: item.workerName,
+      amount: item.amount,
+      currency: item.currency,
+      status: item.status,
+      isLocked: item.isLocked,
+    }))
+  }, [payoutsFromApi])
 
-  const receivableItems = useMemo(
-    () => {
-      if (receivablesFromApi.length > 0) {
-        return receivablesFromApi.map((item) => ({
-          id: item.id,
-          period: item.period,
-          total: item.totalAmount,
-          status: item.status,
-        }))
-      }
-      return postings.slice(0, 6).map((item, index) => ({
-        id: item.id,
-        period: item.shiftDate,
-        total: item.wageAmount * item.headCount,
-        status:
-          index % 4 === 0
-            ? ('Invoiced' as EmployerReceivableStatus)
-            : index % 4 === 1
-              ? ('PartiallyPaid' as EmployerReceivableStatus)
-              : index % 4 === 2
-                ? ('Paid' as EmployerReceivableStatus)
-                : ('Overdue' as EmployerReceivableStatus),
-      }))
-    },
-    [postings, receivablesFromApi],
-  )
+  const receivableItems = useMemo(() => {
+    if (receivablesFromApi.length === 0) {
+      return []
+    }
+    return receivablesFromApi.map((item) => ({
+      id: item.id,
+      period: item.period,
+      total: item.totalAmount,
+      status: item.status,
+    }))
+  }, [receivablesFromApi])
 
   const filteredPayouts = useMemo(
     () => (payoutFilter === 'all' ? payoutItems : payoutItems.filter((item) => item.status === payoutFilter)),
@@ -368,11 +350,12 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
 
   const badges = useMemo(() => {
     const pendingPayouts =
-      spotSummary?.pendingPayoutCount ?? payoutItems.filter((item) => item.status === 'Pending').length
+      spotSummary?.pendingPayoutCount ??
+      (payoutsFromApi.length > 0 ? payoutItems.filter((item) => item.status === 'Pending').length : 0)
     const activeAnomalies =
       spotSummary?.activeAnomalyCount ?? activeAssignments.filter((item) => item.isAnomalyFlagged).length
     return { activeAnomalies, pendingPayouts }
-  }, [activeAssignments, payoutItems, spotSummary])
+  }, [activeAssignments, payoutItems, payoutsFromApi.length, spotSummary])
 
   const runSemanticSearch = useCallback(async (queryText: string) => {
     const term = queryText.trim()
@@ -444,6 +427,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       employerLocations,
       employerSupervisors,
       disputes,
+      spotSummary,
       reloadPostings,
     }),
     [
@@ -473,6 +457,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       employerLocations,
       employerSupervisors,
       disputes,
+      spotSummary,
       reloadPostings,
     ],
   )

@@ -49,6 +49,7 @@ export type UpdateWorkerProfileCommand = {
   lastName: string | null
   nationality: string | null
   university: string | null
+  phone?: string | null
 }
 
 export type DeleteWorkerCommand = {

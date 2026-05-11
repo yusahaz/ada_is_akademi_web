@@ -25,21 +25,15 @@ export function EmployerCandidatesPage() {
   }
   const sectionButtonClass = (isActiveButton: boolean) => `inline-flex ${isActiveButton ? 'is-active' : ''}`
 
-  const portfolioFallback = useMemo(() => {
-    if (workerPortfolio.length > 0) {
-      return workerPortfolio.map((item) => ({
+  const portfolioRows = useMemo(
+    () =>
+      workerPortfolio.map((item) => ({
         workerId: item.workerId,
         reliability: item.reliabilityScore,
         lastSeen: item.lastWorkedAt ?? '-',
-      }))
-    }
-    const base = [...candidateGroups.accepted, ...candidateGroups.pending].slice(0, 12)
-    return base.map((item, index) => ({
-      workerId: item.workerId,
-      reliability: Math.max(92 - index * 3, 60),
-      lastSeen: item.appliedAt,
-    }))
-  }, [candidateGroups.accepted, candidateGroups.pending, workerPortfolio])
+      })),
+    [workerPortfolio],
+  )
 
   return (
     <>
@@ -78,7 +72,7 @@ export function EmployerCandidatesPage() {
         ) : null}
 
         {activeView === 'workerPortfolio' ? (
-          <WorkerPortfolioView theme={theme} toneClass={toneClass} portfolioRows={portfolioFallback} t={t} />
+          <WorkerPortfolioView theme={theme} toneClass={toneClass} portfolioRows={portfolioRows} t={t} />
         ) : null}
       </DashboardSurface>
     </>

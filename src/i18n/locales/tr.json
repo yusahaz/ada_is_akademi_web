@@ -32,7 +32,7 @@
     },
     "card": {
       "shifts": {
-        "title": "Yakınındaki vardiyalar",
+        "title": "Yakınındaki çalışmalar",
         "matching": "Eşleştirme",
         "application": "Başvuru",
         "approval": "Onay",
@@ -44,7 +44,7 @@
       },
       "suggestion": {
         "title": "Akıllı öneri",
-        "body": "Profilini güçlendir; günlük vardiya ilanlarında daha üst sıralarda görün."
+        "body": "Profilini güçlendir; günlük çalışma ilanlarında daha üst sıralarda görün."
       }
     },
     "stats": {
@@ -64,7 +64,7 @@
         },
         {
           "title": "Hızlı başvur",
-          "body": "Uygun vardiyalara tek dokunuşla başvur; başvuru durumunu canlı takip et."
+          "body": "Uygun çalışmalara tek dokunuşla başvur; başvuru durumunu canlı takip et."
         },
         {
           "title": "Onaylan ve başla",
@@ -124,19 +124,19 @@
     },
     "worker": {
       "title": "Worker Dashboard",
-      "subtitle": "Başvurularını, yaklaşan vardiyalarını ve profil gücünü tek yerden yönet.",
+      "subtitle": "Başvurularını, yaklaşan çalışmalarını ve profil gücünü tek yerden yönet.",
       "welcomeGreeting": "Hoş geldin",
       "defaultName": "Aday",
       "summary": {
         "activeApplications": "Aktif başvuru",
-        "upcomingShifts": "Yaklaşan vardiya",
+        "upcomingShifts": "Yaklaşan çalışma",
         "profileScore": "Profil skoru"
       },
       "sections": {
-        "suggestedShifts": "Sana uygun vardiyalar",
+        "suggestedShifts": "Sana uygun çalışmalar",
         "applicationAndPayment": "Başvuru ve ödeme durumu",
         "loading": "Veriler yükleniyor...",
-        "emptyShifts": "Şu an önerilen vardiya bulunamadı.",
+        "emptyShifts": "Şu an önerilen çalışma bulunamadı.",
         "fetchError": "Worker özet verileri alınamadı."
       },
       "status": {
@@ -145,7 +145,7 @@
           "value": "İncelemede"
         },
         "accepted": {
-          "label": "Onaylanan vardiya",
+          "label": "Onaylanan çalışma",
           "value": "Onaylandı"
         },
         "payment": {
@@ -160,9 +160,9 @@
           "hint": "Bugün 3 ilanda durum güncellendi."
         },
         "shifts": {
-          "title": "Bu haftaki vardiya",
+          "title": "Bu haftaki çalışma",
           "value": "4",
-          "hint": "2 vardiya onaylandı, 1'i beklemede."
+          "hint": "2 çalışma onaylandı, 1'i beklemede."
         },
         "profile": {
           "title": "Profil skoru",
@@ -177,7 +177,7 @@
         "overview": "Genel Bakış",
         "profile": "Profil",
         "cvImport": "CV Aktarımı",
-        "shifts": "Vardiyalar",
+        "shifts": "Çalışmalar",
         "applications": "Başvurular",
         "qrCheck": "QR Kontrol",
         "payouts": "Ödemeler",
@@ -188,7 +188,7 @@
         "account": "Hesabım",
         "dashboard": "Panel",
         "findJobs": "İş Bul",
-        "myShifts": "Vardiyalarım",
+        "myShifts": "Çalışmalarım",
         "wallet": "Cüzdan",
         "notifications": "Bildirimler"
       },
@@ -212,7 +212,7 @@
         },
         "shifts": {
           "title": "İş İlanları",
-          "subtitle": "Katılabileceğin vardiyalara göz at ve başvurunu hızlıca ilet."
+          "subtitle": "Katılabileceğin çalışmalara göz at ve başvurunu hızlıca ilet."
         },
         "applications": {
           "title": "Başvurular",
@@ -228,7 +228,7 @@
         },
         "reports": {
           "title": "Raporlar",
-          "subtitle": "Ödemeler ve vardiyalardan özetlenen kritik göstergeler."
+          "subtitle": "Ödemeler ve çalışmalardan özetlenen kritik göstergeler."
         },
         "recommendations": {
           "title": "AI Oneri Listesi",
@@ -239,8 +239,8 @@
           "subtitle": "Sana özel öneriler, açık ilanlar, lokasyon haritası ve başvurularını tek ekranda yönet."
         },
         "myShifts": {
-          "title": "Vardiyalarım",
-          "subtitle": "Aktif görevini, karşılıklı QR doğrulamasını ve geçmiş vardiyalarını izle."
+          "title": "Çalışmalarım",
+          "subtitle": "Aktif görevini, karşılıklı QR doğrulamasını ve geçmiş çalışmalarını izle."
         },
         "wallet": {
           "title": "Cüzdan ve Kazançlar",
@@ -254,28 +254,30 @@
       "overview": {
         "monthlyEarnings": "Aylık kazanç",
         "paidPayouts": "Tamamlanan ödeme",
-        "completedShifts": "Tamamlanan vardiya",
+        "completedShifts": "Tamamlanan çalışma",
         "bestMatchesTitle": "En uygun iş ilanları",
         "bestMatchesSubtitle": "Profiline ve uygunluk durumuna göre önerilen ilanlar.",
         "bestMatchesEmpty": "Şu an uygun ilan bulunmuyor.",
         "employerPrefix": "İşveren #{{id}}",
+        "jobPostingRef": "İlan #{{id}}",
+        "semanticMatchSchedule": "{{date}} • {{start}} - {{end}}",
         "periodMonthly": "Aylık",
-        "completedShiftsTitle": "Tamamlanan Vardiyalar",
-        "shiftEarningLabel": "Vardiya Kazancı",
+        "completedShiftsTitle": "Tamamlanan Çalışmalar",
+        "shiftEarningLabel": "Çalışma Kazancı",
         "periodQuarterly": "3 Aylık",
         "periodSemiAnnual": "6 Aylık",
         "periodYearly": "Yıllık",
         "periodSelectedPrefix": "Seçili dönem: {{period}}",
-        "upcomingShifts": "Yaklaşan vardiyalar",
-        "upcomingShiftsHint": "Sıradaki vardiya: {{date}} • {{range}}",
-        "upcomingShiftsEmpty": "Planlanmış vardiyan bulunmuyor.",
+        "upcomingShifts": "Yaklaşan çalışmalar",
+        "upcomingShiftsHint": "Sıradaki çalışma: {{date}} • {{range}}",
+        "upcomingShiftsEmpty": "Planlanmış çalışman bulunmuyor.",
         "reliabilityScore": "Güvenilirlik skoru",
         "reliabilityHint": "Kabul edilen başvurularının oranından hesaplanır.",
         "reliabilitySamples": "{{count}} başvuru",
         "reliabilityNoData": "Yetersiz veri",
         "quickCheckInTitle": "Anlık aksiyon",
         "quickCheckInCta": "QR ile check-in yap",
-        "quickCheckInEmpty": "Şu an check-in bekleyen vardiyan yok."
+        "quickCheckInEmpty": "Şu an check-in bekleyen çalışman yok."
       },
       "tabs": {
         "jobs": {
@@ -284,18 +286,49 @@
           "map": "Harita",
           "mapEmpty": "Harita için aktif ilan bulunmuyor.",
           "mapHeading": "Yakın işveren lokasyonları",
-          "mapHint": "İşveren bazında gruplanmış vardiya kartları; tam harita yakında.",
+          "mapHint": "İşveren bazında gruplanmış çalışma kartları; tam harita yakında.",
+          "mapGeoResolving": "Haritada yakın ilanları sıralamak için konum izni isteniyor…",
+          "mapGeoNear": "Konumuna göre {{radius}} içindeki ilanlar mesafeye göre sıralı.",
+          "mapRadiusLabel": "Arama yarıçapı",
+          "mapGeoFallback": "Konum alınamadı; tüm açık ilanlar gösteriliyor.",
+          "mapDistanceLabel": "{{distance}} uzaklıkta",
+          "mapPostingMeta": "{{headCount}} kontenjan · {{applicationCount}} başvuru",
           "locationCount": "{{count}} açık ilan",
-          "applications": "Başvurularım"
+          "applications": "Başvurularım",
+        "actions": {
+          "viewDetails": "Detayları Görüntüle",
+          "backToJobs": "İlanlara dön"
+        },
+          "filters": {
+            "searchPlaceholder": "İlan veya anahtar kelime ara…",
+            "dateLabel": "Çalışma tarihi",
+            "statusLabel": "Başvuru durumu",
+            "statusAll": "Tümü",
+            "sortLabel": "Sırala",
+            "sort": {
+              "matchDesc": "Önce en yüksek eşleşme",
+              "dateAsc": "Çalışma: önce en yakın",
+              "dateDesc": "Çalışma: önce en geç",
+              "titleAsc": "Başlık (A-Z)"
+            },
+            "date": {
+              "all": "Tüm tarihler",
+              "today": "Bugün",
+              "week": "Önümüzdeki 7 gün",
+              "month": "Bu ay"
+            },
+            "clear": "Filtreleri sıfırla",
+            "noResults": "Seçtiğin filtrelere uygun kayıt yok."
+          }
         },
         "myShifts": {
-          "active": "Aktif Görev",
+          "active": "Aktif",
           "history": "Geçmiş",
-          "activeAssignment": "Aktif vardiya",
+          "activeAssignment": "Aktif çalışma",
           "qrTitle": "Karşılıklı QR doğrulama",
-          "qrHint": "Vardiya başlangıcı için işveren ve çalışan QR kodlarını birlikte tarayın.",
-          "upcoming": "Yaklaşan vardiyalar",
-          "noActive": "Şu an aktif bir vardiyan yok."
+          "qrHint": "Çalışma başlangıcı için işveren ve çalışan QR kodlarını birlikte tarayın.",
+          "upcoming": "Yaklaşan çalışmalar",
+          "noActive": "Şu an aktif bir çalışman yok."
         },
         "wallet": {
           "payouts": "Ödeme Takibi",
@@ -314,7 +347,7 @@
         }
       },
       "shiftHistory": {
-        "empty": "Geçmişte tamamlanmış vardiya bulunmuyor.",
+        "empty": "Geçmişte tamamlanmış çalışma bulunmuyor.",
         "anomaly": "Anomali",
         "status": {
           "pending": "Bekliyor",
@@ -329,7 +362,7 @@
           "matching": "Eşleşme",
           "payout": "Ödeme",
           "application": "Başvuru",
-          "shift": "Vardiya",
+          "shift": "Çalışma",
           "general": "Genel"
         }
       },
@@ -361,7 +394,7 @@
       "widgets": {
         "aiMatch": {
           "title": "Yapay Zeka Eşleşmeleri",
-          "description": "Profiline en yüksek uyumu gösteren vardiyalar senin için önceliklendirildi.",
+          "description": "Profiline en yüksek uyumu gösteren çalışmalar senin için önceliklendirildi.",
           "scoreLabel": "Eşleşme",
           "action": "Hemen Başla",
           "signal": "Veri kaynaklı öneri"
@@ -391,7 +424,7 @@
         }
       },
       "profile": {
-        "basic": "Temel profil",
+        "basic": "Kişisel Bilgiler",
         "fullName": "Ad Soyad: {{value}}",
         "email": "E-posta: {{value}}",
         "phone": "Telefon: {{value}}",
@@ -422,6 +455,20 @@
         "messages": {
           "savedLocal": "Profil değişiklikleri bu oturum için kaydedildi.",
           "validationError": "Ad soyad en az 2 karakter olmalı."
+        },
+        "experienceSection": {
+          "listSubtitle": "İşverenler profilin incelerken bu zaman çizelgesini görür.",
+          "emptyHint": "İş geçmişini ekleyerek eşleşmelerini güçlendirebilirsin; kayıtları istediğin zaman düzenleyebilir veya silebilirsin.",
+          "formAddTitle": "Yeni deneyim",
+          "formEditTitle": "Deneyimi düzenle",
+          "formSubtitle": "Kaydetmek için şirket, pozisyon ve başlangıç tarihi gereklidir.",
+          "company": "Şirket",
+          "position": "Pozisyon / unvan",
+          "startDate": "Başlangıç tarihi",
+          "endDate": "Bitiş tarihi",
+          "endDateHint": "Hâlâ çalışıyorsan boş bırak.",
+          "ongoing": "Devam ediyor",
+          "periodLabel": "Tarihler"
         },
         "settingsMenu": "Hesap ayarları",
         "menu": {
@@ -467,9 +514,22 @@
         "submitting": "Başvuruluyor...",
         "submitSuccess": "Başvurunuz alındı.",
         "submitError": "Başvuru isteği başarısız oldu.",
-        "wageLabel": "Ücret"
+        "wageLabel": "Ücret",
+        "card": {
+          "employer": "İşveren",
+          "location": "Çalışma yeri",
+          "when": "Çalışma günü",
+          "hours": "Çalışma saatleri",
+          "pay": "Ücret",
+          "vacancy": "Kontenjan ve başvuru",
+          "skills": "Yetenekler",
+          "requiredSkills": "Zorunlu koşullar",
+          "about": "İlan özeti",
+          "postingRef": "İlan numarası: #{{id}}"
+        }
       },
       "applications": {
+        "rejectionReasonLabel": "Reddedilme nedeni",
         "status": {
           "pending": "Bekliyor",
           "accepted": "Kabul edildi",
@@ -507,7 +567,7 @@
       "nav": {
         "groups": {
           "dashboard": "Dashboard",
-          "operations": "Vardiya Yönetimi",
+          "operations": "Çalışma Yönetimi",
           "intelligence": "Yetenek Havuzu",
           "finance": "Finans Merkezi",
           "settings": "Kurumsal Ayarlar",
@@ -546,7 +606,7 @@
         },
         "operations": {
           "title": "Operasyon",
-          "subtitle": "QR ve vardiya operasyonlarının salt okunur önizlemesi."
+          "subtitle": "QR ve çalışma operasyonlarının salt okunur önizlemesi."
         },
         "billing": {
           "title": "Faturalama",
@@ -582,9 +642,9 @@
       "operations": {
         "tabs": {
           "createPosting": "İlan Oluştur",
-          "activeAssignments": "Aktif Vardiyalar",
+          "activeAssignments": "Aktif Çalışmalar",
           "applications": "Başvurular",
-          "history": "Vardiya Geçmişi"
+          "history": "Çalışma Geçmişi"
         },
         "createPosting": {
           "title": "İlan Oluştur",
@@ -597,7 +657,7 @@
             "jobCategoryId": "İş kategorisi ID",
             "selectCategory": "Kategori seçin",
             "categoryOption": "Kategori #{{id}}",
-            "shiftDate": "Vardiya tarihi",
+            "shiftDate": "Çalışma tarihi",
             "shiftStartTime": "Başlangıç saati",
             "shiftEndTime": "Bitiş saati",
             "headCount": "Kontenjan",
@@ -614,10 +674,10 @@
           "submitError": "İş ilanı oluşturulamadı."
         },
         "activeAssignments": {
-          "title": "Aktif Vardiyalar",
+          "title": "Aktif Çalışmalar",
           "subtitle": "Karşılıklı QR doğrulama statüsüne göre devam eden görevleri izleyin.",
           "all": "Tümü",
-          "empty": "Aktif vardiya kaydı yok.",
+          "empty": "Aktif çalışma kaydı yok.",
           "worker": "Aday",
           "qrStatus": "QR durumu"
         },
@@ -629,7 +689,7 @@
           "matchScoreAria": "Eşleşme skoru: %{{score}}"
         },
         "history": {
-          "title": "Vardiya Geçmişi",
+          "title": "Çalışma Geçmişi",
           "subtitle": "Tamamlanan görevler ve no-show raporları."
         }
       },
@@ -701,7 +761,7 @@
         },
         "teamRBAC": {
           "title": "Ekip Yönetimi (RBAC)",
-          "subtitle": "Lokasyon bazlı vardiya sorumluları atayın ve erişimleri sınırlandırın.",
+          "subtitle": "Lokasyon bazlı çalışma sorumluları atayın ve erişimleri sınırlandırın.",
           "cards": {
             "supervisors": "ShiftSupervisor Atamaları",
             "groups": "Grup Yetkileri (Scope)"
@@ -765,8 +825,8 @@
           "completed": "Tamamlandı"
         },
         "mode": {
-          "instant": "Anlık vardiya",
-          "planned": "Planlı vardiya"
+          "instant": "Anlık çalışma",
+          "planned": "Planlı çalışma"
         },
         "detailTitle": "İlan Detayı",
         "detail": {
@@ -789,7 +849,7 @@
         "empty": "Bu kolonda kayıt yok."
       },
       "operations": {
-        "title": "QR ve Vardiya Operasyonları",
+        "title": "QR ve Çalışma Operasyonları",
         "subtitle": "Mutual QR doğrulama ve anomali süreçlerini buradan takip et.",
         "readOnly": "Bu alan API entegrasyonu tamamlanana kadar read-only gösterimdedir.",
         "cards": {
@@ -1208,7 +1268,7 @@
     },
     "login": {
       "title": "Giriş yap",
-      "subtitleIndividual": "Başvurularını, vardiyalarını ve bildirimlerini yönetmek için hesabına eriş.",
+      "subtitleIndividual": "Başvurularını, çalışmalarını ve bildirimlerini yönetmek için hesabına eriş.",
       "subtitleCorporate": "Kurum hesabınla giriş yap; ilan ve işe alım süreçlerini yönet.",
       "emailLabel": "E-posta",
       "emailPlaceholder": "ornek@mail.com",

@@ -10,6 +10,7 @@ import {
   LayoutGrid,
   LogOut,
   Mail,
+  QrCode,
   UserRound,
   Wallet,
 } from 'lucide-react'
@@ -29,7 +30,7 @@ import { WorkerNavBadge, WorkerNotice } from './worker-ui'
 
 type WorkerNavItem = {
   to: string
-  key: 'dashboard' | 'findJobs' | 'myShifts' | 'wallet' | 'profile' | 'notifications'
+  key: 'dashboard' | 'findJobs' | 'myShifts' | 'qrCheck' | 'wallet' | 'profile' | 'notifications'
   badgeKey?: 'newMatches' | 'pendingPayouts' | 'unreadNotifications'
 }
 
@@ -37,6 +38,7 @@ const navItems: WorkerNavItem[] = [
   { to: '/worker', key: 'dashboard' },
   { to: '/worker/jobs', key: 'findJobs', badgeKey: 'newMatches' },
   { to: '/worker/shifts', key: 'myShifts' },
+  { to: '/worker/qr-check', key: 'qrCheck' },
   { to: '/worker/wallet', key: 'wallet', badgeKey: 'pendingPayouts' },
   { to: '/worker/profile', key: 'profile' },
   { to: '/worker/notifications', key: 'notifications', badgeKey: 'unreadNotifications' },
@@ -71,6 +73,7 @@ const navItemIcons: Record<WorkerNavItem['key'], ReactNode> = {
   dashboard: <LayoutGrid className="h-4 w-4" aria-hidden="true" />,
   findJobs: <Briefcase className="h-4 w-4" aria-hidden="true" />,
   myShifts: <ClipboardCheck className="h-4 w-4" aria-hidden="true" />,
+  qrCheck: <QrCode className="h-4 w-4" aria-hidden="true" />,
   wallet: <Wallet className="h-4 w-4" aria-hidden="true" />,
   profile: <UserRound className="h-4 w-4" aria-hidden="true" />,
   notifications: <BellRing className="h-4 w-4" aria-hidden="true" />,

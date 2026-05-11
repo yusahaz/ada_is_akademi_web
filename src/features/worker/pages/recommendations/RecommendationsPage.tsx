@@ -1,26 +1,44 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { JobPostingSummary } from '../../../../api/jobs/job-postings'
+import {
+  semanticSimilarityToPercent,
+  type SemanticMatchedJobPosting,
+} from '../../../../api/jobs/job-postings'
 import { workerPortalApi } from '../../../../api/worker/worker-portal'
-import { DashboardSurface, StatePanel } from '../../../../shared/ui/ui-primitives'
+import { StatePanel } from '../../../../shared/ui/ui-primitives'
 import { useTheme } from '../../../../theme/theme-context'
 import { useWorkerAsyncData } from '../../hooks/useWorkerAsyncData'
 import { WorkerSectionHeader } from '../../worker-ui'
+import { WorkerPostingListItem } from '../jobs/components/WorkerPostingListItem'
+import { filterAndSortSemanticMatches } from '../jobs/job-browse-utils'
+import { useJobsBrowseFilters } from '../jobs/jobs-browse-filters-context'
+import { formatPostingScheduleFriendly } from '../jobs/posting-detail-lines'
 
 export type RecommendationsPageProps = {
   embedded?: boolean
 }
 
 export function RecommendationsPage({ embedded = false }: RecommendationsPageProps = {}) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.listSemanticMatchedShifts(), [])
-  const { loading, error, data: items } = useWorkerAsyncData<JobPostingSummary[]>(
+  const { loading, error, data: items } = useWorkerAsyncData<SemanticMatchedJobPosting[]>(
     [],
     ['worker', 'semantic-matched-shifts'],
     query,
     () => t('dashboard.workerPortal.states.fetchError'),
+  )
+  const { searchQuery, datePreset, postingSort } = useJobsBrowseFilters()
+
+  const visibleItems = useMemo(
+    () =>
+      filterAndSortSemanticMatches(items, {
+        searchQuery,
+        datePreset,
+        sort: postingSort,
+      }),
+    [items, searchQuery, datePreset, postingSort],
   )
 
   const renderHeader = () =>
@@ -59,22 +77,30 @@ export function RecommendationsPage({ embedded = false }: RecommendationsPagePro
     )
   }
 
+  if (visibleItems.length === 0) {
+    return (
+      <div className="space-y-4">
+        {renderHeader()}
+        <StatePanel text={t('dashboard.workerPortal.tabs.jobs.filters.noResults')} theme={theme} />
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-4">
       {renderHeader()}
-      <div className="grid gap-3 md:grid-cols-2">
-        {items.map((item) => (
-          <DashboardSurface key={item.id} theme={theme}>
-            <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-              {item.title}
-            </p>
-            <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/70' : 'text-slate-600'}`}>
-              {item.shiftDate} • {item.shiftStartTime} - {item.shiftEndTime}
-            </p>
-            <p className={`mt-2 text-xs ${theme === 'dark' ? 'text-cyan-200' : 'text-cyan-700'}`}>
-              {item.wageAmount} {item.wageCurrency}
-            </p>
-          </DashboardSurface>
+      <div className="flex flex-col gap-3">
+        {visibleItems.map((item) => (
+          <WorkerPostingListItem
+            key={item.jobPostingId}
+            theme={theme}
+            postingId={item.jobPostingId}
+            title={item.title}
+            scheduleText={formatPostingScheduleFriendly(item, i18n.language)}
+            trailingBadgeText={`${semanticSimilarityToPercent(item.similarityScore)}%`}
+            trailingBadgeEmphasis="info"
+            metaText={t('dashboard.workerPortal.widgets.aiMatch.scoreLabel')}
+          />
         ))}
       </div>
     </div>

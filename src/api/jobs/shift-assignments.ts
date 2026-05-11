@@ -27,6 +27,12 @@ export type ListMyShiftAssignmentsQuery = {
   offset?: number | string
 }
 
+export type ListEmployerShiftAssignmentsQuery = {
+  excludeCompleted?: boolean
+  limit?: number | string
+  offset?: number | string
+}
+
 export type ShiftAssignmentStatus = 'Pending' | 'AwaitingMutualQr' | 'CheckedIn' | 'CheckedOut'
 
 export type WorkerShiftAssignmentListItem = {
@@ -98,6 +104,13 @@ export const shiftAssignmentsApi = {
   myAssignments(body: ListMyShiftAssignmentsQuery | null = null) {
     return client.post<PageableApiResponse<WorkerShiftAssignmentListItem>, ListMyShiftAssignmentsQuery | null>(
       API_ENDPOINTS.shiftAssignments.myAssignments,
+      body,
+      true,
+    )
+  },
+  listEmployerAssignments(body: ListEmployerShiftAssignmentsQuery | null = null) {
+    return client.post<PageableApiResponse<WorkerShiftAssignmentListItem>, ListEmployerShiftAssignmentsQuery | null>(
+      API_ENDPOINTS.shiftAssignments.listEmployerAssignments,
       body,
       true,
     )

@@ -1,6 +1,11 @@
 import { jobApplicationsApi } from '../jobs/job-applications'
 import { EducationType, JobPostingStatus, LanguageLevel } from '../core/enums'
-import { jobPostingsApi, type JobPostingSummary } from '../jobs/job-postings'
+import {
+  jobPostingsApi,
+  type JobPostingDetail,
+  type JobPostingSummary,
+  type SemanticMatchedJobPosting,
+} from '../jobs/job-postings'
 import { normalizePageableList, type PageableListResult } from '../core/pagination'
 import { shiftAssignmentsApi, type WorkerShiftAssignmentListItem } from '../jobs/shift-assignments'
 import { systemUsersApi, type SystemUserNotificationItem } from '../system/system-users'
@@ -35,6 +40,9 @@ export type WorkerApplicationItem = {
   title: string
   shiftDate: string
   shiftRange: string
+  wageAmount?: number
+  wageCurrency?: string
+  rejectionReason?: string
   status: 'pending' | 'accepted' | 'rejected' | 'withdrawn' | 'expired'
 }
 
@@ -174,8 +182,31 @@ export const workerPortalApi = {
     }
   },
 
-  async listOpenShifts(): Promise<JobPostingSummary[]> {
-    return jobPostingsApi.listOpen({})
+  async listOpenShifts(options?: {
+    limit?: number
+    offset?: number
+    nearLatitude?: number
+    nearLongitude?: number
+    radiusMetres?: number
+  }): Promise<JobPostingSummary[]> {
+    const limit = options?.limit
+    const offset = options?.offset
+    const hasNear =
+      options?.nearLatitude != null &&
+      options?.nearLongitude != null &&
+      Number.isFinite(options.nearLatitude) &&
+      Number.isFinite(options.nearLongitude)
+    return jobPostingsApi.listOpen({
+      ...(limit != null ? { limit } : {}),
+      ...(offset != null ? { offset } : {}),
+      ...(hasNear
+        ? {
+            nearLatitude: options!.nearLatitude,
+            nearLongitude: options!.nearLongitude,
+            radiusMetres: options?.radiusMetres ?? 50_000,
+          }
+        : {}),
+    })
   },
 
   async submitApplication(jobPostingId: number) {
@@ -188,7 +219,40 @@ export const workerPortalApi = {
 
   async listApplications(): Promise<WorkerApplicationItem[]> {
     const snapshot = await getWorkerDataSnapshot()
-    return mapApplicationsFromSnapshot(snapshot)
+    const base = mapApplicationsFromSnapshot(snapshot)
+    const missingIds = Array.from(
+      new Set(
+        base
+          .filter((item) => item.shiftDate === '-' || item.shiftRange === '-')
+          .map((item) => item.jobPostingId),
+      ),
+    )
+    if (missingIds.length === 0) {
+      return base
+    }
+
+    const missingDetails = await Promise.allSettled(
+      missingIds.map((jobPostingId) => jobPostingsApi.getById({ jobPostingId })),
+    )
+    const detailByPostingId = new Map<number, JobPostingDetail>()
+    missingDetails.forEach((res, idx) => {
+      if (res.status === 'fulfilled') {
+        detailByPostingId.set(missingIds[idx], res.value)
+      }
+    })
+
+    return base.map((item) => {
+      const detail = detailByPostingId.get(item.jobPostingId)
+      if (!detail) return item
+      return {
+        ...item,
+        title: detail.title || item.title,
+        shiftDate: detail.shiftDate || item.shiftDate,
+        shiftRange: `${detail.shiftStartTime} - ${detail.shiftEndTime}`,
+        wageAmount: Number.isFinite(detail.wageAmount) ? detail.wageAmount : item.wageAmount,
+        wageCurrency: detail.wageCurrency || item.wageCurrency,
+      }
+    })
   },
 
   async listPayouts(): Promise<WorkerPayoutItem[]> {
@@ -255,12 +319,11 @@ export const workerPortalApi = {
     }
   },
 
-  async listSemanticMatchedShifts(): Promise<JobPostingSummary[]> {
+  async listSemanticMatchedShifts(): Promise<SemanticMatchedJobPosting[]> {
     try {
-      const matched = await jobPostingsApi.listSemanticMatched({})
-      return matched
+      return await jobPostingsApi.listSemanticMatched({ limit: 20 })
     } catch {
-      return this.listOpenShifts()
+      return []
     }
   },
 
@@ -438,6 +501,7 @@ export const workerPortalApi = {
     lastName: string | null
     nationality: string | null
     university: string | null
+    phone?: string | null
   }): Promise<void> {
     await workersApi.updateProfile(payload)
   },
@@ -519,14 +583,32 @@ function mapApplicationsFromSnapshot(snapshot: WorkerDataSnapshot): WorkerApplic
         return null
       }
       const posting = postingById.get(jobPostingId)
-      return {
+      const raw = application as Record<string, unknown>
+      const reasonCandidate =
+        raw.rejectionReason ??
+        raw.rejectReason ??
+        raw.reason ??
+        raw.note
+      const rejectionReason =
+        typeof reasonCandidate === 'string' && reasonCandidate.trim().length > 0
+          ? reasonCandidate.trim()
+          : undefined
+      const mapped: WorkerApplicationItem = {
         id,
         jobPostingId,
         title: posting?.title ?? `#${jobPostingId}`,
         shiftDate: posting?.shiftDate ?? '-',
         shiftRange: posting ? `${posting.shiftStartTime} - ${posting.shiftEndTime}` : '-',
         status: mapApplicationStatus(application.status),
-      } satisfies WorkerApplicationItem
+      }
+      if (mapped.status === 'rejected' && rejectionReason) {
+        mapped.rejectionReason = rejectionReason
+      }
+      if (posting?.wageAmount != null && posting.wageCurrency) {
+        mapped.wageAmount = posting.wageAmount
+        mapped.wageCurrency = posting.wageCurrency
+      }
+      return mapped
     })
     .filter((item): item is WorkerApplicationItem => item !== null)
 }

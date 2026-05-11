@@ -9,16 +9,24 @@ type AsyncState<TData> = {
   setData: Dispatch<SetStateAction<TData>>
 }
 
+type UseWorkerAsyncDataOptions = {
+  /** When false, the query does not run (e.g. waiting for geolocation). */
+  enabled?: boolean
+}
+
 export function useWorkerAsyncData<TData>(
   initialData: TData,
   queryKey: QueryKey,
   query: () => Promise<TData>,
   resolveError: (error: unknown) => string,
+  options?: UseWorkerAsyncDataOptions,
 ): AsyncState<TData> {
   const queryClient = useQueryClient()
+  const enabled = options?.enabled ?? true
   const result = useQuery<TData, unknown>({
     queryKey,
     queryFn: query,
+    enabled,
     staleTime: 0,
     gcTime: 0,
     refetchOnWindowFocus: true,
@@ -44,7 +52,7 @@ export function useWorkerAsyncData<TData>(
   )
 
   return {
-    loading: result.isPending || result.isFetching,
+    loading: enabled && (result.isPending || result.isFetching),
     error: result.error ? resolveError(result.error) : null,
     data: result.data ?? initialData,
     reload: runQuery,

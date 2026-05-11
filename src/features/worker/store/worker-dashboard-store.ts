@@ -32,7 +32,7 @@ export const useWorkerDashboardStore = create<WorkerDashboardStore>((set) => ({
   setTheme: (theme) => set({ theme }),
   userName: '',
   setUserName: (userName) => set({ userName }),
-  aiMatchScore: 95,
+  aiMatchScore: 0,
   setAiMatchScore: (aiMatchScore) => set({ aiMatchScore }),
   balance: 0,
   setBalance: (balance) => set({ balance }),

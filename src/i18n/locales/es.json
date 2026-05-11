@@ -23,7 +23,7 @@
       "fr": "FranÃ§ais"
     },
     "hero": {
-      "badge": "Trabaja hoy â€” turnos y oportunidades en una sola app",
+      "badge": "Trabaja hoy â€” trabajos y oportunidades en una sola app",
       "title": "Estudiantes y empleadores en la misma plataforma, emparejados al instante.",
       "subtitle": "Descubre oportunidades diarias con Ada Ä°ÅŸ Akademi, postÃºlate rÃ¡pido y sigue tu proceso y pagos en una sola app.",
       "ctaExplore": "Explorar oportunidades",
@@ -32,7 +32,7 @@
     },
     "card": {
       "shifts": {
-        "title": "Turnos cerca de ti",
+        "title": "Trabajos cerca de ti",
         "matching": "Emparejamiento",
         "application": "Solicitud",
         "approval": "AprobaciÃ³n",
@@ -44,7 +44,7 @@
       },
       "suggestion": {
         "title": "Sugerencia inteligente",
-        "body": "Fortalece tu perfil para aparecer mÃ¡s arriba en los listados diarios de turnos."
+        "body": "Fortalece tu perfil para aparecer mÃ¡s arriba en los listados diarios de trabajos."
       }
     },
     "stats": {
@@ -64,7 +64,7 @@
         },
         {
           "title": "Apply instantly",
-          "body": "Apply to suitable shifts in one tap and track status in real time."
+          "body": "Apply to suitable jobs in one tap and track status in real time."
         },
         {
           "title": "Get approved and start",
@@ -125,18 +125,18 @@
     "worker": {
       "welcomeGreeting": "Bienvenido",
       "title": "Panel de trabajador",
-      "subtitle": "Gestiona solicitudes, prÃ³ximos turnos y estado de perfil en una sola vista.",
+      "subtitle": "Gestiona solicitudes, prÃ³ximos trabajos y estado de perfil en una sola vista.",
       "defaultName": "Trabajador",
       "summary": {
         "activeApplications": "Solicitudes activas",
-        "upcomingShifts": "PrÃ³ximos turnos",
+        "upcomingShifts": "PrÃ³ximos trabajos",
         "profileScore": "PuntuaciÃ³n de perfil"
       },
       "sections": {
-        "suggestedShifts": "Turnos sugeridos",
+        "suggestedShifts": "Trabajos sugeridos",
         "applicationAndPayment": "Estado de solicitud y pago",
         "loading": "Cargando datos...",
-        "emptyShifts": "No hay turnos sugeridos por ahora.",
+        "emptyShifts": "No hay trabajos sugeridos por ahora.",
         "fetchError": "No se pudieron cargar los datos de resumen del trabajador."
       },
       "status": {
@@ -145,7 +145,7 @@
           "value": "En revisiÃ³n"
         },
         "accepted": {
-          "label": "Turnos aprobados",
+          "label": "Trabajos aprobados",
           "value": "Aprobado"
         },
         "payment": {
@@ -160,9 +160,9 @@
           "hint": "3 anuncios cambiaron de estado hoy."
         },
         "shifts": {
-          "title": "Turnos de esta semana",
+          "title": "Trabajos de esta semana",
           "value": "4",
-          "hint": "2 turnos aprobados y 1 en espera."
+          "hint": "2 trabajos aprobados y 1 en espera."
         },
         "profile": {
           "title": "PuntuaciÃ³n de perfil",
@@ -177,7 +177,7 @@
         "overview": "Resumen",
         "profile": "Perfil",
         "cvImport": "ImportaciÃ³n de CV",
-        "shifts": "Turnos",
+        "shifts": "Trabajos",
         "applications": "Solicitudes",
         "qrCheck": "Control QR",
         "payouts": "Pagos",
@@ -188,7 +188,7 @@
         "account": "Mi cuenta",
         "dashboard": "Panel",
         "findJobs": "Buscar trabajos",
-        "myShifts": "Mis turnos",
+        "myShifts": "Mis trabajos",
         "wallet": "Billetera",
         "notifications": "Notificaciones"
       },
@@ -200,7 +200,7 @@
       "pages": {
         "overview": {
           "title": "Resumen",
-          "subtitle": "Consulta puntaje de match, cobros, flujo QR y los mejores turnos para tu perfil."
+          "subtitle": "Consulta puntaje de match, cobros, flujo QR y los mejores trabajos para tu perfil."
         },
         "profile": {
           "title": "Perfil",
@@ -212,7 +212,7 @@
         },
         "shifts": {
           "title": "Ofertas de trabajo",
-          "subtitle": "Explora turnos disponibles y envÃ­a tu solicitud con rapidez."
+          "subtitle": "Explora trabajos disponibles y envÃ­a tu solicitud con rapidez."
         },
         "applications": {
           "title": "Solicitudes",
@@ -228,7 +228,7 @@
         },
         "reports": {
           "title": "Reportes",
-          "subtitle": "MÃ©tricas clave sintetizadas desde pagos y turnos."
+          "subtitle": "MÃ©tricas clave sintetizadas desde pagos y trabajos."
         },
         "recommendations": {
           "title": "Recomendaciones IA",
@@ -239,8 +239,8 @@
           "subtitle": "Recomendaciones personales, ofertas abiertas, mapa de ubicaciones y tus solicitudes en un mismo lugar."
         },
         "myShifts": {
-          "title": "Mis turnos",
-          "subtitle": "Gestiona tu turno activo, validaciÃ³n QR mutua e historial de turnos."
+          "title": "Mis trabajos",
+          "subtitle": "Gestiona tu trabajo activo, validaciÃ³n QR mutua e historial de trabajos."
         },
         "wallet": {
           "title": "Billetera y ganancias",
@@ -248,34 +248,34 @@
         },
         "notifications": {
           "title": "Notificaciones",
-          "subtitle": "Avisos sobre coincidencias, pagos y actividad de turnos."
+          "subtitle": "Avisos sobre coincidencias, pagos y actividad de trabajos."
         }
       },
       "overview": {
         "monthlyEarnings": "Ganancias mensuales",
         "paidPayouts": "Pagos completados",
-        "completedShifts": "Turnos completados",
+        "completedShifts": "Trabajos completados",
         "bestMatchesTitle": "Ofertas mÃ¡s adecuadas",
         "bestMatchesSubtitle": "Ofertas sugeridas segÃºn tu perfil y disponibilidad.",
         "bestMatchesEmpty": "No hay ofertas adecuadas en este momento.",
         "employerPrefix": "Empleador #{{id}}",
         "periodMonthly": "Mensual",
-        "completedShiftsTitle": "Turnos completados",
-        "shiftEarningLabel": "Ganancia del turno",
+        "completedShiftsTitle": "Trabajos completados",
+        "shiftEarningLabel": "Ganancia del trabajo",
         "periodQuarterly": "3 meses",
         "periodSemiAnnual": "6 meses",
         "periodYearly": "Anual",
         "periodSelectedPrefix": "Periodo seleccionado: {{period}}",
-        "upcomingShifts": "PrÃ³ximos turnos",
+        "upcomingShifts": "PrÃ³ximos trabajos",
         "upcomingShiftsHint": "PrÃ³ximo: {{date}} â€¢ {{range}}",
-        "upcomingShiftsEmpty": "No tienes turnos programados.",
+        "upcomingShiftsEmpty": "No tienes trabajos programados.",
         "reliabilityScore": "Puntaje de fiabilidad",
         "reliabilityHint": "Calculado a partir de la proporciÃ³n de solicitudes aceptadas.",
         "reliabilitySamples": "{{count}} solicitudes",
         "reliabilityNoData": "Datos insuficientes",
         "quickCheckInTitle": "AcciÃ³n inmediata",
         "quickCheckInCta": "Hacer check-in con QR",
-        "quickCheckInEmpty": "No hay un turno activo esperando check-in."
+        "quickCheckInEmpty": "No hay un trabajo activo esperando check-in."
       },
       "tabs": {
         "jobs": {
@@ -291,11 +291,11 @@
         "myShifts": {
           "active": "Activo",
           "history": "Historial",
-          "activeAssignment": "Turno activo",
+          "activeAssignment": "Trabajo activo",
           "qrTitle": "ValidaciÃ³n QR mutua",
-          "qrHint": "Escanea los cÃ³digos QR de trabajador y supervisor juntos para iniciar el turno.",
-          "upcoming": "PrÃ³ximos turnos",
-          "noActive": "No tienes un turno activo en este momento."
+          "qrHint": "Escanea los cÃ³digos QR de trabajador y supervisor juntos para iniciar el trabajo.",
+          "upcoming": "PrÃ³ximos trabajos",
+          "noActive": "No tienes un trabajo activo en este momento."
         },
         "wallet": {
           "payouts": "Seguimiento de pagos",
@@ -314,7 +314,7 @@
         }
       },
       "shiftHistory": {
-        "empty": "AÃºn no hay turnos completados en tu historial.",
+        "empty": "AÃºn no hay trabajos completados en tu historial.",
         "anomaly": "AnomalÃ­a",
         "status": {
           "pending": "Pendiente",
@@ -329,7 +329,7 @@
           "matching": "Coincidencia",
           "payout": "Pago",
           "application": "Solicitud",
-          "shift": "Turno",
+          "shift": "Trabajo",
           "general": "General"
         }
       },
@@ -361,7 +361,7 @@
       "widgets": {
         "aiMatch": {
           "title": "Coincidencias de IA",
-          "description": "Los turnos con mayor ajuste semÃ¡ntico se priorizan para tu perfil.",
+          "description": "Los trabajos con mayor ajuste semÃ¡ntico se priorizan para tu perfil.",
           "scoreLabel": "Coincidencia",
           "action": "Comenzar ahora",
           "signal": "Sugerencia basada en datos"
@@ -376,7 +376,7 @@
           "action": "Abrir cÃ¡mara"
         },
         "timeline": {
-          "title": "PrÃ³ximos turnos",
+          "title": "PrÃ³ximos trabajos",
           "viewAll": "Ver todo",
           "status": {
             "confirmed": "Confirmado",
@@ -406,6 +406,7 @@
         "completion": "Completitud del perfil",
         "actions": {
           "edit": "Editar perfil",
+          "add": "Añadir",
           "save": "Guardar",
           "cancel": "Cancelar"
         },
@@ -419,6 +420,20 @@
         "messages": {
           "savedLocal": "Los cambios del perfil se guardaron para esta sesiÃ³n.",
           "validationError": "El nombre completo debe tener al menos 2 caracteres."
+        },
+        "experienceSection": {
+          "listSubtitle": "Los empleadores ven esta línea de tiempo al revisar tu perfil.",
+          "emptyHint": "Añade tu experiencia laboral para mejorar las coincidencias; puedes editar o eliminar entradas en cualquier momento.",
+          "formAddTitle": "Añadir experiencia",
+          "formEditTitle": "Editar experiencia",
+          "formSubtitle": "Empresa, puesto y fecha de inicio son obligatorios para guardar.",
+          "company": "Empresa",
+          "position": "Puesto / cargo",
+          "startDate": "Fecha de inicio",
+          "endDate": "Fecha de fin",
+          "endDateHint": "Déjalo vacío si sigues en el puesto.",
+          "ongoing": "Actualmente",
+          "periodLabel": "Fechas"
         },
         "settingsMenu": "ConfiguraciÃ³n de la cuenta",
         "menu": {
@@ -544,7 +559,7 @@
         },
         "operations": {
           "title": "Operaciones",
-          "subtitle": "Vista previa de solo lectura de operaciones QR y de turno."
+          "subtitle": "Vista previa de solo lectura de operaciones QR y de trabajo."
         },
         "billing": {
           "title": "FacturaciÃ³n",
@@ -580,7 +595,7 @@
       "operations": {
         "tabs": {
           "createPosting": "Crear anuncio",
-          "activeAssignments": "Turnos activos",
+          "activeAssignments": "Trabajos activos",
           "applications": "Solicitudes",
           "history": "Historial"
         },
@@ -595,7 +610,7 @@
             "jobCategoryId": "ID de categorÃ­a",
             "selectCategory": "Seleccione categorÃ­a",
             "categoryOption": "CategorÃ­a #{{id}}",
-            "shiftDate": "Fecha del turno",
+            "shiftDate": "Fecha del trabajo",
             "shiftStartTime": "Hora de inicio",
             "shiftEndTime": "Hora de fin",
             "headCount": "Cupo",
@@ -612,10 +627,10 @@
           "submitError": "No se pudo crear el anuncio."
         },
         "activeAssignments": {
-          "title": "Turnos activos",
+          "title": "Trabajos activos",
           "subtitle": "Sigue el trabajo en curso segÃºn el estado de verificaciÃ³n QR mutua.",
           "all": "Todos",
-          "empty": "No hay turnos activos.",
+          "empty": "No hay trabajos activos.",
           "worker": "Candidato",
           "qrStatus": "Estado QR"
         },
@@ -628,7 +643,7 @@
         },
         "history": {
           "title": "Historial",
-          "subtitle": "Archivo de turnos completados y reportes no-show."
+          "subtitle": "Archivo de trabajos completados y reportes no-show."
         }
       },
       "intelligence": {
@@ -763,8 +778,8 @@
           "completed": "Completadas"
         },
         "mode": {
-          "instant": "Turno inmediato",
-          "planned": "Turno planificado"
+          "instant": "Trabajo inmediato",
+          "planned": "Trabajo planificado"
         },
         "detailTitle": "Detalle de oferta",
         "detail": {
@@ -787,7 +802,7 @@
         "empty": "No hay registros en esta columna."
       },
       "operations": {
-        "title": "Operaciones QR y Turno",
+        "title": "Operaciones QR y Trabajo",
         "subtitle": "Supervisa verificaciÃ³n QR mutua y anomalÃ­as.",
         "readOnly": "Esta secciÃ³n se muestra en modo solo lectura hasta integrar APIs dedicadas.",
         "cards": {
@@ -1206,7 +1221,7 @@
     },
     "login": {
       "title": "Iniciar sesiÃ³n",
-      "subtitleIndividual": "Accede a tu cuenta para gestionar solicitudes, turnos y notificaciones.",
+      "subtitleIndividual": "Accede a tu cuenta para gestionar solicitudes, trabajos y notificaciones.",
       "subtitleCorporate": "Accede con la cuenta de tu organizaciÃ³n para gestionar ofertas y contrataciÃ³n.",
       "emailLabel": "Correo electrÃ³nico",
       "emailPlaceholder": "tu@correo.com",

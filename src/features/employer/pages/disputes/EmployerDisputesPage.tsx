@@ -17,38 +17,23 @@ type DisputeItem = {
 export function EmployerDisputesPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { badges, applications, disputes: disputesFromApi } = useEmployerPortal()
+  const { disputes: disputesFromApi } = useEmployerPortal()
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
 
   const disputes = useMemo<DisputeItem[]>(() => {
-    if (disputesFromApi.length > 0) {
-      return disputesFromApi.map((item) => ({
-        id: item.disputeId,
-        title: item.reasonText || item.reasonCode,
-        detail: t('dashboard.employerSpot.disputes.itemDetail', {
-          id: item.assignmentId,
-          workerId: item.workerId,
-        }),
-        severity: item.isAnomalyRelated ? 'danger' : 'warning',
-      }))
+    if (disputesFromApi.length === 0) {
+      return []
     }
-    if (badges.activeAnomalies === 0) return []
-    const base = applications.slice(0, 6)
-    return base.map((item, index) => ({
-      id: item.applicationId,
-      title:
-        index % 3 === 0
-          ? t('dashboard.employerSpot.disputes.flags.locationMismatch')
-          : index % 3 === 1
-            ? t('dashboard.employerSpot.disputes.flags.expiredToken')
-            : t('dashboard.employerSpot.disputes.flags.replayAttack'),
+    return disputesFromApi.map((item) => ({
+      id: item.disputeId,
+      title: item.reasonText || item.reasonCode,
       detail: t('dashboard.employerSpot.disputes.itemDetail', {
-        id: item.applicationId,
+        id: item.assignmentId,
         workerId: item.workerId,
       }),
-      severity: index % 3 === 2 ? 'danger' : 'warning',
+      severity: item.isAnomalyRelated ? 'danger' : 'warning',
     }))
-  }, [applications, badges.activeAnomalies, disputesFromApi, t])
+  }, [disputesFromApi, t])
 
   return (
     <div className="space-y-4">

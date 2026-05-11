@@ -4,7 +4,10 @@ import type { ExperienceEditorDraft, WorkerProfileData, WorkerProfileSectionItem
 
 export type WorkerTone = 'dark' | 'light'
 export type TFn = (key: string, options?: Record<string, unknown>) => string
-export type WorkerProfileDraft = Pick<WorkerProfileData, 'fullName' | 'nationality' | 'university'>
+export type WorkerProfileDraft = Pick<WorkerProfileData, 'fullName' | 'nationality' | 'university'> & {
+  phoneCountryCode: string
+  phoneNumber: string
+}
 
 export function resolveTitle(theme: WorkerTone) {
   return theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -52,10 +55,19 @@ export function toExperienceEditorDraft(item: WorkerProfileSectionItem): Experie
 }
 
 export function toDraft(profile: WorkerProfileData): WorkerProfileDraft {
+  const rawPhone = (profile.phone ?? '').trim()
+  const countryOptions = ['+90', '+1', '+44', '+49', '+39', '+34', '+33', '+7', '+971']
+  const matchedCountry = countryOptions.find((code) => rawPhone.startsWith(code)) ?? '+90'
+  const numberPart = rawPhone.startsWith(matchedCountry)
+    ? rawPhone.slice(matchedCountry.length)
+    : rawPhone
+  const digits = numberPart.replace(/\D/g, '')
   return {
     fullName: profile.fullName ?? '',
     nationality: profile.nationality ?? '',
     university: profile.university ?? '',
+    phoneCountryCode: matchedCountry,
+    phoneNumber: digits,
   }
 }
 

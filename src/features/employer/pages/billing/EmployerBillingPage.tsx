@@ -46,8 +46,6 @@ export function EmployerBillingPage() {
         {activeView === 'commissionReceivables' ? (
           <CommissionReceivablesView theme={theme} toneClass={toneClass} receivableFilter={receivableFilter} setReceivableFilter={setReceivableFilter} filteredReceivables={filteredReceivables} />
         ) : null}
-
-        <p className={`mt-4 text-xs ${toneClass}`}>{t('dashboard.employer.fallback.noBillingApi')}</p>
       </DashboardSurface>
     </>
   )
