@@ -27,6 +27,24 @@ export type AddWorkerCertificateCommand = {
   documentUrl: string | null
 }
 
+export type InitWorkerCvUploadCommand = {
+  fileName: string
+  contentType?: string | null
+}
+
+export type ConfirmWorkerCvUploadCommand = {
+  objectKey: string
+  fileName: string
+  contentType: string
+  fileSizeBytes: number
+}
+
+export type ObjectStorageUploadInitResponse = {
+  objectKey: string
+  uploadUrl: string
+  uploadExpiresAtUtc: string
+}
+
 export type RemoveWorkerCertificateCommand = {
   certificateId: number | string
 }
@@ -45,11 +63,16 @@ export type RemoveWorkerReferenceCommand = {
 }
 
 export type UpdateWorkerProfileCommand = {
+  workerId?: number | null
   firstName: string | null
   lastName: string | null
   nationality: string | null
   university: string | null
   phone?: string | null
+}
+
+export type UpdateWorkerCvTemplatePreferenceCommand = {
+  cvOptions: string | null
 }
 
 export type DeleteWorkerCommand = {
@@ -79,6 +102,8 @@ export type WorkerDetail = {
   systemUserId: number
   nationality: string | null
   university: string | null
+  cvOptions?: string | null
+  profilePhotoObjectKey?: string | null
   embeddingUpdatedAt: string | null
   systemUser: {
     id: number | string
@@ -160,6 +185,7 @@ export type ListWorkersQuery = {
   limit?: number
   offset?: number
   searchEmail?: string | null
+  searchName?: string | null
 }
 
 export type WorkerListItem = {
@@ -168,7 +194,14 @@ export type WorkerListItem = {
   email: string
   firstName?: string | null
   lastName?: string | null
+  profilePhotoObjectKey?: string | null
+  profilePhotoViewUrl?: string | null
   accountStatus: AccountStatus
+}
+
+export type MediaBlobViewUrlResponse = {
+  url: string
+  urlExpiresAtUtc: string
 }
 
 export type WorkersListResponse = {
@@ -244,6 +277,20 @@ export const workersApi = {
       true,
     )
   },
+  initCvUpload(body: InitWorkerCvUploadCommand) {
+    return client.post<ObjectStorageUploadInitResponse, InitWorkerCvUploadCommand>(
+      API_ENDPOINTS.workers.initCvUpload,
+      body,
+      true,
+    )
+  },
+  confirmCvUpload(body: ConfirmWorkerCvUploadCommand) {
+    return client.post<number, ConfirmWorkerCvUploadCommand>(
+      API_ENDPOINTS.workers.confirmCvUpload,
+      body,
+      true,
+    )
+  },
   removeSkill(body: RemoveWorkerSkillCommand) {
     return client.post<null, RemoveWorkerSkillCommand>(
       API_ENDPOINTS.workers.removeSkill,
@@ -279,6 +326,13 @@ export const workersApi = {
       true,
     )
   },
+  updateCvTemplatePreference(body: UpdateWorkerCvTemplatePreferenceCommand) {
+    return client.post<null, UpdateWorkerCvTemplatePreferenceCommand>(
+      API_ENDPOINTS.workers.updateCvTemplatePreference,
+      body,
+      true,
+    )
+  },
   delete(body: DeleteWorkerCommand) {
     return client.post<null, DeleteWorkerCommand>(API_ENDPOINTS.workers.delete, body, true)
   },
@@ -300,6 +354,13 @@ export const workersApi = {
     return client.post<WorkerDetail, Record<string, never>>(
       API_ENDPOINTS.workers.getSelfFullDetail,
       {},
+      true,
+    )
+  },
+  getProfilePhotoViewUrl(body: Record<string, never> = {}) {
+    return client.post<MediaBlobViewUrlResponse, Record<string, never>>(
+      API_ENDPOINTS.workers.getProfilePhotoViewUrl,
+      body,
       true,
     )
   },

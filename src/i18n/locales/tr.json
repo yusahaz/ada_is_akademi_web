@@ -110,7 +110,11 @@
   },
   "dashboard": {
     "common": {
-      "welcome": "Hoş geldin, {{email}}"
+      "welcome": "Hoş geldin, {{email}}",
+      "action": {
+        "success": "İşlem başarılı",
+        "error": "İşlem sırasında bir hata oluştu"
+      }
     },
     "userMenu": {
       "title": "Hesap menüsü",
@@ -179,7 +183,7 @@
         "cvImport": "CV Aktarımı",
         "shifts": "Çalışmalar",
         "applications": "Başvurular",
-        "qrCheck": "QR Kontrol",
+        "qrCheck": "QR Check-in",
         "payouts": "Ödemeler",
         "reports": "Raporlar",
         "jobs": "İş İlanları",
@@ -190,7 +194,8 @@
         "findJobs": "İş Bul",
         "myShifts": "Çalışmalarım",
         "wallet": "Cüzdan",
-        "notifications": "Bildirimler"
+        "notifications": "Bildirimler",
+        "cvPreview": "CV Önizleme"
       },
       "states": {
         "loading": "Veriler yükleniyor...",
@@ -219,8 +224,8 @@
           "subtitle": "Başvurduğun ilanların ilerleyişini izle."
         },
         "qrCheck": {
-          "title": "QR kontrol",
-          "subtitle": "QR jeton doğrulama akışlarını tanıtım/demo için simüle et."
+          "title": "QR Check-in",
+          "subtitle": "Çalışma başlangıcında karekodu okut, doğrulama sonucunu anında takip et."
         },
         "payouts": {
           "title": "Ödemeler",
@@ -249,6 +254,13 @@
         "notifications": {
           "title": "Bildirimler",
           "subtitle": "Eşleşme, ödeme ve görev durumuna ilişkin uyarıların."
+        },
+        "cvPreview": {
+          "title": "CV Önizleme",
+          "metaLine": "Seçili şablon: {{template}} • Düzen: {{layout}} • Palet: {{palette}}",
+          "goToSettings": "CV Ayarlarına Git",
+          "downloadPdf": "PDF İndir",
+          "preparingPdf": "Hazırlanıyor..."
         }
       },
       "overview": {
@@ -369,6 +381,8 @@
       "availability": {
         "description": "Haftalık uygun olduğun zaman dilimlerini yönet.",
         "editAction": "Takvimi Düzenle",
+        "copyWeekdaysAction": "Pazartesi'den Cuma'ya kopyala",
+        "clearAllAction": "Tüm günleri temizle",
         "deleteAction": "Sil",
         "enableDay": "Bu günü aktif et",
         "empty": "Bu güne ait kayıtlı zaman dilimi yok.",
@@ -456,6 +470,11 @@
           "savedLocal": "Profil değişiklikleri bu oturum için kaydedildi.",
           "validationError": "Ad soyad en az 2 karakter olmalı."
         },
+        "basicSection": {
+          "subtitle": "İletişim ve kişisel bilgilerini güncel tutarak profil görünürlüğünü artırabilirsin.",
+          "completion": "Profil tamamlanma: {{completed}}/{{total}}",
+          "missingHint": "Bu alanı güncelleyerek profilini güçlendirebilirsin."
+        },
         "experienceSection": {
           "listSubtitle": "İşverenler profilin incelerken bu zaman çizelgesini görür.",
           "emptyHint": "İş geçmişini ekleyerek eşleşmelerini güçlendirebilirsin; kayıtları istediğin zaman düzenleyebilir veya silebilirsin.",
@@ -477,14 +496,35 @@
           "skills": "Yetenekler",
           "certificates": "Sertifikalar",
           "references": "Referanslar",
+          "cv": "CV",
           "contact": "İletişim bilgileri",
           "password": "Şifre değiştir",
           "emailNotifications": "E-posta bildirimleri",
           "smsNotifications": "SMS bildirimleri",
           "accountControl": "Hesap silme ve dondurma",
+          "settings": "Ayarlar",
           "adVisibility": "Reklam görünürlüğü",
           "cvImport": "AI CV Yükleme",
           "availability": "Müsaitlik takvimi"
+        },
+        "settingsSection": {
+          "title": "Ayarlar",
+          "subtitle": "Uygulama dili ve tema tercihlerini buradan güncelleyebilirsin.",
+          "languageLabel": "Dil",
+          "themeLabel": "Tema",
+          "languages": {
+            "tr": "Türkçe",
+            "en": "English",
+            "it": "Italiano",
+            "es": "Español",
+            "fr": "Français",
+            "ru": "Русский",
+            "ar": "العربية"
+          },
+          "themes": {
+            "light": "Açık",
+            "dark": "Koyu"
+          }
         },
         "skillsSection": {
           "title": "Yetenekler",
@@ -493,9 +533,152 @@
           "add": "Yetenek Ekle",
           "empty": "Kayıtlı yetenek bulunmuyor."
         },
+        "cvSection": {
+          "title": "CV Menüsü",
+          "subtitle": "CV'ni hızlıca oluşturabilir veya mevcut dosyanı içe aktarabilirsin.",
+          "templateSelectionTitle": "CV şablonu seçimi",
+          "templateSelectionSubtitle": "Şablon seçip oluştur dediğinde profilinle otomatik CV üretilir.",
+          "openTemplateLibrary": "Template Library",
+          "templateSettingsTitle": "Şablon ayarları",
+          "layoutTitle": "Kolon düzeni",
+          "layoutSingle": "Tek kolon",
+          "layoutDouble": "Çift kolon",
+          "paletteTitle": "Renk paleti",
+          "palette": {
+            "slate": "slate",
+            "indigo": "indigo",
+            "emerald": "emerald"
+          },
+          "photoAreaTitle": "Foto alanı",
+          "uploadPhoto": "Foto yükle",
+          "signatureAreaTitle": "İmza alanı",
+          "uploadSignature": "İmza yükle",
+          "clearAsset": "Temizle",
+          "templateLibraryTitle": "CV Şablonları",
+          "templateLibrarySubtitle": "Kurumsal şablonlar arasından seçim yapın.",
+          "selectedTemplate": "Seçili",
+          "createTitle": "Yeni CV oluştur",
+          "createDesc": "Profilindeki bilgilerden hızlı bir CV taslağı üret.",
+          "createAction": "CV Oluştur",
+          "creatingAction": "Oluşturuluyor...",
+          "importTitle": "CV içe aktar",
+          "importDesc": "PDF/DOCX dosyanı yükleyip bilgileri otomatik eşleştir.",
+          "importAction": "CV Yükle",
+          "uploadingAction": "Yükleniyor...",
+          "statusTitle": "CV durumu",
+          "statusDesc": "Yükleme ve doğrulama adımlarını bu alandan takip edebilirsin.",
+          "lastFile": "Son yüklenen dosya: {{fileName}}",
+          "lastUpdated": "Son güncelleme: {{value}}",
+          "refreshAction": "Durumu Yenile",
+          "refreshingAction": "Yenileniyor...",
+          "previewTitle": "CV Önizleme",
+          "previewSubtitle": "İçeriği kontrol edip PDF olarak dışa aktarabilirsin.",
+          "previewClose": "Kapat",
+          "previewExportPdf": "PDF Olarak Dışa Aktar",
+          "previewExportingPdf": "PDF Oluşturuluyor...",
+          "messages": {
+            "draftCreated": "CV taslağı oluşturuldu.",
+            "uploaded": "CV dosyası yüklendi.",
+            "previewReady": "CV önizleme hazır.",
+            "pdfExported": "CV PDF olarak indirildi."
+          },
+          "templateOptions": {
+            "modern": {
+              "title": "Professional Modern",
+              "description": "Sol panel + güçlü deneyim alanı ile çağdaş ve temiz görünüm"
+            },
+            "classic": {
+              "title": "Professional Classic",
+              "description": "Kurumsal başvurular için geleneksel, dengeli ve güvenli düzen"
+            },
+            "minimal": {
+              "title": "Professional Minimal",
+              "description": "Az elemanla yüksek okunabilirlik, tek bakışta net içerik"
+            },
+            "ats": {
+              "title": "ATS Strict",
+              "description": "Takip sistemleri için en güvenli, sade ve metin odaklı format"
+            },
+            "executive": {
+              "title": "Executive Board",
+              "description": "Kıdemli roller için stratejik özet ve etki odaklı sunum"
+            },
+            "concise": {
+              "title": "Concise One-Page",
+              "description": "Resimli, kompakt ve tek sayfaya uygun hızlı taranabilir düzen"
+            },
+            "modernAzure": {
+              "title": "Modern Azure",
+              "description": "Renkli başlık ve foto destekli çağdaş ATS düzeni"
+            },
+            "modernGraphite": {
+              "title": "Modern Graphite",
+              "description": "Kontrast yan panel ile güçlü yetkinlik vurgusu"
+            },
+            "classicNavy": {
+              "title": "Classic Navy",
+              "description": "Lacivert başlıklı kurumsal ve güven veren akış"
+            },
+            "classicBurgundy": {
+              "title": "Classic Burgundy",
+              "description": "Koyu vurgu başlık ile premium klasik görünüm"
+            },
+            "minimalSlate": {
+              "title": "Minimal Slate",
+              "description": "Nötr tonlarla sade ve dikkat dağıtmayan okuma deneyimi"
+            },
+            "minimalIndigo": {
+              "title": "Minimal Indigo",
+              "description": "Minimal yapı içinde renkli yan kolon vurgusu"
+            },
+            "atsBlue": {
+              "title": "ATS Blue Header",
+              "description": "ATS güvenli metin akışı + mavi başlık vurgusu"
+            },
+            "atsMono": {
+              "title": "ATS Mono",
+              "description": "Tam metin odaklı, en sade ve parser güvenli format"
+            },
+            "executiveNavy": {
+              "title": "Executive Navy",
+              "description": "Yonetici profiller için koyu başlık ve özet odak"
+            },
+            "executiveEmerald": {
+              "title": "Executive Emerald",
+              "description": "Yonetici görünümü + foto destekli premium düzen"
+            },
+            "conciseTeal": {
+              "title": "Concise Teal",
+              "description": "Kompakt CV + renkli yan kolon ile hızlı tarama"
+            },
+            "conciseAmber": {
+              "title": "Concise Amber",
+              "description": "Tek sayfa yapıda sıcak başlık vurgusu ve foto"
+            },
+            "studioPhoto": {
+              "title": "Studio Photo",
+              "description": "Foto odaklı profesyonel sunum ve dengeli içerik"
+            },
+            "sidebarContrast": {
+              "title": "Sidebar Contrast",
+              "description": "Sağlam kontrast yan panel ile net bölüm ayrımı"
+            }
+          }
+        },
         "accountActions": {
           "suspend": "Hesabı dondur",
           "delete": "Hesabı sil"
+        },
+        "accountControlSection": {
+          "subtitle": "Bu işlemler hesap erişimini etkiler. Devam etmeden önce dikkatlice onaylayın.",
+          "warning": "Dondurma işlemi geçici olarak girişinizi kısıtlar. Hesap silme işlemi geri alınamaz.",
+          "suspendConfirmTitle": "Hesap dondurma onayı",
+          "deleteConfirmTitle": "Hesap silme onayı",
+          "confirmHelpPrefix": "Devam etmek için kutuyu işaretleyin ve",
+          "confirmHelpSuffix": "yazın.",
+          "confirmCheckbox": "Bu işlemin sonuçlarını anladığımı onaylıyorum.",
+          "suspendConfirmCode": "DONDUR",
+          "deleteConfirmCode": "SIL"
         },
         "menuComingSoon": "Bu alt bölüm yakında aktif edilecek."
       },
@@ -508,6 +691,39 @@
           "failed": "Başarısız"
         },
         "currentState": "Güncel durum: {{state}}"
+      },
+      "cvTemplates": {
+        "defaults": {
+          "fullName": "Aday",
+          "profileTitle": "Aday Profili"
+        },
+        "summary": {
+          "skillsPrefix": "Temel yetkinlikler: {{skills}}."
+        },
+        "emptyInfo": "Bilgi bulunmuyor.",
+        "photoAlt": "Profil",
+        "signature": {
+          "alt": "İmza",
+          "label": "Dijital imza"
+        },
+        "labels": {
+          "email": "E-posta",
+          "phone": "Telefon",
+          "nationality": "Uyruk"
+        },
+        "sections": {
+          "professionalSummary": "Profesyonel Özet",
+          "experience": "Deneyim",
+          "education": "Eğitim",
+          "skills": "Yetenekler",
+          "certificates": "Sertifikalar",
+          "languages": "Diller",
+          "references": "Referanslar",
+          "executiveSummary": "Yönetici Özeti",
+          "coreCompetencies": "Temel Yetkinlikler",
+          "professionalExperience": "Profesyonel Deneyim",
+          "certifications": "Sertifikasyonlar"
+        }
       },
       "shifts": {
         "submit": "İlana Başvur",
@@ -549,7 +765,8 @@
           "validating": "Token ve konum doğrulanıyor.",
           "success": "QR işlem akışı başarıyla tamamlandı.",
           "failed": "Doğrulama başarısız. Tekrar dene."
-        }
+        },
+        "securityNote": "Doğrulama öncesinde token kaynağını kontrol edin."
       },
       "payouts": {
         "status": {
@@ -700,18 +917,18 @@
         },
         "semanticSearch": {
           "title": "Semantik Arama",
-          "subtitle": "Yetenek embedding'leri ile AI destekli çalışan araması yapın.",
-          "placeholder": "Örn: barista, depo, kasiyer…",
-          "search": "Ara",
-          "hint": "Not: Backend hazır olduğunda arama `Workers/List` ve embedding skoru ile gerçek sonuçlara bağlanacak."
+          "subtitle": "İhtiyacına uygun adayı anahtar kelimelerle hızlıca bul.",
+          "placeholder": "Örn: barista, depo görevlisi, kasiyer",
+          "search": "Aday Bul",
+          "hint": "Daha iyi sonuç için pozisyon, deneyim veya beceri anahtar kelimeleri kullan."
         },
         "workerPortfolio": {
           "title": "Aday Portföyü",
-          "subtitle": "Daha önce çalışılmış ve güven puanı yüksek çalışanlar.",
+          "subtitle": "Daha önce birlikte çalıştığın adayları güven puanıyla görüntüle.",
           "empty": "Portföyde kayıt yok.",
           "reliability": "Güven {{value}}%",
           "lastWorked": "Son etkileşim",
-          "hint": "Not: Portföy, assignment geçmişi ve itiraz sonuçlarıyla zenginleşecek."
+          "hint": "Bu liste, geçmiş çalışma performansına göre düzenlenir."
         }
       },
       "finance": {
@@ -929,6 +1146,25 @@
         "loading": "Yükleniyor...",
         "fetchError": "Özet verileri endpointlerden alınamadı, varsayılan değerler gösteriliyor."
       },
+      "commissionChart": {
+        "title": "Komisyon geliri",
+        "subtitle": "Alacak kayıtları (komisyon), dönem bitiş tarihine göre takvim dilimlerinde toplanır.",
+        "monthly": "Aylık",
+        "quarterly": "3 Aylık",
+        "halfYearly": "6 Aylık",
+        "yearly": "Yıllık",
+        "loading": "Grafik yükleniyor...",
+        "fetchError": "Komisyon grafiği yüklenemedi.",
+        "empty": "Seçilen görünümde kayıtlı komisyon tutarı yok.",
+        "total": "Görünür dönemler toplamı",
+        "ariaChart": "Komisyon geliri sütun grafiği",
+        "axisHintSingle": "Y ekseni {{currency}} cinsinden; değerler kompakt gösterilir.",
+        "axisHintMulti": "Birden fazla para birimi var; eksen tümünün toplamını gösterir (kur dönüşümü yok). Detay için sütunlara gelin.",
+        "tooltipPeriod": "Dönem",
+        "tooltipSegment": "{{currency}}: {{amount}}",
+        "tooltipStackTotal": "Dönem toplamı: {{amount}}",
+        "tooltipPeriodTotals": "Bu dönem (kur dönüşümü yok): {{parts}}"
+      },
       "grid": {
         "rowsPerPage": "Sayfa başına",
         "prev": "Önceki",
@@ -1010,11 +1246,12 @@
           "body": "Bu alanda platformun güncel durumunu, anlık trendlerini ve kritik KPI metriklerini takip edebilirsin."
         },
         "employers": {
+          "title": "İş Verenler",
           "body": "İş veren kayıtlarını filtreleyip hızlıca inceleyebileceğin özet liste ekranı."
         },
         "candidates": {
           "title": "Aday Yönetimi Detayı",
-          "body": "Aday kayıtlarını ID ile çağırabilir, milliyet, üniversite ve yetenek etiketine göre filtreleyebilirsin."
+          "body": "Aday kayıtlarını milliyet, üniversite ve yetenek etiketine göre filtreleyebilirsin."
         },
         "users": {
           "title": "Kullanıcı Yönetimi Detayı",
@@ -1081,6 +1318,23 @@
         "genericError": "İşlem sırasında hata oluştu."
       },
       "employers": {
+        "addNew": "Yeni iş veren",
+        "create": {
+          "title": "Yeni iş veren kaydı",
+          "subtitle": "Kurum bilgileri, adres ve yetkili kişi hesabını oluştur. Kayıt sonrası iş veren detayına yönlendirilirsin.",
+          "back": "Listeye dön",
+          "employerName": "İş veren / kurum adı",
+          "description": "Açıklama (isteğe bağlı)",
+          "addressLine": "Adres satırı",
+          "city": "Şehir",
+          "country": "Ülke",
+          "contactSection": "Yetkili kişi ve giriş",
+          "submit": "Kaydı oluştur",
+          "submitting": "Oluşturuluyor...",
+          "success": "İş veren kaydı oluşturuldu.",
+          "error": "Kayıt oluşturulamadı. Bilgileri kontrol edin.",
+          "validationRequired": "Zorunlu alanları doldurun."
+        },
         "filters": {
           "id": "İş Veren ID",
           "name": "İş Veren adı ile filtrele",
@@ -1096,20 +1350,59 @@
         "fetchError": "İş Veren bilgisi alınamadı.",
         "empty": "Liste boş. ID ile İş Veren sorgulayıp grid üzerinde filtreleyebilirsin.",
         "taxNo": "Vergi No",
+        "commissionType": {
+          "percent": "Yüzde"
+        },
+        "actions": {
+          "edit": "Düzenle",
+          "delete": "Sil"
+        },
+        "delete": {
+          "title": "İş vereni sil",
+          "dialogKicker": "Kalıcı işlem",
+          "dialogContext": "{{name}}",
+          "dialogWarning": "Bağlı iş veren kullanıcıları ve bu kayda bağlı veriler etkilenir. İşlem geri alınamaz.",
+          "cancel": "Vazgeç",
+          "confirm": "Evet, sil",
+          "working": "Siliniyor...",
+          "success": "İş veren silindi.",
+          "error": "İş veren silinemedi."
+        },
         "columns": {
           "id": "ID",
-          "commission": "Komisyon"
+          "commission": "Komisyon",
+          "logo": "Logo",
+          "commissionType": "Komisyon tipi",
+          "actions": "İşlemler"
         },
         "list": {
           "fetchSuccess": "{{count}} iş veren listelendi.",
           "fetchError": "İş veren listesi alınamadı.",
           "empty": "Kayıt bulunamadı. Filtreleri değiştirip tekrar deneyin."
         },
+        "invalidCommission": "Komisyon filtreleri için geçerli sayılar girin.",
         "detail": {
           "title": "{{name}} (#{{id}})",
+          "subtitle": "İş veren kartı ve iletişim özeti.",
+          "back": "Listeye dön",
+          "idLabel": "Kayıt no",
+          "description": "Açıklama",
           "loadError": "İş veren detayı yüklenemedi.",
           "targetStatus": "Hedef durum",
-          "pendingNotSupported": "Bu ekrandan Beklemede durumuna geçiş desteklenmiyor."
+          "pendingNotSupported": "Bu ekrandan Beklemede durumuna geçiş desteklenmiyor.",
+          "formHint": "Kurum ve iletişim bilgileri listede ve iş veren kartında görünür.",
+          "sectionOrgTitle": "Kurum bilgileri",
+          "sectionOrgHint": "Kurum adı, vergi numarası ve açıklama; listede ve özet kartında gösterilir.",
+          "sectionContactHint": "Yetkili kişi bilgileri giriş ve bildirimler için kullanılır.",
+          "requiredField": "Zorunlu",
+          "validationRequired": "Zorunlu alanları doldurun.",
+          "actions": {
+            "save": "Kaydet",
+            "saving": "Kaydediliyor...",
+            "saveSuccess": "İş veren bilgileri güncellendi.",
+            "saveError": "Güncelleme yapılamadı. Alanları kontrol edin.",
+            "close": "Kapat"
+          }
         },
         "status": {
           "10": "Beklemede",
@@ -1235,14 +1528,22 @@
           "type": "Tip",
           "status": "Durum"
         },
+        "status": {
+          "0": "Beklemede",
+          "10": "Aktif",
+          "20": "Askıda",
+          "30": "Yasaklı"
+        },
         "type": {
           "10": "Admin",
           "20": "İş Veren",
+          "25": "Supervisor",
           "30": "Aday"
         },
         "filters": {
           "searchEmail": "E-posta ara",
-          "typeAll": "Tüm tipler"
+          "typeAll": "Tüm tipler",
+          "statusAll": "Tüm durumlar"
         },
         "summary": {
           "adminRows": "Bu sayfada admin",
@@ -1260,7 +1561,22 @@
       }
     }
   },
+  "errors": {
+    "validation": {
+      "fieldError": "Lütfen alanları kontrol edin: {{detail}}"
+    },
+    "codes": {
+      "AZX_CORE_021": "Form alanlarında hata var. Lütfen zorunlu alanları kontrol edin.",
+      "AZX_CORE_019": "Kaydetme işlemi başarısız. Bilgileri kontrol edip tekrar deneyin.",
+      "AZX_CORE_020": "İşlem zaman aşımına uğradı. Lütfen tekrar deneyin."
+    }
+  },
   "auth": {
+    "validation": {
+      "emailRequired": "E-posta adresini gir.",
+      "emailInvalid": "Geçerli bir e-posta adresi gir (örnek: ad@alan.com).",
+      "passwordRequired": "Şifreni gir."
+    },
     "audienceAria": "Hesap türü",
     "audience": {
       "individual": "Bireysel",
@@ -1270,6 +1586,7 @@
       "title": "Giriş yap",
       "subtitleIndividual": "Başvurularını, çalışmalarını ve bildirimlerini yönetmek için hesabına eriş.",
       "subtitleCorporate": "Kurum hesabınla giriş yap; ilan ve işe alım süreçlerini yönet.",
+      "subtitleAdmin": "Yönetici paneline erişmek için yönetici e-postan ve şifrenle giriş yap.",
       "emailLabel": "E-posta",
       "emailPlaceholder": "ornek@mail.com",
       "passwordLabel": "Şifre",
@@ -1297,6 +1614,17 @@
     },
     "feedback": {
       "authNotConfigured": "Kimlik doğrulama servis uç noktaları şu anda kullanılamıyor.",
+      "loginInvalidCredentials": "Giriş başarısız: Bu ekran iş veren veya aday hesabı içindir. E-posta veya şifre yanlış olabilir; hesap askıda, yasaklı veya henüz aktif olmayabilir. Yönetici hesabınla giriş için /admin/login adresini kullan.",
+      "loginInvalidCredentialsAdmin": "Yönetici girişi başarısız: Bu e-posta ile kayıtlı yönetici kullanıcı bulunamadı, şifre yanlış veya hesap kilitli / aktif değil. Kurum (iş veren) hesabın varsa ana sitedeki kurumsal girişi kullan.",
+      "loginNetworkError": "API sunucusuna ulaşılamadı. Sunucunun çalıştığından ve geliştirme ortamında adresin http://localhost:15080 olduğundan emin olun.",
+      "validationRequestFailed": "İstek sunucu doğrulamasından geçmedi. Alanları kontrol edip tekrar dene.",
+      "validationRequestFailedDetail": "Sunucu doğrulaması: {{detail}}",
+      "serverLoginEmailRequired": "Sunucu: e-posta zorunlu.",
+      "serverLoginPasswordRequired": "Sunucu: şifre zorunlu.",
+      "serverLoginDeviceRequired": "Sunucu: cihaz tanımlayıcısı eksik. Uygulamayı yenileyip tekrar dene; sorun sürerse destekle iletişime geç.",
+      "serverLoginTypeRequired": "Sunucu: hesap türü bilgisi geçersiz. Sayfayı yenileyip tekrar dene.",
+      "serverInternalError": "Sunucuda beklenmeyen bir hata oluştu. Bir süre sonra tekrar dene.",
+      "serverErrorWithMessage": "{{message}}",
       "genericError": "İşlem sırasında bir hata oluştu. Lütfen tekrar dene.",
       "passwordMismatch": "Şifreler eşleşmiyor.",
       "loginSuccess": "Giriş isteği başarıyla gönderildi.",

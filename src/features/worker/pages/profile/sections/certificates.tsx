@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { workerPortalApi } from '../../../../../api/worker/worker-portal'
 import { useActionToasts } from '../../../../../notifications/use-action-toasts'
-import { DashboardSurface, StatePanel } from '../../../../../shared/ui/ui-primitives'
+import { StatePanel } from '../../../../../shared/ui/ui-primitives'
 import { WorkerGhostButton, WorkerPrimaryButton } from '../../../worker-ui'
 import type { WorkerProfileData, WorkerProfileSectionItem } from '../types'
 import { ProfileInput } from './common'
@@ -143,7 +143,7 @@ export function CertificatesSection({
   )
 
   return (
-    <DashboardSurface theme={theme}>
+    <div className="space-y-0">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <div className="space-y-1">
           <h3 className={`text-base font-semibold leading-tight sm:text-lg ${titleCls}`}>
@@ -265,6 +265,6 @@ export function CertificatesSection({
           ))
         )}
       </ul>
-    </DashboardSurface>
+    </div>
   )
 }

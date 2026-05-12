@@ -110,7 +110,11 @@
   },
   "dashboard": {
     "common": {
-      "welcome": "Welcome, {{email}}"
+      "welcome": "Welcome, {{email}}",
+      "action": {
+        "success": "Operation completed successfully",
+        "error": "An error occurred while processing the operation"
+      }
     },
     "userMenu": {
       "title": "Account menu",
@@ -190,7 +194,8 @@
         "findJobs": "Find Jobs",
         "myShifts": "My Jobs",
         "wallet": "Wallet",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "cvPreview": "CV Preview"
       },
       "states": {
         "loading": "Loading data...",
@@ -249,6 +254,13 @@
         "notifications": {
           "title": "Notifications",
           "subtitle": "Alerts for matches, payouts and work activity."
+        },
+        "cvPreview": {
+          "title": "CV Preview",
+          "metaLine": "Selected template: {{template}} • Layout: {{layout}} • Palette: {{palette}}",
+          "goToSettings": "Go to CV Settings",
+          "downloadPdf": "Download PDF",
+          "preparingPdf": "Preparing..."
         }
       },
       "overview": {
@@ -369,6 +381,8 @@
       "availability": {
         "description": "Manage your weekly availability slots.",
         "editAction": "Edit Calendar",
+        "copyWeekdaysAction": "Copy Monday to Friday",
+        "clearAllAction": "Clear all days",
         "deleteAction": "Delete",
         "enableDay": "Enable this day",
         "empty": "No saved slots for this day.",
@@ -456,6 +470,11 @@
           "savedLocal": "Profile changes saved for this session.",
           "validationError": "Full name must be at least 2 characters."
         },
+        "basicSection": {
+          "subtitle": "Keep your contact and personal details up to date to improve your profile visibility.",
+          "completion": "Profile completion: {{completed}}/{{total}}",
+          "missingHint": "You can strengthen your profile by completing this field."
+        },
         "experienceSection": {
           "listSubtitle": "Employers see this timeline when reviewing your profile.",
           "emptyHint": "Add your work history to improve matches. You can edit or remove entries anytime.",
@@ -477,14 +496,35 @@
           "skills": "Skills",
           "certificates": "Certificates",
           "references": "References",
+          "cv": "CV",
           "contact": "Contact information",
           "password": "Change password",
           "emailNotifications": "Email notifications",
           "smsNotifications": "SMS notifications",
           "accountControl": "Delete and freeze account",
+          "settings": "Settings",
           "adVisibility": "Ad visibility",
           "cvImport": "AI CV upload",
           "availability": "Availability calendar"
+        },
+        "settingsSection": {
+          "title": "Settings",
+          "subtitle": "Update your app language and theme preferences from here.",
+          "languageLabel": "Language",
+          "themeLabel": "Theme",
+          "languages": {
+            "tr": "Turkish",
+            "en": "English",
+            "it": "Italian",
+            "es": "Spanish",
+            "fr": "French",
+            "ru": "Russian",
+            "ar": "Arabic"
+          },
+          "themes": {
+            "light": "Light",
+            "dark": "Dark"
+          }
         },
         "skillsSection": {
           "title": "Skills",
@@ -493,9 +533,152 @@
           "add": "Add Skill",
           "empty": "No saved skills yet."
         },
+        "cvSection": {
+          "title": "CV Menu",
+          "subtitle": "Create a new CV quickly or import your existing file.",
+          "templateSelectionTitle": "CV template selection",
+          "templateSelectionSubtitle": "When you select a template and create, a CV is generated automatically from your profile.",
+          "openTemplateLibrary": "Template Library",
+          "templateSettingsTitle": "Template settings",
+          "layoutTitle": "Column layout",
+          "layoutSingle": "Single column",
+          "layoutDouble": "Double column",
+          "paletteTitle": "Color palette",
+          "palette": {
+            "slate": "slate",
+            "indigo": "indigo",
+            "emerald": "emerald"
+          },
+          "photoAreaTitle": "Photo area",
+          "uploadPhoto": "Upload photo",
+          "signatureAreaTitle": "Signature area",
+          "uploadSignature": "Upload signature",
+          "clearAsset": "Clear",
+          "templateLibraryTitle": "CV Templates",
+          "templateLibrarySubtitle": "Choose from professional templates.",
+          "selectedTemplate": "Selected",
+          "createTitle": "Create new CV",
+          "createDesc": "Generate a quick CV draft from your profile data.",
+          "createAction": "Create CV",
+          "creatingAction": "Creating...",
+          "importTitle": "Import CV",
+          "importDesc": "Upload PDF/DOCX and map details automatically.",
+          "importAction": "Upload CV",
+          "uploadingAction": "Uploading...",
+          "statusTitle": "CV status",
+          "statusDesc": "Track upload and validation progress from this panel.",
+          "lastFile": "Last uploaded file: {{fileName}}",
+          "lastUpdated": "Last update: {{value}}",
+          "refreshAction": "Refresh status",
+          "refreshingAction": "Refreshing...",
+          "previewTitle": "CV Preview",
+          "previewSubtitle": "Review the content before exporting as PDF.",
+          "previewClose": "Close",
+          "previewExportPdf": "Export as PDF",
+          "previewExportingPdf": "Generating PDF...",
+          "messages": {
+            "draftCreated": "CV draft created.",
+            "uploaded": "CV file uploaded.",
+            "previewReady": "CV preview is ready.",
+            "pdfExported": "CV has been downloaded as PDF."
+          },
+          "templateOptions": {
+            "modern": {
+              "title": "Professional Modern",
+              "description": "Contemporary look with a sidebar and strong experience flow"
+            },
+            "classic": {
+              "title": "Professional Classic",
+              "description": "Balanced, traditional structure for corporate applications"
+            },
+            "minimal": {
+              "title": "Professional Minimal",
+              "description": "High readability with a clean and direct one-look layout"
+            },
+            "ats": {
+              "title": "ATS Strict",
+              "description": "Text-first, parser-safe format optimized for ATS systems"
+            },
+            "executive": {
+              "title": "Executive Board",
+              "description": "Impact-driven summary and structure for senior roles"
+            },
+            "concise": {
+              "title": "Concise One-Page",
+              "description": "Compact, photo-enabled layout built for one-page resumes"
+            },
+            "modernAzure": {
+              "title": "Modern Azure",
+              "description": "Contemporary ATS layout with a colored header and photo support"
+            },
+            "modernGraphite": {
+              "title": "Modern Graphite",
+              "description": "Strong competency focus with a contrast sidebar"
+            },
+            "classicNavy": {
+              "title": "Classic Navy",
+              "description": "Corporate-safe classic flow with a navy header accent"
+            },
+            "classicBurgundy": {
+              "title": "Classic Burgundy",
+              "description": "Premium traditional structure with deep accent header"
+            },
+            "minimalSlate": {
+              "title": "Minimal Slate",
+              "description": "Neutral, distraction-free reading experience"
+            },
+            "minimalIndigo": {
+              "title": "Minimal Indigo",
+              "description": "Minimal structure with a colored side emphasis"
+            },
+            "atsBlue": {
+              "title": "ATS Blue Header",
+              "description": "ATS-safe text flow with a subtle blue header"
+            },
+            "atsMono": {
+              "title": "ATS Mono",
+              "description": "Most parser-safe, text-first and highly readable format"
+            },
+            "executiveNavy": {
+              "title": "Executive Navy",
+              "description": "Senior-level profile with strong summary hierarchy"
+            },
+            "executiveEmerald": {
+              "title": "Executive Emerald",
+              "description": "Executive structure with premium photo support"
+            },
+            "conciseTeal": {
+              "title": "Concise Teal",
+              "description": "Compact one-page CV with a highlighted sidebar"
+            },
+            "conciseAmber": {
+              "title": "Concise Amber",
+              "description": "One-page layout with warm header accent and photo"
+            },
+            "studioPhoto": {
+              "title": "Studio Photo",
+              "description": "Photo-forward professional presentation with clean balance"
+            },
+            "sidebarContrast": {
+              "title": "Sidebar Contrast",
+              "description": "Clear section separation with a high-contrast side panel"
+            }
+          }
+        },
         "accountActions": {
           "suspend": "Suspend account",
           "delete": "Delete account"
+        },
+        "accountControlSection": {
+          "subtitle": "These actions affect account access. Please confirm carefully before proceeding.",
+          "warning": "Suspending temporarily restricts your sign-in. Deleting the account cannot be undone.",
+          "suspendConfirmTitle": "Suspend account confirmation",
+          "deleteConfirmTitle": "Delete account confirmation",
+          "confirmHelpPrefix": "To continue, check the box and type",
+          "confirmHelpSuffix": ".",
+          "confirmCheckbox": "I confirm that I understand the consequences of this action.",
+          "suspendConfirmCode": "SUSPEND",
+          "deleteConfirmCode": "DELETE"
         },
         "menuComingSoon": "This subsection will be enabled soon."
       },
@@ -508,6 +691,39 @@
           "failed": "Failed"
         },
         "currentState": "Current state: {{state}}"
+      },
+      "cvTemplates": {
+        "defaults": {
+          "fullName": "Candidate",
+          "profileTitle": "Candidate Profile"
+        },
+        "summary": {
+          "skillsPrefix": "Core competencies: {{skills}}."
+        },
+        "emptyInfo": "No information available.",
+        "photoAlt": "Profile",
+        "signature": {
+          "alt": "Signature",
+          "label": "Digital signature"
+        },
+        "labels": {
+          "email": "Email",
+          "phone": "Phone",
+          "nationality": "Nationality"
+        },
+        "sections": {
+          "professionalSummary": "Professional Summary",
+          "experience": "Experience",
+          "education": "Education",
+          "skills": "Skills",
+          "certificates": "Certificates",
+          "languages": "Languages",
+          "references": "References",
+          "executiveSummary": "Executive Summary",
+          "coreCompetencies": "Core Competencies",
+          "professionalExperience": "Professional Experience",
+          "certifications": "Certifications"
+        }
       },
       "shifts": {
         "submit": "Apply to Posting",
@@ -549,7 +765,8 @@
           "validating": "Token and location are validating.",
           "success": "Check flow completed successfully.",
           "failed": "Validation failed. Retry is required."
-        }
+        },
+        "securityNote": "Verify the token source before confirming."
       },
       "payouts": {
         "status": {
@@ -929,6 +1146,25 @@
         "loading": "Loading...",
         "fetchError": "Summary metrics could not be loaded from endpoints. Showing fallback values."
       },
+      "commissionChart": {
+        "title": "Commission revenue",
+        "subtitle": "Commission receivables are summed into calendar buckets using each row's period end date.",
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "halfYearly": "Half-yearly",
+        "yearly": "Yearly",
+        "loading": "Loading chart...",
+        "fetchError": "Commission chart could not be loaded.",
+        "empty": "No commission amounts in this view.",
+        "total": "Total across visible periods",
+        "ariaChart": "Commission revenue column chart",
+        "axisHintSingle": "Y-axis amounts are in {{currency}} (compact labels).",
+        "axisHintMulti": "Multiple currencies; the axis shows the sum of all stacks (no FX conversion). Hover a bar for detail.",
+        "tooltipPeriod": "Period",
+        "tooltipSegment": "{{currency}}: {{amount}}",
+        "tooltipStackTotal": "Period total: {{amount}}",
+        "tooltipPeriodTotals": "This period (no FX): {{parts}}"
+      },
       "grid": {
         "rowsPerPage": "Rows per page",
         "prev": "Prev",
@@ -1010,6 +1246,7 @@
           "body": "Track current platform status, live trends, and critical KPI metrics from this summary area."
         },
         "employers": {
+          "title": "Employers",
           "body": "Summary listing screen where you can filter and quickly review employer records."
         },
         "candidates": {
@@ -1081,6 +1318,23 @@
         "genericError": "Operation failed."
       },
       "employers": {
+        "addNew": "New employer",
+        "create": {
+          "title": "New employer registration",
+          "subtitle": "Enter organization details, address, and the primary contact account. You will be redirected to the employer profile after success.",
+          "back": "Back to list",
+          "employerName": "Employer / company name",
+          "description": "Description (optional)",
+          "addressLine": "Address line",
+          "city": "City",
+          "country": "Country",
+          "contactSection": "Contact person & sign-in",
+          "submit": "Create registration",
+          "submitting": "Creating...",
+          "success": "Employer registration created.",
+          "error": "Could not create registration. Check the fields and try again.",
+          "validationRequired": "Please fill all required fields."
+        },
         "filters": {
           "id": "Employer ID",
           "name": "Filter by employer name",
@@ -1096,20 +1350,59 @@
         "fetchError": "Employer info could not be loaded.",
         "empty": "List is empty. Query an employer by ID and filter results on the grid.",
         "taxNo": "Tax No",
+        "commissionType": {
+          "percent": "Percentage"
+        },
+        "actions": {
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "delete": {
+          "title": "Delete employer",
+          "dialogKicker": "Permanent action",
+          "dialogContext": "{{name}}",
+          "dialogWarning": "Linked employer users and data tied to this record will be affected. This cannot be undone.",
+          "cancel": "Cancel",
+          "confirm": "Yes, delete",
+          "working": "Deleting...",
+          "success": "Employer was deleted.",
+          "error": "Could not delete employer."
+        },
         "columns": {
           "id": "ID",
-          "commission": "Commission"
+          "commission": "Commission",
+          "logo": "Logo",
+          "commissionType": "Commission type",
+          "actions": "Actions"
         },
         "list": {
           "fetchSuccess": "{{count}} employers listed.",
           "fetchError": "Employer list could not be loaded.",
           "empty": "No records found. Adjust filters and try again."
         },
+        "invalidCommission": "Enter valid numbers for the commission filters.",
         "detail": {
           "title": "{{name}} (#{{id}})",
+          "subtitle": "Employer card and contact summary.",
+          "back": "Back to list",
+          "idLabel": "Record ID",
+          "description": "Description",
           "loadError": "Employer detail could not be loaded.",
           "targetStatus": "Target status",
-          "pendingNotSupported": "Switching to Pending from this screen is not supported."
+          "pendingNotSupported": "Switching to Pending from this screen is not supported.",
+          "formHint": "Organization and contact details appear on the employer card and in listings.",
+          "sectionOrgTitle": "Organization",
+          "sectionOrgHint": "Company name, tax ID, and description are shown in the list and summary card.",
+          "sectionContactHint": "The contact person is used for sign-in and notifications.",
+          "requiredField": "Required",
+          "validationRequired": "Please fill all required fields.",
+          "actions": {
+            "save": "Save",
+            "saving": "Saving...",
+            "saveSuccess": "Employer profile was updated.",
+            "saveError": "Could not update. Check the fields and try again.",
+            "close": "Close"
+          }
         },
         "status": {
           "10": "Pending",
@@ -1235,14 +1528,22 @@
           "type": "Type",
           "status": "Status"
         },
+        "status": {
+          "0": "Pending",
+          "10": "Active",
+          "20": "Suspended",
+          "30": "Banned"
+        },
         "type": {
           "10": "Admin",
           "20": "Employer",
+          "25": "Supervisor",
           "30": "Worker"
         },
         "filters": {
           "searchEmail": "Search email",
-          "typeAll": "All types"
+          "typeAll": "All types",
+          "statusAll": "All statuses"
         },
         "summary": {
           "adminRows": "Admins on this page",
@@ -1260,7 +1561,22 @@
       }
     }
   },
+  "errors": {
+    "validation": {
+      "fieldError": "Please check the fields: {{detail}}"
+    },
+    "codes": {
+      "AZX_CORE_021": "Some fields are invalid. Please review the required inputs.",
+      "AZX_CORE_019": "Could not save changes. Please review the inputs and try again.",
+      "AZX_CORE_020": "The operation timed out. Please try again."
+    }
+  },
   "auth": {
+    "validation": {
+      "emailRequired": "Enter your email address.",
+      "emailInvalid": "Enter a valid email address (e.g. name@domain.com).",
+      "passwordRequired": "Enter your password."
+    },
     "audienceAria": "Account type",
     "audience": {
       "individual": "Individual",
@@ -1270,6 +1586,7 @@
       "title": "Sign in",
       "subtitleIndividual": "Access your account to manage applications, jobs, and notifications.",
       "subtitleCorporate": "Sign in with your organization account to manage listings and hiring.",
+      "subtitleAdmin": "Sign in with your administrator email and password to access the admin panel.",
       "emailLabel": "Email",
       "emailPlaceholder": "you@example.com",
       "passwordLabel": "Password",
@@ -1297,6 +1614,17 @@
     },
     "feedback": {
       "authNotConfigured": "Authentication service endpoints are currently unavailable.",
+      "loginInvalidCredentials": "Sign-in failed: this screen is for employer or candidate accounts. Your email or password may be wrong, or the account may be suspended, banned, or not active yet. Use /admin/login for an administrator account.",
+      "loginInvalidCredentialsAdmin": "Administrator sign-in failed: no admin user matches this email, the password is incorrect, or the account is locked or not active. If you have an employer account, use corporate sign-in on the main site.",
+      "loginNetworkError": "Could not reach the API. Ensure the server is running; in local dev the web app expects the API at http://localhost:15080.",
+      "validationRequestFailed": "The request did not pass server validation. Check the fields and try again.",
+      "validationRequestFailedDetail": "Server validation: {{detail}}",
+      "serverLoginEmailRequired": "Server: email is required.",
+      "serverLoginPasswordRequired": "Server: password is required.",
+      "serverLoginDeviceRequired": "Server: device identifier is missing. Refresh the page and try again; contact support if it persists.",
+      "serverLoginTypeRequired": "Server: account type is invalid. Refresh the page and try again.",
+      "serverInternalError": "The server hit an unexpected error. Please try again later.",
+      "serverErrorWithMessage": "{{message}}",
       "genericError": "Something went wrong. Please try again.",
       "passwordMismatch": "Passwords do not match.",
       "loginSuccess": "Login request sent successfully.",

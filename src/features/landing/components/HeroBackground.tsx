@@ -73,6 +73,40 @@ export function HeroBackground() {
           <circle cx="560" cy="520" r="3" />
         </g>
       </svg>
+      <svg
+        className="pointer-events-none fixed bottom-0 left-0 z-0 w-full h-[180px] sm:h-[220px]"
+        viewBox="0 0 1440 200"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <linearGradient id="heroWave1" x1="0" y1="0" x2="0" y2="1">
+            <stop
+              offset="0%"
+              stopColor={theme === 'dark' ? '#14f1d9' : '#0284c7'}
+              stopOpacity={theme === 'dark' ? '0.18' : '0.28'}
+            />
+            <stop
+              offset="100%"
+              stopColor={theme === 'dark' ? '#14f1d9' : '#0284c7'}
+              stopOpacity="0"
+            />
+          </linearGradient>
+          <linearGradient id="heroWave2" x1="0" y1="0" x2="0" y2="1">
+            <stop
+              offset="0%"
+              stopColor={theme === 'dark' ? '#2dd4bf' : '#0e7490'}
+              stopOpacity={theme === 'dark' ? '0.22' : '0.32'}
+            />
+            <stop
+              offset="100%"
+              stopColor={theme === 'dark' ? '#2dd4bf' : '#0e7490'}
+              stopOpacity="0"
+            />
+          </linearGradient>
+        </defs>
+        <path className="wave-anim-slow" d="M0 120 Q360 60 720 110 T1440 100 V200 H0Z" fill="url(#heroWave1)" />
+        <path className="wave-anim-slower" d="M0 150 Q360 100 720 150 T1440 140 V200 H0Z" fill="url(#heroWave2)" />
+      </svg>
     </div>
   )
 }

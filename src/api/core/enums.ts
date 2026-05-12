@@ -68,22 +68,6 @@ export const LanguageLevel = {
 
 export type LanguageLevel = (typeof LanguageLevel)[keyof typeof LanguageLevel]
 
-export const MembershipScopeType = {
-  EmployerScoped: 1,
-  Global: 0,
-  LocationScoped: 2,
-} as const
-
-export type MembershipScopeType =
-  (typeof MembershipScopeType)[keyof typeof MembershipScopeType]
-
-export const PermissionEffect = {
-  Allow: 10,
-  Deny: 20,
-} as const
-
-export type PermissionEffect = (typeof PermissionEffect)[keyof typeof PermissionEffect]
-
 export const ShiftAssignmentStatus = {
   Pending: 10,
   CheckedIn: 20,
@@ -96,6 +80,7 @@ export type ShiftAssignmentStatus =
 export const SystemUserType = {
   Admin: 10,
   Employer: 20,
+  Supervisor: 25,
   Worker: 30,
 } as const
 

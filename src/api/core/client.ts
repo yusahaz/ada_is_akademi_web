@@ -1,6 +1,25 @@
 import { getApiBaseUrl } from './config'
 import type { ApiEnvelope, RequestOptions } from './types'
 
+/**
+ * Backend `PageableApiResponse<T>` places the row array in `data` and paging metadata
+ * (`totalCount`, `limit`, …) on the same object as `isSuccess` — not nested under `data`.
+ * Without this branch, callers only receive the array and lose `totalCount`, breaking paging.
+ */
+function tryPageableEnvelope<TResponse>(payload: unknown): TResponse | null {
+  if (!payload || typeof payload !== 'object') return null
+  const p = payload as Record<string, unknown>
+  if (!Array.isArray(p.data)) return null
+  if (p.totalCount === undefined || p.totalCount === null) return null
+  return {
+    data: p.data,
+    totalCount: p.totalCount,
+    hasMore: p.hasMore ?? false,
+    limit: p.limit,
+    offset: p.offset,
+  } as TResponse
+}
+
 export class ApiError extends Error {
   public readonly status: number
   public readonly code: string | null
@@ -46,6 +65,35 @@ let sharedRefreshContextProvider: RefreshContextProvider = () => null
 let sharedRefreshTokenHandler: RefreshTokenHandler | null = null
 let sharedRefreshSessionUpdater: RefreshSessionUpdater = () => undefined
 let sharedAuthFailureHandler: AuthFailureHandler = () => undefined
+
+type MutationToastHandlers = {
+  success: (message: string) => void
+  error: (message: string) => void
+  messages: () => { success: string; error: string }
+  formatError?: (error: ApiError) => string | null
+}
+
+let sharedMutationToastHandlers: MutationToastHandlers | null = null
+
+export function setApiMutationToastHandlers(handlers: MutationToastHandlers | null) {
+  sharedMutationToastHandlers = handlers
+}
+
+function shouldToastForRequest(method: string, path: string): boolean {
+  // Only toast for potential mutations; list/get/search endpoints are treated as queries.
+  if (method !== 'POST' && method !== 'PUT' && method !== 'DELETE') return false
+
+  const p = path.toLowerCase()
+
+  // Auth/session management: keep quiet.
+  if (p.includes('systemusers/login') || p.includes('systemusers/refreshtoken')) return false
+
+  // Query-ish endpoints (even if implemented as POST).
+  if (p.includes('/list') || p.includes('/get') || p.includes('/overview') || p.includes('/me') || p.includes('/my')) return false
+  if (p.includes('semanticsearch') || p.includes('/export')) return false
+
+  return true
+}
 
 export function setApiAccessTokenProvider(provider: TokenProvider) {
   sharedTokenProvider = provider
@@ -163,11 +211,30 @@ export class ApiClient {
     const normalizedFieldErrors = payload.fieldErrors ?? payload.errors ?? null
 
     if (!response.ok || !normalizedSuccess) {
+      if (sharedMutationToastHandlers && shouldToastForRequest(options.method, options.path)) {
+        const formatted = new ApiError(payload.message ?? 'API request failed.', {
+          status: response.status,
+          code: normalizedCode,
+          fieldErrors: normalizedFieldErrors,
+        })
+        const msg = sharedMutationToastHandlers.formatError?.(formatted) ?? null
+        sharedMutationToastHandlers.error(msg ?? sharedMutationToastHandlers.messages().error)
+      }
       throw new ApiError(payload.message ?? 'API request failed.', {
         status: response.status,
         code: normalizedCode,
         fieldErrors: normalizedFieldErrors,
       })
+    }
+
+    const pageable = tryPageableEnvelope<TResponse>(payload)
+    if (pageable !== null) {
+      return pageable
+    }
+
+    if (sharedMutationToastHandlers && shouldToastForRequest(options.method, options.path)) {
+      const msg = sharedMutationToastHandlers.messages().success
+      sharedMutationToastHandlers.success(msg)
     }
 
     return payload.data as TResponse

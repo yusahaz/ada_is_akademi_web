@@ -58,7 +58,7 @@ export function EmployerOperationsPage() {
             postings={postings}
             selectedPostingId={selectedPostingId}
             setSelectedPostingId={setSelectedPostingId}
-            activeAssignmentsFallback={activeAssignmentRows}
+            activeAssignments={activeAssignmentRows}
           />
         ) : null}
 

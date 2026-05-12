@@ -9,6 +9,7 @@ import { OverviewPage } from './pages/overview/OverviewPage'
 import { ProfilePage } from './pages/profile/ProfilePage'
 import { QrCheckPage } from './pages/qr-check/QrCheckPage'
 import { WalletPage } from './pages/wallet/WalletPage'
+import { WorkerCvPage } from './pages/cv/WorkerCvPage'
 
 type WorkerDashboardProps = {
   isSidebarOpen: boolean
@@ -26,6 +27,7 @@ export function WorkerDashboard({ isSidebarOpen, onSidebarClose }: WorkerDashboa
         <Route path="shifts" element={<MyShiftsPage />} />
         <Route path="qr-check" element={<QrCheckPage />} />
         <Route path="wallet" element={<WalletPage />} />
+        <Route path="cv" element={<WorkerCvPage />} />
         <Route path="notifications" element={<NotificationsPage />} />
 
         {/* Backward-compatible redirects to new IA */}
@@ -47,7 +49,7 @@ export function WorkerDashboard({ isSidebarOpen, onSidebarClose }: WorkerDashboa
         />
         <Route
           path="cv-import"
-          element={<Navigate to="/worker/profile?section=cvImport" replace />}
+          element={<Navigate to="/worker/profile?section=cv" replace />}
         />
 
         <Route path="*" element={<Navigate to="/worker" replace />} />

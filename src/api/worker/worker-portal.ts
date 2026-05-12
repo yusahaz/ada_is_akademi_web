@@ -1,4 +1,4 @@
-import { jobApplicationsApi } from '../jobs/job-applications'
+import { jobApplicationsApi, type MyJobApplicationItem } from '../jobs/job-applications'
 import { EducationType, JobPostingStatus, LanguageLevel } from '../core/enums'
 import {
   jobPostingsApi,
@@ -9,6 +9,8 @@ import {
 import { normalizePageableList, type PageableListResult } from '../core/pagination'
 import { shiftAssignmentsApi, type WorkerShiftAssignmentListItem } from '../jobs/shift-assignments'
 import { systemUsersApi, type SystemUserNotificationItem } from '../system/system-users'
+import { skillsApi } from '../skills/skills'
+import { resolveObjectStorageUrlCandidates, sanitizeObjectStorageUrl } from '../../shared/lib/object-storage-url'
 import { workersApi } from './workers'
 
 export type WorkerProfileSectionItem = {
@@ -26,6 +28,8 @@ export type WorkerProfileData = {
   nationality: string
   university: string
   studentNumber: string
+  cvOptions: string | null
+  profilePhotoObjectKey: string | null
   skills: Array<{ id: number; tag: string }>
   educations: WorkerProfileSectionItem[]
   experiences: WorkerProfileSectionItem[]
@@ -61,6 +65,11 @@ export type WorkerReportCard = {
 
 export type WorkerCvState = 'uploaded' | 'extracting' | 'awaitingReview' | 'confirmed' | 'failed'
 export type WorkerQrStatus = 'idle' | 'validating' | 'success' | 'failed'
+export type WorkerCvUploadSnapshot = {
+  fileName: string
+  sizeBytes: number
+  uploadedAt: string
+}
 
 export type WorkerReliabilityScore = {
   value: number | null
@@ -111,6 +120,10 @@ type WorkerDataSnapshot = {
 }
 
 export const workerPortalApi = {
+  resolveWorkerCvOptions(detail: { cvOptions?: string | null }): string | null {
+    return detail.cvOptions ?? null
+  },
+
   async getProfile(): Promise<WorkerProfileData> {
     const [me, detail] = await Promise.all([
       systemUsersApi.me(),
@@ -126,6 +139,8 @@ export const workerPortalApi = {
       nationality: 'N/A',
       university: 'N/A',
       studentNumber: 'N/A',
+      cvOptions: this.resolveWorkerCvOptions(detail),
+      profilePhotoObjectKey: detail.profilePhotoObjectKey ?? null,
       skills: [],
       educations: [],
       experiences: [],
@@ -136,6 +151,8 @@ export const workerPortalApi = {
 
     return {
       ...fallbackProfile,
+      cvOptions: this.resolveWorkerCvOptions(detail),
+      profilePhotoObjectKey: detail.profilePhotoObjectKey ?? null,
       nationality: detail.nationality ?? 'N/A',
       university: detail.university ?? 'N/A',
       skills:
@@ -328,6 +345,14 @@ export const workerPortalApi = {
   },
 
   async getCvImportState(): Promise<WorkerCvState> {
+    const uploadSnapshot = this.getCvUploadSnapshot()
+    if (uploadSnapshot) {
+      const uploadedAtMs = new Date(uploadSnapshot.uploadedAt).getTime()
+      const elapsedMs = Number.isFinite(uploadedAtMs) ? Date.now() - uploadedAtMs : Number.MAX_SAFE_INTEGER
+      if (elapsedMs < 4_000) return 'uploaded'
+      if (elapsedMs < 12_000) return 'extracting'
+    }
+
     const profile = await this.getProfile()
     if (profile.skills.length === 0) {
       return 'extracting'
@@ -336,6 +361,93 @@ export const workerPortalApi = {
       return 'awaitingReview'
     }
     return 'confirmed'
+  },
+
+  async createCvDraftFromProfile(profile?: WorkerProfileData): Promise<Blob> {
+    const source = profile ?? (await this.getProfile())
+    const lines = [
+      source.fullName,
+      source.email,
+      source.phone && source.phone !== 'N/A' ? source.phone : '',
+      source.nationality && source.nationality !== 'N/A' ? source.nationality : '',
+      source.university && source.university !== 'N/A' ? source.university : '',
+      '',
+      'EXPERIENCE',
+      ...(source.experiences.length > 0
+        ? source.experiences.map((item) => `- ${item.label}: ${item.value}`)
+        : ['- N/A']),
+      '',
+      'SKILLS',
+      ...(source.skills.length > 0 ? source.skills.map((skill) => `- ${skill.tag}`) : ['- N/A']),
+      '',
+      'CERTIFICATES',
+      ...(source.certificates.length > 0
+        ? source.certificates.map((item) => `- ${item.label}: ${item.value}`)
+        : ['- N/A']),
+      '',
+      'REFERENCES',
+      ...(source.references.length > 0
+        ? source.references.map((item) => `- ${item.label}: ${item.value}`)
+        : ['- N/A']),
+    ]
+    return new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' })
+  },
+
+  async uploadCvFile(file: File): Promise<WorkerCvUploadSnapshot> {
+    const contentType = resolveCvContentType(file)
+    const initResult = await workersApi.initCvUpload({
+      fileName: file.name,
+      contentType,
+    })
+
+    const uploadSucceeded = await tryUploadToObjectStorage(
+      initResult.uploadUrl,
+      file,
+      contentType,
+    )
+    if (!uploadSucceeded) {
+      throw new Error('CV upload failed.')
+    }
+
+    await workersApi.confirmCvUpload({
+      objectKey: initResult.objectKey,
+      fileName: file.name,
+      contentType,
+      fileSizeBytes: file.size,
+    })
+
+    const snapshot: WorkerCvUploadSnapshot = {
+      fileName: file.name,
+      sizeBytes: file.size,
+      uploadedAt: new Date().toISOString(),
+    }
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem('ada-is-akademi:worker-cv-upload', JSON.stringify(snapshot))
+    }
+    return snapshot
+  },
+
+  getCvUploadSnapshot(): WorkerCvUploadSnapshot | null {
+    if (typeof window === 'undefined') return null
+    const raw = window.sessionStorage.getItem('ada-is-akademi:worker-cv-upload')
+    if (!raw) return null
+    try {
+      const parsed = JSON.parse(raw) as Partial<WorkerCvUploadSnapshot>
+      if (
+        typeof parsed.fileName !== 'string' ||
+        typeof parsed.sizeBytes !== 'number' ||
+        typeof parsed.uploadedAt !== 'string'
+      ) {
+        return null
+      }
+      return {
+        fileName: parsed.fileName,
+        sizeBytes: parsed.sizeBytes,
+        uploadedAt: parsed.uploadedAt,
+      }
+    } catch {
+      return null
+    }
   },
 
   async validateQrToken(payload: string): Promise<WorkerQrStatus> {
@@ -474,6 +586,29 @@ export const workerPortalApi = {
     return this.getAvailabilityCalendar()
   },
 
+  async copyAvailabilityWeekdaysFromDay(sourceDay: number = 1): Promise<WorkerAvailabilitySlot[]> {
+    const current = await this.getAvailabilityCalendar()
+    const source = current.find((slot) => Number(slot.dayOfWeek) === sourceDay)
+    if (!source) {
+      return current
+    }
+
+    const weekdays = [1, 2, 3, 4, 5]
+    const preserved = current.filter((slot) => !weekdays.includes(Number(slot.dayOfWeek)))
+    const copied: WorkerAvailabilitySlot[] = weekdays.map((day) => ({
+      id: `copy-${day}`,
+      dayOfWeek: day,
+      timeFrom: source.timeFrom,
+      timeTo: source.timeTo,
+    }))
+
+    return this.saveAvailabilityCalendar([...preserved, ...copied])
+  },
+
+  async clearAvailabilityCalendar(): Promise<WorkerAvailabilitySlot[]> {
+    return this.saveAvailabilityCalendar([])
+  },
+
   async requestEmailVerification(systemUserId: number): Promise<void> {
     const tokenHash = generateClientTokenHash()
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString()
@@ -484,8 +619,26 @@ export const workerPortalApi = {
     })
   },
 
+  async getProfilePhotoViewUrl(): Promise<string | null> {
+    try {
+      const response = await workersApi.getProfilePhotoViewUrl({})
+      return sanitizeObjectStorageUrl(response.url)
+    } catch {
+      return null
+    }
+  },
+
   async addWorkerSkill(workerId: number, tag: string): Promise<number> {
     return workersApi.addSkill({ workerId, tag })
+  },
+
+  async listGlobalSkills(limit: number = 1000): Promise<string[]> {
+    try {
+      const rows = await skillsApi.list({ limit })
+      return Array.isArray(rows) ? rows : []
+    } catch {
+      return []
+    }
   },
 
   async removeWorkerSkill(skillId: number): Promise<void> {
@@ -504,6 +657,10 @@ export const workerPortalApi = {
     phone?: string | null
   }): Promise<void> {
     await workersApi.updateProfile(payload)
+  },
+
+  async updateCvTemplatePreference(cvOptions: string | null): Promise<void> {
+    await workersApi.updateCvTemplatePreference({ cvOptions })
   },
 
   async addExperience(payload: {
@@ -571,11 +728,12 @@ async function getWorkerDataSnapshot(): Promise<WorkerDataSnapshot> {
 }
 
 function mapApplicationsFromSnapshot(snapshot: WorkerDataSnapshot): WorkerApplicationItem[] {
+  const { rows: applications } = normalizePageableList<MyJobApplicationItem>(snapshot.applications)
   const postingById = new Map<number, JobPostingSummary>(
     snapshot.openPostings.map((posting) => [posting.id, posting]),
   )
 
-  return snapshot.applications
+  return applications
     .map((application) => {
       const jobPostingId = Number(application.jobPostingId)
       const id = Number(application.applicationId)
@@ -826,4 +984,38 @@ function normalizeDayOfWeek(value: unknown): number {
   if (text === 'saturday') return 6
   if (text === 'sunday') return 0
   return 0
+}
+
+function resolveCvContentType(file: File): string {
+  const name = file.name.toLowerCase()
+  if (name.endsWith('.pdf')) {
+    return 'application/pdf'
+  }
+  if (name.endsWith('.docx')) {
+    return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  }
+
+  // Backend only accepts PDF/DOCX for CV upload init/confirm.
+  throw new Error('Unsupported CV format. Please upload PDF or DOCX.')
+}
+
+async function tryUploadToObjectStorage(url: unknown, file: File, contentType: string): Promise<boolean> {
+  const candidates = resolveObjectStorageUrlCandidates(url)
+  if (candidates.length === 0) return false
+
+  for (const candidate of candidates) {
+    try {
+      const response = await fetch(candidate, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': contentType,
+        },
+        body: file,
+      })
+      if (response.ok) return true
+    } catch {
+      // Try next candidate URL.
+    }
+  }
+  return false
 }

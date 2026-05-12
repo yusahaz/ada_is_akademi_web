@@ -12,6 +12,7 @@ import {
   jobApplicationsApi,
   jobPostingsApi,
   shiftAssignmentsApi,
+  skillsApi,
   workersApi,
 } from '../../../api/core/index'
 import type { EmployerLocationListItemModel } from '../../../api/employer/employer-locations'
@@ -48,6 +49,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   const [assignmentHistory, setAssignmentHistory] = useState<ShiftAssignmentHistoryListItemModel[]>([])
   const [semanticResults, setSemanticResults] = useState<SemanticSearchedWorkerListItem[]>([])
   const [workerPortfolio, setWorkerPortfolio] = useState<WorkerPortfolioListItemModel[]>([])
+  const [skillSuggestions, setSkillSuggestions] = useState<string[]>([])
   const [employerLocations, setEmployerLocations] = useState<EmployerLocationListItemModel[]>([])
   const [employerSupervisors, setEmployerSupervisors] = useState<EmployerSupervisorListItemModel[]>([])
   const [disputes, setDisputes] = useState<EmployerDisputeListItemModel[]>([])
@@ -210,6 +212,17 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
         setWorkerPortfolio([])
       })
 
+    void skillsApi
+      .list({ limit: 1000 })
+      .then((rows) => {
+        if (!isActive) return
+        setSkillSuggestions(Array.isArray(rows) ? rows : [])
+      })
+      .catch(() => {
+        if (!isActive) return
+        setSkillSuggestions([])
+      })
+
     void employerLocationsApi
       .listLocations({ limit: 50, offset: 0 })
       .then((res) => {
@@ -268,15 +281,11 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
 
   const summary = useMemo(
     () => ({
-      openPostings: spotSummary?.openPostingCount ?? postings.length,
-      pendingApplications:
-        spotSummary?.pendingApplicationCount ??
-        applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
-      actionRequired:
-        spotSummary?.activeAnomalyCount ??
-        applications.filter((item) => item.status === JobApplicationStatus.Pending).length,
+      openPostings: spotSummary?.openPostingCount ?? 0,
+      pendingApplications: spotSummary?.pendingApplicationCount ?? 0,
+      actionRequired: spotSummary?.activeAnomalyCount ?? 0,
     }),
-    [applications, postings.length, spotSummary],
+    [spotSummary],
   )
 
   const postingsWithStatus = useMemo(
@@ -349,16 +358,13 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
   )
 
   const badges = useMemo(() => {
-    const pendingPayouts =
-      spotSummary?.pendingPayoutCount ??
-      (payoutsFromApi.length > 0 ? payoutItems.filter((item) => item.status === 'Pending').length : 0)
-    const activeAnomalies =
-      spotSummary?.activeAnomalyCount ?? activeAssignments.filter((item) => item.isAnomalyFlagged).length
+    const pendingPayouts = spotSummary?.pendingPayoutCount ?? 0
+    const activeAnomalies = spotSummary?.activeAnomalyCount ?? 0
     return { activeAnomalies, pendingPayouts }
-  }, [activeAssignments, payoutItems, payoutsFromApi.length, spotSummary])
+  }, [spotSummary])
 
   const runSemanticSearch = useCallback(async (queryText: string) => {
-    const term = queryText.trim()
+    const term = queryText.trim().toLocaleLowerCase()
     if (!term) {
       setSemanticResults([])
       return
@@ -424,6 +430,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       semanticResults,
       runSemanticSearch,
       workerPortfolio,
+      skillSuggestions,
       employerLocations,
       employerSupervisors,
       disputes,
@@ -454,6 +461,7 @@ export function EmployerPortalProvider({ children }: { children: ReactNode }) {
       semanticResults,
       runSemanticSearch,
       workerPortfolio,
+      skillSuggestions,
       employerLocations,
       employerSupervisors,
       disputes,

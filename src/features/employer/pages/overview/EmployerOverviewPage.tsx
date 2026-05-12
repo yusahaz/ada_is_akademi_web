@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { useTheme } from '../../../../theme/theme-context'
 import { WorkerSectionHeader } from '../../../worker/worker-ui'
 import { useEmployerPortal } from '../../portal/use-employer-portal'
-import { AnomaliesPanel, CandidateFlowPanel, KpiCards, PostingsPanel, type SpotAnomalyItem } from './sections'
+import { AnomaliesPanel, KpiCards, PostingsPanel, type SpotAnomalyItem } from './sections'
 
 export function EmployerOverviewPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const {
     error,
@@ -17,26 +17,20 @@ export function EmployerOverviewPage() {
     activeAssignments,
     selectedPostingId,
     setSelectedPostingId,
-    applications,
     spotSummary,
   } = useEmployerPortal()
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
+  const locale = i18n.resolvedLanguage ?? i18n.language
 
   const fillRatePercent =
     spotSummary != null
       ? Math.min(100, Math.max(0, Math.round(Number(spotSummary.dailyFillRatePercent))))
-      : postings.length === 0
-        ? 0
-        : Math.min(100, Math.round((applications.length / (postings.length * 3)) * 100))
+      : 0
 
   const activeWorkersApprox =
     spotSummary != null
       ? spotSummary.activeWorkerCount
-      : Math.min(
-          applications.filter((item) => String(item.status).toLowerCase().includes('accepted')).length +
-            Math.floor(applications.length / 4),
-          999,
-        )
+      : 0
 
   const anomalies: SpotAnomalyItem[] = (() => {
     const prefix = t('dashboard.employerSpot.anomalies.itemPrefix')
@@ -60,7 +54,16 @@ export function EmployerOverviewPage() {
         subtitle={t('dashboard.employerPortal.pages.overview.subtitle')}
       />
 
-      <KpiCards theme={theme} fillRatePercent={fillRatePercent} activeWorkersApprox={activeWorkersApprox} openPostings={summary.openPostings} pendingApplications={summary.pendingApplications} t={t} />
+      <KpiCards
+        theme={theme}
+        fillRatePercent={fillRatePercent}
+        activeWorkersApprox={activeWorkersApprox}
+        openPostings={summary.openPostings}
+        pendingApplications={summary.pendingApplications}
+        activeAnomalies={badges.activeAnomalies}
+        pendingPayouts={badges.pendingPayouts}
+        t={t}
+      />
 
       {error ? (
         <p
@@ -74,10 +77,9 @@ export function EmployerOverviewPage() {
         </p>
       ) : null}
 
-      <div className="grid gap-4 xl:grid-cols-3">
+      <div className="grid gap-4 xl:grid-cols-2">
         <AnomaliesPanel theme={theme} toneClass={toneClass} anomalies={anomalies} activeAnomalies={badges.activeAnomalies} t={t} />
-        <PostingsPanel theme={theme} toneClass={toneClass} loading={loading} postings={postings} selectedPostingId={selectedPostingId} setSelectedPostingId={setSelectedPostingId} t={t} />
-        <CandidateFlowPanel theme={theme} toneClass={toneClass} selectedPostingId={selectedPostingId} applications={applications} t={t} />
+        <PostingsPanel theme={theme} toneClass={toneClass} loading={loading} postings={postings} selectedPostingId={selectedPostingId} setSelectedPostingId={setSelectedPostingId} t={t} locale={locale} />
       </div>
     </>
   )

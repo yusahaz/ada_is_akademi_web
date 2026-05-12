@@ -13,7 +13,7 @@ type IntelligenceView = 'semanticSearch' | 'workerPortfolio'
 export function EmployerCandidatesPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const { candidateGroups, semanticResults, runSemanticSearch, workerPortfolio } = useEmployerPortal()
+  const { semanticResults, runSemanticSearch, workerPortfolio, skillSuggestions } = useEmployerPortal()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchText, setSearchText] = useState('')
   const toneClass = theme === 'dark' ? 'text-white/70' : 'text-slate-600'
@@ -43,7 +43,8 @@ export function EmployerCandidatesPage() {
         subtitle={t('dashboard.employerPortal.pages.candidates.subtitle')}
       />
       <DashboardSurface theme={theme}>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="rounded-2xl border border-slate-200/80 bg-white/70 p-2 dark:border-white/10 dark:bg-white/[0.03]">
+          <div className="flex flex-wrap items-center gap-2">
           {(
             [
               ['semanticSearch', t('dashboard.employerSpot.intelligence.tabs.semanticSearch')],
@@ -51,11 +52,12 @@ export function EmployerCandidatesPage() {
             ] as [IntelligenceView, string][]
           ).map(([key, label]) => (
             <button key={key} type="button" onClick={() => setView(key)} className={sectionButtonClass(activeView === key)}>
-              <InteractiveButton theme={theme} isActive={activeView === key}>
+              <InteractiveButton theme={theme} isActive={activeView === key} className="w-full justify-center sm:w-auto">
                 {label}
               </InteractiveButton>
             </button>
           ))}
+          </div>
         </div>
 
         {activeView === 'semanticSearch' ? (
@@ -66,7 +68,7 @@ export function EmployerCandidatesPage() {
             setSearchText={setSearchText}
             runSemanticSearch={runSemanticSearch}
             semanticResults={semanticResults}
-            candidateGroups={candidateGroups}
+            skillSuggestions={skillSuggestions}
             t={t}
           />
         ) : null}

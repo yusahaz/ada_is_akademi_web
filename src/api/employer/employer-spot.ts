@@ -1,6 +1,5 @@
 import { getApiClient } from '../core/client'
 import { API_ENDPOINTS } from '../core/endpoints'
-import type { MembershipScopeType } from './employer-supervisors'
 
 export type SpotDashboardSummaryModel = {
   dailyFillRatePercent: number
@@ -47,7 +46,6 @@ export type EmployerDisputeListItemModel = {
   resolvedAt: string | null
   isAnomalyRelated: boolean
   anomalyCode: string | null
-  scopeType?: MembershipScopeType
 }
 
 export type PagedListResponse<TItem> = {

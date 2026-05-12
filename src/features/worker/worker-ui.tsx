@@ -91,7 +91,7 @@ export function WorkerPrimaryButton({
     <button
       type="button"
       className={cn(
-        'inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 disabled:opacity-50',
+        'worker-flow-btn worker-flow-btn--primary inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 disabled:opacity-50',
         tone === 'dark'
           ? 'bg-gradient-to-r from-cyan-400 via-sky-500 to-teal-500 text-slate-950'
           : 'bg-gradient-to-r from-sky-500 via-cyan-500 to-teal-500 text-white shadow-sm shadow-cyan-900/25',
@@ -111,7 +111,7 @@ export function WorkerGhostButton({
     <button
       type="button"
       className={cn(
-        'inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 disabled:opacity-50',
+        'worker-flow-btn worker-flow-btn--ghost inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 disabled:opacity-50',
         tone === 'dark'
           ? 'border-white/15 bg-white/[0.04] text-white/85 hover:bg-white/[0.08]'
           : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50',

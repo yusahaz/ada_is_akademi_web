@@ -38,8 +38,6 @@ export function AnomaliesPanel({
           })}
         </div>
       )}
-      <div aria-hidden className={`pointer-events-none mt-4 h-px ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-200'}`} />
-      <p className={`mt-3 text-xs ${toneClass}`}>{t('dashboard.employerSpot.anomalies.hint')}</p>
     </DashboardSurface>
   )
 }

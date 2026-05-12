@@ -38,8 +38,10 @@ export default function App() {
   const isWorkerDashboard = isAuthenticated && dashboardRole === 'worker'
   const isEmployerDashboard = isAuthenticated && dashboardRole === 'employer'
   const isAdminLoginRoute = location.pathname === '/admin' && !isAuthenticated
-  const shouldShowGlobalNavbar = !isWorkerDashboard && !isEmployerDashboard && !isAdminLoginRoute
-  const shouldShowGlobalFooter = !isWorkerDashboard && !isEmployerDashboard && !isAdminLoginRoute
+  const shouldShowGlobalNavbar =
+    !isWorkerDashboard && !isEmployerDashboard && !isAdminDashboard && !isAdminLoginRoute
+  const shouldShowGlobalFooter =
+    !isWorkerDashboard && !isEmployerDashboard && !isAdminDashboard && !isAdminLoginRoute
 
   useEffect(() => {
     document.title = t('landing.meta.title')

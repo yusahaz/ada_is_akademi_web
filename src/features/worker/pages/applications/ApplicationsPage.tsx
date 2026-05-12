@@ -11,7 +11,7 @@ import { useWorkerAsyncData } from '../../hooks/useWorkerAsyncData'
 import { filterAndSortApplications } from '../jobs/job-browse-utils'
 import { useJobsBrowseFilters } from '../jobs/jobs-browse-filters-context'
 import { WorkerPostingListItem } from '../jobs/components/WorkerPostingListItem'
-import { formatShiftDateLong, formatTimeShort } from '../jobs/posting-detail-lines'
+import { formatRawShiftRange, formatShiftDateLong } from '../jobs/posting-detail-lines'
 
 export type ApplicationsPageProps = {
   embedded?: boolean
@@ -87,11 +87,8 @@ export function ApplicationsPage({ embedded = false }: ApplicationsPageProps = {
       <div className="flex flex-col gap-3">
         {visibleItems.map((item) => (
           (() => {
-            const parts = item.shiftRange.split('-')
-            const start = formatTimeShort(parts[0]?.trim() ?? '')
-            const end = formatTimeShort(parts[1]?.trim() ?? '')
             const dateText = formatShiftDateLong(item.shiftDate, i18n.language)
-            const scheduleText = end ? `${dateText} • ${start} - ${end}` : `${dateText} • ${start}`
+            const scheduleText = `${dateText} • ${formatRawShiftRange(item.shiftRange, i18n.language)}`
             return (
           <WorkerPostingListItem
             key={item.id}

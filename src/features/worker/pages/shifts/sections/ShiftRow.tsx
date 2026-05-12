@@ -1,4 +1,5 @@
 import type { WorkerShiftHistoryItem } from '../../../../../api/worker/worker-portal'
+import { formatShiftDateLong, formatTimeRangeShort } from '../../jobs/posting-detail-lines'
 import { WorkerPillBadge } from '../../../worker-ui'
 import { shiftStatusEmphasis } from './shift-utils'
 
@@ -6,16 +7,18 @@ export function ShiftRow({
   item,
   theme,
   t,
+  locale,
 }: {
   item: WorkerShiftHistoryItem
   theme: 'dark' | 'light'
   t: (key: string, options?: Record<string, unknown>) => string
+  locale: string
 }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div className="min-w-0">
         <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-          {item.shiftDate} • {item.shiftStartTime} - {item.shiftEndTime}
+          {formatShiftDateLong(item.shiftDate, locale)} • {formatTimeRangeShort(item.shiftStartTime, item.shiftEndTime, locale)}
         </p>
         <p className={`mt-0.5 text-xs ${theme === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>
           {t('dashboard.workerPortal.overview.employerPrefix', { id: item.jobPostingId })}

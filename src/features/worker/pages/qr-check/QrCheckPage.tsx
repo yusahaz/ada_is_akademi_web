@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Camera, CameraOff, CheckCircle2, QrCode, ScanLine, ShieldAlert, XCircle } from 'lucide-react'
+import jsQR from 'jsqr'
 
 import { workerPortalApi, type WorkerQrStatus } from '../../../../api/worker/worker-portal'
 import { useTheme } from '../../../../theme/theme-context'
@@ -28,7 +29,6 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
   const [qrPayload, setQrPayload] = useState('')
   const [isScanning, setIsScanning] = useState(false)
   const [cameraError, setCameraError] = useState<string | null>(null)
-  const [isBarcodeSupported, setIsBarcodeSupported] = useState(false)
 
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
@@ -88,15 +88,13 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.BarcodeDetector) {
       detectorRef.current = new window.BarcodeDetector({ formats: ['qr_code'] })
-      setIsBarcodeSupported(true)
     } else {
       detectorRef.current = null
-      setIsBarcodeSupported(false)
     }
   }, [])
 
   useEffect(() => {
-    if (!isScanning || !isBarcodeSupported || !videoRef.current || !detectorRef.current) return
+    if (!isScanning || !videoRef.current) return
 
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
@@ -105,7 +103,7 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
     const scanLoop = async () => {
       const video = videoRef.current
       const detector = detectorRef.current
-      if (!video || !detector || video.readyState < 2) {
+      if (!video || video.readyState < 2) {
         scanRafRef.current = requestAnimationFrame(() => void scanLoop())
         return
       }
@@ -115,8 +113,15 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 
       try {
-        const results = await detector.detect(canvas)
-        const raw = results[0]?.rawValue?.trim()
+        let raw = ''
+        if (detector) {
+          const results = await detector.detect(canvas)
+          raw = results[0]?.rawValue?.trim() ?? ''
+        } else {
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+          const qr = jsQR(imageData.data, imageData.width, imageData.height)
+          raw = qr?.data?.trim() ?? ''
+        }
         if (raw) {
           setQrPayload(raw)
           stopCamera()
@@ -137,7 +142,7 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
         scanRafRef.current = null
       }
     }
-  }, [isScanning, isBarcodeSupported, stopCamera, validatePayload])
+  }, [isScanning, stopCamera, validatePayload])
 
   useEffect(() => () => stopCamera(), [stopCamera])
 
@@ -233,11 +238,6 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
               )}
             </div>
 
-            {!isBarcodeSupported ? (
-              <p className={`text-xs ${theme === 'dark' ? 'text-amber-200' : 'text-amber-700'}`}>
-                Bu tarayıcıda otomatik QR okuma desteklenmiyor. Lütfen tokenı manuel girin.
-              </p>
-            ) : null}
             {cameraError ? (
               <p className={`text-xs ${theme === 'dark' ? 'text-rose-200' : 'text-rose-700'}`}>{cameraError}</p>
             ) : null}
@@ -274,12 +274,16 @@ export function QrCheckPage({ embedded = false }: QrCheckPageProps = {}) {
             <span>{t(`dashboard.workerPortal.qr.status.${status}`)}</span>
           </div>
 
-          <div className={`rounded-2xl border px-3 py-2 text-xs sm:text-sm ${theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-white/70' : 'border-slate-200 bg-slate-50 text-slate-600'}`}>
-            <span className="inline-flex items-center gap-1 font-medium">
-              <ShieldAlert className="h-4 w-4" aria-hidden />
-              Guvenlik notu:
-            </span>{' '}
-            Dogrulama oncesinde token kaynagini kontrol edin.
+          <div
+            className={`flex items-start gap-1.5 rounded-2xl border px-3 py-2 text-xs sm:text-sm ${
+              theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-white/70' : 'border-slate-200 bg-slate-50 text-slate-600'
+            }`}
+          >
+            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+            <p className="leading-relaxed">
+              <span className="font-medium">Güvenlik notu:</span>{' '}
+              {t('dashboard.workerPortal.qr.securityNote')}
+            </p>
           </div>
         </div>
       </DashboardSurface>

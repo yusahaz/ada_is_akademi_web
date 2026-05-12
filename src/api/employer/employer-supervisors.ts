@@ -11,8 +11,6 @@ export type RemoveEmployerSupervisorCommand = {
   locationId?: number | null
 }
 
-export type MembershipScopeType = 'Global' | 'EmployerScoped' | 'LocationScoped'
-
 export type ListEmployerSupervisorsQuery = {
   [key: string]: never
 }
@@ -22,8 +20,6 @@ export type EmployerSupervisorListItemModel = {
   fullName: string
   email: string
   assignedLocationIds: number[]
-  groupIds: number[]
-  scopeType: MembershipScopeType
 }
 
 const client = getApiClient()

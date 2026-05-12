@@ -68,7 +68,7 @@ export async function getAdminSummaryStats(): Promise<AdminSummaryStats | null> 
   let hasAnyValue = false
 
   const summary = await client.post<AdminSummaryEndpointResponse, Record<string, never>>(
-    API_ENDPOINTS.statistics.overview,
+    API_ENDPOINTS.admin.overview,
     {},
     true,
   )

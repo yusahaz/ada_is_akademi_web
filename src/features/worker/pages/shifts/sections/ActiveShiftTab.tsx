@@ -6,11 +6,12 @@ import { DashboardSurface, StatePanel } from '../../../../../shared/ui/ui-primit
 import { useTheme } from '../../../../../theme/theme-context'
 import { useWorkerAsyncData } from '../../../hooks/useWorkerAsyncData'
 import { WorkerPillBadge } from '../../../worker-ui'
+import { formatShiftDateLong, formatTimeRangeShort } from '../../jobs/posting-detail-lines'
 import { ShiftRow } from './ShiftRow'
 import { shiftStatusEmphasis } from './shift-utils'
 
 export function ActiveShiftTab() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(
     () =>
@@ -40,7 +41,7 @@ export function ActiveShiftTab() {
             {data.active ? (
               <>
                 <p className={`mt-1 text-base font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-                  {data.active.shiftDate} • {data.active.shiftStartTime} - {data.active.shiftEndTime}
+                  {formatShiftDateLong(data.active.shiftDate, i18n.language)} • {formatTimeRangeShort(data.active.shiftStartTime, data.active.shiftEndTime, i18n.language)}
                 </p>
                 <p className={`mt-1 text-xs ${theme === 'dark' ? 'text-white/65' : 'text-slate-600'}`}>
                   {t('dashboard.workerPortal.overview.employerPrefix', { id: data.active.jobPostingId })}
@@ -67,7 +68,7 @@ export function ActiveShiftTab() {
           <ul className="mt-3 space-y-2">
             {data.upcoming.map((item) => (
               <li key={item.assignmentId}>
-                <ShiftRow item={item} theme={theme} t={t} />
+                <ShiftRow item={item} theme={theme} t={t} locale={i18n.language} />
               </li>
             ))}
           </ul>

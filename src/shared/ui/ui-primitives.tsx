@@ -8,15 +8,8 @@ type SurfaceProps = {
   className?: string
 }
 
-type BadgeProps = {
-  theme: ThemeMode
-  children: ReactNode
-  className?: string
-}
-
 type HeroProps = {
   theme: ThemeMode
-  eyebrow?: string
   title: string
   description: string
   children?: ReactNode
@@ -43,7 +36,7 @@ export function DashboardSurface({ theme, children, className }: SurfaceProps) {
   )
 }
 
-export function DashboardHero({ theme, eyebrow, title, description, children }: HeroProps) {
+export function DashboardHero({ theme, title, description, children }: HeroProps) {
   return (
     <article
       className={cx(
@@ -53,15 +46,25 @@ export function DashboardHero({ theme, eyebrow, title, description, children }: 
           : 'border-sky-200 bg-[linear-gradient(135deg,rgba(14,165,233,0.12),rgba(255,255,255,0.97)_45%,rgba(240,249,255,0.9))]',
       )}
     >
-      <div className="relative z-[1] max-w-3xl">
-        {eyebrow ? <GlowBadge theme={theme}>{eyebrow}</GlowBadge> : null}
-        <h1 className={cx('mt-3 font-display text-2xl font-semibold sm:text-3xl', theme === 'dark' ? 'text-white' : 'text-slate-900')}>
-          {title}
-        </h1>
-        <p className={cx('mt-2 text-sm leading-6 sm:text-base', theme === 'dark' ? 'text-white/75' : 'text-slate-700')}>
-          {description}
-        </p>
-        {children ? <div className="mt-4">{children}</div> : null}
+      <div
+        className={cx(
+          'relative z-[1]',
+          children
+            ? 'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6'
+            : 'max-w-3xl',
+        )}
+      >
+        <div className={cx(children ? 'min-w-0 flex-1' : undefined)}>
+          <h1 className={cx('font-display text-2xl font-semibold sm:text-3xl', theme === 'dark' ? 'text-white' : 'text-slate-900')}>
+            {title}
+          </h1>
+          <p className={cx('mt-2 text-sm leading-6 sm:text-base', theme === 'dark' ? 'text-white/75' : 'text-slate-700')}>
+            {description}
+          </p>
+        </div>
+        {children ? (
+          <div className="flex w-full min-w-0 shrink-0 items-center justify-end sm:w-auto">{children}</div>
+        ) : null}
       </div>
       <div
         aria-hidden
@@ -71,22 +74,6 @@ export function DashboardHero({ theme, eyebrow, title, description, children }: 
         )}
       />
     </article>
-  )
-}
-
-export function GlowBadge({ theme, children, className }: BadgeProps) {
-  return (
-    <span
-      className={cx(
-        'inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em]',
-        theme === 'dark'
-          ? 'border-cyan-300/30 bg-cyan-300/10 text-cyan-100'
-          : 'border-sky-300 bg-sky-100 text-sky-700',
-        className,
-      )}
-    >
-      {children}
-    </span>
   )
 }
 

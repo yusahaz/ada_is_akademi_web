@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Flag, GraduationCap, Mail, Phone, UserCircle2 } from 'lucide-react'
 
 import { workerPortalApi } from '../../../../../api/worker/worker-portal'
 import { useActionToasts } from '../../../../../notifications/use-action-toasts'
@@ -99,35 +100,97 @@ export function BasicInfoSection({
     }
   }
 
+  const readOnlyRows = [
+    {
+      key: 'fullName',
+      label: t('dashboard.workerPortal.profile.fields.fullName'),
+      rawValue: currentProfile.fullName,
+      icon: UserCircle2,
+    },
+    {
+      key: 'email',
+      label: t('dashboard.workerPortal.profile.fields.email'),
+      rawValue: currentProfile.email,
+      icon: Mail,
+    },
+    {
+      key: 'phone',
+      label: t('dashboard.workerPortal.profile.fields.phone'),
+      rawValue: currentProfile.phone,
+      icon: Phone,
+    },
+    {
+      key: 'nationality',
+      label: t('dashboard.workerPortal.profile.fields.nationality'),
+      rawValue: currentProfile.nationality,
+      icon: Flag,
+    },
+    {
+      key: 'university',
+      label: t('dashboard.workerPortal.profile.fields.university'),
+      rawValue: currentProfile.university,
+      icon: GraduationCap,
+    },
+  ] as const
+
+  const completedFields = readOnlyRows.reduce((acc, row) => {
+    const raw = typeof row.rawValue === 'string' ? row.rawValue.trim() : ''
+    if (raw && raw !== 'N/A') return acc + 1
+    return acc
+  }, 0)
+
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className={`text-sm font-semibold ${resolveTitle(theme)}`}>
-          {t('dashboard.workerPortal.profile.basic')}
-        </h2>
-        <div className="flex flex-wrap items-center gap-2">
-          {isEditing ? (
-            <>
+    <div className="space-y-4">
+      <div
+        className={`rounded-2xl border p-3 sm:p-4 ${
+          theme === 'dark' ? 'border-white/10 bg-white/[0.03]' : 'border-slate-200 bg-slate-50/80'
+        }`}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-2">
+            <h2 className={`text-base font-semibold leading-tight sm:text-lg ${resolveTitle(theme)}`}>
+              {t('dashboard.workerPortal.profile.basic')}
+            </h2>
+            <p className={`text-xs leading-relaxed sm:text-sm ${resolveMuted(theme)}`}>
+              {t('dashboard.workerPortal.profile.basicSection.subtitle')}
+            </p>
+            <p
+              className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                theme === 'dark' ? 'bg-cyan-500/15 text-cyan-100' : 'bg-cyan-100 text-cyan-800'
+              }`}
+            >
+              {t('dashboard.workerPortal.profile.basicSection.completion', {
+                completed: completedFields,
+                total: readOnlyRows.length,
+              })}
+            </p>
+          </div>
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center">
+            {isEditing ? (
+              <>
+                <WorkerGhostButton
+                  tone={theme}
+                  className="h-10 w-full justify-center sm:w-auto sm:min-w-[7.5rem]"
+                  onClick={() => handleCancelEdit(setDraft, setIsEditing, setSaveState)}
+                >
+                  {t('dashboard.workerPortal.profile.actions.cancel')}
+                </WorkerGhostButton>
+                <WorkerPrimaryButton tone={theme} className="h-10 w-full justify-center sm:w-auto sm:min-w-[7.5rem]" onClick={() => void handleSaveProfile()}>
+                  {t('dashboard.workerPortal.profile.actions.save')}
+                </WorkerPrimaryButton>
+              </>
+            ) : (
               <WorkerGhostButton
                 tone={theme}
-                onClick={() => handleCancelEdit(setDraft, setIsEditing, setSaveState)}
+                className="h-10 w-full justify-center sm:w-auto sm:min-w-[8.5rem]"
+                onClick={() =>
+                  handleStartEdit(currentProfile, setDraft, setIsEditing, setSaveState)
+                }
               >
-                {t('dashboard.workerPortal.profile.actions.cancel')}
+                {t('dashboard.workerPortal.profile.actions.edit')}
               </WorkerGhostButton>
-              <WorkerPrimaryButton tone={theme} onClick={() => void handleSaveProfile()}>
-                {t('dashboard.workerPortal.profile.actions.save')}
-              </WorkerPrimaryButton>
-            </>
-          ) : (
-            <WorkerGhostButton
-              tone={theme}
-              onClick={() =>
-                handleStartEdit(currentProfile, setDraft, setIsEditing, setSaveState)
-              }
-            >
-              {t('dashboard.workerPortal.profile.actions.edit')}
-            </WorkerGhostButton>
-          )}
+            )}
+          </div>
         </div>
       </div>
       {saveState === 'validation-error' ? (
@@ -135,7 +198,7 @@ export function BasicInfoSection({
           {t('dashboard.workerPortal.profile.messages.validationError')}
         </p>
       ) : null}
-      <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <div className="mt-1 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {isEditing && draft ? (
           <>
             <ProfileInput
@@ -210,49 +273,37 @@ export function BasicInfoSection({
             </label>
           </>
         ) : (
-          [
-            {
-              key: 'fullName',
-              label: t('dashboard.workerPortal.profile.fields.fullName'),
-              rawValue: currentProfile.fullName,
-            },
-            {
-              key: 'email',
-              label: t('dashboard.workerPortal.profile.fields.email'),
-              rawValue: currentProfile.email,
-            },
-            {
-              key: 'phone',
-              label: t('dashboard.workerPortal.profile.fields.phone'),
-              rawValue: currentProfile.phone,
-            },
-            {
-              key: 'nationality',
-              label: t('dashboard.workerPortal.profile.fields.nationality'),
-              rawValue: currentProfile.nationality,
-            },
-            {
-              key: 'university',
-              label: t('dashboard.workerPortal.profile.fields.university'),
-              rawValue: currentProfile.university,
-            },
-          ].map((row) => {
+          readOnlyRows.map((row) => {
             const raw = typeof row.rawValue === 'string' ? row.rawValue.trim() : ''
             const isMissing = !raw || raw === 'N/A'
+            const Icon = row.icon
             return (
               <div
                 key={row.key}
                 className={`rounded-2xl border px-3 py-3 text-sm sm:px-4 ${
                   theme === 'dark'
-                    ? 'border-white/10 bg-white/[0.03]'
-                    : 'border-slate-200 bg-slate-50/80'
+                    ? 'border-white/12 bg-white/[0.05] shadow-[0_10px_26px_rgba(0,0,0,0.28)]'
+                    : 'border-slate-200/90 bg-white shadow-[0_8px_20px_rgba(15,23,42,0.06)]'
                 }`}
               >
-                <p className={`text-[11px] font-semibold uppercase tracking-wide ${resolveMuted(theme)}`}>
-                  {row.label}
-                </p>
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className={`text-[11px] font-semibold tracking-wide ${resolveMuted(theme)}`}>
+                      {row.label}
+                    </p>
+                  </div>
+                  <span
+                    className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border ${
+                      theme === 'dark'
+                        ? 'border-white/15 bg-white/[0.03] text-cyan-200'
+                        : 'border-slate-200 bg-slate-50 text-cyan-700'
+                    }`}
+                  >
+                    <Icon size={14} />
+                  </span>
+                </div>
                 <p
-                  className={`mt-1.5 min-w-0 text-sm leading-snug [overflow-wrap:anywhere] ${
+                  className={`mt-2 min-w-0 text-sm leading-snug [overflow-wrap:anywhere] ${
                     isMissing
                       ? theme === 'dark'
                         ? 'italic text-white/55'
@@ -262,6 +313,11 @@ export function BasicInfoSection({
                 >
                   {isMissing ? '—' : raw}
                 </p>
+                {isMissing ? (
+                  <p className={`mt-1 text-[11px] ${resolveMuted(theme)}`}>
+                    {t('dashboard.workerPortal.profile.basicSection.missingHint')}
+                  </p>
+                ) : null}
               </div>
             )
           })

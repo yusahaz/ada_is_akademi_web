@@ -15,7 +15,8 @@ export function OperationsTabs({
 }) {
   const sectionButtonClass = (isActiveButton: boolean) => `inline-flex ${isActiveButton ? 'is-active' : ''}`
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="rounded-2xl border border-slate-200/80 bg-white/75 p-2 dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="flex flex-wrap items-center gap-2">
       {(
         [
           ['activeAssignments', t('dashboard.employerSpot.operations.tabs.activeAssignments')],
@@ -24,11 +25,12 @@ export function OperationsTabs({
         ] as [OperationsView, string][]
       ).map(([key, label]) => (
         <button key={key} type="button" onClick={() => setView(key)} className={sectionButtonClass(activeView === key)}>
-          <InteractiveButton theme={theme} isActive={activeView === key}>
+          <InteractiveButton theme={theme} isActive={activeView === key} className="w-full justify-center sm:w-auto">
             {label}
           </InteractiveButton>
         </button>
       ))}
+      </div>
     </div>
   )
 }
