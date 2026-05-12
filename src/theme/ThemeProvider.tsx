@@ -13,7 +13,7 @@ function getSystemTheme(): AppTheme {
 
 function getInitialTheme(): AppTheme {
   if (typeof window === 'undefined') return 'dark'
-  const stored = window.localStorage.getItem(STORAGE_KEY)
+  const stored = window.sessionStorage.getItem(STORAGE_KEY)
   if (stored === 'dark' || stored === 'light') {
     return stored
   }
@@ -29,7 +29,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     applyThemeToDocument(theme)
-    window.localStorage.setItem(STORAGE_KEY, theme)
+    window.sessionStorage.setItem(STORAGE_KEY, theme)
   }, [theme])
 
   const value = useMemo<ThemeContextValue>(

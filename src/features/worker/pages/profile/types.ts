@@ -21,6 +21,8 @@ export type WorkerProfileData = {
   nationality: string
   university: string
   studentNumber: string
+  cvOptions?: string | null
+  profilePhotoObjectKey?: string | null
   skills: Array<{ id: number; tag: string }>
   educations: WorkerProfileSectionItem[]
   experiences: WorkerProfileSectionItem[]

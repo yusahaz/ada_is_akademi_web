@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { CalendarClock } from 'lucide-react'
 
 import {
   workerPortalApi,
@@ -10,10 +11,33 @@ import { useTheme } from '../../../../../theme/theme-context'
 import { StatePanel } from '../../../../../shared/ui/ui-primitives'
 import { useWorkerAsyncData } from '../../../hooks/useWorkerAsyncData'
 import { WorkerGhostButton, WorkerPrimaryButton } from '../../../worker-ui'
+import { formatTimeShort } from '../../jobs/posting-detail-lines'
 import { resolveMuted, resolveTitle } from './helpers'
 
+function buildDraftFromSlots(slots: WorkerAvailabilitySlot[]): Record<number, { enabled: boolean; timeFrom: string; timeTo: string }> {
+  const byDay = new Map<number, WorkerAvailabilitySlot[]>()
+  for (const slot of slots) {
+    const day = Number(slot.dayOfWeek)
+    if (!Number.isFinite(day)) continue
+    const list = byDay.get(day) ?? []
+    list.push(slot)
+    byDay.set(day, list)
+  }
+
+  const draft: Record<number, { enabled: boolean; timeFrom: string; timeTo: string }> = {}
+  for (let day = 0; day <= 6; day += 1) {
+    const firstSlot = byDay.get(day)?.[0]
+    draft[day] = {
+      enabled: Boolean(firstSlot),
+      timeFrom: firstSlot?.timeFrom || '09:00',
+      timeTo: firstSlot?.timeTo || '18:00',
+    }
+  }
+  return draft
+}
+
 export function AvailabilitySection() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const { runWithToast } = useActionToasts()
   const query = useCallback(() => workerPortalApi.getAvailabilityCalendar(), [])
@@ -55,15 +79,7 @@ export function AvailabilitySection() {
   )
 
   const handleStartEdit = () => {
-    const initialDraft: Record<number, { enabled: boolean; timeFrom: string; timeTo: string }> = {}
-    for (let day = 0; day <= 6; day += 1) {
-      const firstSlot = slotsByDay.get(day)?.[0]
-      initialDraft[day] = {
-        enabled: Boolean(firstSlot),
-        timeFrom: firstSlot?.timeFrom || '09:00',
-        timeTo: firstSlot?.timeTo || '18:00',
-      }
-    }
+    const initialDraft = buildDraftFromSlots(slots)
     setDraftByDay(initialDraft)
     setSaveState('idle')
     setIsEditing(true)
@@ -73,6 +89,34 @@ export function AvailabilitySection() {
     setDraftByDay({})
     setSaveState('idle')
     setIsEditing(false)
+  }
+
+  const handleCopyWeekdaysFromMonday = async () => {
+    try {
+      const savedSlots = await runWithToast(workerPortalApi.copyAvailabilityWeekdaysFromDay(1), {
+        success: { messageKey: 'dashboard.workerPortal.profile.messages.savedLocal' },
+        error: { messageKey: 'dashboard.workerPortal.states.fetchError' },
+      })
+      setSlots(savedSlots)
+      setDraftByDay(buildDraftFromSlots(savedSlots))
+      setSaveState('success')
+    } catch {
+      // toast handled
+    }
+  }
+
+  const handleClearAllDays = async () => {
+    try {
+      const savedSlots = await runWithToast(workerPortalApi.clearAvailabilityCalendar(), {
+        success: { messageKey: 'dashboard.workerPortal.profile.messages.savedLocal' },
+        error: { messageKey: 'dashboard.workerPortal.states.fetchError' },
+      })
+      setSlots(savedSlots)
+      setDraftByDay(buildDraftFromSlots(savedSlots))
+      setSaveState('success')
+    } catch {
+      // toast handled
+    }
   }
 
   const handleSaveEdit = async () => {
@@ -113,32 +157,48 @@ export function AvailabilitySection() {
   }
 
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <p className={`text-sm font-semibold ${resolveTitle(theme)}`}>
+    <div className="space-y-4">
+      <div className="space-y-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-1">
+          <p className={`text-base font-semibold leading-tight sm:text-lg ${resolveTitle(theme)}`}>
             {t('dashboard.workerPortal.profile.menu.availability')}
           </p>
-          <p className={`mt-1 text-xs ${resolveMuted(theme)}`}>
+          <p className={`text-xs leading-relaxed sm:text-sm ${resolveMuted(theme)}`}>
             {t('dashboard.workerPortal.availability.description')}
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center">
           {isEditing ? (
             <>
-              <WorkerGhostButton tone={theme} onClick={handleCancelEdit}>
+              <WorkerGhostButton tone={theme} className="h-10 w-full justify-center sm:w-auto" onClick={handleCancelEdit}>
                 {t('dashboard.workerPortal.profile.actions.cancel')}
               </WorkerGhostButton>
-              <WorkerPrimaryButton tone={theme} onClick={() => void handleSaveEdit()} disabled={!canSave}>
+              <WorkerPrimaryButton tone={theme} className="h-10 w-full justify-center sm:w-auto" onClick={() => void handleSaveEdit()} disabled={!canSave}>
                 {t('dashboard.workerPortal.profile.actions.save')}
               </WorkerPrimaryButton>
             </>
           ) : (
-            <WorkerGhostButton tone={theme} onClick={handleStartEdit}>
+            <WorkerGhostButton tone={theme} className="h-10 w-full justify-center sm:w-auto" onClick={handleStartEdit}>
               {t('dashboard.workerPortal.availability.editAction')}
             </WorkerGhostButton>
           )}
         </div>
+      </div>
+        {isEditing ? (
+          <div
+            className={`flex flex-col gap-2 rounded-2xl border p-2 sm:flex-row sm:items-center sm:justify-end ${
+              theme === 'dark' ? 'border-white/10 bg-white/[0.03]' : 'border-slate-200 bg-slate-50/80'
+            }`}
+          >
+            <WorkerGhostButton tone={theme} className="h-9 w-full justify-center text-xs sm:w-auto" onClick={() => void handleCopyWeekdaysFromMonday()}>
+              {t('dashboard.workerPortal.availability.copyWeekdaysAction')}
+            </WorkerGhostButton>
+            <WorkerGhostButton tone={theme} className="h-9 w-full justify-center text-xs sm:w-auto" onClick={() => void handleClearAllDays()}>
+              {t('dashboard.workerPortal.availability.clearAllAction')}
+            </WorkerGhostButton>
+          </div>
+        ) : null}
       </div>
       {loading ? <div className="mt-3"><StatePanel theme={theme} text={t('dashboard.workerPortal.states.loading')} /></div> : null}
       {error ? <div className="mt-3"><StatePanel theme={theme} text={error} isError /></div> : null}
@@ -148,16 +208,26 @@ export function AvailabilitySection() {
         </p>
       ) : null}
       {!loading && !error ? (
-        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-2 space-y-2 sm:space-y-3">
           {dayLabels.map(({ day, label }) => {
             const list = slotsByDay.get(day) ?? []
             const draft = draftByDay[day]
             return (
               <div
                 key={label}
-                className={`rounded-xl border px-3 py-2 text-sm ${theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-white/80' : 'border-slate-200 bg-slate-50 text-slate-700'}`}
+                className={`rounded-2xl border px-3 py-3 text-sm sm:px-4 ${
+                  theme === 'dark' ? 'border-white/10 bg-white/[0.03] text-white/80' : 'border-slate-200 bg-slate-50/80 text-slate-700'
+                }`}
               >
-                <p className={`text-xs font-semibold ${resolveTitle(theme)}`}>{label}</p>
+                <div className="flex items-center justify-between gap-2">
+                  <p className={`text-sm font-semibold ${resolveTitle(theme)}`}>{label}</p>
+                  {!isEditing ? (
+                    <span className={`inline-flex items-center gap-1 text-[11px] ${resolveMuted(theme)}`}>
+                      <CalendarClock className="h-3.5 w-3.5" aria-hidden />
+                      {list.length}
+                    </span>
+                  ) : null}
+                </div>
                 {isEditing ? (
                   <div className="mt-2 space-y-2">
                     <label className="inline-flex items-center gap-2 text-xs">
@@ -193,7 +263,7 @@ export function AvailabilitySection() {
                           }))
                         }
                         disabled={!draft?.enabled}
-                        className={`w-full rounded-xl border px-2 py-1.5 text-xs outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white disabled:opacity-50' : 'border-slate-200 bg-white text-slate-900 disabled:opacity-50'}`}
+                        className={`w-full rounded-xl border px-2 py-2 text-xs outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white disabled:opacity-50' : 'border-slate-200 bg-white text-slate-900 disabled:opacity-50'}`}
                       />
                       <input
                         type="time"
@@ -209,26 +279,26 @@ export function AvailabilitySection() {
                           }))
                         }
                         disabled={!draft?.enabled}
-                        className={`w-full rounded-xl border px-2 py-1.5 text-xs outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white disabled:opacity-50' : 'border-slate-200 bg-white text-slate-900 disabled:opacity-50'}`}
+                        className={`w-full rounded-xl border px-2 py-2 text-xs outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white disabled:opacity-50' : 'border-slate-200 bg-white text-slate-900 disabled:opacity-50'}`}
                       />
                     </div>
                   </div>
                 ) : list.length === 0 ? (
-                  <p className={`mt-1 text-[11px] ${resolveMuted(theme)}`}>
+                  <p className={`mt-2 text-xs ${resolveMuted(theme)}`}>
                     {t('dashboard.workerPortal.availability.empty')}
                   </p>
                 ) : (
-                  <ul className="mt-1 space-y-1">
+                  <ul className="mt-2 space-y-2">
                     {list.map((slot) => (
-                      <li key={slot.id} className="flex items-center justify-between gap-2">
-                        <span className={`text-[11px] ${resolveMuted(theme)}`}>
-                          {slot.timeFrom} - {slot.timeTo}
+                      <li key={slot.id} className="flex items-center justify-between gap-2 rounded-xl px-2.5 py-2">
+                        <span className={`text-xs ${resolveMuted(theme)}`}>
+                          {formatTimeShort(slot.timeFrom, i18n.language)} - {formatTimeShort(slot.timeTo, i18n.language)}
                         </span>
                         <button
                           type="button"
                           onClick={() => void handleRemoveAvailability(slot.id)}
                           disabled={removingAvailabilityId === slot.id}
-                          className={`rounded-full px-1.5 py-0.5 text-[11px] font-semibold transition ${theme === 'dark' ? 'text-rose-200 hover:bg-rose-400/20 disabled:opacity-50' : 'text-rose-700 hover:bg-rose-100 disabled:opacity-50'}`}
+                          className={`rounded-full px-2 py-1 text-[11px] font-semibold transition ${theme === 'dark' ? 'text-rose-200 hover:bg-rose-400/20 disabled:opacity-50' : 'text-rose-700 hover:bg-rose-100 disabled:opacity-50'}`}
                         >
                           {t('dashboard.workerPortal.availability.deleteAction')}
                         </button>

@@ -1,6 +1,8 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '../theme/theme-context'
+import { setApiMutationToastHandlers } from '../api/core/client'
 import {
   NotificationContext,
   type NotificationTone,
@@ -19,6 +21,7 @@ const DEFAULT_DURATION_MS = 3600
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
   const { theme } = useTheme()
+  const { t } = useTranslation()
   const [toasts, setToasts] = useState<Toast[]>([])
 
   const removeToast = useCallback((id: number) => {
@@ -54,6 +57,35 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     }),
     [notify],
   )
+
+  useEffect(() => {
+    setApiMutationToastHandlers({
+      success: (message) => value.success(message),
+      error: (message) => value.error(message),
+      messages: () => ({
+        success: t('dashboard.common.action.success'),
+        error: t('dashboard.common.action.error'),
+      }),
+      formatError: (error) => {
+        // 1) Prefer translated error codes (validation codes included).
+        if (error.code) {
+          const translated = t(`errors.codes.${error.code}`, { defaultValue: '' })
+          if (translated) return translated
+        }
+
+        // 2) Field errors: show first one in a user-friendly wrapper.
+        const fieldErrors = Array.isArray(error.fieldErrors) ? error.fieldErrors : null
+        if (fieldErrors && fieldErrors.length > 0) {
+          return t('errors.validation.fieldError', { detail: String(fieldErrors[0]) })
+        }
+
+        // 3) Fallback: use safe API message if present.
+        if (error.message) return error.message
+        return null
+      },
+    })
+    return () => setApiMutationToastHandlers(null)
+  }, [t, value])
 
   return (
     <NotificationContext.Provider value={value}>

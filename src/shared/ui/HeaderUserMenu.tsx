@@ -40,6 +40,8 @@ export type HeaderUserMenuProps = {
   triggerAriaLabel?: string
   /** Override classes for the trigger button (size/color/border). */
   triggerClassName?: string
+  /** When set, only these locales appear in the language list (e.g. admin panel: Turkish + English). */
+  localeChoices?: readonly AppLocale[]
   /**
    * Side of the popover anchor. Defaults to `end` so the popover opens
    * toward the inline-end edge (RTL safe via logical positioning).
@@ -53,7 +55,7 @@ export type HeaderUserMenuProps = {
  * Exposes:
  * - Profile shortcut (optional)
  * - Theme switch (Dark / Light)
- * - Language switch (all `SUPPORTED_LOCALES`)
+ * - Language switch (defaults to all `SUPPORTED_LOCALES`; override via `localeChoices`)
  * - Logout shortcut (optional)
  */
 export function HeaderUserMenu({
@@ -64,6 +66,7 @@ export function HeaderUserMenu({
   onLogout,
   triggerAriaLabel,
   triggerClassName,
+  localeChoices,
   align = 'end',
 }: HeaderUserMenuProps) {
   const { t, i18n } = useTranslation()
@@ -73,8 +76,11 @@ export function HeaderUserMenu({
   const triggerRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
 
+  const effectiveLocales: readonly AppLocale[] =
+    localeChoices && localeChoices.length > 0 ? localeChoices : SUPPORTED_LOCALES
+
   const activeLanguage: AppLocale =
-    SUPPORTED_LOCALES.find((code) => i18n.language.startsWith(code)) ?? 'tr'
+    effectiveLocales.find((code) => i18n.language.startsWith(code)) ?? effectiveLocales[0] ?? 'tr'
 
   const close = useCallback(() => {
     setOpen(false)
@@ -258,7 +264,7 @@ export function HeaderUserMenu({
             aria-label={t('dashboard.userMenu.language')}
             className="max-h-56 overflow-y-auto px-1 pb-2"
           >
-            {SUPPORTED_LOCALES.map((code) => {
+            {effectiveLocales.map((code) => {
               const selected = code === activeLanguage
               return (
                 <li key={code}>

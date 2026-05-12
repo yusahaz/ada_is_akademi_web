@@ -15,6 +15,7 @@ export type AddEmployerLocationCommand = {
 export type AddEmployerLocationResult = number
 
 export type ListEmployerLocationsQuery = {
+  employerId?: number | null
   limit?: number
   offset?: number
 }

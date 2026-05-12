@@ -32,4 +32,178 @@
   .font-display {
     font-family: "Syne", ui-sans-serif, system-ui, sans-serif;
   }
+
+}
+
+@keyframes wave-drift-slow {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-16px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes wave-drift-slower {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(18px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .worker-flow-btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .worker-flow-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background-size: 220% 100%;
+    background-position: 0% 50%;
+    transition: opacity 180ms ease;
+    animation: button-flow-ltr 2.8s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .worker-flow-btn--primary::after {
+    background-image: linear-gradient(
+      100deg,
+      rgba(34, 211, 238, 0.14) 0%,
+      rgba(56, 189, 248, 0.34) 35%,
+      rgba(20, 241, 217, 0.3) 60%,
+      rgba(99, 102, 241, 0.22) 100%
+    );
+  }
+
+  .worker-flow-btn--ghost::after {
+    background-image: linear-gradient(
+      100deg,
+      rgba(34, 211, 238, 0.08) 0%,
+      rgba(45, 212, 191, 0.18) 42%,
+      rgba(14, 165, 233, 0.16) 100%
+    );
+  }
+
+  .worker-flow-btn--danger::after {
+    background-image: linear-gradient(
+      100deg,
+      rgba(251, 113, 133, 0.1) 0%,
+      rgba(244, 63, 94, 0.26) 40%,
+      rgba(225, 29, 72, 0.22) 100%
+    );
+  }
+
+  html[data-theme='light'] .worker-flow-btn--primary::after {
+    background-image: linear-gradient(
+      100deg,
+      rgba(14, 165, 233, 0.09) 0%,
+      rgba(6, 182, 212, 0.24) 38%,
+      rgba(59, 130, 246, 0.2) 100%
+    );
+  }
+
+  html[data-theme='light'] .worker-flow-btn--ghost::after {
+    background-image: linear-gradient(
+      100deg,
+      rgba(14, 165, 233, 0.06) 0%,
+      rgba(6, 182, 212, 0.14) 45%,
+      rgba(56, 189, 248, 0.12) 100%
+    );
+  }
+
+  html[data-theme='light'] .worker-flow-btn--danger::after {
+    background-image: linear-gradient(
+      100deg,
+      rgba(244, 63, 94, 0.08) 0%,
+      rgba(225, 29, 72, 0.16) 45%,
+      rgba(190, 24, 93, 0.14) 100%
+    );
+  }
+
+  .worker-flow-btn:hover::after,
+  .worker-flow-btn:focus-visible::after {
+    opacity: 1;
+    animation-play-state: running;
+  }
+
+  .worker-flow-btn:disabled::after {
+    opacity: 0 !important;
+    animation-play-state: paused !important;
+  }
+
+  .worker-flow-btn.worker-flow-btn--icon::after,
+  .worker-flow-btn[class*="h-8"][class*="w-8"]::after,
+  .worker-flow-btn[class*="h-9"][class*="w-9"]::after,
+  .worker-flow-btn[class*="h-10"][class*="w-10"]::after {
+    opacity: 0;
+  }
+
+  .worker-flow-btn.worker-flow-btn--icon:hover::after,
+  .worker-flow-btn.worker-flow-btn--icon:focus-visible::after,
+  .worker-flow-btn[class*="h-8"][class*="w-8"]:hover::after,
+  .worker-flow-btn[class*="h-8"][class*="w-8"]:focus-visible::after,
+  .worker-flow-btn[class*="h-9"][class*="w-9"]:hover::after,
+  .worker-flow-btn[class*="h-9"][class*="w-9"]:focus-visible::after,
+  .worker-flow-btn[class*="h-10"][class*="w-10"]:hover::after,
+  .worker-flow-btn[class*="h-10"][class*="w-10"]:focus-visible::after {
+    opacity: 0.45;
+  }
+
+  html[dir='rtl'] .worker-flow-btn::after {
+    animation-name: button-flow-rtl;
+  }
+
+  .wave-anim-slow {
+    animation: wave-drift-slow 12s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .wave-anim-slower {
+    animation: wave-drift-slower 16s ease-in-out infinite;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .worker-flow-btn::after {
+    animation: none !important;
+  }
+
+  .wave-anim-slow,
+  .wave-anim-slower {
+    animation: none !important;
+  }
+}
+
+@keyframes button-flow-ltr {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes button-flow-rtl {
+  from {
+    background-position: 200% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
 }

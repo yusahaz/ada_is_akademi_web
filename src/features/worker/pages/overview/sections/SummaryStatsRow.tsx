@@ -3,6 +3,7 @@ import { CalendarClock, ScanLine, ShieldCheck } from 'lucide-react'
 import type { WorkerReliabilityScore, WorkerShiftHistoryItem } from '../../../../../api/worker/worker-portal'
 import { DashboardSurface } from '../../../../../shared/ui/ui-primitives'
 import { cn } from '../../../../../shared/lib/cn'
+import { formatShiftDateLong, formatTimeRangeShort } from '../../jobs/posting-detail-lines'
 import { WorkerPillBadge, WorkerPrimaryButton } from '../../../worker-ui'
 
 export function SummaryStatsRow({
@@ -13,6 +14,7 @@ export function SummaryStatsRow({
   activeShift,
   onGoActiveShift,
   t,
+  locale,
 }: {
   theme: 'dark' | 'light'
   upcomingShifts: WorkerShiftHistoryItem[]
@@ -21,6 +23,7 @@ export function SummaryStatsRow({
   activeShift: WorkerShiftHistoryItem | null
   onGoActiveShift: () => void
   t: (key: string, options?: Record<string, unknown>) => string
+  locale: string
 }) {
   return (
     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -55,8 +58,8 @@ export function SummaryStatsRow({
               )}
             >
               {t('dashboard.workerPortal.overview.upcomingShiftsHint', {
-                date: upcomingShifts[0].shiftDate,
-                range: `${upcomingShifts[0].shiftStartTime} - ${upcomingShifts[0].shiftEndTime}`,
+                date: formatShiftDateLong(upcomingShifts[0].shiftDate, locale),
+                range: formatTimeRangeShort(upcomingShifts[0].shiftStartTime, upcomingShifts[0].shiftEndTime, locale),
               })}
             </div>
           ) : null}
@@ -120,7 +123,7 @@ export function SummaryStatsRow({
                 )}
               >
                 <p className="font-semibold">
-                  {activeShift.shiftDate} • {activeShift.shiftStartTime} - {activeShift.shiftEndTime}
+                  {formatShiftDateLong(activeShift.shiftDate, locale)} • {formatTimeRangeShort(activeShift.shiftStartTime, activeShift.shiftEndTime, locale)}
                 </p>
                 <p className="mt-1 text-xs">{t(`dashboard.workerPortal.shiftHistory.status.${activeShift.status}`)}</p>
               </div>

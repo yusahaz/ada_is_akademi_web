@@ -18,7 +18,7 @@ function parsePostingId(value: string | undefined): number | null {
 }
 
 export function JobPostingDetailPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const navigate = useNavigate()
   const { runWithToast } = useActionToasts()
@@ -83,7 +83,7 @@ export function JobPostingDetailPage() {
 
       <article className={theme === 'dark' ? 'space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4' : 'space-y-4 rounded-2xl border border-slate-200 bg-white p-4'}>
         <p className={theme === 'dark' ? 'text-sm text-white/75' : 'text-sm text-slate-700'}>
-          {postingShiftScheduleText(t, data)}
+          {postingShiftScheduleText(t, data, i18n.language)}
         </p>
         <p className={theme === 'dark' ? 'text-sm text-white/75' : 'text-sm text-slate-700'}>
           {t('dashboard.workerPortal.shifts.card.vacancy')}: {data.headCount}

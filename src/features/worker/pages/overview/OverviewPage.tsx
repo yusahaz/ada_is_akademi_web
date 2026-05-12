@@ -19,6 +19,7 @@ import {
 } from '../../store/worker-dashboard-store'
 import { cn } from '../../../../shared/lib/cn'
 import { SummaryStatsRow } from './sections'
+import { formatShiftDateLong, formatTimeRangeShort, formatTimeShort } from '../jobs/posting-detail-lines'
 
 function buildPostingLookup(postings: JobPostingSummary[]): Map<number, JobPostingSummary> {
   const map = new Map<number, JobPostingSummary>()
@@ -45,6 +46,7 @@ function mapAssignmentToTimelineItem(
   assignment: WorkerShiftHistoryItem,
   postingById: Map<number, JobPostingSummary>,
   t: (key: string, options?: Record<string, unknown>) => string,
+  locale: string,
 ): WorkerShiftTimelineItem {
   const posting = postingById.get(assignment.jobPostingId)
   const label =
@@ -55,14 +57,14 @@ function mapAssignmentToTimelineItem(
     employerName: label,
     category: label,
     day: assignment.shiftDate,
-    timeRange: `${assignment.shiftStartTime} - ${assignment.shiftEndTime}`,
+    timeRange: formatTimeRangeShort(assignment.shiftStartTime, assignment.shiftEndTime, locale),
     status: mapTimelineShiftStatus(assignment),
     anomaly: mapTimelineAnomaly(assignment),
   }
 }
 
 export function OverviewPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const { theme } = useTheme()
   const [loading, setLoading] = useState(true)
@@ -83,30 +85,42 @@ export function OverviewPage() {
     let active = true
     setLoading(true)
 
-    void Promise.all([
+    void Promise.allSettled([
       workerPortalApi.getOverviewData(),
       jobPostingsApi.listSemanticMatched({ limit: 8 }),
       workerPortalApi.listShiftHistory(24),
       workerPortalApi.getReliabilityScore(),
       workerPortalApi.getUpcomingShiftAssignments(4),
       workerPortalApi.getActiveShiftAssignment(),
-    ])
-      .then(([overview, semantic, history, reliabilityScore, upcoming, activeA]) => {
-        if (!active) return
-        setCards(overview.reportCards)
-        setSemanticMatches(semantic)
-        const postingById = buildPostingLookup(overview.openShifts)
-        setCompletedAssignments(history.filter((h) => h.status === 'checkedOut').slice(0, 4))
-        setTimeline(history.slice(0, 8).map((a) => mapAssignmentToTimelineItem(a, postingById, t)))
-        setReliability(reliabilityScore)
-        setUpcomingShifts(upcoming)
-        setActiveShift(activeA)
-        setError(null)
-      })
-      .catch(() => {
-        if (!active) return
+    ]).then((results) => {
+      if (!active) return
+
+      const overviewResult = results[0]
+      if (overviewResult.status === 'rejected') {
         setError(t('dashboard.workerPortal.states.fetchError'))
-      })
+        return
+      }
+
+      const overview = overviewResult.value
+      const semantic = results[1].status === 'fulfilled' ? results[1].value : []
+      const history = results[2].status === 'fulfilled' ? results[2].value : []
+      const reliabilityScore: WorkerReliabilityScore =
+        results[3].status === 'fulfilled'
+          ? results[3].value
+          : { value: null, sampleSize: 0, hasData: false }
+      const upcoming = results[4].status === 'fulfilled' ? results[4].value : []
+      const activeA = results[5].status === 'fulfilled' ? results[5].value : null
+
+      setCards(overview.reportCards)
+      setSemanticMatches(semantic)
+      const postingById = buildPostingLookup(overview.openShifts)
+      setCompletedAssignments(history.filter((h) => h.status === 'checkedOut').slice(0, 4))
+      setTimeline(history.slice(0, 8).map((a) => mapAssignmentToTimelineItem(a, postingById, t, i18n.language)))
+      setReliability(reliabilityScore)
+      setUpcomingShifts(upcoming)
+      setActiveShift(activeA)
+      setError(null)
+    })
       .finally(() => {
         if (active) setLoading(false)
       })
@@ -114,7 +128,7 @@ export function OverviewPage() {
     return () => {
       active = false
     }
-  }, [setTimeline, t])
+  }, [i18n.language, setTimeline, t])
 
   const monthlyEarningsRaw = cards.find((c) => c.key === 'monthlyEarnings')?.value ?? '0'
   const monthlyEarningsNumeric = useMemo(() => Number(monthlyEarningsRaw.replace(/[^\d.-]/g, '')) || 0, [monthlyEarningsRaw])
@@ -142,6 +156,7 @@ export function OverviewPage() {
             activeShift={activeShift}
             onGoActiveShift={() => navigate('/worker/shifts?tab=active')}
             t={t}
+            locale={i18n.language}
           />
 
           <div className="grid gap-3 xl:grid-cols-[1.55fr_1fr]">
@@ -166,6 +181,8 @@ export function OverviewPage() {
                 <div className="mt-3 flex flex-col gap-2">
                   {semanticMatches.slice(0, 4).map((item) => {
                     const pct = semanticSimilarityToPercent(item.similarityScore)
+                    const startText = formatTimeShort(item.shiftStartTime, i18n.language)
+                    const endText = formatTimeShort(item.shiftEndTime, i18n.language)
                     return (
                       <article
                         key={item.jobPostingId}
@@ -181,9 +198,9 @@ export function OverviewPage() {
                             </p>
                             <p className={cn('mt-0.5 text-xs', theme === 'dark' ? 'text-white/65' : 'text-slate-600')}>
                               {t('dashboard.workerPortal.overview.semanticMatchSchedule', {
-                                date: item.shiftDate,
-                                start: item.shiftStartTime,
-                                end: item.shiftEndTime,
+                                date: formatShiftDateLong(item.shiftDate, i18n.language),
+                                start: startText,
+                                end: endText,
                               })}
                             </p>
                           </div>
@@ -221,6 +238,7 @@ export function OverviewPage() {
                         theme={theme}
                         assignment={assignment}
                         t={t}
+                        locale={i18n.language}
                       />
                     )
                   })}
@@ -283,10 +301,12 @@ function CompletedShiftCard({
   theme,
   assignment,
   t,
+  locale,
 }: {
   theme: 'dark' | 'light'
   assignment: WorkerShiftHistoryItem
   t: (key: string, options?: Record<string, unknown>) => string
+  locale: string
 }) {
   const [posting, setPosting] = useState<JobPostingSummary | null>(null)
 
@@ -331,9 +351,9 @@ function CompletedShiftCard({
           <p className={cn('text-sm font-semibold', theme === 'dark' ? 'text-white' : 'text-slate-900')}>{title}</p>
           <p className={cn('mt-0.5 text-xs', theme === 'dark' ? 'text-white/65' : 'text-slate-600')}>
             {t('dashboard.workerPortal.overview.semanticMatchSchedule', {
-              date: assignment.shiftDate,
-              start: assignment.shiftStartTime,
-              end: assignment.shiftEndTime,
+              date: formatShiftDateLong(assignment.shiftDate, locale),
+              start: formatTimeShort(assignment.shiftStartTime, locale),
+              end: formatTimeShort(assignment.shiftEndTime, locale),
             })}
           </p>
           {posting ? (

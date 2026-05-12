@@ -23,7 +23,9 @@ export function AccountControlSection({
   const [confirmChecked, setConfirmChecked] = useState(false)
 
   const isDelete = pendingAction === 'delete'
-  const expectedText = isDelete ? 'SIL' : 'DONDUR'
+  const expectedText = isDelete
+    ? t('dashboard.workerPortal.profile.accountControlSection.deleteConfirmCode')
+    : t('dashboard.workerPortal.profile.accountControlSection.suspendConfirmCode')
   const canSubmit = confirmChecked && confirmText.trim().toUpperCase() === expectedText
 
   const resetConfirmState = () => {
@@ -68,7 +70,7 @@ export function AccountControlSection({
             {t('dashboard.workerPortal.profile.menu.accountControl')}
           </p>
           <p className={`text-xs leading-relaxed sm:text-sm ${resolveMuted(theme)}`}>
-            Bu işlemler hesap erişimini etkiler. Devam etmeden önce dikkatlice onaylayın.
+            {t('dashboard.workerPortal.profile.accountControlSection.subtitle')}
           </p>
         </div>
       </div>
@@ -80,7 +82,7 @@ export function AccountControlSection({
             : 'border-amber-200 bg-amber-50 text-amber-800'
         }`}
       >
-        Dondurma işlemi geçici olarak girişinizi kısıtlar. Hesap silme işlemi geri alınamaz.
+        {t('dashboard.workerPortal.profile.accountControlSection.warning')}
       </div>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
@@ -109,10 +111,14 @@ export function AccountControlSection({
           }`}
         >
           <p className={`text-sm font-semibold ${resolveTitle(theme)}`}>
-            {isDelete ? 'Hesap silme onayı' : 'Hesap dondurma onayı'}
+            {isDelete
+              ? t('dashboard.workerPortal.profile.accountControlSection.deleteConfirmTitle')
+              : t('dashboard.workerPortal.profile.accountControlSection.suspendConfirmTitle')}
           </p>
           <p className={`text-xs leading-relaxed sm:text-sm ${resolveMuted(theme)}`}>
-            Devam etmek için kutuyu işaretleyin ve <span className="font-semibold">{expectedText}</span> yazın.
+            {t('dashboard.workerPortal.profile.accountControlSection.confirmHelpPrefix')}{' '}
+            <span className="font-semibold">{expectedText}</span>{' '}
+            {t('dashboard.workerPortal.profile.accountControlSection.confirmHelpSuffix')}
           </p>
           <label className={`flex items-start gap-2 text-xs sm:text-sm ${resolveMuted(theme)}`}>
             <input
@@ -121,7 +127,7 @@ export function AccountControlSection({
               onChange={(e) => setConfirmChecked(e.target.checked)}
               className="mt-0.5 h-4 w-4 rounded border-slate-300"
             />
-            <span>Bu işlemin sonuçlarını anladığımı onaylıyorum.</span>
+            <span>{t('dashboard.workerPortal.profile.accountControlSection.confirmCheckbox')}</span>
           </label>
           <input
             type="text"
@@ -141,7 +147,7 @@ export function AccountControlSection({
             <WorkerPrimaryButton
               tone={theme}
               className={`h-10 w-full sm:w-auto ${
-                isDelete ? (theme === 'dark' ? '!bg-rose-500 !text-white' : '!bg-rose-600 !text-white') : ''
+                isDelete ? `worker-flow-btn--danger ${theme === 'dark' ? '!bg-rose-500 !text-white' : '!bg-rose-600 !text-white'}` : ''
               }`}
               onClick={() => void (isDelete ? remove() : suspend())}
               disabled={!canSubmit}

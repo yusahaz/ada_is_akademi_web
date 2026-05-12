@@ -77,6 +77,7 @@ export type EmployerPortalValue = {
   semanticResults: SemanticSearchedWorkerListItem[]
   runSemanticSearch: (queryText: string) => Promise<void>
   workerPortfolio: WorkerPortfolioListItemModel[]
+  skillSuggestions: string[]
   employerLocations: EmployerLocationListItemModel[]
   employerSupervisors: EmployerSupervisorListItemModel[]
   disputes: EmployerDisputeListItemModel[]

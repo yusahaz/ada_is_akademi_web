@@ -8,7 +8,7 @@ import { useWorkerAsyncData } from '../../../hooks/useWorkerAsyncData'
 import { ShiftRow } from './ShiftRow'
 
 export function ShiftHistoryTab() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const query = useCallback(() => workerPortalApi.listShiftHistory(20, 0), [])
   const { loading, error, data: items } = useWorkerAsyncData<WorkerShiftHistoryItem[]>(
@@ -26,7 +26,7 @@ export function ShiftHistoryTab() {
     <div className="grid gap-3 lg:grid-cols-2">
       {items.map((item) => (
         <DashboardSurface key={item.assignmentId} theme={theme}>
-          <ShiftRow item={item} theme={theme} t={t} />
+          <ShiftRow item={item} theme={theme} t={t} locale={i18n.language} />
         </DashboardSurface>
       ))}
     </div>

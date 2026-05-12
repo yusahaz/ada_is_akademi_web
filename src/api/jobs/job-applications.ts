@@ -1,5 +1,6 @@
 import { getApiClient } from '../core/client'
 import { API_ENDPOINTS } from '../core/endpoints'
+import type { PageableListResult } from '../core/pagination'
 import type { JobApplicationStatus } from '../core/enums'
 
 export type AcceptJobPostingApplicationCommand = {
@@ -62,7 +63,7 @@ export const jobApplicationsApi = {
     )
   },
   myApplications(body: Record<string, never> = {}) {
-    return client.post<MyJobApplicationItem[], Record<string, never>>(
+    return client.post<PageableListResult<MyJobApplicationItem>, Record<string, never>>(
       API_ENDPOINTS.jobApplications.myApplications,
       body,
       true,

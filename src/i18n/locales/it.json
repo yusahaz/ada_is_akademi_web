@@ -1,4 +1,4 @@
-﻿{
+{
   "landing": {
     "meta": {
       "title": "Ada Ä°ÅŸ Akademi"
@@ -190,7 +190,8 @@
         "findJobs": "Trova lavoro",
         "myShifts": "I miei lavori",
         "wallet": "Portafoglio",
-        "notifications": "Notifiche"
+        "notifications": "Notifiche",
+        "cvPreview": "Anteprima CV"
       },
       "states": {
         "loading": "Caricamento dati...",
@@ -249,6 +250,13 @@
         "notifications": {
           "title": "Notifiche",
           "subtitle": "Avvisi su match, pagamenti e attivitÃ  dei lavori."
+        },
+        "cvPreview": {
+          "title": "Anteprima CV",
+          "metaLine": "Template selezionato: {{template}} • Layout: {{layout}} • Palette: {{palette}}",
+          "goToSettings": "Vai alle impostazioni CV",
+          "downloadPdf": "Scarica PDF",
+          "preparingPdf": "Preparazione..."
         }
       },
       "overview": {
@@ -336,6 +344,8 @@
       "availability": {
         "description": "Gestisci le fasce di disponibilitÃ  settimanale.",
         "editAction": "Modifica calendario",
+        "copyWeekdaysAction": "Copia da lunedÃ¬ a venerdÃ¬",
+        "clearAllAction": "Cancella tutti i giorni",
         "deleteAction": "Elimina",
         "enableDay": "Abilita questo giorno",
         "empty": "Nessuna fascia salvata per questo giorno.",
@@ -421,6 +431,11 @@
           "savedLocal": "Le modifiche al profilo sono state salvate per questa sessione.",
           "validationError": "Il nome completo deve contenere almeno 2 caratteri."
         },
+        "basicSection": {
+          "subtitle": "Mantieni aggiornati i dati personali e di contatto per migliorare la visibilitÃ  del profilo.",
+          "completion": "Completamento profilo: {{completed}}/{{total}}",
+          "missingHint": "Completa questo campo per rafforzare il tuo profilo."
+        },
         "experienceSection": {
           "listSubtitle": "I datori di lavoro vedono questa cronologia quando rivedono il profilo.",
           "emptyHint": "Aggiungi la tua esperienza lavorativa per migliorare gli abbinamenti; puoi modificare o rimuovere le voci in qualsiasi momento.",
@@ -442,6 +457,7 @@
           "skills": "Competenze",
           "certificates": "Certificati",
           "references": "Referenze",
+          "cv": "CV",
           "contact": "Informazioni di contatto",
           "password": "Cambia password",
           "emailNotifications": "Notifiche email",
@@ -451,6 +467,25 @@
           "cvImport": "Caricamento CV con IA",
           "availability": "Calendario disponibilitÃ "
         },
+        "settingsSection": {
+          "title": "Impostazioni",
+          "subtitle": "Aggiorna da qui lingua dell'app e preferenze tema.",
+          "languageLabel": "Lingua",
+          "themeLabel": "Tema",
+          "languages": {
+            "tr": "Turco",
+            "en": "Inglese",
+            "it": "Italiano",
+            "es": "Spagnolo",
+            "fr": "Francese",
+            "ru": "Russo",
+            "ar": "Arabo"
+          },
+          "themes": {
+            "light": "Chiaro",
+            "dark": "Scuro"
+          }
+        },
         "skillsSection": {
           "title": "Competenze",
           "subtitle": "Aggiungi o rimuovi tag competenze per migliorare gli abbinamenti.",
@@ -458,9 +493,68 @@
           "add": "Aggiungi competenza",
           "empty": "Nessuna competenza salvata."
         },
+        "cvSection": {
+          "title": "Menu CV",
+          "subtitle": "Crea rapidamente un nuovo CV o importa il file esistente.",
+          "templateSelectionTitle": "Selezione template CV",
+          "templateSelectionSubtitle": "Quando selezioni un template e crei, il CV viene generato automaticamente dal profilo.",
+          "openTemplateLibrary": "Template Library",
+          "templateSettingsTitle": "Impostazioni template",
+          "layoutTitle": "Layout colonne",
+          "layoutSingle": "Colonna singola",
+          "layoutDouble": "Doppia colonna",
+          "paletteTitle": "Palette colore",
+          "palette": { "slate": "slate", "indigo": "indigo", "emerald": "emerald" },
+          "photoAreaTitle": "Area foto",
+          "uploadPhoto": "Carica foto",
+          "signatureAreaTitle": "Area firma",
+          "uploadSignature": "Carica firma",
+          "clearAsset": "Pulisci",
+          "templateLibraryTitle": "Modelli CV",
+          "templateLibrarySubtitle": "Scegli tra template professionali.",
+          "selectedTemplate": "Selezionato",
+          "createTitle": "Crea nuovo CV",
+          "createDesc": "Genera una bozza CV rapida dai dati del profilo.",
+          "createAction": "Crea CV",
+          "creatingAction": "Creazione...",
+          "importTitle": "Importa CV",
+          "importDesc": "Carica PDF/DOCX e associa automaticamente i dati.",
+          "importAction": "Carica CV",
+          "uploadingAction": "Caricamento...",
+          "statusTitle": "Stato CV",
+          "statusDesc": "Monitora avanzamento di caricamento e verifica da qui.",
+          "lastFile": "Ultimo file caricato: {{fileName}}",
+          "lastUpdated": "Ultimo aggiornamento: {{value}}",
+          "refreshAction": "Aggiorna stato",
+          "refreshingAction": "Aggiornamento...",
+          "previewTitle": "Anteprima CV",
+          "previewSubtitle": "Controlla il contenuto prima dell'esportazione PDF.",
+          "previewClose": "Chiudi",
+          "previewExportPdf": "Esporta come PDF",
+          "previewExportingPdf": "Generazione PDF...",
+          "templateOptions": {
+            "modern": { "title": "ATS Modern", "description": "Sezioni chiare e testo leggibile" },
+            "classic": { "title": "ATS Classic", "description": "Layout candidatura tradizionale" },
+            "minimal": { "title": "ATS Minimal", "description": "Semplice e diretto" },
+            "ats": { "title": "ATS Standard", "description": "Formato sicuro per ATS" },
+            "executive": { "title": "ATS Executive", "description": "Struttura orientata al riepilogo" },
+            "concise": { "title": "ATS Concise", "description": "Stile breve a pagina singola" }
+          }
+        },
         "accountActions": {
           "suspend": "Sospendi account",
           "delete": "Elimina account"
+        },
+        "accountControlSection": {
+          "subtitle": "Queste azioni influiscono sull'accesso all'account. Conferma con attenzione prima di continuare.",
+          "warning": "La sospensione limita temporaneamente l'accesso. L'eliminazione dell'account Ã¨ irreversibile.",
+          "suspendConfirmTitle": "Conferma sospensione account",
+          "deleteConfirmTitle": "Conferma eliminazione account",
+          "confirmHelpPrefix": "Per continuare, seleziona la casella e scrivi",
+          "confirmHelpSuffix": ".",
+          "confirmCheckbox": "Confermo di aver compreso le conseguenze di questa azione.",
+          "suspendConfirmCode": "SOSPENDI",
+          "deleteConfirmCode": "ELIMINA"
         }
       },
       "cv": {
@@ -472,6 +566,27 @@
           "failed": "Fallito"
         },
         "currentState": "Stato corrente: {{state}}"
+      },
+      "cvTemplates": {
+        "defaults": { "fullName": "Candidato", "profileTitle": "Profilo candidato" },
+        "summary": { "skillsPrefix": "Competenze chiave: {{skills}}." },
+        "emptyInfo": "Nessuna informazione disponibile.",
+        "photoAlt": "Profilo",
+        "signature": { "alt": "Firma", "label": "Firma digitale" },
+        "labels": { "email": "Email", "phone": "Telefono", "nationality": "Nazionalita" },
+        "sections": {
+          "professionalSummary": "Riepilogo professionale",
+          "experience": "Esperienza",
+          "education": "Formazione",
+          "skills": "Competenze",
+          "certificates": "Certificati",
+          "languages": "Lingue",
+          "references": "Referenze",
+          "executiveSummary": "Riepilogo executive",
+          "coreCompetencies": "Competenze chiave",
+          "professionalExperience": "Esperienza professionale",
+          "certifications": "Certificazioni"
+        }
       },
       "shifts": {
         "submit": "Candidati all'annuncio",
@@ -500,7 +615,8 @@
           "validating": "Token e posizione in validazione.",
           "success": "Flusso QR completato con successo.",
           "failed": "Validazione fallita. Riprovare."
-        }
+        },
+        "securityNote": "Verifica la fonte del token prima di confermare."
       },
       "payouts": {
         "status": {

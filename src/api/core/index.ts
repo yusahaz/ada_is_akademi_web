@@ -6,7 +6,6 @@ export {
   EmployerStatus,
   JobApplicationStatus,
   JobPostingStatus,
-  PermissionEffect,
   SystemUserType,
 } from './enums'
 export { getAdminSummaryStats } from '../admin/admin-dashboard'
@@ -20,7 +19,7 @@ export { employerSupervisorsApi } from '../employer/employer-supervisors'
 export { jobPostingsApi } from '../jobs/job-postings'
 export { jobApplicationsApi } from '../jobs/job-applications'
 export { shiftAssignmentsApi } from '../jobs/shift-assignments'
-export { systemUserGroupsApi } from '../system/system-user-groups'
+export { skillsApi } from '../skills/skills'
 export { systemUsersApi } from '../system/system-users'
 export { workersApi } from '../worker/workers'
 export type { ApiEnvelope, ApiFieldError } from './types'

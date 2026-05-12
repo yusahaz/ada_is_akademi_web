@@ -1,5 +1,6 @@
 import { getApiClient } from '../core/client'
 import { API_ENDPOINTS } from '../core/endpoints'
+import { normalizePageableList, type PageableListResult } from '../core/pagination'
 import type { JobPostingStatus } from '../core/enums'
 
 export type CancelJobPostingCommand = {
@@ -190,12 +191,13 @@ export const jobPostingsApi = {
       true,
     )
   },
-  listOpen(body: ListOpenJobPostingsQuery = {}) {
-    return client.post<JobPostingSummary[], ListOpenJobPostingsQuery>(
+  async listOpen(body: ListOpenJobPostingsQuery = {}): Promise<JobPostingSummary[]> {
+    const res = await client.post<PageableListResult<JobPostingSummary>, ListOpenJobPostingsQuery>(
       API_ENDPOINTS.jobPostings.listOpen,
       body,
       false,
     )
+    return normalizePageableList(res).rows
   },
   async listSemanticMatched(body: ListSemanticMatchedJobPostingsQuery = {}) {
     const res = await client.post<unknown, ListSemanticMatchedJobPostingsQuery>(
@@ -205,12 +207,13 @@ export const jobPostingsApi = {
     )
     return normalizeSemanticMatchedList(res)
   },
-  listByEmployer(body: ListJobPostingsByEmployerIdQuery = {}) {
-    return client.post<JobPostingSummary[], ListJobPostingsByEmployerIdQuery>(
+  async listByEmployer(body: ListJobPostingsByEmployerIdQuery = {}): Promise<JobPostingSummary[]> {
+    const res = await client.post<PageableListResult<JobPostingSummary>, ListJobPostingsByEmployerIdQuery>(
       API_ENDPOINTS.jobPostings.listByEmployer,
       body,
       true,
     )
+    return normalizePageableList(res).rows
   },
   getById(body: GetJobPostingByIdQuery) {
     return client.post<JobPostingDetail, GetJobPostingByIdQuery>(

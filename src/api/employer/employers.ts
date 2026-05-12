@@ -30,7 +30,8 @@ export type EmployerDetail = {
   id: number
   name: string
   description: string | null
-  status: EmployerStatus
+  /** API may return numeric enum or string name depending on serializer settings. */
+  status: EmployerStatus | string
   taxNumber: string
   contact: EmployerContact | null
 }
@@ -42,14 +43,35 @@ export type ListEmployersQuery = {
   offset?: number
   searchText?: string | null
   status?: EmployerStatus | null
+  /** name | taxNumber | status | commissionRate | employerId */
+  sortBy?: string | null
+  sortDescending?: boolean
 }
 
 export type EmployerListItem = {
   commissionRate: number | string
   employerId: number | string
   name: string
-  status: EmployerStatus
+  /** API may return numeric enum or string name depending on serializer settings. */
+  status: EmployerStatus | string
   taxNumber: string
+  logoObjectKey?: string | null
+  logoViewUrl?: string | null
+}
+
+export type DeleteEmployerCommand = {
+  employerId: number
+}
+
+export type UpdateEmployerProfileCommand = {
+  employerId: number
+  name: string
+  taxNumber: string
+  description?: string | null
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
 }
 
 export type EmployersListResult = PageableListResult<EmployerListItem>
@@ -71,6 +93,9 @@ export const employersApi = {
       true,
     )
   },
+  delete(body: DeleteEmployerCommand) {
+    return client.post<null, DeleteEmployerCommand>(API_ENDPOINTS.employers.delete, body, true)
+  },
   getById(body: GetEmployerByIdQuery) {
     return client.post<EmployerDetail, GetEmployerByIdQuery>(
       API_ENDPOINTS.employers.getById,
@@ -88,6 +113,13 @@ export const employersApi = {
   suspend(body: SuspendEmployerCommand) {
     return client.post<null, SuspendEmployerCommand>(
       API_ENDPOINTS.employers.suspend,
+      body,
+      true,
+    )
+  },
+  updateProfile(body: UpdateEmployerProfileCommand) {
+    return client.post<null, UpdateEmployerProfileCommand>(
+      API_ENDPOINTS.employers.updateProfile,
       body,
       true,
     )
