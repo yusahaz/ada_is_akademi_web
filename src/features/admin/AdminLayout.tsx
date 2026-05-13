@@ -9,7 +9,6 @@ import {
   LayoutGrid,
   LogOut,
   Moon,
-  Shield,
   Sun,
   UserCog,
   Users,

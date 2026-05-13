@@ -147,7 +147,7 @@ export function AdminEmployerDetailPage() {
   const { t } = useTranslation()
   const { theme } = useTheme()
   const navigate = useNavigate()
-  const { error: notifyError } = useNotification()
+  const { success, error: notifyError } = useNotification()
   const params = useParams<{ entityId?: string }>()
   const employerId = Number(params.entityId ?? '')
 

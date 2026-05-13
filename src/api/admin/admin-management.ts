@@ -1,7 +1,7 @@
 import { getApiClient } from '../core/client'
 import { API_ENDPOINTS } from '../core/endpoints'
-import type { ListEmployersQuery, EmployerDetail, EmployerListResult, UpdateEmployerProfileCommand, DeleteEmployerCommand, GetEmployerByIdQuery } from '../employer/employers'
-import type { ListEmployerLocationsQuery, EmployerLocationsListResponse } from '../employer/employer-locations'
+import type { ListEmployersQuery, EmployerDetail, EmployersListResult, UpdateEmployerProfileCommand, DeleteEmployerCommand, GetEmployerByIdQuery } from '../employer/employers'
+import type { ListEmployerLocationsQuery, PagedListResponse, EmployerLocationListItemModel } from '../employer/employer-locations'
 import type { ListEmployerSupervisorsQuery, EmployerSupervisorListItemModel } from '../employer/employer-supervisors'
 import type { ListSystemUsersQuery, SystemUsersListResult, RegisterEmployerCommand, RegisterAdminCommand, BanSystemUserCommand, SuspendSystemUserCommand, ReactivateSystemUserCommand, SystemUserMe } from '../system/system-users'
 import type { DeleteWorkerCommand, GetWorkerByIdQuery, ListWorkersQuery, UpdateWorkerProfileCommand, WorkerDetail, WorkersListResult } from '../worker/workers'
@@ -10,7 +10,7 @@ const client = getApiClient()
 
 export const adminManagementApi = {
   listEmployers(body: ListEmployersQuery) {
-    return client.post<EmployerListResult, ListEmployersQuery>(API_ENDPOINTS.admin.listEmployers, body, true)
+    return client.post<EmployersListResult, ListEmployersQuery>(API_ENDPOINTS.admin.listEmployers, body, true)
   },
   getEmployerById(body: GetEmployerByIdQuery) {
     return client.post<EmployerDetail, GetEmployerByIdQuery>(API_ENDPOINTS.admin.getEmployerById, body, true)
@@ -22,7 +22,7 @@ export const adminManagementApi = {
     return client.post<null, DeleteEmployerCommand>(API_ENDPOINTS.admin.deleteEmployer, body, true)
   },
   listEmployerLocations(body: ListEmployerLocationsQuery) {
-    return client.post<EmployerLocationsListResponse, ListEmployerLocationsQuery>(API_ENDPOINTS.admin.listEmployerLocations, body, true)
+    return client.post<PagedListResponse<EmployerLocationListItemModel>, ListEmployerLocationsQuery>(API_ENDPOINTS.admin.listEmployerLocations, body, true)
   },
   listEmployerSupervisors(body: ListEmployerSupervisorsQuery = {}) {
     return client.post<EmployerSupervisorListItemModel[], ListEmployerSupervisorsQuery>(

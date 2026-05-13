@@ -12,7 +12,7 @@ export type RemoveEmployerSupervisorCommand = {
 }
 
 export type ListEmployerSupervisorsQuery = {
-  [key: string]: never
+  employerId?: number | null
 }
 
 export type EmployerSupervisorListItemModel = {
