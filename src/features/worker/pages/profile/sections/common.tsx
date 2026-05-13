@@ -29,6 +29,37 @@ export function ProfileInput({
   )
 }
 
+export function ProfileSelect({
+  theme,
+  label,
+  value,
+  onChange,
+  options,
+  placeholder,
+}: {
+  theme: WorkerTone
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: readonly string[]
+  placeholder: string
+}) {
+  const selectClass = `min-w-0 w-full rounded-xl border px-3 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${theme === 'dark' ? 'border-white/20 bg-white/[0.03] text-white' : 'border-slate-200 bg-white text-slate-900'}`
+  return (
+    <label className="space-y-1 text-sm">
+      <span className={resolveMuted(theme)}>{label}</span>
+      <select value={value} onChange={(event) => onChange(event.target.value)} className={selectClass}>
+        <option value="">{placeholder}</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+      </select>
+    </label>
+  )
+}
+
 export function ProfileReadOnlyField({
   theme,
   label,

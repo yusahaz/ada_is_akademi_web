@@ -463,12 +463,19 @@
           "email": "E-posta",
           "phone": "Telefon",
           "nationality": "Uyruk",
+          "nationalityPlaceholder": "Seçiniz",
+          "gender": "Cinsiyet",
           "university": "Üniversite",
           "studentNumber": "Öğrenci no"
         },
         "messages": {
           "savedLocal": "Profil değişiklikleri bu oturum için kaydedildi.",
           "validationError": "Ad soyad en az 2 karakter olmalı."
+        },
+        "gender": {
+          "unspecified": "Belirtilmemiş",
+          "male": "Erkek",
+          "female": "Kadın"
         },
         "basicSection": {
           "subtitle": "İletişim ve kişisel bilgilerini güncel tutarak profil görünürlüğünü artırabilirsin.",

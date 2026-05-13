@@ -424,12 +424,19 @@
           "fullName": "Full name",
           "email": "Email",
           "nationality": "Nationality",
+          "nationalityPlaceholder": "Select",
+          "gender": "Gender",
           "university": "University",
           "studentNumber": "Student number"
         },
         "messages": {
           "savedLocal": "Profile changes saved for this session.",
           "validationError": "Full name must be at least 2 characters."
+        },
+        "gender": {
+          "unspecified": "Non précisé",
+          "male": "Homme",
+          "female": "Femme"
         },
         "basicSection": {
           "subtitle": "Gardez vos informations personnelles et de contact Ã  jour pour amÃ©liorer la visibilitÃ© de votre profil.",

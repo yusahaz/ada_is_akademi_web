@@ -1,13 +1,17 @@
 import { useMemo, useState } from 'react'
-import { Flag, GraduationCap, Mail, Phone, UserCircle2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Flag, GraduationCap, Mail, Phone, UserCircle2, Users } from 'lucide-react'
 
 import { workerPortalApi } from '../../../../../api/worker/worker-portal'
+import { WorkerGender } from '../../../../../api/core/enums'
 import { useActionToasts } from '../../../../../notifications/use-action-toasts'
+import { getNationalitySelectOptions } from '../../../../../shared/lib/nationality-options'
 
 import type { WorkerProfileData } from '../types'
 import {
   ProfileInput,
   ProfileReadOnlyField,
+  ProfileSelect,
 } from './common'
 import {
   type TFn,
@@ -29,6 +33,17 @@ function formatPhoneMasked(digitsRaw: string): string {
   return parts.join(' ')
 }
 
+function formatGenderLabel(gender: WorkerGender, t: TFn): string {
+  switch (gender) {
+    case WorkerGender.Male:
+      return t('dashboard.workerPortal.profile.gender.male')
+    case WorkerGender.Female:
+      return t('dashboard.workerPortal.profile.gender.female')
+    default:
+      return t('dashboard.workerPortal.profile.gender.unspecified')
+  }
+}
+
 export function BasicInfoSection({
   profile,
   theme,
@@ -44,6 +59,12 @@ export function BasicInfoSection({
   const [draft, setDraft] = useState<WorkerProfileDraft | null>(null)
   const [saveState, setSaveState] = useState<'idle' | 'success' | 'validation-error'>('idle')
   const [savedProfilePatch, setSavedProfilePatch] = useState<Partial<WorkerProfileData>>({})
+  const { i18n } = useTranslation()
+
+  const nationalityOptions = useMemo(
+    () => getNationalitySelectOptions(i18n.language, draft?.nationality),
+    [i18n.language, draft?.nationality],
+  )
 
   const sectionProfile = useMemo<WorkerProfileData>(
     () => ({ ...profile, ...savedProfilePatch }),
@@ -56,6 +77,7 @@ export function BasicInfoSection({
       ...sectionProfile,
       fullName: draft.fullName,
       nationality: draft.nationality,
+      gender: draft.gender,
       university: draft.university,
     }
   }, [draft, isEditing, sectionProfile])
@@ -76,6 +98,7 @@ export function BasicInfoSection({
           lastName: lastName || null,
           nationality: draft.nationality.trim() || null,
           university: draft.university.trim() || null,
+          gender: draft.gender,
           phone: draft.phoneNumber ? `${draft.phoneCountryCode}${draft.phoneNumber.replace(/\D/g, '')}` : null,
         }),
         {
@@ -87,6 +110,7 @@ export function BasicInfoSection({
         ...prev,
         fullName,
         nationality: draft.nationality.trim() || sectionProfile.nationality,
+        gender: draft.gender,
         university: draft.university.trim() || sectionProfile.university,
         phone: draft.phoneNumber
           ? `${draft.phoneCountryCode} ${formatPhoneMasked(draft.phoneNumber)}`
@@ -124,6 +148,12 @@ export function BasicInfoSection({
       label: t('dashboard.workerPortal.profile.fields.nationality'),
       rawValue: currentProfile.nationality,
       icon: Flag,
+    },
+    {
+      key: 'gender',
+      label: t('dashboard.workerPortal.profile.fields.gender'),
+      rawValue: formatGenderLabel(currentProfile.gender, t),
+      icon: Users,
     },
     {
       key: 'university',
@@ -209,14 +239,38 @@ export function BasicInfoSection({
                 setDraft((prev) => (prev ? { ...prev, fullName: value } : prev))
               }
             />
-            <ProfileInput
+            <ProfileSelect
               theme={theme}
               label={t('dashboard.workerPortal.profile.fields.nationality')}
               value={draft.nationality}
               onChange={(value) =>
                 setDraft((prev) => (prev ? { ...prev, nationality: value } : prev))
               }
+              options={nationalityOptions}
+              placeholder={t('dashboard.workerPortal.profile.fields.nationalityPlaceholder')}
             />
+            <label className="space-y-1 text-sm">
+              <span className={resolveMuted(theme)}>{t('dashboard.workerPortal.profile.fields.gender')}</span>
+              <select
+                value={String(draft.gender)}
+                onChange={(event) =>
+                  setDraft((prev) =>
+                    prev ? { ...prev, gender: Number(event.target.value) as WorkerGender } : prev,
+                  )
+                }
+                className={`min-w-0 w-full rounded-xl border px-3 py-2 text-sm outline-none transition focus-visible:ring-2 focus-visible:ring-cyan-400/45 ${
+                  theme === 'dark'
+                    ? 'border-white/20 bg-white/[0.03] text-white'
+                    : 'border-slate-200 bg-white text-slate-900'
+                }`}
+              >
+                <option value={String(WorkerGender.Unspecified)}>
+                  {t('dashboard.workerPortal.profile.gender.unspecified')}
+                </option>
+                <option value={String(WorkerGender.Male)}>{t('dashboard.workerPortal.profile.gender.male')}</option>
+                <option value={String(WorkerGender.Female)}>{t('dashboard.workerPortal.profile.gender.female')}</option>
+              </select>
+            </label>
             <ProfileInput
               theme={theme}
               label={t('dashboard.workerPortal.profile.fields.university')}

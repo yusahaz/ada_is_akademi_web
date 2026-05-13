@@ -424,12 +424,19 @@
           "fullName": "Nome completo",
           "email": "Email",
           "nationality": "NazionalitÃ ",
+          "nationalityPlaceholder": "Seleziona",
+          "gender": "Genere",
           "university": "UniversitÃ ",
           "studentNumber": "Numero studente"
         },
         "messages": {
           "savedLocal": "Le modifiche al profilo sono state salvate per questa sessione.",
           "validationError": "Il nome completo deve contenere almeno 2 caratteri."
+        },
+        "gender": {
+          "unspecified": "Non specificato",
+          "male": "Uomo",
+          "female": "Donna"
         },
         "basicSection": {
           "subtitle": "Mantieni aggiornati i dati personali e di contatto per migliorare la visibilitÃ  del profilo.",

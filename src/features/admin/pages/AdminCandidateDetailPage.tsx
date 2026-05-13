@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { type WorkerDetail } from '../../../api/worker/workers'
 import { adminManagementApi } from '../../../api/admin/admin-management'
+import { getNationalitySelectOptions } from '../../../shared/lib/nationality-options'
 import { AccountStatus } from '../../../api/core/enums'
 import { DashboardHero, DashboardSurface, StatePanel } from '../../../shared/ui/ui-primitives'
 import { cn } from '../../../shared/lib/cn'
@@ -79,7 +80,7 @@ function fullName(detail: WorkerDetail | null): string {
 }
 
 export function AdminCandidateDetailPage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { theme } = useTheme()
   const { success, error: notifyError } = useNotification()
   const navigate = useNavigate()
@@ -149,6 +150,11 @@ export function AdminCandidateDetailPage() {
         id: detail?.id ?? candidateId ?? '—',
       }),
     [candidateId, detail, t],
+  )
+
+  const nationalityOptions = useMemo(
+    () => getNationalitySelectOptions(i18n.language, nationality),
+    [i18n.language, nationality],
   )
 
   const onSave = async (e: FormEvent) => {
@@ -227,7 +233,14 @@ export function AdminCandidateDetailPage() {
                 </label>
                 <label>
                   <span className={cn('mb-1.5 block text-xs font-semibold uppercase tracking-wide', theme === 'dark' ? 'text-white/55' : 'text-slate-600')}>Milliyet</span>
-                  <input className={inputClass} value={nationality} onChange={(e) => setNationality(e.target.value)} />
+                  <select className={inputClass} value={nationality} onChange={(e) => setNationality(e.target.value)}>
+                    <option value="">{t('dashboard.workerPortal.profile.fields.nationalityPlaceholder')}</option>
+                    {nationalityOptions.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
+                  </select>
                 </label>
                 <label className="sm:col-span-2">
                   <span className={cn('mb-1.5 block text-xs font-semibold uppercase tracking-wide', theme === 'dark' ? 'text-white/55' : 'text-slate-600')}>Üniversite</span>

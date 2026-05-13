@@ -1,10 +1,12 @@
 import type { Dispatch, SetStateAction } from 'react'
 
+import type { WorkerGender } from '../../../../../api/core/enums'
+
 import type { ExperienceEditorDraft, WorkerProfileData, WorkerProfileSectionItem } from '../types'
 
 export type WorkerTone = 'dark' | 'light'
 export type TFn = (key: string, options?: Record<string, unknown>) => string
-export type WorkerProfileDraft = Pick<WorkerProfileData, 'fullName' | 'nationality' | 'university'> & {
+export type WorkerProfileDraft = Pick<WorkerProfileData, 'fullName' | 'nationality' | 'university' | 'gender'> & {
   phoneCountryCode: string
   phoneNumber: string
 }
@@ -66,6 +68,7 @@ export function toDraft(profile: WorkerProfileData): WorkerProfileDraft {
     fullName: profile.fullName ?? '',
     nationality: profile.nationality ?? '',
     university: profile.university ?? '',
+    gender: (profile.gender ?? 0) as WorkerGender,
     phoneCountryCode: matchedCountry,
     phoneNumber: digits,
   }

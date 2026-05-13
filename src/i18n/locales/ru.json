@@ -422,12 +422,19 @@
           "fullName": "Полное имя",
           "email": "Email",
           "nationality": "Гражданство",
+          "nationalityPlaceholder": "Выберите",
+          "gender": "Пол",
           "university": "Университет",
           "studentNumber": "Номер студента"
         },
         "messages": {
           "savedLocal": "Изменения профиля сохранены для этой сессии.",
           "validationError": "Полное имя должно содержать минимум 2 символа."
+        },
+        "gender": {
+          "unspecified": "Не указан",
+          "male": "Мужской",
+          "female": "Женский"
         },
         "experienceSection": {
           "listSubtitle": "Работодатели видят эту хронологию при просмотре профиля.",
