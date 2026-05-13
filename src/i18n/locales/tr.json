@@ -1142,12 +1142,97 @@
       "subtitle": "Sistem kullanıcılarını, onay süreçlerini ve güvenlik durumunu merkezi olarak yönet.",
       "sidebar": {
         "overview": "Kontrol Paneli",
+        "groupPanel": "Panel",
+        "groupManagement": "Yönetim",
+        "groupFinance": "Finans",
         "employers": "İş Verenler",
         "candidates": "Adaylar",
         "userGroups": "Kullanıcı Grupları",
         "users": "Kullanıcılar",
         "createAdmin": "Admin Oluştur",
+        "profile": "Profil",
+        "commissionRules": "Komisyon kuralı",
         "closeAria": "Kenar panelini kapat"
+      },
+      "profile": {
+        "title": "Hesap profili",
+        "subtitle": "Oturum açmış yönetici hesabınızın bilgilerini görüntüleyin ve şifrenizi güncelleyin.",
+        "cardTitle": "Profil bilgileri",
+        "cardHint": "Veriler API üzerinden anlık okunur (SystemUsers/Me).",
+        "loadError": "Profil bilgileri alınamadı.",
+        "retry": "Yeniden dene",
+        "lockedWarning": "Bu hesap çok sayıda başarısız giriş nedeniyle kilitli görünüyor. Şifre sıfırlama veya destek ile ilerleyin.",
+        "fields": {
+          "email": "E-posta",
+          "fullName": "Ad Soyad",
+          "phone": "Telefon",
+          "userType": "Hesap türü",
+          "accountStatus": "Hesap durumu",
+          "systemUserId": "Sistem kullanıcı ID"
+        },
+        "accountStatus": {
+          "active": "Aktif",
+          "pending": "Beklemede",
+          "suspended": "Askıda",
+          "banned": "Yasaklı"
+        },
+        "userType": {
+          "admin": "Yönetici",
+          "employer": "İş veren",
+          "supervisor": "Süpervizör",
+          "worker": "Aday"
+        },
+        "password": {
+          "sectionTitle": "Şifre değiştir",
+          "sectionHint": "Yeni şifrenizi iki kez girin. Kaydettikten sonra güvenlik için yeniden giriş yapmanız gerekebilir.",
+          "new": "Yeni şifre",
+          "confirm": "Yeni şifre (tekrar)",
+          "mismatch": "Şifreler eşleşmiyor.",
+          "tooShort": "Şifre en az {{min}} karakter olmalıdır.",
+          "submit": "Şifreyi güncelle",
+          "success": "Şifre güncellendi.",
+          "apiError": "Şifre güncellenemedi.",
+          "invalidSession": "Oturum bilgisi geçersiz; lütfen çıkış yapıp tekrar giriş yapın."
+        }
+      },
+      "commissionRules": {
+        "list": {
+          "title": "Komisyon kuralları",
+          "subtitle": "Aktif iş verenlerin komisyon oranı ve tahmini hacimleri; satıra tıklayarak detay ve oran güncellemesine gidin.",
+          "tableTitle": "Özet liste",
+          "tableHint": "Kaynak: Employers/ListCommissionSummaries (aktif iş verenler, en yüksek tahmini komisyona göre sıralı).",
+          "refresh": "Yenile",
+          "fetchError": "Komisyon özeti yüklenemedi.",
+          "empty": "Gösterilecek kayıt yok."
+        },
+        "columns": {
+          "employer": "İş veren",
+          "status": "Durum",
+          "rate": "Komisyon oranı",
+          "accepted": "Kabul başvuru",
+          "gross": "Tahmini brüt hacim",
+          "commission": "Tahmini komisyon"
+        },
+        "detail": {
+          "back": "Listeye dön",
+          "title": "Komisyon kuralı detayı",
+          "subtitle": "İş veren profiline benzer özet ve komisyon oranı tanımı.",
+          "tax": "Vergi numarası",
+          "fetchError": "Detay verileri yüklenemedi.",
+          "formTitle": "Komisyon oranını güncelle",
+          "formHint": "Oran 0 ile 100 arasında yüzde olarak girilir (ör. 15 = %15). Kayıt tüm iş veren verilerine uygulanır.",
+          "ratePercent": "Komisyon oranı (%)",
+          "save": "Kaydet",
+          "saveSuccess": "Komisyon oranı güncellendi.",
+          "saveError": "Komisyon oranı kaydedilemedi.",
+          "invalidRate": "Geçerli bir yüzde girin (0–100).",
+          "kpis": {
+            "rate": "Güncel oran",
+            "accepted": "Kabul başvuru",
+            "gross": "Tahmini brüt",
+            "commission": "Tahmini komisyon"
+          }
+        }
       },
       "summary": {
         "loading": "Yükleniyor...",
