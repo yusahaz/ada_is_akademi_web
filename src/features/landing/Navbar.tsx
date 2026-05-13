@@ -156,8 +156,8 @@ export function Navbar({
             : 'border-slate-300/80 bg-white/75'
       }`}
     >
-      <div className="mx-auto flex w-full flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-3 sm:flex-nowrap sm:gap-4 sm:px-6 sm:py-4 lg:px-8">
-        <div className="flex min-w-0 flex-1 items-center gap-2 sm:flex-none sm:gap-3">
+      <div className="mx-auto flex w-full flex-nowrap items-center justify-between gap-2 px-3 py-2.5 sm:gap-4 sm:px-6 sm:py-4 lg:px-8">
+        <div className="flex min-w-0 shrink items-center gap-1.5 sm:gap-3">
           <a
             href="#top"
             className={`flex min-w-0 items-center gap-3 text-start no-underline ${
@@ -166,7 +166,7 @@ export function Navbar({
             aria-label={t('landing.nav.logoAria')}
           >
             <AdaLogoWordmark
-              className="h-8 w-[148px] shrink-0 sm:h-10 sm:w-[210px]"
+              className="h-7 w-[124px] shrink-0 sm:h-10 sm:w-[210px]"
               mode={theme === 'dark' ? 'dark' : 'light'}
             />
           </a>
@@ -175,7 +175,7 @@ export function Navbar({
             <button
               type="button"
               onClick={onSidebarToggle}
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition ${
+              className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition sm:h-10 sm:w-10 ${
                 theme === 'dark'
                   ? 'text-cyan-100 hover:bg-white/12'
                   : 'text-slate-700 hover:bg-white/60'
@@ -200,11 +200,11 @@ export function Navbar({
           ) : null}
         </div>
 
-        <div className="ml-auto flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:flex-nowrap sm:gap-3">
+        <div className="flex shrink-0 flex-nowrap items-center justify-end gap-1 sm:gap-3">
           <button
             type="button"
             onClick={toggleTheme}
-            className={`inline-flex h-9 items-center justify-center rounded-full px-2.5 transition sm:h-10 sm:px-3 ${
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition sm:h-10 sm:w-auto sm:px-3 ${
               theme === 'dark'
                 ? 'text-white hover:bg-white/10'
                 : 'text-slate-700 hover:bg-slate-100'
@@ -227,7 +227,7 @@ export function Navbar({
               ref={triggerRef}
               type="button"
               id="language-select"
-              className={`relative inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-transparent px-2.5 pe-8 text-start outline-none ring-offset-2 transition focus-visible:ring-2 focus-visible:ring-[#14f1d9]/55 sm:h-10 sm:px-3 sm:pe-9 ${
+              className={`relative inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-full bg-transparent px-2 pe-6 text-start outline-none ring-offset-2 transition focus-visible:ring-2 focus-visible:ring-[#14f1d9]/55 sm:h-10 sm:gap-2 sm:px-3 sm:pe-9 ${
                 theme === 'dark'
                   ? 'ring-offset-[#0b0e14] hover:bg-white/[0.06] text-white'
                   : 'ring-offset-white hover:bg-slate-200/70 text-slate-900'
@@ -258,7 +258,7 @@ export function Navbar({
               onKeyDown={onTriggerKeyDown}
             >
               <IconGlobe
-                className="h-4 w-4 shrink-0 text-[#14f1d9]/90"
+                className="hidden h-4 w-4 shrink-0 text-[#14f1d9]/90 sm:inline-block"
                 aria-hidden
               />
               <span
@@ -269,7 +269,7 @@ export function Navbar({
                 {activeLanguage.toUpperCase()}
               </span>
               <IconChevronDown
-                className={`pointer-events-none absolute end-2 top-1/2 h-4 w-4 shrink-0 -translate-y-1/2 transition-transform duration-150 ${
+                className={`pointer-events-none absolute end-1.5 top-1/2 h-4 w-4 shrink-0 -translate-y-1/2 transition-transform duration-150 sm:end-2 ${
                   theme === 'dark' ? 'text-white/50' : 'text-slate-500'
                 } ${
                   menuOpen ? 'rotate-180' : ''
@@ -363,7 +363,7 @@ export function Navbar({
           ) : onAuthAction ? (
             <button
               type="button"
-              className={`inline-flex h-10 max-w-[10rem] items-center justify-center rounded-xl px-3 text-xs font-semibold transition sm:h-11 sm:max-w-none sm:px-4 sm:text-sm ${
+              className={`inline-flex h-9 shrink-0 max-w-[7.5rem] items-center justify-center rounded-xl px-2.5 text-xs font-semibold transition sm:h-11 sm:max-w-none sm:px-4 sm:text-sm ${
                 showSidebarToggle
                   ? theme === 'dark'
                     ? 'text-cyan-100 hover:bg-white/10'
@@ -384,7 +384,7 @@ export function Navbar({
             </button>
           ) : (
             <a
-              className={`inline-flex h-10 max-w-[10rem] items-center justify-center rounded-xl border px-3 text-xs font-semibold transition sm:h-11 sm:max-w-none sm:px-4 sm:text-sm ${
+              className={`inline-flex h-9 shrink-0 max-w-[7.5rem] items-center justify-center rounded-xl border px-2.5 text-xs font-semibold transition sm:h-11 sm:max-w-none sm:px-4 sm:text-sm ${
                 theme === 'dark'
                   ? 'border-white/20 text-white hover:border-white/35 hover:bg-white/5'
                   : 'border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100'
