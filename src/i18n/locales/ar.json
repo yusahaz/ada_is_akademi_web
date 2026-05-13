@@ -422,12 +422,19 @@
           "fullName": "الاسم الكامل",
           "email": "البريد الإلكتروني",
           "nationality": "الجنسية",
+          "nationalityPlaceholder": "اختر",
+          "gender": "الجنس",
           "university": "الجامعة",
           "studentNumber": "رقم الطالب"
         },
         "messages": {
           "savedLocal": "تم حفظ تعديلات الملف لهذه الجلسة.",
           "validationError": "يجب أن يكون الاسم الكامل مكوّنا من حرفين على الأقل."
+        },
+        "gender": {
+          "unspecified": "غير محدد",
+          "male": "ذكر",
+          "female": "أنثى"
         },
         "experienceSection": {
           "listSubtitle": "يرى أصحاب العمل هذا السجل عند مراجعة ملفك الشخصي.",

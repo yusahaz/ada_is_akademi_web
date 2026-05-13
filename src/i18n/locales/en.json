@@ -463,12 +463,19 @@
           "email": "Email",
           "phone": "Phone",
           "nationality": "Nationality",
+          "nationalityPlaceholder": "Select",
+          "gender": "Gender",
           "university": "University",
           "studentNumber": "Student number"
         },
         "messages": {
           "savedLocal": "Profile changes saved for this session.",
           "validationError": "Full name must be at least 2 characters."
+        },
+        "gender": {
+          "unspecified": "Unspecified",
+          "male": "Male",
+          "female": "Female"
         },
         "basicSection": {
           "subtitle": "Keep your contact and personal details up to date to improve your profile visibility.",

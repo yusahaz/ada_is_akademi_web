@@ -77,6 +77,14 @@ export const ShiftAssignmentStatus = {
 export type ShiftAssignmentStatus =
   (typeof ShiftAssignmentStatus)[keyof typeof ShiftAssignmentStatus]
 
+export const WorkerGender = {
+  Unspecified: 0,
+  Male: 10,
+  Female: 20,
+} as const
+
+export type WorkerGender = (typeof WorkerGender)[keyof typeof WorkerGender]
+
 export const SystemUserType = {
   Admin: 10,
   Employer: 20,

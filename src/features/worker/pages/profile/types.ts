@@ -1,3 +1,5 @@
+import type { WorkerGender } from '../../../../api/core/enums'
+
 export type WorkerProfileSectionItem = {
   id: string
   label: string
@@ -19,6 +21,7 @@ export type WorkerProfileData = {
   email: string
   phone: string
   nationality: string
+  gender: WorkerGender
   university: string
   studentNumber: string
   cvOptions?: string | null

@@ -1,5 +1,5 @@
 import { jobApplicationsApi, type MyJobApplicationItem } from '../jobs/job-applications'
-import { EducationType, JobPostingStatus, LanguageLevel } from '../core/enums'
+import { EducationType, JobPostingStatus, LanguageLevel, WorkerGender } from '../core/enums'
 import {
   jobPostingsApi,
   type JobPostingDetail,
@@ -26,6 +26,7 @@ export type WorkerProfileData = {
   email: string
   phone: string
   nationality: string
+  gender: WorkerGender
   university: string
   studentNumber: string
   cvOptions: string | null
@@ -137,6 +138,7 @@ export const workerPortalApi = {
       email: me.email,
       phone: me.phone ?? 'N/A',
       nationality: 'N/A',
+      gender: WorkerGender.Unspecified,
       university: 'N/A',
       studentNumber: 'N/A',
       cvOptions: this.resolveWorkerCvOptions(detail),
@@ -154,6 +156,7 @@ export const workerPortalApi = {
       cvOptions: this.resolveWorkerCvOptions(detail),
       profilePhotoObjectKey: detail.profilePhotoObjectKey ?? null,
       nationality: detail.nationality ?? 'N/A',
+      gender: typeof detail.gender === 'number' ? detail.gender : WorkerGender.Unspecified,
       university: detail.university ?? 'N/A',
       skills:
         detail.skills
@@ -654,6 +657,7 @@ export const workerPortalApi = {
     lastName: string | null
     nationality: string | null
     university: string | null
+    gender?: WorkerGender | null
     phone?: string | null
   }): Promise<void> {
     await workersApi.updateProfile(payload)

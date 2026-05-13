@@ -424,12 +424,19 @@
           "fullName": "Nombre completo",
           "email": "Correo",
           "nationality": "Nacionalidad",
+          "nationalityPlaceholder": "Seleccionar",
+          "gender": "Género",
           "university": "Universidad",
           "studentNumber": "NÃºmero de estudiante"
         },
         "messages": {
           "savedLocal": "Los cambios del perfil se guardaron para esta sesiÃ³n.",
           "validationError": "El nombre completo debe tener al menos 2 caracteres."
+        },
+        "gender": {
+          "unspecified": "Sin especificar",
+          "male": "Hombre",
+          "female": "Mujer"
         },
         "basicSection": {
           "subtitle": "Mantener tus datos personales y de contacto actualizados mejora la visibilidad de tu perfil.",

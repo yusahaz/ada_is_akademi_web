@@ -1,6 +1,6 @@
 import { getApiClient } from '../core/client'
 import { API_ENDPOINTS } from '../core/endpoints'
-import type { AccountStatus } from '../core/enums'
+import type { AccountStatus, WorkerGender } from '../core/enums'
 
 export type AddWorkerSkillCommand = {
   tag: string
@@ -68,6 +68,7 @@ export type UpdateWorkerProfileCommand = {
   lastName: string | null
   nationality: string | null
   university: string | null
+  gender?: WorkerGender | null
   phone?: string | null
 }
 
@@ -101,6 +102,7 @@ export type WorkerDetail = {
   id: number
   systemUserId: number
   nationality: string | null
+  gender: WorkerGender
   university: string | null
   cvOptions?: string | null
   profilePhotoObjectKey?: string | null
