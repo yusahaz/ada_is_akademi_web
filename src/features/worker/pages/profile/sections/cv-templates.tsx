@@ -452,7 +452,7 @@ export function resolveCvTemplateDisplayOptions(templateId: CvTemplateId): {
   }
   if (templateId === 'conciseTeal') return { layoutVariant: 'single', palette: 'emerald' }
   if (templateId === 'conciseAmber' || templateId === 'classicBurgundy') return { layoutVariant: 'single', palette: 'slate' }
-  if (templateId === 'concise' || templateId === 'conciseAmber' || templateId === 'conciseTeal' || templateId === 'atsMono') {
+  if (templateId === 'concise' || templateId === 'atsMono') {
     return { layoutVariant: 'single', palette: 'slate' }
   }
   if (templateId === 'modernAzure' || templateId === 'atsBlue') return { layoutVariant: 'double', palette: 'indigo' }

@@ -156,17 +156,17 @@ export function Navbar({
             : 'border-slate-300/80 bg-white/75'
       }`}
     >
-      <div className="mx-auto flex w-full items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 sm:gap-3">
+      <div className="mx-auto flex w-full flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-3 sm:flex-nowrap sm:gap-4 sm:px-6 sm:py-4 lg:px-8">
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:flex-none sm:gap-3">
           <a
             href="#top"
-            className={`flex items-center gap-3 text-start no-underline ${
+            className={`flex min-w-0 items-center gap-3 text-start no-underline ${
               theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}
             aria-label={t('landing.nav.logoAria')}
           >
             <AdaLogoWordmark
-              className="h-9 w-[190px] sm:h-10 sm:w-[210px]"
+              className="h-8 w-[148px] shrink-0 sm:h-10 sm:w-[210px]"
               mode={theme === 'dark' ? 'dark' : 'light'}
             />
           </a>
@@ -200,11 +200,11 @@ export function Navbar({
           ) : null}
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="ml-auto flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto sm:flex-nowrap sm:gap-3">
           <button
             type="button"
             onClick={toggleTheme}
-            className={`inline-flex h-10 items-center justify-center rounded-full px-3 transition ${
+            className={`inline-flex h-9 items-center justify-center rounded-full px-2.5 transition sm:h-10 sm:px-3 ${
               theme === 'dark'
                 ? 'text-white hover:bg-white/10'
                 : 'text-slate-700 hover:bg-slate-100'
@@ -227,7 +227,7 @@ export function Navbar({
               ref={triggerRef}
               type="button"
               id="language-select"
-              className={`relative inline-flex h-10 cursor-pointer items-center gap-2 rounded-full bg-transparent px-3 pe-9 text-start outline-none ring-offset-2 transition focus-visible:ring-2 focus-visible:ring-[#14f1d9]/55 ${
+              className={`relative inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-transparent px-2.5 pe-8 text-start outline-none ring-offset-2 transition focus-visible:ring-2 focus-visible:ring-[#14f1d9]/55 sm:h-10 sm:px-3 sm:pe-9 ${
                 theme === 'dark'
                   ? 'ring-offset-[#0b0e14] hover:bg-white/[0.06] text-white'
                   : 'ring-offset-white hover:bg-slate-200/70 text-slate-900'
@@ -283,7 +283,7 @@ export function Navbar({
                 id={listboxId}
                 role="listbox"
                 aria-label={t('landing.nav.languageAria')}
-                className={`absolute end-0 top-full z-[60] mt-2 max-h-[min(320px,calc(100svh-5rem))] min-w-[12.5rem] overflow-y-auto overscroll-contain rounded-2xl border py-2 backdrop-blur-xl ${
+                className={`absolute end-0 top-full z-[60] mt-2 max-h-[min(320px,calc(100svh-5rem))] min-w-[11.5rem] max-w-[calc(100vw-1rem)] overflow-y-auto overscroll-contain rounded-2xl border py-2 backdrop-blur-xl sm:min-w-[12.5rem] ${
                   theme === 'dark'
                     ? 'border-white/12 bg-[#0b0e14]/96 shadow-[0_16px_48px_rgba(0,0,0,0.45)] ring-1 ring-[#14f1d9]/15'
                     : 'border-slate-300 bg-white/95 shadow-[0_12px_34px_rgba(15,23,42,0.16)]'
@@ -363,7 +363,7 @@ export function Navbar({
           ) : onAuthAction ? (
             <button
               type="button"
-              className={`inline-flex h-11 items-center justify-center rounded-xl px-4 text-sm font-semibold transition ${
+              className={`inline-flex h-10 max-w-[10rem] items-center justify-center rounded-xl px-3 text-xs font-semibold transition sm:h-11 sm:max-w-none sm:px-4 sm:text-sm ${
                 showSidebarToggle
                   ? theme === 'dark'
                     ? 'text-cyan-100 hover:bg-white/10'
@@ -379,19 +379,19 @@ export function Navbar({
               {showSidebarToggle ? (
                 <IconLogout className="h-5 w-5" />
               ) : (
-                (authLabel ?? t('landing.nav.login'))
+                <span className="truncate">{authLabel ?? t('landing.nav.login')}</span>
               )}
             </button>
           ) : (
             <a
-              className={`inline-flex h-11 items-center justify-center rounded-xl border px-4 text-sm font-semibold transition ${
+              className={`inline-flex h-10 max-w-[10rem] items-center justify-center rounded-xl border px-3 text-xs font-semibold transition sm:h-11 sm:max-w-none sm:px-4 sm:text-sm ${
                 theme === 'dark'
                   ? 'border-white/20 text-white hover:border-white/35 hover:bg-white/5'
                   : 'border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-100'
               }`}
               href="#sign-in"
             >
-              {authLabel ?? t('landing.nav.login')}
+              <span className="truncate">{authLabel ?? t('landing.nav.login')}</span>
             </a>
           )}
         </div>
