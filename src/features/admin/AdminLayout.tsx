@@ -9,8 +9,10 @@ import {
   LayoutGrid,
   LogOut,
   Moon,
+  Percent,
   Sun,
   UserCog,
+  UserRound,
   Users,
 } from 'lucide-react'
 
@@ -28,36 +30,46 @@ type AdminLayoutProps = {
   children: ReactNode
 }
 
-type AdminNavKey = 'overview' | 'employers' | 'candidates' | 'users'
+type AdminNavKey = 'overview' | 'profile' | 'employers' | 'candidates' | 'users' | 'commissionRules'
 type AdminNavItemConfig = { key: AdminNavKey; to: string }
 type AdminNavGroupConfig = {
-  id: 'dashboard' | 'management' | 'security'
-  title: string
+  id: 'dashboard' | 'management' | 'finance'
+  titleKey: 'groupPanel' | 'groupManagement' | 'groupFinance'
   items: AdminNavItemConfig[]
 }
 
 const navGroups: AdminNavGroupConfig[] = [
   {
     id: 'dashboard',
-    title: 'Panel',
-    items: [{ key: 'overview', to: '/admin/overview' }],
+    titleKey: 'groupPanel',
+    items: [
+      { key: 'overview', to: '/admin/overview' },
+      { key: 'profile', to: '/admin/profile' },
+    ],
   },
   {
     id: 'management',
-    title: 'Yonetim',
+    titleKey: 'groupManagement',
     items: [
       { key: 'employers', to: '/admin/employers' },
       { key: 'candidates', to: '/admin/candidates' },
       { key: 'users', to: '/admin/users' },
     ],
   },
+  {
+    id: 'finance',
+    titleKey: 'groupFinance',
+    items: [{ key: 'commissionRules', to: '/admin/commission-rules' }],
+  },
 ]
 
 const navItemIcons: Record<AdminNavKey, ReactNode> = {
   overview: <LayoutGrid className="h-4 w-4" aria-hidden="true" />,
+  profile: <UserRound className="h-4 w-4" aria-hidden="true" />,
   employers: <BriefcaseBusiness className="h-4 w-4" aria-hidden="true" />,
   candidates: <Users className="h-4 w-4" aria-hidden="true" />,
   users: <UserCog className="h-4 w-4" aria-hidden="true" />,
+  commissionRules: <Percent className="h-4 w-4" aria-hidden="true" />,
 }
 
 const ADMIN_SIDEBAR_COLLAPSE_KEY = 'ada-admin:sidebar-collapsed'
@@ -183,7 +195,7 @@ export function AdminLayout({ isSidebarOpen, onSidebarClose, children }: AdminLa
               <div key={group.id} className="space-y-1">
                 {!isSidebarCollapsed ? (
                   <p className={cn('px-2 text-[10px] font-semibold uppercase tracking-[0.16em]', theme === 'dark' ? 'text-slate-400' : 'text-slate-500')}>
-                    {group.title}
+                    {t(`dashboard.admin.sidebar.${group.titleKey}`)}
                   </p>
                 ) : null}
                 <div className="flex flex-col gap-0">
@@ -191,7 +203,7 @@ export function AdminLayout({ isSidebarOpen, onSidebarClose, children }: AdminLa
                     <NavLink
                       key={item.key}
                       to={item.to}
-                      end={item.to === '/admin/overview'}
+                      end={item.to === '/admin/overview' || item.to === '/admin/profile' || item.to === '/admin/commission-rules'}
                       className="block w-full"
                       onClick={() => {
                         if (typeof window !== 'undefined' && window.innerWidth < 1024) {
@@ -330,7 +342,8 @@ export function AdminLayout({ isSidebarOpen, onSidebarClose, children }: AdminLa
               <HeaderUserMenu
                 tone={theme}
                 userName={displayName}
-                userEmail={null}
+                userEmail={session?.email ?? null}
+                profileTo="/admin/profile"
                 onLogout={logout}
                 localeChoices={ADMIN_PANEL_LOCALES}
               />

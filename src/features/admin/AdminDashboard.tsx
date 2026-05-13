@@ -11,6 +11,9 @@ import { AdminCandidatesPage } from './pages/AdminCandidatesPage'
 import { AdminUsersPage } from './pages/AdminUsersPage'
 import { AdminUserDetailPage } from './pages/AdminUserDetailPage'
 import { AdminUserCreatePage } from './pages/AdminUserCreatePage'
+import { AdminProfilePage } from './pages/AdminProfilePage'
+import { AdminCommissionRulesPage } from './pages/AdminCommissionRulesPage'
+import { AdminCommissionRuleDetailPage } from './pages/AdminCommissionRuleDetailPage'
 
 type AdminDashboardProps = {
   isSidebarOpen: boolean
@@ -19,11 +22,13 @@ type AdminDashboardProps = {
 
 const ADMIN_SECTIONS = new Set([
   'overview',
+  'profile',
   'employers',
   'candidates',
   'users',
   'userGroups',
   'createAdmin',
+  'commission-rules',
 ])
 
 export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboardProps) {
@@ -37,6 +42,16 @@ export function AdminDashboard({ isSidebarOpen, onSidebarClose }: AdminDashboard
   const content =
     section === 'overview' ? (
       <AdminOverviewPage />
+    ) : section === 'profile' ? (
+      <AdminProfilePage />
+    ) : section === 'commission-rules' &&
+      params.entityId &&
+      params.entityId !== 'new' &&
+      Number.isFinite(Number(params.entityId)) &&
+      Number(params.entityId) > 0 ? (
+      <AdminCommissionRuleDetailPage />
+    ) : section === 'commission-rules' ? (
+      <AdminCommissionRulesPage />
     ) : section === 'employers' && params.entityId === 'new' ? (
       <AdminEmployerCreatePage />
     ) : section === 'employers' && params.entityId ? (

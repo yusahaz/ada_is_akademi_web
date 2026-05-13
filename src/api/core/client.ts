@@ -87,6 +87,10 @@ function shouldToastForRequest(method: string, path: string): boolean {
 
   // Auth/session management: keep quiet.
   if (p.includes('systemusers/login') || p.includes('systemusers/refreshtoken')) return false
+  // Password rotation: callers show contextual UI (e.g. admin profile form).
+  if (p.includes('systemusers/changepassword')) return false
+  // Admin commission rule detail form uses local notifications.
+  if (p.includes('employers/setcommissionpolicy')) return false
 
   // Query-ish endpoints (even if implemented as POST).
   if (p.includes('/list') || p.includes('/get') || p.includes('/overview') || p.includes('/me') || p.includes('/my')) return false

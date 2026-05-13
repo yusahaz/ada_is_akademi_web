@@ -1142,12 +1142,97 @@
       "subtitle": "Manage system users, approvals, and security health from a single control center.",
       "sidebar": {
         "overview": "Control Panel",
+        "groupPanel": "Panel",
+        "groupManagement": "Management",
+        "groupFinance": "Finance",
         "employers": "Employers",
         "candidates": "Candidates",
         "userGroups": "User Groups",
         "users": "Users",
         "createAdmin": "Create Admin",
+        "profile": "Profile",
+        "commissionRules": "Commission rule",
         "closeAria": "Close sidebar"
+      },
+      "profile": {
+        "title": "Account profile",
+        "subtitle": "View your signed-in admin account details and update your password.",
+        "cardTitle": "Profile details",
+        "cardHint": "Data is loaded live from the API (SystemUsers/Me).",
+        "loadError": "Could not load profile information.",
+        "retry": "Try again",
+        "lockedWarning": "This account appears locked due to failed sign-in attempts. Use password reset or support.",
+        "fields": {
+          "email": "Email",
+          "fullName": "Full name",
+          "phone": "Phone",
+          "userType": "Account type",
+          "accountStatus": "Account status",
+          "systemUserId": "System user ID"
+        },
+        "accountStatus": {
+          "active": "Active",
+          "pending": "Pending",
+          "suspended": "Suspended",
+          "banned": "Banned"
+        },
+        "userType": {
+          "admin": "Admin",
+          "employer": "Employer",
+          "supervisor": "Supervisor",
+          "worker": "Worker"
+        },
+        "password": {
+          "sectionTitle": "Change password",
+          "sectionHint": "Enter your new password twice. You may need to sign in again afterwards.",
+          "new": "New password",
+          "confirm": "Confirm new password",
+          "mismatch": "Passwords do not match.",
+          "tooShort": "Password must be at least {{min}} characters.",
+          "submit": "Update password",
+          "success": "Password updated.",
+          "apiError": "Password could not be updated.",
+          "invalidSession": "Invalid session; please sign out and sign in again."
+        }
+      },
+      "commissionRules": {
+        "list": {
+          "title": "Commission rules",
+          "subtitle": "Active employers’ commission rates and estimated volumes; open a row to edit the rate.",
+          "tableTitle": "Summary list",
+          "tableHint": "Source: Employers/ListCommissionSummaries (active employers, sorted by highest estimated commission).",
+          "refresh": "Refresh",
+          "fetchError": "Could not load commission summary.",
+          "empty": "No rows to show."
+        },
+        "columns": {
+          "employer": "Employer",
+          "status": "Status",
+          "rate": "Commission rate",
+          "accepted": "Accepted applications",
+          "gross": "Est. gross volume",
+          "commission": "Est. commission"
+        },
+        "detail": {
+          "back": "Back to list",
+          "title": "Commission rule detail",
+          "subtitle": "Employer-style summary and commission rate configuration.",
+          "tax": "Tax number",
+          "fetchError": "Could not load detail data.",
+          "formTitle": "Update commission rate",
+          "formHint": "Enter a percentage between 0 and 100 (e.g. 15 means 15%). This applies to the employer’s commission policy.",
+          "ratePercent": "Commission rate (%)",
+          "save": "Save",
+          "saveSuccess": "Commission rate updated.",
+          "saveError": "Commission rate could not be saved.",
+          "invalidRate": "Enter a valid percentage (0–100).",
+          "kpis": {
+            "rate": "Current rate",
+            "accepted": "Accepted applications",
+            "gross": "Est. gross",
+            "commission": "Est. commission"
+          }
+        }
       },
       "summary": {
         "loading": "Loading...",
